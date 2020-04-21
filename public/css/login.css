@@ -1,0 +1,123 @@
+body {
+    background-image: url("/images/login_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+    background-color: #464646;
+
+    /*Disables selection by user*/
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-container {
+    align-self: center;
+}
+
+.login-tittle {
+    text-align: center;
+    font-family: "Nunito", sans-serif;
+    font-weight: normal;
+    font-size: 40px;
+    padding-top: 30px;
+}
+.form {
+    display: flex;
+    width: 480px;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    font-family: "Nunito", sans-serif;
+    font-weight: lighter;
+    font-size: 18px;
+    -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+}
+
+.input-login {
+    border-radius: 7px;
+    border: 1px solid grey;
+    width: 350px;
+    height: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.input-login:hover {
+    border: 1px solid #9507e6;
+}
+
+.remember-me-login label:hover,
+.remember-me-login input:hover {
+    cursor: pointer;
+}
+
+.email-login span,
+.password-login span {
+    display: table;
+    margin-bottom: 5px;
+}
+
+.last-buttons {
+    display: inline-flex;
+    font-size: 16px;
+}
+
+.forgot-psswd-login a {
+    margin-left: 70px;
+    color: black;
+    text-decoration: none;
+}
+.forgot-psswd-login a:hover {
+    color: #9507e6;
+}
+
+.button-submit {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.signup-login {
+    text-align: center;
+}
+
+.signup-login a {
+    color: black;
+    font-size: 14px;
+    text-decoration: none;
+}
+.signup-login a:hover {
+    color: #9507e6;
+}
+
+.button-submit button {
+    width: 190px;
+    height: 50px;
+    border: none;
+    background-color: #9507e6;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.button-submit button:hover {
+    background-color: #000f2d;
+    cursor: pointer;
+}
