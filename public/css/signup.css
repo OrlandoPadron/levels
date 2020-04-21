@@ -1,0 +1,148 @@
+body {
+    background-image: url("/images/signup_image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-attachment: fixed;
+    background-color: #464646;
+
+    /*Disables selection by user*/
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.signup-container {
+    align-self: center;
+}
+
+.signup-tittle {
+    text-align: center;
+    font-family: "Nunito", sans-serif;
+    font-weight: normal;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+.form {
+    display: flex;
+    width: 600px;
+    height: 700px;
+    justify-content: center;
+    background-color: white;
+    border-radius: 5px;
+    padding-bottom: 20px;
+    font-family: "Nunito", sans-serif;
+    font-weight: lighter;
+    font-size: 18px;
+    -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+}
+
+.input-signup {
+    border-radius: 7px;
+    border: 1px solid grey;
+    width: 350px;
+    height: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 25px;
+    outline: none;
+}
+
+.input-signup:hover {
+    border: 1px solid #9507e6;
+}
+
+.signup-field span {
+    display: table;
+    margin-bottom: 5px;
+}
+
+.last-buttons {
+    display: inline-flex;
+    font-size: 16px;
+}
+.usertype-signup input,
+.usertype-signup label {
+    cursor: pointer;
+}
+
+.button-submit {
+    position: absolute; /*Prevents the buttom from moving when errors appear*/
+    top: 88%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.button-submit button {
+    width: 180px;
+    height: 50px;
+    border: none;
+    background-color: #9507e6;
+    border-radius: 10px;
+    font-size: 20px;
+    color: white;
+    margin-top: 25px;
+    margin-bottom: 5px;
+}
+
+.button-submit button:hover {
+    background-color: #000f2d;
+    cursor: pointer;
+}
+
+.usertype-signup {
+    position: relative;
+    top: -10px;
+}
+.usertype-signup input {
+    position: relative;
+    top: 2px;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 220px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -110px;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.error-message {
+    margin-bottom: 5px;
+}

@@ -1,5 +1,6 @@
 @extends('layouts.base')
 @section('head')
+@section('tittle', 'Levels | Iniciar sesión')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 @endsection
 @section('content')
