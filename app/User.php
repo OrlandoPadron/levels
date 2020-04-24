@@ -47,21 +47,20 @@ class User extends Authenticatable
     protected $attributes = [
         'trainer' => false,
         'admin' => false,
-        'user_image' => 'aquilaimagen',
     ];
 
 
-    public function getTrainer()
+    public function trainer()
     {
         if ($this->trainer == 1) {
-            return $this->hasOne(Trainer::class);
+            return $this->hasOne(Trainer::class, 'trainer_id');
         }
     }
 
-    public function getAthlete()
+    public function athlete()
     {
         if ($this->trainer == 0) {
-            return $this->hasOne(Athlete::class);
+            return $this->hasOne(Athlete::class, 'athlete_id');
         }
     }
 }
