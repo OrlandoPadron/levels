@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class User extends Authenticatable
 {
@@ -48,4 +49,19 @@ class User extends Authenticatable
         'admin' => false,
         'user_image' => 'aquilaimagen',
     ];
+
+
+    public function getTrainer()
+    {
+        if ($this->trainer == 1) {
+            return $this->hasOne(Trainer::class);
+        }
+    }
+
+    public function getAthlete()
+    {
+        if ($this->trainer == 0) {
+            return $this->hasOne(Athlete::class);
+        }
+    }
 }

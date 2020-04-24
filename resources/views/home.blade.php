@@ -13,8 +13,13 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    
                     You are logged in!
+                    El id del usuario es {{$trainer = Auth::user()->trainer}}
+                    
+    
+
+                    
                 </div>
             </div>
         </div>

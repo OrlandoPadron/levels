@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\AthleteController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\TrainerController;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -66,12 +68,24 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+
+        $user = User::create([
             'name' => $data['name'],
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'trainer' => isset($data['trainer']) ? true : false,
         ]);
+
+        // Trainer Table -> creates new row 
+        if (isset($data['trainer'])) {
+            $trainer = new TrainerController();
+
+            $trainer->store($user->id);
+        } else {
+            $athlete = new AthleteController();
+            $athlete->store($user->id);
+        }
+        return $user;
     }
 }
