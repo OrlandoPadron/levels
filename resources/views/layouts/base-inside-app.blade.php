@@ -11,6 +11,7 @@
     <link href="{{asset('css/userbar.css')}}" rel="stylesheet" />
     <link href="{{asset('css/grid.css')}}" rel="stylesheet" />
     @livewireStyles
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     @yield('head')
 </head>
 <body>

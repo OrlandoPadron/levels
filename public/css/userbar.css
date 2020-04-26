@@ -248,6 +248,14 @@ body {
     border: 3px solid black;
 }
 
+.dropdonw-button-to-open {
+    display: flex;
+    align-items: center;
+}
+.dropdonw-button-to-open:hover {
+    cursor: pointer;
+}
+
 .dropdown-button-userbar-content {
     position: absolute;
     display: flex;

@@ -9,17 +9,30 @@
           <span class="smaller" id="type_user">{{Auth::user()->trainer == 1 ? 'Perfil entrenador' : 'Perfil deportista'}}</span>
         </div>
       </div>
-      <div class="dropdown-button-userbar">
-      <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="avatar" />
-        <i class="fas fa-caret-down"></i>
+      <div class="dropdown-button-userbar" x-data="{open: false}">
+        <div  
+          class="dropdonw-button-to-open"
+          @click="open=!open" 
+          @click.away="open=false"
+          @keydown.escape.window="open=false"
+          >
+          <img
+            src="/uploads/avatars/{{Auth::user()->user_image}}" 
+            alt="avatar"
+           
+            />
+          <i class="fas fa-caret-down"></i>
+
+        </div>
         @if(Auth::user()->admin==1)
-          <div class="dropdown-button-userbar-content">
+        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
         @else
         <div class="dropdown-button-userbar-content" style="height: 160px;">
         @endif
           <div class="dropdown-button-userbar-content-item">
-            <a href=""><i class="fas fa-user"></i>Mi perfil</a>
+          <a href="{{route('profile.show', Auth::user()->id)}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>
+          
           @if(Auth::user()->admin==1)
             <div class="dropdown-button-userbar-content-item">
               <a href=""><i class="fas fa-user-cog"></i>Panel admin</a>

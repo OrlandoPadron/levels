@@ -1,7 +1,15 @@
-<div class="search-container">
+<div class="search-container" x-data="{ isOpen: true}" @click.away="isOpen = false">
     <form action="/" method="GET" autocomplete="off">
       <div class="wrap-search">
-        <input wire:model.debounce.500ms="search" type="text" placeholder="Buscar..." name="search" />
+        <input 
+        wire:model.debounce.500ms="search" 
+        type="text" placeholder="Buscar..." 
+        name="search" 
+        @keydown = "isOpen = true"
+        @focus = "isOpen = true"
+        @keydown.escape.window = "isOpen = false"
+
+        />
         <div class="button-submit">
           <button disabled type="submit">
             <i class="fa fa-search"></i>
@@ -10,20 +18,27 @@
       </div>
     </form>
     @if (strlen($search) >=3)
-      <div class="search-dropdown">
+      <div 
+      class="search-dropdown" 
+      x-show.transition.opacity="isOpen"
+      >
         @if($searchResults->count()>0)
           <ul>
               @foreach ($searchResults as $user)
                 <li>
+
                     <img
                     src="/uploads/avatars/{{$user->user_image}}"
                     alt="profile-pic"
                     class="user_picture"
                     />
-                    <div class="user_info">
-                        <a href="">{{$user->name . ' ' .$user->surname}}</a>
+                    <div 
+                    class="user_info"
+                    @if($loop->last) @keydown.tab="isOpen = false" @endif 
+                    >
+                        <a href="{{route('profile.show', $user->id)}}">{{$user->name . ' ' .$user->surname}}</a>
                         @if(Auth::user()->id == $user->id)
-                    <span class="user_info_usertype">{{$user->trainer == 1 ? 'Entrenador' : 'Deportista'}} - Eres tú </span>
+                    <span class="user_info_usertype">{{$user->trainer == 1 ? 'Entrenador' : 'Deportista'}} (Tú) </span>
                         @else
                             <span class="user_info_usertype">{{$user->trainer == 1 ? 'Entrenador' : 'Deportista'}}</span>
 
@@ -35,7 +50,8 @@
                         <button>Entrenando</button>
                     </div>
                     @endif
-                </li>  
+                    
+                </li> 
               @endforeach
           </ul>
         @else

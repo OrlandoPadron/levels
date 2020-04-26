@@ -21,11 +21,11 @@ class SearchDropdown extends Component
          */
         if ($name == '!entrenadores') {
             $searchResults = User::query()
-                ->where('trainer', '1')->get();
+                ->where('trainer', '1')->orderBy('name')->get();
             return view('livewire.search-dropdown', ['searchResults' => $searchResults]);
         } elseif ($name == "!deportistas") {
             $searchResults = User::query()
-                ->where('trainer', '0')->get();
+                ->where('trainer', '0')->orderBy('name')->get();
             return view('livewire.search-dropdown', ['searchResults' => $searchResults]);
         }
 
@@ -36,17 +36,18 @@ class SearchDropdown extends Component
                     ->where('name', 'LIKE', '%' . $name . '%')
                     ->orWhere('surname', 'LIKE', '%' . $name . '%')->get();
             } else {
+
                 /**
                  * TODO: check if method runs properly 
                  * In case the user inserts different combinations of a name ; 
                  * ? For example: surname + name  
                  */
+                /**Case name + surname*/
                 $fullname = explode(' ', $name);
                 $searchResults = User::query()
                     ->where('name', 'LIKE', '%' . $fullname[0] . '%')
-                    ->orWhere('surname', 'LIKE', '%' . $fullname[0] . '%')
-                    ->orWhere('name', 'LIKE', '%' . $fullname[1] . '%')
-                    ->orWhere('surname', 'LIKE', '%' . $fullname[1] . '%')->get();
+                    ->where('surname', 'LIKE', '%' . $fullname[1] . '%')
+                    ->get();
             }
         }
 
