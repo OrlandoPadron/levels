@@ -10,6 +10,7 @@
     <link href="{{asset('css/navbar.css')}}" rel="stylesheet" />
     <link href="{{asset('css/userbar.css')}}" rel="stylesheet" />
     <link href="{{asset('css/grid.css')}}" rel="stylesheet" />
+    @livewireStyles
     @yield('head')
 </head>
 <body>
@@ -21,6 +22,6 @@
     </div>
 
 
-    
+    @livewireScripts
 </body>
 </html>
