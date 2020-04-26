@@ -27,7 +27,7 @@
         @if(Auth::user()->admin==1)
         <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
         @else
-        <div class="dropdown-button-userbar-content" style="height: 160px;">
+        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" style="height: 160px;">
         @endif
           <div class="dropdown-button-userbar-content-item">
           <a href="{{route('profile.show', Auth::user()->id)}}"><i class="fas fa-user"></i>Mi perfil</a>
