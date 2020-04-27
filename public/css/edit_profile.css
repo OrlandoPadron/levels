@@ -1,0 +1,244 @@
+.content-edit {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 1fr;
+    grid-template-areas: "image-pack data-pack";
+}
+
+.image-pack {
+    grid-area: image-pack;
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    padding: 5%;
+    margin-left: 20px;
+    align-content: center;
+    /* background-color: red; */
+    align-items: center;
+    margin-right: -20%;
+}
+
+.image-container img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 5px solid black;
+}
+
+.image-container input[type="file"] {
+    display: none;
+}
+
+.image-container form {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+#save-changes {
+    width: fit-content;
+    height: 40px;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(58, 175, 57);
+    background: linear-gradient(
+        153deg,
+        rgba(58, 175, 57, 1) 0%,
+        rgba(57, 175, 166, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    padding-right: 15px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+#save-changes i,
+#add-category i {
+    margin-right: 10px;
+    margin-left: 5px;
+}
+.image-container label:hover,
+.image-container button:hover {
+    cursor: pointer;
+}
+
+.image-container #swap-image {
+    width: 180px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(149, 7, 230);
+    background: linear-gradient(
+        153deg,
+        rgba(149, 7, 230, 1) 0%,
+        rgba(93, 7, 230, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.data-pack {
+    grid-area: data-pack;
+}
+.profile-data {
+    display: flex;
+    flex-direction: column;
+    padding: 1%;
+    margin-left: 20px;
+    align-content: center;
+    /* background-color: red; */
+    align-items: left;
+}
+
+#add-category {
+    width: fit-content;
+    height: 40px;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(58, 175, 57);
+    background: linear-gradient(
+        153deg,
+        rgba(58, 175, 57, 1) 0%,
+        rgba(57, 175, 166, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    padding-right: 15px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 5px;
+}
+
+.personal-data input[type="text"] {
+    border-radius: 7px;
+    border: 1px solid grey;
+    width: 30%;
+    height: 20px;
+    padding: 5px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    outline: none;
+}
+
+.personal-data label {
+    margin-right: 5px;
+}
+
+.personal-data form {
+    width: 100%;
+}
+
+.personal-data {
+    width: 60%;
+}
+.personal-data h1 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid black;
+}
+
+.personal-data h2 {
+    margin-top: 30px;
+}
+
+.personal-data #add-category {
+    margin-right: 2%;
+}
+.personal-data button:hover {
+    cursor: pointer;
+}
+
+#add-category {
+    background: rgb(128, 128, 128);
+    background: linear-gradient(
+        160deg,
+        rgba(128, 128, 128, 1) 33%,
+        rgba(110, 85, 143, 1) 100%
+    );
+}
+
+#form-additional-info textarea {
+    display: flex;
+    width: 90%;
+    font-family: "Nunito", sans-serif;
+    font-size: 16px;
+    outline: none;
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 25px;
+    flex-direction: column;
+}
+
+#form-additional-info h2 {
+    margin-top: 100px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+#add-files-documentation :not(button) {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-files-documentation label {
+    margin-bottom: 10px;
+}
+#add-files-documentation input[type="text"] {
+    margin-bottom: 30px;
+}
+
+#add-files-documentation > #save-changes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+}
+
+.file-list {
+    padding-bottom: 110px;
+}
+.file-list h2 {
+    margin-top: 100px;
+}
+
+label {
+    font-size: 18px;
+}
+
+.file-list > form > input {
+    margin-top: 20px;
+}

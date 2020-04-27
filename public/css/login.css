@@ -109,7 +109,14 @@ body {
     width: 190px;
     height: 50px;
     border: none;
-    background-color: #9507e6;
+    /* Gradiente botón  */
+    background: rgb(149, 7, 230);
+    background: linear-gradient(
+        153deg,
+        rgba(149, 7, 230, 1) 0%,
+        rgba(93, 7, 230, 1) 100%
+    );
+    /* Fin gradiente boton */
     border-radius: 10px;
     font-size: 20px;
     color: white;

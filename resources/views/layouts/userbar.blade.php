@@ -32,6 +32,9 @@
           <div class="dropdown-button-userbar-content-item">
           <a href="{{route('profile.show', Auth::user()->id)}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>
+          <div class="dropdown-button-userbar-content-item">
+          <a href="{{route('profileEdit.show')}}"><i class="fas fa-user-edit"></i>Gestionar perfil</a>
+          </div>
           
           @if(Auth::user()->admin==1)
             <div class="dropdown-button-userbar-content-item">

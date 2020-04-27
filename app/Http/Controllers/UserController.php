@@ -19,8 +19,17 @@ class UserController extends Controller
         ]);
     }
 
+    public function showEditProfile()
+    {
+        $user = Auth::user();
+        return view('edit-profile');
+    }
+
+
     public function updateAvatar(Request $request)
     {
+        $this->deleteAvatarAndSetDefaultAvatar($request);
+
         //Handle user upload of avatar
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
@@ -39,6 +48,21 @@ class UserController extends Controller
             $logged_user->user_image = $filename;
             $logged_user->save();
         }
-        return redirect()->route('profile.show', Auth::user()->id);
+        return redirect()->route('profileEdit.show');
+    }
+
+    private function deleteAvatarAndSetDefaultAvatar(Request $request)
+    {
+        if ($request->get('delete-avatar') == true) {
+            $logged_user = Auth::user();
+            // Delete previous avatar
+            $previous_file = $logged_user->user_image;
+            if ($previous_file != 'default_avatar.jpg') {
+                unlink('uploads/avatars/' . $previous_file);
+            }
+            //Updates avatar
+            $logged_user->user_image = 'default_avatar.jpg';
+            $logged_user->save();
+        }
     }
 }
