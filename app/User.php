@@ -53,14 +53,14 @@ class User extends Authenticatable
     public function trainer()
     {
         if ($this->trainer == 1) {
-            return $this->hasOne(Trainer::class, 'trainer_id');
+            return $this->hasOne(Trainer::class);
         }
     }
 
     public function athlete()
     {
         if ($this->trainer == 0) {
-            return $this->hasOne(Athlete::class, 'athlete_id');
+            return $this->hasOne(Athlete::class);
         }
     }
 }
