@@ -31,4 +31,9 @@ class TrainingPlan extends Model
     {
         return $this->belongsTo(Athlete::class);
     }
+
+    public function macrocycle()
+    {
+        return $this->hasMany(Macrocycle::class);
+    }
 }
