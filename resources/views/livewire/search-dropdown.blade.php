@@ -46,9 +46,11 @@
                         
                     </div>
                     @if($user->isTrainer==0 && Auth::user()->isTrainer == 1)
-                    <div class="training_button_searchbar">
-                        <button>Entrenando</button>
-                    </div>
+                      @if(currentlyTrainingAthlete($user->id))
+                        <div class="training_button_searchbar">
+                          <button>Entrenando</button>
+                        </div>
+                      @endif
                     @endif
                     
                 </li> 

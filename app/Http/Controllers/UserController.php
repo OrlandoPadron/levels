@@ -85,4 +85,23 @@ class UserController extends Controller
 
         return redirect()->route('profile.show', ["user" => $user]);
     }
+
+
+    public function stopTrainingThisAthlete(Request $request)
+    {
+        // Find athlete and delete 'trainer_id' 
+        $athlete = User::find($request['user_id'])->athlete;
+        $athlete->trainer_id = null;
+        $athlete->save();
+
+        //Remove athlete's id from trainers' 'trained_by_me' field
+        $trainer = Auth::user()->trainer;
+        $array = (array) $trainer->trained_by_me;
+        $delete = array($request['user_id']);
+        $trainer->trained_by_me = array_diff($array, $delete);
+        $trainer->save();
+
+        $user = User::find($request['user_id']);
+        return redirect()->route('profile.show', ["user" => $user]);
+    }
 }

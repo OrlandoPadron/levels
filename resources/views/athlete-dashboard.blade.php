@@ -6,11 +6,21 @@
                 <p id="user_name_dashboard">{{$user->name .' '. $user->surname}}</p>
                 <label id="user_type">{{$user->isTrainer == 0 ? 'Deportista' : 'Entrenador'}}</label>
                 <button class="btn-purple-basic">Ver datos personales</button>
-                <form action="{{route('trainUser')}}" method="POST">
-                    @csrf
-                    <input type="text" name="user_id" value="{{$user->id}}" hidden>
-                    <button type="submit" class="btn-basic train-button">Entrenar</button>
-                </form>
+                @if(currentlyTrainingAthlete($user->id))
+                    <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
+                        @csrf
+                        <input type="text" name="user_id" value="{{$user->id}}" hidden>
+                        <button type="submit" class="btn-basic train-button">Dejar de entrenar</button>
+                    </form>
+                @else
+                    <form action="{{route('trainUser')}}" method="POST">
+                        @csrf
+                        <input type="text" name="user_id" value="{{$user->id}}" hidden>
+                        <button type="submit" class="btn-basic train-button">Entrenar</button>
+                    </form>
+                @endif
+                
+                
             </div>
     
         </div>

@@ -30,6 +30,9 @@ Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_ava
 
 //Train this user
 Route::post('/train', 'UserController@trainThisAthlete')->name('trainUser');
+Route::post('/stopTraining', 'UserController@stopTrainingThisAthlete')->name('stopTrainingThisAthlete');
+
+
 
 
 //TrainingPlan routes
