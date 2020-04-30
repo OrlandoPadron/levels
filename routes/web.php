@@ -25,8 +25,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //User controllers routes 
 Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit.show');
-Route::get('/profile/{user}', 'UserController@showProfile')->name('profile.show');
+Route::get('/profile/{user}/dashboard', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
+
+//Train this user
+Route::post('/train', 'UserController@trainThisAthlete')->name('trainUser');
 
 
 //TrainingPlan routes

@@ -21,11 +21,11 @@ class SearchDropdown extends Component
          */
         if ($name == '!entrenadores') {
             $searchResults = User::query()
-                ->where('trainer', '1')->orderBy('name')->get();
+                ->where('isTrainer', '1')->orderBy('name')->get();
             return view('livewire.search-dropdown', ['searchResults' => $searchResults]);
         } elseif ($name == "!deportistas") {
             $searchResults = User::query()
-                ->where('trainer', '0')->orderBy('name')->get();
+                ->where('isTrainer', '0')->orderBy('name')->get();
             return view('livewire.search-dropdown', ['searchResults' => $searchResults]);
         }
 

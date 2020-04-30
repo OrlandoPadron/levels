@@ -1,7 +1,9 @@
 <?php
 
+use App\Trainer;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder
 {
@@ -13,6 +15,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        factory(User::class, 5)->create();
+        $user = User::create([
+            'name' => 'Orlando',
+            'surname' => 'Padrón',
+            'email' => 'orlando@prueba.com',
+            'password' => Hash::make("12345678"),
+            'isTrainer' => true,
+        ]);
+        Trainer::create([
+            'user_id' => $user->id,
+        ]);
     }
 }

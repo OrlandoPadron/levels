@@ -17,6 +17,7 @@ class CreateTrainersTable extends Migration
             $table->increments('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->text('trained_by_me')->nullable();
             $table->timestamps();
         });
     }

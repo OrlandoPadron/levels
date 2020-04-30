@@ -17,6 +17,7 @@ class CreateAthletesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('trainer_id')->nullable();
             $table->timestamps();
         });
     }

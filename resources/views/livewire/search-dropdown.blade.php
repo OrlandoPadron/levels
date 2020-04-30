@@ -38,14 +38,14 @@
                     >
                         <a href="{{route('profile.show', $user->id)}}">{{$user->name . ' ' .$user->surname}}</a>
                         @if(Auth::user()->id == $user->id)
-                    <span class="user_info_usertype">{{$user->trainer == 1 ? 'Entrenador' : 'Deportista'}} (Tú) </span>
+                    <span class="user_info_usertype">{{$user->isTrainer == 1 ? 'Entrenador' : 'Deportista'}} (Tú) </span>
                         @else
-                            <span class="user_info_usertype">{{$user->trainer == 1 ? 'Entrenador' : 'Deportista'}}</span>
+                            <span class="user_info_usertype">{{$user->isTrainer == 1 ? 'Entrenador' : 'Deportista'}}</span>
 
                         @endif
                         
                     </div>
-                    @if($user->trainer==0 && Auth::user()->trainer == 1)
+                    @if($user->isTrainer==0 && Auth::user()->isTrainer == 1)
                     <div class="training_button_searchbar">
                         <button>Entrenando</button>
                     </div>

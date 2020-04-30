@@ -9,6 +9,6 @@ use Faker\Generator as Faker;
 $factory->define(Athlete::class, function (Faker $faker) {
     return [
         //
-        'user_id' => factory('App\User')->create(['trainer' => 0,])->id,
+        'user_id' => factory('App\User')->create(['isTrainer' => 0,])->id,
     ];
 });

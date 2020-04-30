@@ -6,6 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trainer extends Model
 {
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'trained_by_me' => 'array',
+    ];
+
+
     //
     public function user()
     {

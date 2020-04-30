@@ -1,6 +1,20 @@
 @extends('layouts.base-inside-app')
+@section('head')
+<link href="{{asset('css/profile-dashboard.css')}}" rel="stylesheet" />
+@endsection
 @section('content')
-    <p>Ahora deberías ver un perfil</p>
+
+@if($user->isTrainer == 1)
+    <p>Es un entrenador</p>
+@else
+    @include('athlete-dashboard')
+@endif
+
+
+
+
+
+    {{-- <p>Ahora deberías ver un perfil</p>
     <p>El id es {{$user->id}}</p>
     <p>{{$user->trainer}}</p>
     <p>Estás en el perfil de {{$user->name}}</p>
@@ -43,5 +57,19 @@
             
             @endif
     @endif
+    <h2>Barra de navegación </h2>
+    <ul>
+        <li>
+        <a href="{{route('profile.show', $user->id)}}">Descripción general</a>
+        </li>
+        
+        <li>
+            <a href="">Plan temporada</a>
+        </li>
+        
+        <li>
+            <a href="">Logros</a>
+        </li>
+    </ul> --}}
     
 @endsection

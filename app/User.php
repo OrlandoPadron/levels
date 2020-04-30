@@ -18,7 +18,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name', 'surname', 'email', 'password',
-        'trainer',
+        'isTrainer',
     ];
 
     /**
@@ -45,21 +45,21 @@ class User extends Authenticatable
      * @var array
      */
     protected $attributes = [
-        'trainer' => false,
+        'isTrainer' => false,
         'admin' => false,
     ];
 
 
     public function trainer()
     {
-        if ($this->trainer == 1) {
+        if ($this->isTrainer == 1) {
             return $this->hasOne(Trainer::class);
         }
     }
 
     public function athlete()
     {
-        if ($this->trainer == 0) {
+        if ($this->isTrainer == 0) {
             return $this->hasOne(Athlete::class);
         }
     }

@@ -56,7 +56,7 @@ class RegisterController extends Controller
             'surname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'trainer' => ['boolean'],
+            'isTrainer' => ['boolean'],
         ]);
     }
 
@@ -74,7 +74,7 @@ class RegisterController extends Controller
             'surname' => $data['surname'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'trainer' => isset($data['trainer']) ? true : false,
+            'isTrainer' => isset($data['trainer']) ? true : false,
         ]);
 
         // Trainer Table -> creates new row 

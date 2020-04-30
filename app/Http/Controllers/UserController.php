@@ -15,7 +15,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         return view('show-profile', [
-            'user' => $user,
+            'user' => $user
         ]);
     }
 
@@ -64,5 +64,25 @@ class UserController extends Controller
             $logged_user->user_image = 'default_avatar.jpg';
             $logged_user->save();
         }
+    }
+
+    public function trainThisAthlete(Request $request)
+    {
+        // Find athlete and change 'trainer_id' 
+        $user = User::find($request['user_id']);
+
+        $athlete = $user->athlete;
+        $athlete->trainer_id = Auth::user()->id;
+
+        $athlete->save();
+
+        //Add athlete id to trainers' 'trained_by_me' field
+        $trainer = Auth::user()->trainer;
+        $array = (array) $trainer->trained_by_me;
+        array_push($array, $request['user_id']);
+        $trainer->trained_by_me = $array;
+        $trainer->save();
+
+        return redirect()->route('profile.show', ["user" => $user]);
     }
 }

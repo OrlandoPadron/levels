@@ -6,7 +6,7 @@
         <p>Hola, <span id="user_name">{{Auth::user()->name}} {{Auth::user()->surname}}</span></p>
         </div>
         <div class="user-type">
-          <span class="smaller" id="type_user">{{Auth::user()->trainer == 1 ? 'Perfil entrenador' : 'Perfil deportista'}}</span>
+          <span class="smaller" id="type_user">{{Auth::user()->isTrainer == 1 ? 'Perfil entrenador' : 'Perfil deportista'}}</span>
         </div>
       </div>
       <div class="dropdown-button-userbar" x-data="{open: false}">
