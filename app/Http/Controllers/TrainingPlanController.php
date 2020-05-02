@@ -69,11 +69,11 @@ class TrainingPlanController extends Controller
                         'mesocycle_associated' => $mesocycle->id,
                     ]);
                     // Add sessions to microcycle
-                    for ($l = 1; $l <= $request['num_sessions']; $l++) {
-                        Session::create([
-                            'microcycle_associated' => $microcycle->id,
-                        ]);
-                    }
+                    // for ($l = 1; $l <= $request['num_sessions']; $l++) {
+                    //     Session::create([
+                    //         'microcycle_associated' => $microcycle->id,
+                    //     ]);
+                    // }
                 }
             }
         }

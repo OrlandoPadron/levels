@@ -20,6 +20,6 @@ class Athlete extends Model
 
     public function trainingPlans()
     {
-        return $this->hasMany(TrainingPlan::class);
+        return $this->hasMany(TrainingPlan::class, 'athlete_associated');
     }
 }

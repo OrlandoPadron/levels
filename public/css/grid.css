@@ -1,43 +1,43 @@
 /*General layout*/
 body {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  grid-template-rows: 150px 1fr;
-  grid-template-areas:
-    "navbar userbar"
-    "navbar page-content";
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    grid-template-rows: 150px 1fr;
+    grid-template-areas:
+        "navbar userbar"
+        "navbar page-content";
 }
 
 .page-content {
-  grid-area: page-content;
+    grid-area: page-content;
 }
 
 .navbar {
-  align-content: center;
-  grid-area: navbar;
+    align-content: center;
+    grid-area: navbar;
 }
 
 .userbar {
-  display: grid;
-  grid-area: userbar;
-  grid-template-columns: 60% 40%;
-  grid-template-rows: 1fr;
-  grid-template-areas: "searchbar userbuttons";
-  align-content: center;
-  justify-items: center;
-  justify-content: center;
+    display: grid;
+    grid-area: userbar;
+    grid-template-columns: 60% 40%;
+    grid-template-rows: 1fr;
+    grid-template-areas: "searchbar userbuttons";
+    align-content: center;
+    justify-items: center;
+    justify-content: center;
 }
 
 .search-container {
-  grid-area: searchbar;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    grid-area: searchbar;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .userbuttons {
-  grid-area: userbuttons;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    grid-area: userbuttons;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

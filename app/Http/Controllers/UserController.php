@@ -14,9 +14,17 @@ class UserController extends Controller
     public function showProfile($id)
     {
         $user = User::find($id);
-        return view('show-profile', [
-            'user' => $user
-        ]);
+        if ($user->isTrainer == 1) {
+            return view('show-profile', [
+                'user' => $user
+            ]);
+        } else {
+            $trainingPlans = $user->athlete->trainingPlans;
+            return view('show-profile', [
+                'user' => $user,
+                'trainingPlans' => $trainingPlans
+            ]);
+        }
     }
 
     public function showEditProfile()
@@ -72,14 +80,14 @@ class UserController extends Controller
         $user = User::find($request['user_id']);
 
         $athlete = $user->athlete;
-        $athlete->trainer_id = Auth::user()->id;
+        $athlete->trainer_id = Auth::user()->trainer->id;
 
         $athlete->save();
 
         //Add athlete id to trainers' 'trained_by_me' field
         $trainer = Auth::user()->trainer;
         $array = (array) $trainer->trained_by_me;
-        array_push($array, $request['user_id']);
+        array_push($array, $athlete->id);
         $trainer->trained_by_me = $array;
         $trainer->save();
 
@@ -97,7 +105,7 @@ class UserController extends Controller
         //Remove athlete's id from trainers' 'trained_by_me' field
         $trainer = Auth::user()->trainer;
         $array = (array) $trainer->trained_by_me;
-        $delete = array($request['user_id']);
+        $delete = array($athlete->id);
         $trainer->trained_by_me = array_diff($array, $delete);
         $trainer->save();
 

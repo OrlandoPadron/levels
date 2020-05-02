@@ -3,7 +3,7 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 300px 20% 30%;
+    grid-template-rows: 300px 100px 1fr;
     grid-template-areas:
         "userinfo"
         "navbar-dashboard"
@@ -62,6 +62,9 @@
 }
 
 /* NAVBAR DASHBOARD */
+.navbar-dashboard {
+    margin-bottom: 0px;
+}
 .navbar-dashboard-menu ul {
     list-style-type: none;
     align-content: center;
@@ -108,4 +111,8 @@ li.active-dashboard a:hover {
 .navbar-dashboard-menu a {
     height: 100%;
     line-height: 50%;
+}
+
+.content-dashboard {
+    padding-top: 0px;
 }

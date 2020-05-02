@@ -17,12 +17,12 @@ class Macrocycle extends Model
     //Each macrocycle belongs to one Training plan 
     public function tplan()
     {
-        return $this->belongsTo(TrainingPlan::class);
+        return $this->belongsTo(TrainingPlan::class, 'tplan_associated');
     }
 
     //Each macrocycle has one or more mesocycles  
     public function mesocycles()
     {
-        return $this->hasMany(Mesocycle::class);
+        return $this->hasMany(Mesocycle::class, 'macrocycle_associated');
     }
 }

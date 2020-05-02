@@ -17,6 +17,6 @@ class Session extends Model
     //Each session belongs to one microcycle
     public function microcycle()
     {
-        return $this->belongsTo(Microcycle::class);
+        return $this->belongsTo(Microcycle::class, 'microcycle_associated');
     }
 }

@@ -29,11 +29,11 @@ class TrainingPlan extends Model
 
     public function athleteAssociated()
     {
-        return $this->belongsTo(Athlete::class);
+        return $this->belongsTo(Athlete::class, 'athlete_associated');
     }
 
-    public function macrocycle()
+    public function macrocycles()
     {
-        return $this->hasMany(Macrocycle::class);
+        return $this->hasMany(Macrocycle::class, 'tplan_associated');
     }
 }

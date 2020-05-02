@@ -17,12 +17,12 @@ class Mesocycle extends Model
     //Each mesocycle belongs to one macrocycle 
     public function macrocycle()
     {
-        return $this->belongsTo(Macrocycle::class);
+        return $this->belongsTo(Macrocycle::class, 'macrocycle_associated');
     }
 
     //Each mesocycle has one or more microcycle  
     public function microcycles()
     {
-        return $this->hasMany(Microcycle::class);
+        return $this->hasMany(Microcycle::class, 'mesocycle_associated');
     }
 }

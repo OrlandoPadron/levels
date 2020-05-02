@@ -3,145 +3,145 @@
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  width: 99.99%;
-  height: 100%;
-  background-color: #f2f1f2;
-  font-family: "Nunito", sans-serif;
+    margin: 0;
+    padding: 0;
+    width: 99.99%;
+    height: 100%;
+    background-color: #f2f1f2;
+    font-family: "Nunito", sans-serif;
 }
 
 .app-name-navbar {
-  margin-top: 0;
-  padding-top: 13%;
-  text-align: center;
-  font-family: "Roboto Slab", serif;
-  font-weight: 400;
-  font-size: 46px;
+    margin-top: 0;
+    padding-top: 13%;
+    text-align: center;
+    font-family: "Roboto Slab", serif;
+    font-weight: 400;
+    font-size: 46px;
 }
 
 .navbar {
-  background-color: #000f2d;
-  width: 240px;
-  height: 100%;
-  color: white;
-  border-right: 1px solid black;
+    background-color: #000f2d;
+    width: 240px;
+    height: 100%;
+    color: white;
+    border-right: 1px solid black;
 }
 
 ul.items {
-  margin-top: 40%;
+    margin-top: 40%;
 }
 
 a:active,
 a:link,
 a:visited,
 a:hover {
-  color: white;
-  text-decoration: none;
+    color: white;
+    text-decoration: none;
 }
 
 .navbar li {
-  width: 100%;
-  list-style: none;
-  margin-left: 40px;
-  margin-right: 20px;
-  font-size: 18px;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
+    width: 100%;
+    list-style: none;
+    margin-left: 40px;
+    margin-right: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
 }
 
 .item-list {
-  background-color: #333d51;
+    background-color: #333d51;
 
-  display: flex;
-  margin-top: 20px;
-  height: 90px;
-  padding-right: 10px;
-  margin-left: -40px;
+    display: flex;
+    margin-top: 20px;
+    height: 90px;
+    padding-right: 10px;
+    margin-left: -40px;
 }
 
 .item-list:not(.active):hover {
-  background-color: #282f3f;
-  cursor: pointer;
+    background-color: #282f3f;
+    cursor: pointer;
 }
 
 .active {
-  background-color: teal;
+    background-color: teal;
 }
 
 .text-list {
-  overflow-wrap: break-word;
-  width: 100px;
-  float: left;
+    overflow-wrap: break-word;
+    width: 100px;
+    float: left;
 }
 
 .icon {
-  float: left;
-  margin-right: 15px;
-  margin-left: 7px;
+    float: left;
+    margin-right: 15px;
+    margin-left: 7px;
 }
 
 .add-button {
-  margin-left: -10px;
-  font-size: 30px;
-  color: white;
+    margin-left: -10px;
+    font-size: 30px;
+    color: white;
 }
 
 .add-button a:link,
 .add-button a:visited,
 .add-button a:active {
-  text-decoration: none;
-  color: #c0c0c0;
+    text-decoration: none;
+    color: #c0c0c0;
 }
 
 .add-button a:hover {
-  color: white;
+    color: white;
 }
 
 .group {
-  background-color: white;
-  width: 100%;
-  align-content: center;
-  text-align: center;
-  margin-top: -15px;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  color: black;
+    background-color: white;
+    width: 100%;
+    align-content: center;
+    text-align: center;
+    margin-top: -15px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    color: black;
 }
 
 .group ul {
-  list-style: circle !important;
+    list-style: circle !important;
 }
 
 .group li {
-  display: list-item;
-  width: 70%;
-  font-size: 15px;
-  font-weight: 300;
-  margin-left: 10px;
-  list-style: circle;
-  margin-top: 30px;
-  text-align: left;
-  overflow-wrap: break-word;
-  border-bottom: 1px solid #ddd;
+    display: list-item;
+    width: 70%;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 10px;
+    list-style: circle;
+    margin-top: 30px;
+    text-align: left;
+    overflow-wrap: break-word;
+    border-bottom: 1px solid #ddd;
 }
 
 .group li:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .group a:active,
 .group a:link,
 .group a:visited {
-  color: black;
-  margin-left: 0px;
+    color: black;
+    margin-left: 0px;
 }
 
 .group a:hover {
-  color: #9507e6;
+    color: #9507e6;
 }
 
 .hidden {
-  display: none;
+    display: none;
 }

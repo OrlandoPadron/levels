@@ -9,7 +9,7 @@
                 @click="openShowProfileData=!openShowProfileData" 
                 @keydown.escape.window="openShowProfileData=false"
                 >Información adicional</button>
-                @if(currentlyTrainingAthlete($user->id))
+                @if(currentlyTrainingAthlete($user->athlete->id))
                     <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
                         @csrf
                         <input type="text" name="user_id" value="{{$user->id}}" hidden>
@@ -90,40 +90,55 @@
     </div>
     
     <div class="content-dashboard">
-        <div class="container-dashboard" x-data="{open1: false}">
+        <div class="container-dashboard" x-data="{openNewPlan: false}">
             <button class="btn-purple-basic"
-                @click="open1=!open1" 
-                @keydown.escape.window="open1=false"
+                @click="openNewPlan=!openNewPlan" 
+                @keydown.escape.window="openNewPlan=false"
                 
-            >Abrir modal</button>
+            >Nuevo plan</button>
             {{-- @if (Request::get('a')==1)
                 <p>Detalles generales</p>  
             @else
                 <p>Planes entrenamiento</p>  
             @endif --}}
             
-            <!-- Modals -->
-            <div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="open1">
+            @include('modals.newPlanModal')
+            @if($trainingPlans->isNotEmpty() && currentlyTrainingAthlete($user->athlete->id))
+                @foreach ($trainingPlans as $key => $plan)
+                    <h1 class="underlined">{{$key+1 . ') \''}}{{$plan->title .'\''}}</h1>
+                    <h3>Asociado a: {{$user->name . ' ' . $user->surname}}</h3>
+                    <h3>Entrenado por: {{getTrainersName($user->id)}}</h3>
+                    <h3>Descripción:</h3>
+                    <p>{{$plan->description}}</p>
+                    
+                    <p>Formado por {{count($plan->macrocycles)}} macrociclos.</p>
+                    <ul>
+                        @foreach ($plan->macrocycles as $keyMacro => $macrocycle)
+                            <li>{{$macrocycle->title}} -> el cual consta los siguientes mesociclos:
+                                <ul>
+                                    @foreach ($macrocycle->mesocycles as $keyMes=>$mesocycle)
+                                        <li>Mesociclo #{{$keyMes + 1}} -> formado por los siguientes microciclos (semanas): 
+                                            <ul>
+                                                @foreach($mesocycle->microcycles as $microcycle)
+                                                    <li>
+                                                        {{$microcycle->title}} -> Número de sesiones = {{count($microcycle->sessions)}}
+                                                    </li>
+                                                @endforeach
 
-                <!-- Modal content -->
-                <div class="modal-content" @click.away="open1=false">
-                    <div class="modal-header">
-                        <span class="close" @click="open=!open">&times;</span>
-                        <h2>Modal Header</h2>
-                    </div>
-                    <div class="modal-body">
-                        <p>Some text in the Modal Body</p>
-                        <p>Some other text...</p>
-                        
+                                            </ul>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            
+                            </li>
+                        @endforeach
 
-                    </div>
-                    <div class="modal-footer">
-                        <h3>Modal Footer</h3>
-                    </div>
-                </div>
-            
-            </div>
+                    </ul>
 
+
+                @endforeach
+
+            @endif
         </div>
     </div>
 
