@@ -1,21 +1,26 @@
 @extends('layouts.base-inside-app')
 @section('head')
 <link href="{{asset('css/edit_profile.css')}}" rel="stylesheet" />
+<script>
+  function submit(){
+    document.getElementById("myForm").submit();
+  }
+</script>
 @endsection
 @section('content')
 <div class="content-edit">
     <div class="image-pack">
       <div class="image-container">
         <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile_picture" />
-        <form action="{{route('profile.update_avatar')}}" enctype="multipart/form-data" method="POST">
+        <form action="{{route('profile.update_avatar')}}" enctype="multipart/form-data" method="POST" id="myForm">
           @csrf
           <label id="swap-image" for="file-upload">Cambiar imagen</label>
-          <input id="file-upload" name="avatar" type="file" />
+          <input onchange="submit()" id="file-upload" name="avatar" type="file" accept="image/*"/>
           <label for="delete-file">Eliminar imagen</label>
-          <input type="checkbox" name="delete-avatar" id="delete-file" hidden>
-          <button id="save-changes" type="submit">
+          <input onchange="submit()" type="checkbox" name="delete-avatar" id="delete-file" hidden>
+          {{-- <button id="save-changes" type="submit">
             <i class="fas fa-check-circle"></i>Guardar
-          </button>
+          </button> --}}
         </form>
       </div>
     </div>

@@ -37,3 +37,4 @@ Route::post('/stopTraining', 'UserController@stopTrainingThisAthlete')->name('st
 
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');
+Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');

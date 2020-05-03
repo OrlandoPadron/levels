@@ -21,6 +21,10 @@
     width: 100%;
 }
 
+.primary-blue-color {
+    color: #000f2d;
+}
+
 .error-message {
     display: flex;
     margin-top: -10px;
@@ -43,6 +47,11 @@
     font-weight: 400;
 }
 
+.shadow-container {
+    -webkit-box-shadow: 4px 12px 9px -1px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 12px 9px -1px rgba(0, 0, 0, 0.15);
+}
+
 /* Used on main info buttons */
 .btn-purple-basic {
     width: fit-content;
@@ -54,6 +63,42 @@
         153deg,
         rgba(149, 7, 230, 1) 0%,
         rgba(93, 7, 230, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+}
+
+.btn-gray-basic {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(128, 128, 128);
+    background: linear-gradient(
+        160deg,
+        rgba(128, 128, 128, 1) 33%,
+        rgba(110, 85, 143, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+}
+
+.btn-add-basic {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(58, 175, 57);
+    background: linear-gradient(
+        153deg,
+        rgba(58, 175, 57, 1) 0%,
+        rgba(57, 175, 166, 1) 100%
     );
     /* Fin gradiente boton */
     border-radius: 10px;

@@ -125,8 +125,10 @@ class TrainingPlanController extends Controller
      * @param  \App\TrainingPlan  $trainingPlan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TrainingPlan $trainingPlan)
+    public function destroy(Request $request)
     {
-        //
+        $plan = TrainingPlan::findOrFail($request['id_plan']);
+        $plan->delete();
+        return redirect()->route('profile.show', ['user' => $request['user_id']]);
     }
 }
