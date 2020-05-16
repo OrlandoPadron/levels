@@ -23,6 +23,11 @@ class Trainer extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
+    }
+
     // public function getUserId()
     // {
     //     return $this->belongsTo(User::class)->get('id');
