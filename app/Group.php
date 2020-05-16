@@ -12,7 +12,7 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'tittle',
+        'title',
     ];
 
     /**
