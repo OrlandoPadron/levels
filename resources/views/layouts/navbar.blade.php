@@ -1,4 +1,4 @@
-<div class="navbar">
+<div class="navbar" x-data="{openNewGroupForm: false}">
     <h1 class="app-name-navbar">Levels</h1>
     <ul class="items">
       <div class="item-list active">
@@ -20,23 +20,26 @@
             <a href=""><span>Grupos</span></a>
           </div>
           <div class="add-button">
-            <a href=""><i class="fas fa-plus-circle"></i></a>
+            <a href=""
+              x-on:click.prevent
+              @click="openNewGroupForm=!openNewGroupForm" 
+              @keydown.escape.window="openNewGroupForm=false"
+            ><i class="fas fa-plus-circle"></i></a>
           </div>
         </li>
       </div>
+      @include('modals.newGroupModal')
     </ul>
     <!--hidden-->
-    <div class="group">
-      <ul class="group-list">
-        <li>
-          <a href="">Transgrancanaria</a>
-        </li>
-        <li>
-          <a href="">Avanzados</a>
-        </li>
-        <li>
-          <a href="">Principiantes</a>
-        </li>
-      </ul>
-    </div>
+    @if(Auth::user()->isTrainer == 1)
+      <div class="group">
+        <ul class="group-list">
+          @foreach(Auth::user()->trainer->groups as $group)
+            <li>
+              <a href="">{{$group->title}}</a>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
   </div>

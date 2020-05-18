@@ -6,7 +6,9 @@ use App\User;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -38,7 +40,7 @@ class UserController extends Controller
     {
         $this->deleteAvatarAndSetDefaultAvatar($request);
 
-        //Handle user upload of avatar
+        //Handle user uploaded avatar
         if ($request->hasFile('avatar')) {
             $avatar = $request->file('avatar');
             $filename = time() . '.' . $avatar->getClientOriginalExtension();
@@ -52,7 +54,7 @@ class UserController extends Controller
                 unlink('uploads/avatars/' . $previous_file);
             }
 
-            //Updates avatar
+            //Update avatar
             $logged_user->user_image = $filename;
             $logged_user->save();
         }
@@ -111,5 +113,27 @@ class UserController extends Controller
 
         $user = User::find($request['user_id']);
         return redirect()->route('profile.show', ["user" => $user]);
+    }
+
+
+
+    public function uploadFile(Request $request)
+    {
+        //Handle user uploaded avatar
+        if ($request->hasFile('fileuploaded')) {
+            $files = $request->file('fileuploaded');
+
+            // Get user's uploads folder
+            $path = 'uploads/files/' . $request['user_id'];
+
+            // !TODO check if a file with same name exists. 
+
+            foreach ($files as $file) {
+                $file->move($path, $file->getClientOriginalName());
+            }
+
+            $allFiles = File::allfiles(public_path($path));
+            return view('home', ['allFiles' => $allFiles]);
+        }
     }
 }

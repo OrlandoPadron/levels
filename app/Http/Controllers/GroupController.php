@@ -35,7 +35,16 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Let's create our new group. 
+        $group = Group::create([
+            'title' => isset($request['title']) ? $request['title'] : null,
+            'description' => isset($request['description']) ? $request['description'] : null,
+            'created_by' => $request['created_by'],
+            'status' => 'active',
+
+        ]);
+        $group->save();
+        return redirect()->route('home');
     }
 
     /**

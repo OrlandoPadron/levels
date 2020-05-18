@@ -12,7 +12,7 @@ class Group extends Model
      * @var array
      */
     protected $fillable = [
-        'title',
+        'title', 'description', 'created_by',
     ];
 
     /**
@@ -28,6 +28,6 @@ class Group extends Model
 
     public function trainer()
     {
-        return $this->hasOne(Trainer::class);
+        return $this->belongsTo(Trainer::class);
     }
 }

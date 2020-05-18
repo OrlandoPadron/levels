@@ -23,10 +23,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-//User controllers routes 
+/**
+ * USER CONTROLLER ROUTES
+ */
+// Profile
 Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit.show');
 Route::get('/profile/{user}/dashboard', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
+
+//Files uploads and downloads
+Route::post('/upload', 'UserController@uploadFile')->name('profile.uploadFile');
+
 
 //Train this user
 Route::post('/train', 'UserController@trainThisAthlete')->name('trainUser');
@@ -38,3 +45,9 @@ Route::post('/stopTraining', 'UserController@stopTrainingThisAthlete')->name('st
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');
 Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');
+
+
+//Groups routes 
+//Creation
+Route::post('/newGroup', 'GroupController@store')->name('group.store');
+Route::get('/group', 'GroupController@index')->name('group.show');
