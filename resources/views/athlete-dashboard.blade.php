@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'General'}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'Cuotas'}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -34,6 +34,7 @@
                 <ul>
                     <li x-on:click.prevent @click="sectionTab = 'General'" :class="{'active-dashboard': sectionTab === 'General'}"><a href="#">Detalles generales</a></li>
                     <li x-on:click.prevent @click="sectionTab = 'Plan'" :class="{'active-dashboard': sectionTab === 'Plan'}"><a href="#">Plan entrenamiento</a></li>
+                    <li x-on:click.prevent @click="sectionTab = 'Cuotas'" :class="{'active-dashboard': sectionTab === 'Cuotas'}"><a href="#">Cuotas</a></li>
                 </ul>
             </div>
         </div>
@@ -47,6 +48,9 @@
             </div>
             <div x-show="sectionTab === 'Plan'">
                 @include('sections_dashboard.trainingPlans')
+            </div>
+            <div x-show="sectionTab === 'Cuotas'">
+                @include('sections_dashboard.payment')
             </div>
         </div>
     </div>

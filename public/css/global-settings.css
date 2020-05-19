@@ -25,6 +25,10 @@
     color: #000f2d;
 }
 
+.purple {
+    color: #6013bb;
+}
+
 .error-message {
     display: flex;
     margin-top: -10px;
@@ -193,3 +197,11 @@ button:hover {
 }
 
 /* End modal */
+
+.month_paid {
+    color: #00d89d;
+}
+
+.month_unpaid {
+    color: #d80000;
+}

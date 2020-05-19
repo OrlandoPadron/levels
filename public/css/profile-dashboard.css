@@ -259,3 +259,117 @@ li.active-dashboard a:hover {
 button:hover {
     filter: brightness(1.2);
 }
+
+/*Payment tab*/
+.fee-training-details {
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    display: grid;
+    grid-template-columns: 1fr 45% 20%;
+    grid-template-rows: auto;
+    grid-template-areas: "status details buttons";
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.fee-training-details-status {
+    grid-area: status;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-top: 10px;
+    margin-right: 0px;
+    padding-top: 10px;
+    padding-left: 50px;
+    height: auto;
+    color: #6013bb;
+    font-size: 18px;
+    align-items: left;
+    justify-self: left;
+    /* background-color: burlywood; */
+}
+
+#fee-payment-info {
+    margin-top: -10px;
+    font-size: 65px;
+    font-weight: 100;
+    margin-bottom: 30px;
+}
+
+.fee-training-details-details {
+    grid-area: details;
+    display: flex;
+    color: #6013bb;
+}
+
+.fee-training-details-details p {
+    margin-left: 10px;
+}
+
+.suscription-type {
+    padding-top: 20px;
+}
+
+.next-fee {
+    margin-top: 30px;
+    padding-bottom: 10px;
+}
+#next-fee-date,
+#fee-details {
+    margin-top: -10px;
+}
+
+#fee-monthly-price {
+    font-weight: 100;
+}
+
+.fee-training-details-details > .separation-plan {
+    height: 140px;
+    margin-bottom: 10px;
+}
+
+.fee-training-details-buttons {
+    grid-area: buttons;
+    padding-right: 30px;
+    justify-self: center;
+    align-self: center;
+}
+
+.fee-training-details-buttons i {
+    margin-right: 5px;
+    font-size: 15px;
+}
+
+/*Invoice History*/
+.fee-training-history {
+    margin-top: 60px;
+}
+
+.fee-table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+    margin-bottom: 100px;
+}
+
+.fee-table th {
+    border-bottom: 1px solid black;
+}
+
+.fee-table th,
+td {
+    padding: 10px;
+    padding-left: 0;
+}
+
+.fee-table td {
+    border-bottom: 1px solid black;
+}
+
+.second_title {
+    font-size: 18px;
+}
