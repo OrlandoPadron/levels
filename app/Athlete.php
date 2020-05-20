@@ -13,13 +13,19 @@ class Athlete extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function getUserId()
-    // {
-    //     return $this->belongsTo(User::class)->get('id');
-    // }
-
     public function trainingPlans()
     {
         return $this->hasMany(TrainingPlan::class, 'athlete_associated');
+    }
+
+
+    public function subscription()
+    {
+        return $this->hasOne(Subscription::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class, 'athlete_id');
     }
 }

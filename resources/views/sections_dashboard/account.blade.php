@@ -18,6 +18,6 @@
 <form action="{{route('profile.activate')}}" method="POST">
     @csrf
     <input type="text" value="{{$user->id}}" name="user_id" hidden>
-    <button class="btn-activate-account"><i class="fas fa-user-check"></i> Activar cuenta</button>
+    <button class="btn-add-basic"><i class="fas fa-user-check"></i> Activar cuenta</button>
 </form>
 @endif
