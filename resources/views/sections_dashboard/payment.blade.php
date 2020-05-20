@@ -1,9 +1,13 @@
 <h1 class="primary-blue-color">Cuotas</h1>
+@if ($user->account_activated == 0)
+    @include('page_messages.account_deactivated_message')
+    
+@endif
 <div class="fee-training">
     <div class="fee-training-title">
         <p class="bold second_title">Detalles de la cuota</p>
     </div>
-    <div class="fee-training-details shadow-container">
+    <div class="fee-training-details shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
         <div class="fee-training-details-status">
            <p class="bold container-title">Estado de Abril </p>
            <span class="light container-data">(01/04/20 - 01/05/2020)</span>
@@ -26,12 +30,6 @@
         </div>
         <div class="fee-training-details-buttons">
             <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Cancelar pago</button>
-            <form action="" method="POST">
-                @csrf
-                <input type="text" value="" name="id_plan" hidden>
-                <input type="text" value="" name="user_id" hidden>
-                <button class="btn-gray-basic"><i class="fas fa-user-slash"></i> Desactivar cuenta</button>
-            </form>
         </div>
     </div>
     <div class="fee-training-history">

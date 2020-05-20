@@ -6,14 +6,17 @@
                 ><i class="fas fa-plus"></i>Nuevo plan
     </button>
     <h1 class="primary-blue-color">Planes de entrenamiento</h1>
-
+    @if ($user->account_activated == 0)
+    @include('page_messages.account_deactivated_message')
+    
+    @endif
 </div>
 
 @include('modals.newPlanModal')
 @if($trainingPlans->isNotEmpty() && currentlyTrainingAthlete($user->athlete->id))
     <!-- Box training details -->
     @foreach ($trainingPlans as $key => $plan)
-        <div class="trainingPlan-container shadow-container ">
+        <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}} ">
             <div class="trainingPlan-status">
                 <div class="info-trainingPlan-status">
                     <p class="title-plan bold">'{{$plan->title}}'</p>

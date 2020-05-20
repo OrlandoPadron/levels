@@ -111,6 +111,24 @@
     color: white;
 }
 
+.btn-activate-account {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    /* Gradiente botón  */
+    background: rgb(131, 58, 180);
+    background: linear-gradient(
+        132deg,
+        rgba(131, 58, 180, 1) 36%,
+        rgba(180, 58, 58, 1) 100%
+    );
+    /* Fin gradiente boton */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+    color: white;
+}
+
 .container-dashboard {
     width: 80%;
     position: relative;
@@ -212,4 +230,38 @@ button:hover {
 
 .container-data {
     font-size: 18px;
+}
+
+/*MESSAGES*/
+/*INFO MESSAGES */
+.info-account {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 25px;
+    padding: 10px;
+    padding-left: 40px;
+    background-color: #6013bb;
+    color: white;
+    border-radius: 7px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.info-message p:first-child {
+    margin-bottom: -10px;
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.info-message p:not(:first-child) {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: 300;
+}
+
+.info-account i {
+    margin-right: 50px;
+    font-size: 100px;
 }

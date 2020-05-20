@@ -251,7 +251,8 @@ li.active-dashboard a:hover {
     justify-content: center;
 }
 
-.btn-gray-basic {
+.btn-gray-basic,
+.btn-activate-account {
     width: 210px;
     height: 40px;
 }
@@ -386,4 +387,9 @@ td {
 
 .second_title {
     font-size: 24px;
+}
+
+.account_deactivated {
+    opacity: 0.9;
+    filter: grayscale(100%);
 }

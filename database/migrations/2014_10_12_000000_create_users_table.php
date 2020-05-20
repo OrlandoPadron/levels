@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->boolean('isTrainer');
             $table->boolean('admin');
+            $table->boolean('account_activated')->default('1');
             $table->string('user_image')->default('default_avatar.jpg');
             $table->timestamps();
         });

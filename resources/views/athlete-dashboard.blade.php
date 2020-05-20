@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'General'}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'Cuotas'}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -36,6 +36,7 @@
                     <li x-on:click.prevent @click="sectionTab = 'Plan'" :class="{'active-dashboard': sectionTab === 'Plan'}"><a href="#">Plan entrenamiento</a></li>
                     <li x-on:click.prevent @click="sectionTab = 'Archivos'" :class="{'active-dashboard': sectionTab === 'Archivos'}"><a href="#">Archivos</a></li>
                     <li x-on:click.prevent @click="sectionTab = 'Cuotas'" :class="{'active-dashboard': sectionTab === 'Cuotas'}"><a href="#">Cuotas</a></li>
+                    <li x-on:click.prevent @click="sectionTab = 'Cuenta'" :class="{'active-dashboard': sectionTab === 'Cuenta'}"><a href="#">Cuenta</a></li>
                 </ul>
             </div>
         </div>
@@ -45,7 +46,7 @@
     <div class="content-dashboard">
         <div class="container-dashboard">
             <div x-show="sectionTab === 'General'">
-                <p>Detalles generales</p>
+                @include('sections_dashboard.general')
             </div>
             <div x-show="sectionTab === 'Plan'">
                 @include('sections_dashboard.trainingPlans')
@@ -55,6 +56,9 @@
             </div>
             <div x-show="sectionTab === 'Cuotas'">
                 @include('sections_dashboard.payment')
+            </div>
+            <div x-show="sectionTab === 'Cuenta'">
+                @include('sections_dashboard.account')
             </div>
         </div>
     </div>

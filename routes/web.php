@@ -40,6 +40,9 @@ Route::post('/train', 'UserController@trainThisAthlete')->name('trainUser');
 Route::post('/stopTraining', 'UserController@stopTrainingThisAthlete')->name('stopTrainingThisAthlete');
 
 
+//Deactivate account
+Route::post('/activate', 'UserController@activateAccount')->name('profile.activate');
+Route::post('/deactivate', 'UserController@deactivateAccount')->name('profile.deactivate');
 
 
 //TrainingPlan routes
@@ -47,7 +50,9 @@ Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.sto
 Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');
 
 
-//Groups routes 
+/**
+ * GROUP ROUTES
+ */
 //Creation
 Route::post('/newGroup', 'GroupController@store')->name('group.store');
 Route::get('/group', 'GroupController@index')->name('group.show');

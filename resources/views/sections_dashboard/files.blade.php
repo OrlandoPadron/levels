@@ -1,4 +1,8 @@
 <h2>Subida/Descarga de ficheros</h2>
+@if ($user->account_activated == 0)
+    @include('page_messages.account_deactivated_message')
+    
+@endif
 <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
     @csrf
     <label for="file-upload">Subir fichero</label>

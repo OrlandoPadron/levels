@@ -136,4 +136,35 @@ class UserController extends Controller
             return view('home', ['allFiles' => $allFiles]);
         }
     }
+
+
+    /**
+     * Activate accounts. Activates a deactivated account. 
+     */
+
+    public function activateAccount(Request $request)
+    {
+        if ($request['user_id'] != null) {
+            $user = User::find($request['user_id']);
+            $user->account_activated = 1;
+            $user->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
+    }
+
+
+    /**
+     * Deactivates accounts. Prevents the page from generating 
+     * monthly invoices for a given account. 
+     * 
+     */
+    public function deactivateAccount(Request $request)
+    {
+        if ($request['user_id'] != null) {
+            $user = User::find($request['user_id']);
+            $user->account_activated = 0;
+            $user->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
+    }
 }
