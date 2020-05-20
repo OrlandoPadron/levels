@@ -7,7 +7,7 @@
             <i class="fas fa-dumbbell"></i>
           </div>
           <div class="text-list">
-            <a href=""><span id="trainer_panel">Panel de entrenador</span></a>
+            <a href="{{route('home')}}"><span id="trainer_panel">Panel de entrenador</span></a>
           </div>
         </li>
       </div>

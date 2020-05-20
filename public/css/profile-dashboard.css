@@ -287,16 +287,24 @@ button:hover {
     padding-left: 50px;
     height: auto;
     color: #6013bb;
-    font-size: 18px;
+    font-size: 24px;
     align-items: left;
     justify-self: left;
     /* background-color: burlywood; */
 }
 
+.fee-training-details-status > .container-title {
+    margin-top: 5px;
+}
+
+.fee-training-details-status > .container-data {
+    margin-top: -25px;
+    margin-bottom: 20px;
+}
 #fee-payment-info {
-    margin-top: -10px;
-    font-size: 65px;
-    font-weight: 100;
+    margin-top: -20px;
+    font-size: 55px;
+    font-weight: 300;
     margin-bottom: 30px;
 }
 
@@ -311,20 +319,24 @@ button:hover {
 }
 
 .suscription-type {
-    padding-top: 20px;
+    padding-top: 25px;
+    font-size: 24px;
 }
 
 .next-fee {
-    margin-top: 30px;
+    margin-top: 20px;
     padding-bottom: 10px;
+    font-size: 24px;
 }
 #next-fee-date,
 #fee-details {
-    margin-top: -10px;
+    margin-top: -25px;
+    font-size: 18px;
 }
 
 #fee-monthly-price {
     font-weight: 100;
+    font-size: 18px;
 }
 
 .fee-training-details-details > .separation-plan {
@@ -350,7 +362,9 @@ button:hover {
 }
 
 .fee-table {
-    width: 100%;
+    width: 99%;
+    margin-left: auto;
+    margin-right: auto;
     text-align: left;
     border-collapse: collapse;
     margin-bottom: 100px;
@@ -371,5 +385,5 @@ td {
 }
 
 .second_title {
-    font-size: 18px;
+    font-size: 24px;
 }
