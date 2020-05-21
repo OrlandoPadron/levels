@@ -17,10 +17,11 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('athlete_id');
             $table->foreign('athlete_id')->references('id')->on('athletes')->onDelete('cascade');
-            $table->date('date');
+            $table->string('date');
             $table->string('subscription_title');
             $table->string('active_month');
             $table->double('price');
+            $table->boolean('isPaid');
             $table->timestamps();
         });
     }

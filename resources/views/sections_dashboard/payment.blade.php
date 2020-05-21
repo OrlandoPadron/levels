@@ -5,11 +5,11 @@
 @endif
 <div class="fee-training">
     <div class="fee-training-title">
-        <p class="bold second_title">Detalles de la cuota</p>
+        <p class="bold second_title">Detalles mensualidad actual</p>
     </div>
     <div class="fee-training-details shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
         <div class="fee-training-details-status">
-           <p class="bold container-title">Estado de Abril </p>
+           <p class="bold container-title">Estado de {{ucfirst(strval(Date::now()->format('F')))}} </p>
            <span class="light container-data">({{date('01/m/Y')}} - {{date('t/m/Y')}})</span>
            <p id="fee-payment-info" class="{{$user->athlete->monthPaid == 1 ? 'month_paid' : 'month_unpaid'}}">{{$user->athlete->monthPaid == 1 ? 'PAGADO' : 'PENDIENTE'}}</p>
         </div>
@@ -22,7 +22,8 @@
                 </div>
                 <div class="next-fee">
                     <p class="bold">Próximo pago</p>
-                    <p id="next-fee-date">{{date('1 \d\e %B \d\e Y', strtotime('+ 1 month'))}}</p>
+                    {{-- date('1 \d\e F \d\e Y', strtotime('+ 1 month')) --}}
+                    <p id="next-fee-date">{{Date::parse('first day next month')->format('1 \d\e F \d\e Y')}}</p>
                 </div>
 
             </div>
@@ -45,26 +46,35 @@
         </div>
     </div>
     <div class="fee-training-history">
-        <p class="bold second_title">Historial de facturación <span class="light">(último año)</span></p>
+        <p class="bold second_title">Historial de facturación <span class="light">(meses anteriores)</span></p>
         <table class="fee-table">
             <tr>
-                <th>Fecha</th>
+                <th>Fecha de la aceptación</th>
                 <th>Tipo de entrenamiento</th>
                 <th>Período del servicio</th>
                 <th>Total</th>
+                <th>Estado</th>
+                <th>Gestionar</th>
             </tr>
-            <tr>
-                <td>01/03/2020</td>
-                <td>Entrenamiento básico</td>
-                <td>01/03/2020 - 01/04/2020</td>
-                <td>30,00 € </td>
-            </tr>
-            <tr>
-                <td>01/02/2020</td>
-                <td>Entrenamiento básico</td>
-                <td>01/02/2020 - 01/03/2020</td>
-                <td>30,00 € </td>
-            </tr>
+            @foreach ($user->athlete->invoices as $invoice)
+                <tr>
+                    <td>{{$invoice->date}}</td>
+                    <td>{{$invoice->subscription_title}}</td>
+                    <td>{{$invoice->active_month}}</td>
+                    <td>{{$invoice->price}} € </td>
+                    <td style="color:{{$invoice->isPaid == 1 ? 'green' : 'red'}};">{{$invoice->isPaid == 1 ? 'Pagado' : 'Sin pagar'}}</td>
+                    <td>
+                        @if ($invoice->isPaid==0)
+                        <button>Pagar</button>
+                        @else
+                        <button>Anular pago</button>
+                        @endif
+                        
+                    </td>
+                        
+                </tr>
+                
+            @endforeach
         </table>
     </div>
 </div>

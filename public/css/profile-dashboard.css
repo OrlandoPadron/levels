@@ -370,11 +370,12 @@ button:hover {
     margin-top: 60px;
 }
 
-.fee-table {
+table.fee-table {
+    table-layout: fixed;
     width: 99%;
     margin-left: auto;
     margin-right: auto;
-    text-align: left;
+    text-align: center;
     border-collapse: collapse;
     margin-bottom: 100px;
 }
@@ -387,6 +388,8 @@ button:hover {
 td {
     padding: 10px;
     padding-left: 0;
+    margin-left: 200px;
+    width: fit-content;
 }
 
 .fee-table td {
