@@ -45,6 +45,11 @@ Route::post('/activate', 'UserController@activateAccount')->name('profile.activa
 Route::post('/deactivate', 'UserController@deactivateAccount')->name('profile.deactivate');
 
 
+//Monthly payment
+Route::post('/pay', 'UserController@setMonthAsPaid')->name('profile.setMonthAsPaid');
+Route::post('/delpayment', 'UserController@setMonthAsNotPaid')->name('profile.setMonthAsNotPaid');
+
+
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');
 Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');

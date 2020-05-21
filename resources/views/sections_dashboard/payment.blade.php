@@ -10,8 +10,8 @@
     <div class="fee-training-details shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
         <div class="fee-training-details-status">
            <p class="bold container-title">Estado de Abril </p>
-           <span class="light container-data">(01/04/20 - 01/05/2020)</span>
-           <p id="fee-payment-info" class="month_paid">PAGADO</p>
+           <span class="light container-data">({{date('01/m/Y')}} - {{date('t/m/Y')}})</span>
+           <p id="fee-payment-info" class="{{$user->athlete->monthPaid == 1 ? 'month_paid' : 'month_unpaid'}}">{{$user->athlete->monthPaid == 1 ? 'PAGADO' : 'PENDIENTE'}}</p>
         </div>
         <div class="fee-training-details-details">
             <div class="separation-plan"></div>
@@ -22,14 +22,26 @@
                 </div>
                 <div class="next-fee">
                     <p class="bold">Próximo pago</p>
-                    <p id="next-fee-date">1 de mayo de 2020</p>
+                    <p id="next-fee-date">{{date('1 \d\e %B \d\e Y', strtotime('+ 1 month'))}}</p>
                 </div>
 
             </div>
             
         </div>
         <div class="fee-training-details-buttons">
-            <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Cancelar pago</button>
+            @if($user->athlete->monthPaid == 1)
+                <form action="{{route('profile.setMonthAsNotPaid')}}" method="POST">
+                    @csrf
+                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                    <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
+                </form>
+            @else
+                <form action="{{route('profile.setMonthAsPaid')}}" method="POST">
+                    @csrf
+                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                    <button class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
+                </form>
+            @endif    
         </div>
     </div>
     <div class="fee-training-history">

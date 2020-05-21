@@ -167,4 +167,35 @@ class UserController extends Controller
             return redirect()->route('profile.show', ["user" => $user]);
         }
     }
+
+    /**
+     * Given an athlete, method pays current monthly fee. 
+     */
+
+    public function setMonthAsPaid(Request $request)
+    {
+        if ($request['user_id'] != null) {
+            $user = User::find($request['user_id']);
+            $athlete = $user->athlete;
+            $athlete->monthPaid = 1;
+            $athlete->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
+    }
+
+
+    /**
+     * Given an athlete, method set as 'not paid' current monthly fee. 
+     */
+
+    public function setMonthAsNotPaid(Request $request)
+    {
+        if ($request['user_id'] != null) {
+            $user = User::find($request['user_id']);
+            $athlete = $user->athlete;
+            $athlete->monthPaid = 0;
+            $athlete->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
+    }
 }

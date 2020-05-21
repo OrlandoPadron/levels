@@ -20,6 +20,7 @@ class CreateAthletesTable extends Migration
             $table->integer('trainer_id')->nullable();
             $table->unsignedBigInteger('subscription_plan_id')->nullable();
             $table->foreign('subscription_plan_id')->references('id')->on('subscriptions');
+            $table->boolean('monthPaid')->default(false);
             $table->timestamps();
         });
     }
