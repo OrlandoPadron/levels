@@ -49,6 +49,10 @@ Route::post('/deactivate', 'UserController@deactivateAccount')->name('profile.de
 Route::post('/pay', 'UserController@setMonthAsPaid')->name('profile.setMonthAsPaid');
 Route::post('/delpayment', 'UserController@setMonthAsNotPaid')->name('profile.setMonthAsNotPaid');
 
+//Invoices status
+Route::post('/invoicepaid', 'UserController@setInvoiceAsPaid')->name('profile.setInvoiceAsPaid');
+Route::post('/invoiceunpaid', 'UserController@setInvoiceAsUnpaid')->name('profile.setInvoiceAsUnpaid');
+
 
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');

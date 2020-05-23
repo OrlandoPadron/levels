@@ -17,7 +17,7 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('athlete_id');
             $table->foreign('athlete_id')->references('id')->on('athletes')->onDelete('cascade');
-            $table->string('date');
+            $table->string('date')->nullable();
             $table->string('subscription_title');
             $table->string('active_month');
             $table->double('price');

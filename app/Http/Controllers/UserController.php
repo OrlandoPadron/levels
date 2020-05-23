@@ -23,9 +23,11 @@ class UserController extends Controller
             ]);
         } else {
             $trainingPlans = $user->athlete->trainingPlans;
+            $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
             return view('show-profile', [
                 'user' => $user,
-                'trainingPlans' => $trainingPlans
+                'trainingPlans' => $trainingPlans,
+                'invoices' => $invoices,
             ]);
         }
     }
@@ -180,6 +182,7 @@ class UserController extends Controller
             $user = User::find($request['user_id']);
             $athlete = $user->athlete;
             $athlete->monthPaid = 1;
+            $athlete->payment_date = strval(date('d/m/Y'));
             $athlete->save();
             //Create new invoice on invoices' table. 
             // Invoice::create([
@@ -206,6 +209,7 @@ class UserController extends Controller
             $user = User::find($request['user_id']);
             $athlete = $user->athlete;
             $athlete->monthPaid = 0;
+            $athlete->payment_date = null;
             $athlete->save();
 
             //Delete invoice
@@ -223,11 +227,14 @@ class UserController extends Controller
 
     public function setInvoiceAsPaid(Request $request)
     {
-        $user = User::find($request['user_id']);
-        $invoice = Invoice::find($request['invoice_id']);
-        $invoice->isPaid = 1;
-        $invoice->save();
-        return redirect()->route('profile.show', ["user" => $user]);
+        if ($request['user_id'] != null && $request['invoice_id'] != null) {
+            $user = User::find($request['user_id']);
+            $invoice = Invoice::find($request['invoice_id']);
+            $invoice->date = strval(date('d/m/Y'));
+            $invoice->isPaid = 1;
+            $invoice->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
     }
 
     /**
@@ -236,10 +243,13 @@ class UserController extends Controller
 
     public function setInvoiceAsUnpaid(Request $request)
     {
-        $user = User::find($request['user_id']);
-        $invoice = Invoice::find($request['invoice_id']);
-        $invoice->isPaid = 0;
-        $invoice->save();
-        return redirect()->route('profile.show', ["user" => $user]);
+        if ($request['user_id'] != null && $request['invoice_id'] != null) {
+            $user = User::find($request['user_id']);
+            $invoice = Invoice::find($request['invoice_id']);
+            $invoice->date = null;
+            $invoice->isPaid = 0;
+            $invoice->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
     }
 }
