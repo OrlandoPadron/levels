@@ -10,6 +10,7 @@ body {
 
 .page-content {
     grid-area: page-content;
+    overflow-y: overlay;
 }
 
 .navbar {
