@@ -4,7 +4,9 @@ body {
 }
 
 .userbar {
-    position: relative;
+    position: -webkit-sticky; /* Safari */
+    position: sticky;
+    top: 0;
     background-color: white;
     border-left: 1px solid black;
     width: 99.99%;

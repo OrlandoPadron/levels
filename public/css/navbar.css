@@ -21,6 +21,10 @@ body {
 }
 
 .navbar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
     background-color: #000f2d;
     width: 240px;
     height: 100%;

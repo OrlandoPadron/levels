@@ -28,18 +28,20 @@
           </div>
         </li>
       </div>
-      @include('modals.newGroupModal')
     </ul>
     <!--hidden-->
     @if(Auth::user()->isTrainer == 1)
-      <div class="group">
-        <ul class="group-list">
-          @foreach(Auth::user()->trainer->groups as $group)
-            <li>
-              <a href="">{{$group->title}}</a>
-            </li>
-          @endforeach
-        </ul>
-      </div>
+      @include('modals.newGroupModal')
+      @if(Auth::user()->trainer->groups->isNotEmpty())
+        <div class="group">
+          <ul class="group-list">
+            @foreach(Auth::user()->trainer->groups->sortBy('title') as $group)
+              <li>
+                <a href="">{{$group->title}}</a>
+              </li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
     @endif
   </div>
