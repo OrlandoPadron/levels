@@ -252,4 +252,20 @@ class UserController extends Controller
             return redirect()->route('profile.show', ["user" => $user]);
         }
     }
+
+    /**
+     * Update athlete's subscription description and price 
+     */
+
+    public function updateSubscriptionOnAthlete(Request $request)
+    {
+        if ($request['user_id'] != null) {
+            $user = User::find($request['user_id']);
+            $athlete = $user->athlete;
+            $athlete->subscription_description = $request['subscription'] == null ? null : $request['subscription'];
+            $athlete->subscription_price = $request['price'] == null ? null : doubleval($request['price']);
+            $athlete->save();
+            return redirect()->route('profile.show', ["user" => $user]);
+        }
+    }
 }

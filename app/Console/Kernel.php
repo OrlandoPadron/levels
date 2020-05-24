@@ -34,19 +34,21 @@ class Kernel extends ConsoleKernel
 
             foreach ($users as $user) {
                 $athlete = $user->athlete;
-                Invoice::create([
-                    'athlete_id' => $athlete->id,
-                    'date' => $athlete->payment_date,
-                    'subscription_title' => 'Entrenamiento básico para ' . $user->name,
-                    'active_month' => strval(date('01/m/Y')) . ' - ' . strval(date('t/m/Y')),
-                    'price' => 30.0,
-                    'isPaid' => $athlete->monthPaid == 1 ? '1' : '0',
-                ]);
-                $athlete->monthPaid = 0;
-                $athlete->payment_date = null;
-                $athlete->save();
+                if ($athlete->subscription_description != null && $athlete->subscription_price != null) {
+                    Invoice::create([
+                        'athlete_id' => $athlete->id,
+                        'date' => $athlete->payment_date,
+                        'subscription_title' => $athlete->subscription_description,
+                        'active_month' => strval(date('01/m/Y')) . ' - ' . strval(date('t/m/Y')),
+                        'price' => doubleval($athlete->subscription_price),
+                        'isPaid' => $athlete->monthPaid == 1 ? '1' : '0',
+                    ]);
+                    $athlete->monthPaid = 0;
+                    $athlete->payment_date = null;
+                    $athlete->save();
+                }
             }
-        })->monthlyOn(1);
+        })->everyMinute();
     }
 
     /**

@@ -18,10 +18,12 @@ class CreateAthletesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('trainer_id')->nullable();
-            $table->unsignedBigInteger('subscription_plan_id')->nullable();
-            $table->foreign('subscription_plan_id')->references('id')->on('subscriptions');
+            // $table->unsignedBigInteger('subscription_plan_id')->nullable();
+            // $table->foreign('subscription_plan_id')->references('id')->on('subscriptions');
             $table->boolean('monthPaid')->default(false);
             $table->string('payment_date')->nullable();
+            $table->string('subscription_description')->nullable();
+            $table->double('subscription_price')->nullable();
             $table->timestamps();
         });
     }

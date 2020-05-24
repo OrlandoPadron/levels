@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'Cuotas'}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'Cuotas', paymentSettings: false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">

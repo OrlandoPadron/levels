@@ -10,11 +10,11 @@
         @keydown.escape.window = "isOpen = false"
 
         />
-        <div class="button-submit">
+        {{-- <div class="button-submit">
           <button disabled type="submit">
             <i class="fa fa-search"></i>
           </button>
-        </div>
+        </div> --}}
       </div>
     </form>
     @if (strlen($search) >=3)

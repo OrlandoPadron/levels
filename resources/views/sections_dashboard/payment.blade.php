@@ -1,4 +1,13 @@
-<h1 class="primary-blue-color">Cuotas</h1>
+<div class="heading-section">
+    <button class="btn-gray-basic button-position"
+                    @click="paymentSettings=!paymentSettings" 
+                    @keydown.escape.window="paymentSettings=false"
+                    
+                ><i style="margin-right: 5px;" class="fas fa-cog"></i> Configurar cuota
+    </button>
+    <h1 class="primary-blue-color">Cuotas</h1>
+</div>
+@include('modals.paymentSettingsModal')
 @if ($user->account_activated == 0)
     @include('page_messages.account_deactivated_message')
     
@@ -18,7 +27,7 @@
             <div id="fee-details">
                 <div class="suscription-type">
                     <p class="bold">Tipo de entrenamiento</p>
-                    <p id="fee-details">Entrenamiento básico por <span id="fee-monthly-price">30€ /mes</span></p>
+                    <p id="fee-details">{{$user->athlete->subscription_description}} <span id="fee-monthly-price">{{$user->athlete->subscription_price}}€ /mes</span></p>
                 </div>
                 <div class="next-fee">
                     <p class="bold">Próximo pago</p>

@@ -1,4 +1,4 @@
-<div class="heading-plan">
+<div class="heading-section">
     <button class="btn-add-basic button-position"
                     @click="openNewPlan=!openNewPlan" 
                     @keydown.escape.window="openNewPlan=false"
