@@ -20,7 +20,7 @@ function setActive($tab)
  * Function used to determine if a given trainer is currently training a 
  * specific athlete. 
  */
-function currentlyTrainingAthlete($athlete_id)
+function iAmcurrentlyTrainingThisAthlete($athlete_id)
 {
     $athletes_trained = (array) Auth::user()->trainer->trained_by_me;
     if (in_array($athlete_id, $athletes_trained)) {
@@ -39,5 +39,14 @@ function getTrainersName($user_id)
 {
     $trainers_id = User::find($user_id)->athlete->trainer_id;
     $trainer = Trainer::find($trainers_id)->user;
+    return $trainer->name . ' ' . $trainer->surname;
+}
+
+/**
+ * Returns trainers name given a trainer_id. 
+ */
+function getTrainersNameByTrainerId($trainer_id)
+{
+    $trainer = Trainer::find($trainer_id)->user;
     return $trainer->name . ' ' . $trainer->surname;
 }

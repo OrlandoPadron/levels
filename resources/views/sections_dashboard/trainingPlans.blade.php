@@ -13,7 +13,8 @@
 </div>
 
 @include('modals.newPlanModal')
-@if($trainingPlans->isNotEmpty() && currentlyTrainingAthlete($user->athlete->id))
+{{-- && currentlyTrainingAthlete($user->athlete->id) --}}
+@if($trainingPlans->isNotEmpty())
     <!-- Box training details -->
     @foreach ($trainingPlans as $key => $plan)
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}} ">
@@ -46,7 +47,7 @@
     @endforeach
     <!-- Ends Box training details -->
 @else
-    <p>Actualmente este usuario no dispone de planes de entrenamiento.</p>         
+    @include('page_messages.training_plans_not_available_message')   
 @endif
             {{-- @if($trainingPlans->isNotEmpty() && currentlyTrainingAthlete($user->athlete->id))
                 @foreach ($trainingPlans as $key => $plan)

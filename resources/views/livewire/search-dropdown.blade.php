@@ -46,7 +46,7 @@
                         
                     </div>
                     @if($user->isTrainer==0 && Auth::user()->isTrainer == 1)
-                      @if(currentlyTrainingAthlete($user->athlete->id))
+                      @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                         <div class="training_button_searchbar">
                           <button>Entrenando</button>
                         </div>

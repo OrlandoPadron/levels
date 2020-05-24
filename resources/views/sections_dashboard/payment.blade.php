@@ -12,6 +12,9 @@
     @include('page_messages.account_deactivated_message')
     
 @endif
+@if ($user->athlete->subscription_description == null && $user->athlete->subscription_price == null)
+    @include('page_messages.subscription_needed_message')
+@else
 <div class="fee-training">
     <div class="fee-training-title">
         <p class="bold second_title">Detalles mensualidad actual</p>
@@ -31,7 +34,6 @@
                 </div>
                 <div class="next-fee">
                     <p class="bold">Próximo pago</p>
-                    {{-- date('1 \d\e F \d\e Y', strtotime('+ 1 month')) --}}
                     <p id="next-fee-date">{{Date::parse('first day next month')->format('1 \d\e F \d\e Y')}}</p>
                 </div>
 
@@ -54,48 +56,51 @@
             @endif    
         </div>
     </div>
-    <div class="fee-training-history">
-        <p class="bold second_title">Historial de facturación <span class="light">(meses anteriores)</span></p>
-        {{-- {{$invoices->links("pagination::default")}} --}}
-        <table class="fee-table">
-            <tr>
-                <th>Período del servicio</th>
-                <th>Fecha de la aceptación</th>
-                <th>Tipo de entrenamiento</th>
-                <th>Total</th>
-                <th>Estado</th>
-                <th>Gestionar</th>
-            </tr>
-            @foreach ($invoices as $invoice)
+    @if($invoices->isNotEmpty())
+        <div class="fee-training-history">
+            <p class="bold second_title">Historial de facturación <span class="light">(meses anteriores)</span></p>
+            {{-- {{$invoices->links("pagination::default")}} --}}
+            <table class="fee-table">
                 <tr>
-                    <td>{{$invoice->active_month}}</td>
-                    <td>{{$invoice->date}}</td>
-                    <td>{{$invoice->subscription_title}}</td>
-                    <td>{{$invoice->price}} € </td>
-                    <td style="color:{{$invoice->isPaid == 1 ? 'green' : 'red'}};">{{$invoice->isPaid == 1 ? 'Pagado' : 'Sin pagar'}}</td>
-                    <td>
-                        @if ($invoice->isPaid==0)
-                        <form action="{{route('profile.setInvoiceAsPaid')}}" method="POST">
-                            @csrf
-                            <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                            <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
-                            <button><i style="font-size: 15px;" class="fas fa-coins"></i> Pagado</button>
-                        </form>
-
-                        @else
-                        <form action="{{route('profile.setInvoiceAsUnpaid')}}" method="POST">
-                            @csrf
-                            <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                            <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
-                            <button><i style="font-size: 15px;" class="fas fa-times"></i> Anular pago</button>
-                        </form>
-                        @endif
-                        
-                    </td>
-                        
+                    <th>Período del servicio</th>
+                    <th>Fecha de la aceptación</th>
+                    <th>Tipo de entrenamiento</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Gestionar</th>
                 </tr>
-                
-            @endforeach
-        </table>
-    </div>
+                @foreach ($invoices as $invoice)
+                    <tr>
+                        <td>{{$invoice->active_month}}</td>
+                        <td>{{$invoice->date}}</td>
+                        <td>{{$invoice->subscription_title}}</td>
+                        <td>{{$invoice->price}} € </td>
+                        <td style="color:{{$invoice->isPaid == 1 ? 'green' : 'red'}};">{{$invoice->isPaid == 1 ? 'Pagado' : 'Sin pagar'}}</td>
+                        <td>
+                            @if ($invoice->isPaid==0)
+                            <form action="{{route('profile.setInvoiceAsPaid')}}" method="POST">
+                                @csrf
+                                <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                                <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
+                                <button><i style="font-size: 15px;" class="fas fa-coins"></i> Pagado</button>
+                            </form>
+                            @else
+                            <form action="{{route('profile.setInvoiceAsUnpaid')}}" method="POST">
+                                @csrf
+                                <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                                <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
+                                <button><i style="font-size: 15px;" class="fas fa-times"></i> Anular pago</button>
+                            </form>
+                            @endif
+                            
+                        </td>
+                            
+                    </tr>
+                    
+                @endforeach
+            </table>
+            
+        </div>
+    @endif
 </div>
+@endif
