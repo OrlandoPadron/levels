@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'General', paymentSettings: false}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'Tutorías', paymentSettings: false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -39,6 +39,7 @@
                         <li x-on:click.prevent @click="sectionTab = 'General'" :class="{'active-dashboard': sectionTab === 'General'}"><a href="#">Detalles generales</a></li>
                         <li x-on:click.prevent @click="sectionTab = 'Plan'" :class="{'active-dashboard': sectionTab === 'Plan'}"><a href="#">Plan entrenamiento</a></li>
                         <li x-on:click.prevent @click="sectionTab = 'Archivos'" :class="{'active-dashboard': sectionTab === 'Archivos'}"><a href="#">Archivos</a></li>
+                        <li x-on:click.prevent @click="sectionTab = 'Tutorías'" :class="{'active-dashboard': sectionTab === 'Tutorías'}"><a href="#">Tutorías</a></li>
                         <li x-on:click.prevent @click="sectionTab = 'Cuotas'" :class="{'active-dashboard': sectionTab === 'Cuotas'}"><a href="#">Cuotas</a></li>
                         <li x-on:click.prevent @click="sectionTab = 'Cuenta'" :class="{'active-dashboard': sectionTab === 'Cuenta'}"><a href="#">Cuenta</a></li>
                     </ul>
@@ -56,6 +57,9 @@
                 </div>
                 <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Archivos'">
                     @include('sections_dashboard.files')
+                </div>
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Tutorías'">
+                    @include('sections_dashboard.tutorship')
                 </div>
                 <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Cuotas'">
                     @include('sections_dashboard.payment')

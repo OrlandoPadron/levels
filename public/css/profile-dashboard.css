@@ -404,3 +404,129 @@ td {
     opacity: 0.9;
     filter: grayscale(100%);
 }
+
+/*TUTORSHIP SECTION*/
+.tutorship-container {
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    display: grid;
+    grid-template-areas:
+        "heading"
+        "details"
+        "add-details"
+        "buttons";
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.tutorship-heading {
+    grid-area: heading;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: auto;
+    width: 92%;
+    color: #6013bb;
+    font-size: 24px;
+    align-items: left;
+    justify-self: left;
+}
+
+#tutorship_date {
+    font-size: 18px;
+}
+
+.tutorship-heading > p.container-title {
+    margin-bottom: -10px;
+}
+
+.tutorship-goal {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.separation-tutorship {
+    height: 0px;
+    width: 100%;
+    border-bottom: 1px solid rgba(96, 19, 187, 0.75);
+}
+
+.tutorship-content {
+    grid-area: details;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-top: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: auto;
+    width: 90%;
+    color: black;
+    font-size: 18px;
+    align-items: left;
+    justify-self: left;
+    margin-bottom: 50px;
+}
+
+.tutorship-section-title {
+    font-weight: 500;
+    margin-bottom: -5px;
+    color: #6013bb;
+}
+
+.tutorship-section-content {
+    font-weight: 100;
+    margin-bottom: 30px;
+}
+
+.tutorship-add-details {
+    grid-area: add-details;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    margin-top: -25px;
+    padding-left: 50px;
+    margin-bottom: 80px;
+    padding-right: 50px;
+    height: auto;
+    color: black;
+    font-size: 18px;
+    align-items: left;
+    justify-self: left;
+}
+
+.tutorship-buttons {
+    grid-area: buttons;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: auto;
+    color: black;
+    font-size: 18px;
+    align-items: center;
+    justify-self: center;
+    margin-bottom: 50px;
+}
+
+.tutorship-buttons button {
+    margin-left: 15px;
+}
+
+.tutorship-buttons > .btn-gray-basic {
+    width: 150px;
+}
+
+/*Bookmark effect*/
+.tutorship-bookmarked {
+    border-top: 20px solid #6013bb;
+    z-index: 11;
+}
