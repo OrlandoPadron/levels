@@ -1,10 +1,12 @@
 <div class="heading-section">
+    @if ($user->account_activated == 1)
     <button class="btn-gray-basic button-position"
                     @click="paymentSettings=!paymentSettings" 
                     @keydown.escape.window="paymentSettings=false"
                     
                 ><i style="margin-right: 5px;" class="fas fa-cog"></i> Configurar cuota
     </button>
+    @endif
     <h1 class="primary-blue-color">Cuotas</h1>
 </div>
 @include('modals.paymentSettingsModal')
@@ -40,21 +42,23 @@
             </div>
             
         </div>
-        <div class="fee-training-details-buttons">
-            @if($user->athlete->monthPaid == 1)
-                <form action="{{route('profile.setMonthAsNotPaid')}}" method="POST">
-                    @csrf
-                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                    <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
-                </form>
-            @else
-                <form action="{{route('profile.setMonthAsPaid')}}" method="POST">
-                    @csrf
-                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                    <button class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
-                </form>
-            @endif    
-        </div>
+        @if ($user->account_activated == 1)
+            <div class="fee-training-details-buttons">
+                @if($user->athlete->monthPaid == 1)
+                    <form action="{{route('profile.setMonthAsNotPaid')}}" method="POST">
+                        @csrf
+                        <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                        <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
+                    </form>
+                @else
+                    <form action="{{route('profile.setMonthAsPaid')}}" method="POST">
+                        @csrf
+                        <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                        <button class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
+                    </form>
+                @endif    
+            </div>
+        @endif
     </div>
     @if($invoices->isNotEmpty())
         <div class="fee-training-history">

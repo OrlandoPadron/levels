@@ -48,19 +48,19 @@
         <!-- End 'Navbar dashboard' -->
         <div class="content-dashboard">
             <div class="container-dashboard">
-                <div x-show="sectionTab === 'General'">
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'General'">
                     @include('sections_dashboard.general')
                 </div>
-                <div x-show="sectionTab === 'Plan'">
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Plan'">
                     @include('sections_dashboard.trainingPlans')
                 </div>
-                <div x-show="sectionTab === 'Archivos'">
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Archivos'">
                     @include('sections_dashboard.files')
                 </div>
-                <div x-show="sectionTab === 'Cuotas'">
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Cuotas'">
                     @include('sections_dashboard.payment')
                 </div>
-                <div x-show="sectionTab === 'Cuenta'">
+                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'Cuenta'">
                     @include('sections_dashboard.account')
                 </div>
             </div>

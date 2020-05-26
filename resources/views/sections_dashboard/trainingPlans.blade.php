@@ -1,10 +1,12 @@
 <div class="heading-section">
+    @if ($user->account_activated == 1)
     <button class="btn-add-basic button-position"
                     @click="openNewPlan=!openNewPlan" 
                     @keydown.escape.window="openNewPlan=false"
                     
                 ><i class="fas fa-plus"></i>Nuevo plan
     </button>
+    @endif
     <h1 class="primary-blue-color">Planes de entrenamiento</h1>
     @if ($user->account_activated == 0)
     @include('page_messages.account_deactivated_message')
