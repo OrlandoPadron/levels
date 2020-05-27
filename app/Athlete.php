@@ -28,4 +28,9 @@ class Athlete extends Model
     {
         return $this->hasMany(Invoice::class, 'athlete_id');
     }
+
+    public function athlete()
+    {
+        return $this->hasMany(Tutorship::class, 'athlete_associated');
+    }
 }

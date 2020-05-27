@@ -425,6 +425,16 @@ td {
 
 .tutorship-heading {
     grid-area: heading;
+    width: 92%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+        "title options"
+        "bar bar";
+}
+
+.tutorship-heading-title {
+    grid-area: title;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -432,7 +442,7 @@ td {
     padding-left: 50px;
     padding-right: 50px;
     height: auto;
-    width: 92%;
+    width: 100%;
     color: #6013bb;
     font-size: 24px;
     align-items: left;
@@ -443,7 +453,7 @@ td {
     font-size: 18px;
 }
 
-.tutorship-heading > p.container-title {
+.tutorship-heading-title > p.container-title {
     margin-bottom: -10px;
 }
 
@@ -452,9 +462,35 @@ td {
     margin-bottom: 10px;
 }
 
-.separation-tutorship {
-    height: 0px;
+.tutorship-options {
+    grid-area: options;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
     width: 100%;
+    padding-top: 15px;
+    /* background-color: red; */
+    font-size: 26px;
+    align-items: center;
+    justify-content: flex-end;
+    color: #8e6bb6;
+}
+
+.tutorship-options a {
+    margin-left: 15px;
+}
+
+.tutorship-options a:hover {
+    color: #6013bb;
+    cursor: pointer;
+}
+
+.separation-tutorship {
+    grid-area: bar;
+    height: 0px;
+    margin-left: 50px;
+    background-color: red;
+    width: 98%;
     border-bottom: 1px solid rgba(96, 19, 187, 0.75);
 }
 
@@ -529,4 +565,12 @@ td {
 .tutorship-bookmarked {
     border-top: 20px solid #6013bb;
     z-index: 11;
+}
+
+/*Collapse Tutorship*/
+.tutorship-collapse > .tutorship-heading {
+    padding-bottom: 25px;
+}
+.tutorship-collapse > .tutorship-heading:hover {
+    cursor: pointer;
 }
