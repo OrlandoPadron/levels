@@ -476,6 +476,14 @@ td {
     color: #8e6bb6;
 }
 
+.tutorship-option-bookmarked {
+    color: #6013bb;
+}
+.tutorship-option-bookmarked > i:hover:before {
+    font-weight: normal;
+    color: #bb133d;
+}
+
 .tutorship-options a {
     margin-left: 15px;
 }
@@ -483,6 +491,10 @@ td {
 .tutorship-options a:hover {
     color: #6013bb;
     cursor: pointer;
+}
+
+.tutorship-options:hover:before {
+    font-weight: bold;
 }
 
 .separation-tutorship {
@@ -564,7 +576,6 @@ td {
 /*Bookmark effect*/
 .tutorship-bookmarked {
     border-top: 20px solid #6013bb;
-    z-index: 11;
 }
 
 /*Collapse Tutorship*/
@@ -573,4 +584,8 @@ td {
 }
 .tutorship-collapse > .tutorship-heading:hover {
     cursor: pointer;
+}
+
+.tutorship-number {
+    opacity: 35%;
 }

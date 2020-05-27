@@ -28,6 +28,7 @@ class UserController extends Controller
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
                 'invoices' => $invoices,
+                'tab' => 'General',
             ]);
         }
     }
@@ -41,7 +42,9 @@ class UserController extends Controller
 
     public function updateAvatar(Request $request)
     {
-        $this->deleteAvatarAndSetDefaultAvatar($request);
+        if ($request->get('delete-avatar') == true) {
+            $this->deleteAvatarAndSetDefaultAvatar($request);
+        }
 
         //Handle user uploaded avatar
         if ($request->hasFile('avatar')) {
@@ -54,7 +57,9 @@ class UserController extends Controller
             // Delete previous avatar
             $previous_file = $logged_user->user_image;
             if ($previous_file != 'default_avatar.jpg') {
-                unlink('uploads/avatars/' . $previous_file);
+                if (file_exists('uploads/avatars/' . $previous_file)) {
+                    unlink('uploads/avatars/' . $previous_file);
+                }
             }
 
             //Update avatar
@@ -66,17 +71,18 @@ class UserController extends Controller
 
     private function deleteAvatarAndSetDefaultAvatar(Request $request)
     {
-        if ($request->get('delete-avatar') == true) {
-            $logged_user = Auth::user();
-            // Delete previous avatar
-            $previous_file = $logged_user->user_image;
-            if ($previous_file != 'default_avatar.jpg') {
+
+        $logged_user = Auth::user();
+        // Delete previous avatar
+        $previous_file = $logged_user->user_image;
+        if ($previous_file != 'default_avatar.jpg') {
+            if (file_exists('uploads/avatars/' . $previous_file)) {
                 unlink('uploads/avatars/' . $previous_file);
             }
-            //Updates avatar
-            $logged_user->user_image = 'default_avatar.jpg';
-            $logged_user->save();
         }
+        //Updates avatar
+        $logged_user->user_image = 'default_avatar.jpg';
+        $logged_user->save();
     }
 
     public function trainThisAthlete(Request $request)

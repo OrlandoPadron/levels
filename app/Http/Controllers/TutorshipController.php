@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use App\Athlete;
 use App\Tutorship;
 use Illuminate\Http\Request;
 
@@ -35,7 +37,20 @@ class TutorshipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // tutorshipNumber represents its index inside athlete's tutorships. 
+        $tutorshipNumber = Athlete::find($request['athlete_associated'])->tutorships()->count() + 1;
+        Tutorship::create([
+            'title' => $request['title'] != null ? $request['title'] : 'Tutoría #' . $tutorshipNumber,
+            'date' => $request['date'] != null ? $request['date'] : date('d/m/Y'),
+            'goal' => $request['goal'] != null ? $request['goal'] : "Objetivo no especificado.",
+            'description' => $request['description'] != null ? $request['description'] : "Sin descripción",
+            'athlete_associated' => $request['athlete_associated'],
+            'bookmarked' => ($request['bookmark'] == 'bookmark_set') ? 1 : 0,
+            'tutorship_number' => $tutorshipNumber,
+        ]);
+
+        $user = User::find($request['user_id']);
+        return redirect()->route('profile.show', ['user' => $user]);
     }
 
     /**
@@ -81,5 +96,19 @@ class TutorshipController extends Controller
     public function destroy(Tutorship $tutorship)
     {
         //
+    }
+
+
+    public function toggleBookmark(Request $request)
+    {
+        $tutorship = Tutorship::find($request['id_tutorship']);
+        if ($tutorship->bookmarked == 1) {
+            $tutorship->bookmarked = 0;
+        } else {
+            $tutorship->bookmarked = 1;
+        }
+        $tutorship->save();
+        $user = User::find($request['user_id']);
+        return redirect()->route('profile.show', ['user' => $user]);
     }
 }

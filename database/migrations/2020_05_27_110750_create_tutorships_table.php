@@ -18,11 +18,11 @@ class CreateTutorshipsTable extends Migration
             $table->string('title');
             $table->string('goal')->nullable();
             $table->string('date');
-            $table->string('description');
-            $table->string('additional_info')->nullable();
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('athlete_associated');
             $table->foreign('athlete_associated')->references('id')->on('athletes')->onDelete('cascade');
-            $table->boolean('bookmarked')->default('false');
+            $table->boolean('bookmarked')->default(false);
+            $table->integer('tutorship_number')->nullable();
             $table->timestamps();
         });
     }

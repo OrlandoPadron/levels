@@ -12,7 +12,7 @@ class Tutorship extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'date', 'description',
+        'title', 'date', 'goal', 'description', 'athlete_associated', 'tutorship_number', 'bookmarked',
     ];
 
     //Each instance of tutorship belongs to one athlete 

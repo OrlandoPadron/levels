@@ -62,6 +62,10 @@ Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.sto
 Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');
 
 
+//Tutorship
+Route::post('/tutorship', 'TutorshipController@store')->name('tutorship.store');
+Route::post('/bookmark', 'TutorshipController@toggleBookmark')->name('tutorship.toggleBookmark');
+
 /**
  * GROUP ROUTES
  */

@@ -29,7 +29,7 @@ class Athlete extends Model
         return $this->hasMany(Invoice::class, 'athlete_id');
     }
 
-    public function athlete()
+    public function tutorships()
     {
         return $this->hasMany(Tutorship::class, 'athlete_associated');
     }
