@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'email' => 'orlando@prueba.com',
             'password' => Hash::make("12345678"),
             'isTrainer' => true,
-            'user_image' => '1590355212.jpg',
+            'user_image' => 'orlando.jpg',
         ]);
         Trainer::create([
             'user_id' => $user->id,

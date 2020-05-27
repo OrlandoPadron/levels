@@ -20,7 +20,7 @@
     @include('page_messages.account_deactivated_message')
 @endif
 
-@foreach($user->athlete->tutorships->sortByDesc('id') as $key => $tutorship)
+@foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
     @if($loop->first)
         <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="tutorship-heading">

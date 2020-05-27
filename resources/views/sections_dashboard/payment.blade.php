@@ -45,17 +45,13 @@
         @if ($user->account_activated == 1)
             <div class="fee-training-details-buttons">
                 @if($user->athlete->monthPaid == 1)
-                    <form action="{{route('profile.setMonthAsNotPaid')}}" method="POST">
-                        @csrf
-                        <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                        <button class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
-                    </form>
+                    <button id="unpay_button" onclick="toggleMonthPayment({{$user->athlete->id}}, {{$user->athlete->monthPaid}})" class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
+                    <button id="pay_button" style="display: none;" onclick="toggleMonthPayment({{$user->athlete->id}}, {{$user->athlete->monthPaid}})" class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
+
                 @else
-                    <form action="{{route('profile.setMonthAsPaid')}}" method="POST">
-                        @csrf
-                        <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                        <button class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
-                    </form>
+                    <button id="unpay_button" style="display: none;" onclick="toggleMonthPayment({{$user->athlete->id}}, {{$user->athlete->monthPaid}})" class="btn-purple-basic"><i style="font-size: 15px;" class="fas fa-times"></i> Marcar como no pagado</button>
+                    <button id="pay_button"  onclick="toggleMonthPayment({{$user->athlete->id}}, {{$user->athlete->monthPaid}})" class="btn-add-basic"><i style="font-size: 15px;" class="fas fa-coins"></i> Marcar como pagado</button>
+                
                 @endif    
             </div>
         @endif
@@ -108,3 +104,46 @@
     @endif
 </div>
 @endif
+<script>
+    var status = -1; 
+
+    function toggleMonthPayment(athlete_id, statusWhenInitialized){ 
+        console.log("Toggle Month Payment");
+        $.ajax({
+            url: "{{route("athlete.toggleMonthPayment")}}",
+            type: "POST",
+            data: {
+                athlete_id: athlete_id,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                if (status == -1){
+                    status = statusWhenInitialized;
+                }
+                if (status == 1){
+                    status = 0;
+                    $("#fee-payment-info").text("PENDIENTE");
+                    $("#fee-payment-info").removeClass("month_paid");
+                    $("#fee-payment-info").addClass("month_unpaid");
+                    $("#unpay_button").hide();
+                    $("#pay_button").show();
+
+
+
+                }else{
+                    status = 1; 
+                    $("#fee-payment-info").text("PAGADO");
+                    $("#fee-payment-info").removeClass("month_unpaid");
+                    $("#fee-payment-info").addClass("month_paid");
+                    $("#pay_button").hide();
+                    $("#unpay_button").show();
+                }
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "toggleMonthPayment" function');
+            }  
+        });
+    }
+</script>

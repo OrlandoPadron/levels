@@ -85,4 +85,12 @@ class AthleteController extends Controller
     {
         //
     }
+
+
+    public function toggleCurrentMonthPaymentStatus(Request $request)
+    {
+        $athlete = Athlete::find($request['athlete_id']);
+        $athlete->monthPaid == '0' ? $athlete->monthPaid = 1 : $athlete->monthPaid = 0;
+        $athlete->save();
+    }
 }

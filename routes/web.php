@@ -56,6 +56,7 @@ Route::post('/invoiceunpaid', 'UserController@setInvoiceAsUnpaid')->name('profil
 
 //Athlete's subscription forms 
 Route::post('/updatesubscription', 'UserController@updateSubscriptionOnAthlete')->name('profile.updateSubscription');
+Route::post('/togglepayment', 'AthleteController@toggleCurrentMonthPaymentStatus')->name('athlete.toggleMonthPayment');
 
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');

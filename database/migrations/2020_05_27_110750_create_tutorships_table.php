@@ -18,7 +18,7 @@ class CreateTutorshipsTable extends Migration
             $table->string('title');
             $table->string('goal')->nullable();
             $table->string('date');
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->unsignedBigInteger('athlete_associated');
             $table->foreign('athlete_associated')->references('id')->on('athletes')->onDelete('cascade');
             $table->boolean('bookmarked')->default(false);

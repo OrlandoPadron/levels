@@ -353,7 +353,7 @@ button:hover {
     align-self: center;
 }
 
-.fee-training-details-buttons > form > .btn-purple-basic {
+.fee-training-details-buttons > .btn-purple-basic {
     padding: 10px;
     width: fit-content;
     height: fit-content;
@@ -587,5 +587,5 @@ td {
 }
 
 .tutorship-number {
-    opacity: 35%;
+    opacity: 50%;
 }
