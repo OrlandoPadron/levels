@@ -90,7 +90,30 @@ class AthleteController extends Controller
     public function toggleCurrentMonthPaymentStatus(Request $request)
     {
         $athlete = Athlete::find($request['athlete_id']);
-        $athlete->monthPaid == '0' ? $athlete->monthPaid = 1 : $athlete->monthPaid = 0;
+
+        if ($athlete->monthPaid == '0') {
+            $athlete->monthPaid = 1;
+            $athlete->payment_date = strval(date('d/m/Y'));
+        } else {
+            $athlete->monthPaid = 0;
+            $athlete->payment_date = null;
+        }
+
         $athlete->save();
+    }
+
+    /**
+     * Update athlete's subscription description and price 
+     */
+
+    public function updateSubscriptionOnAthlete(Request $request)
+    {
+
+        $athlete = Athlete::find($request['athlete_id']);
+        $athlete->subscription_description = $request['subscription'] == null ? null : $request['subscription'];
+        $athlete->subscription_price = $request['price'] == null ? null : doubleval($request['price']);
+        $athlete->save();
+        //return redirect()->route('profile.show', ["user" => $user]);
+
     }
 }

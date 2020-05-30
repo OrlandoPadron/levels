@@ -82,4 +82,34 @@ class InvoiceController extends Controller
     {
         //
     }
+
+    /**
+     * Set an invoice as paid. 
+     */
+
+    public function setInvoiceAsPaid(Request $request)
+    {
+
+        $invoice = Invoice::find($request['invoice_id']);
+        $invoice->date = strval(date('d/m/Y'));
+        $invoice->isPaid = 1;
+        $invoice->save();
+        //return redirect()->route('profile.show', ["user" => $user]);
+
+    }
+
+    /**
+     * Set an invoice as unpaid. 
+     */
+
+    public function setInvoiceAsUnpaid(Request $request)
+    {
+
+        $invoice = Invoice::find($request['invoice_id']);
+        $invoice->date = null;
+        $invoice->isPaid = 0;
+        $invoice->save();
+        //return redirect()->route('profile.show', ["user" => $user]);
+
+    }
 }

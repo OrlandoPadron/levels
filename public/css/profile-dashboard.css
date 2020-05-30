@@ -396,6 +396,16 @@ td {
     border-bottom: 1px solid black;
 }
 
+/*DATATABLES*/
+#fee-table_length {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+table.dataTable {
+    margin-top: 2em !important;
+    margin-bottom: 2em !important;
+}
+
 .second_title {
     font-size: 24px;
 }

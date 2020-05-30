@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Invoice;
 use App\User;
-use Illuminate\Http\Request;
+use App\Athlete;
+use App\Invoice;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -173,104 +174,6 @@ class UserController extends Controller
             $user = User::find($request['user_id']);
             $user->account_activated = 0;
             $user->save();
-            return redirect()->route('profile.show', ["user" => $user]);
-        }
-    }
-
-    /**
-     * Given an athlete, method pays current monthly fee. 
-     */
-
-    public function setMonthAsPaid(Request $request)
-    {
-        // Set attribute paid. 
-        if ($request['user_id'] != null) {
-            $user = User::find($request['user_id']);
-            $athlete = $user->athlete;
-            $athlete->monthPaid = 1;
-            $athlete->payment_date = strval(date('d/m/Y'));
-            $athlete->save();
-            //Create new invoice on invoices' table. 
-            // Invoice::create([
-            //     'athlete_id' => $athlete->id,
-            //     'date' => strval(date('d/m/Y')),
-            //     'subscription_title' => 'Entrenamiento básico',
-            //     'active_month' => strval(date('01/m/Y')) . ' - ' . strval(date('t/m/Y')),
-            //     'price' => 30.0,
-            //     'isPaid' => true,
-            // ]);
-            return redirect()->route('profile.show', ["user" => $user]);
-        }
-    }
-
-
-    /**
-     * Given an athlete, method set as 'not paid' current monthly fee. 
-     */
-
-    public function setMonthAsNotPaid(Request $request)
-    {
-        // Set attribute unpaid. 
-        if ($request['user_id'] != null) {
-            $user = User::find($request['user_id']);
-            $athlete = $user->athlete;
-            $athlete->monthPaid = 0;
-            $athlete->payment_date = null;
-            $athlete->save();
-
-            //Delete invoice
-            // $active_month = strval(date('01/m/Y')) . ' - ' . strval(date('t/m/Y'));
-
-            // $invoice = Invoice::where('active_month', $active_month)->first();
-            // $invoice->delete();
-            return redirect()->route('profile.show', ["user" => $user]);
-        }
-    }
-
-    /**
-     * Set an invoice as paid. 
-     */
-
-    public function setInvoiceAsPaid(Request $request)
-    {
-        if ($request['user_id'] != null && $request['invoice_id'] != null) {
-            $user = User::find($request['user_id']);
-            $invoice = Invoice::find($request['invoice_id']);
-            $invoice->date = strval(date('d/m/Y'));
-            $invoice->isPaid = 1;
-            $invoice->save();
-            return redirect()->route('profile.show', ["user" => $user]);
-        }
-    }
-
-    /**
-     * Set an invoice as unpaid. 
-     */
-
-    public function setInvoiceAsUnpaid(Request $request)
-    {
-        if ($request['user_id'] != null && $request['invoice_id'] != null) {
-            $user = User::find($request['user_id']);
-            $invoice = Invoice::find($request['invoice_id']);
-            $invoice->date = null;
-            $invoice->isPaid = 0;
-            $invoice->save();
-            return redirect()->route('profile.show', ["user" => $user]);
-        }
-    }
-
-    /**
-     * Update athlete's subscription description and price 
-     */
-
-    public function updateSubscriptionOnAthlete(Request $request)
-    {
-        if ($request['user_id'] != null) {
-            $user = User::find($request['user_id']);
-            $athlete = $user->athlete;
-            $athlete->subscription_description = $request['subscription'] == null ? null : $request['subscription'];
-            $athlete->subscription_price = $request['price'] == null ? null : doubleval($request['price']);
-            $athlete->save();
             return redirect()->route('profile.show', ["user" => $user]);
         }
     }

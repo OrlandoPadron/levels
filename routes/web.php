@@ -50,12 +50,12 @@ Route::post('/pay', 'UserController@setMonthAsPaid')->name('profile.setMonthAsPa
 Route::post('/delpayment', 'UserController@setMonthAsNotPaid')->name('profile.setMonthAsNotPaid');
 
 //Invoices status
-Route::post('/invoicepaid', 'UserController@setInvoiceAsPaid')->name('profile.setInvoiceAsPaid');
-Route::post('/invoiceunpaid', 'UserController@setInvoiceAsUnpaid')->name('profile.setInvoiceAsUnpaid');
+Route::post('/invoicepaid', 'InvoiceController@setInvoiceAsPaid')->name('invoice.setInvoiceAsPaid');
+Route::post('/invoiceunpaid', 'InvoiceController@setInvoiceAsUnpaid')->name('invoice.setInvoiceAsUnpaid');
 
 
 //Athlete's subscription forms 
-Route::post('/updatesubscription', 'UserController@updateSubscriptionOnAthlete')->name('profile.updateSubscription');
+Route::post('/updatesubscription', 'AthleteController@updateSubscriptionOnAthlete')->name('athlete.updateSubscription');
 Route::post('/togglepayment', 'AthleteController@toggleCurrentMonthPaymentStatus')->name('athlete.toggleMonthPayment');
 
 //TrainingPlan routes

@@ -60,44 +60,46 @@
         <div class="fee-training-history">
             <p class="bold second_title">Historial de facturación <span class="light">(meses anteriores)</span></p>
             {{-- {{$invoices->links("pagination::default")}} --}}
-            <table class="fee-table">
-                <tr>
-                    <th>Período del servicio</th>
-                    <th>Fecha de la aceptación</th>
-                    <th>Tipo de entrenamiento</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                    <th>Gestionar</th>
-                </tr>
-                @foreach ($invoices as $invoice)
+            <table id="fee-table" class="fee-table">
+                <thead>
                     <tr>
-                        <td>{{$invoice->active_month}}</td>
-                        <td>{{$invoice->date}}</td>
-                        <td>{{$invoice->subscription_title}}</td>
-                        <td>{{$invoice->price}} € </td>
-                        <td style="color:{{$invoice->isPaid == 1 ? 'green' : 'red'}};">{{$invoice->isPaid == 1 ? 'Pagado' : 'Sin pagar'}}</td>
-                        <td>
-                            @if ($invoice->isPaid==0)
-                            <form action="{{route('profile.setInvoiceAsPaid')}}" method="POST">
-                                @csrf
-                                <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                                <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
-                                <button><i style="font-size: 15px;" class="fas fa-coins"></i> Pagado</button>
-                            </form>
-                            @else
-                            <form action="{{route('profile.setInvoiceAsUnpaid')}}" method="POST">
-                                @csrf
-                                <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                                <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
-                                <button><i style="font-size: 15px;" class="fas fa-times"></i> Anular pago</button>
-                            </form>
-                            @endif
-                            
-                        </td>
-                            
+                        <th>Período del servicio</th>
+                        <th>Fecha de la aceptación</th>
+                        <th>Tipo de entrenamiento</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Gestionar</th>
                     </tr>
-                    
-                @endforeach
+                </thead>
+                <tbody>
+                    @foreach ($invoices as $invoice)
+                        <tr>
+                            <td>{{$invoice->active_month}}</td>
+                            <td id="invoice_date_acceptation{{$invoice->id}}">{{$invoice->date}}</td>
+                            <td>{{$invoice->subscription_title}}</td>
+                            <td>{{$invoice->price}} € </td>
+                            <td id="invoice_payment_status{{$invoice->id}}" style="color:{{$invoice->isPaid == 1 ? 'green' : 'red'}};">{{$invoice->isPaid == 1 ? 'Pagado' : 'Sin pagar'}}</td>
+                            <td>
+                                @if ($invoice->isPaid==0)
+                                <button id="payInvoice_button{{$invoice->id}}" onclick="setInvoiceAsPaid({{$invoice->id}}, '{{date('d/m/Y')}}')"><i style="font-size: 15px;" class="fas fa-coins"></i> Pagado</button>
+                                <button style="display: none;" id="unpayInvoice_button{{$invoice->id}}" onclick="setInvoiceAsUnpaid({{$invoice->id}}, '{{date('d/m/Y')}}')"><i style="font-size: 15px;" class="fas fa-times"></i> Anular pago</button>
+                                {{-- <form action="{{route('profile.setInvoiceAsPaid')}}" method="POST">
+                                    @csrf
+                                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
+                                    <input type="text" value="{{$invoice->id}}" name="invoice_id" hidden>
+                                </form> --}}
+                                @else
+                                <button id="unpayInvoice_button{{$invoice->id}}" onclick="setInvoiceAsUnpaid({{$invoice->id}}, '{{date('d/m/Y')}}')"><i style="font-size: 15px;" class="fas fa-times"></i> Anular pago</button>
+                                <button style="display: none;" id="payInvoice_button{{$invoice->id}}" onclick="setInvoiceAsPaid({{$invoice->id}}, '{{date('d/m/Y')}}')"><i style="font-size: 15px;" class="fas fa-coins"></i> Pagado</button>
+    
+                                @endif
+                                
+                            </td>
+                                
+                        </tr>
+                        
+                    @endforeach
+                </tbody>
             </table>
             
         </div>
@@ -106,6 +108,19 @@
 @endif
 <script>
     var status = -1; 
+
+    $(document).ready(function() {
+        $('#fee-table').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+            },
+            "columnDefs": [
+                { "orderable": false, "targets": 5 },
+                { "searchable": false, "targets": 0 }
+            ],
+            "bFilter": false
+        });
+    } );
 
     function toggleMonthPayment(athlete_id, statusWhenInitialized){ 
         console.log("Toggle Month Payment");
@@ -143,6 +158,64 @@
             error: function(){
                 alert('Se ha producido un error.');
                 console.log('Error on ajax call "toggleMonthPayment" function');
+            }  
+        });
+    }
+
+    function setInvoiceAsPaid(invoice_id, date){
+        console.log('Set Invoice ' + invoice_id + ' as Paid');
+        $.ajax({
+            url: "{{route("invoice.setInvoiceAsPaid")}}",
+            type: "POST",
+            data: {
+                invoice_id: invoice_id,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                var invoice_acceptation = "#invoice_date_acceptation".concat(invoice_id);
+                var invoice_payment_status = "#invoice_payment_status".concat(invoice_id);
+                var pay_button = "#payInvoice_button".concat(invoice_id);
+                var unpay_button =  "#unpayInvoice_button".concat(invoice_id);
+
+                $(invoice_acceptation).text(date);
+                $(invoice_payment_status).css("color", "green");
+                $(invoice_payment_status).text("Pagado");
+                $(pay_button).hide();
+                $(unpay_button).show();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "setInvoiceAsPaid" function');
+            }  
+        });
+    }
+
+    function setInvoiceAsUnpaid(invoice_id, date){
+        console.log('Set Invoice ' + invoice_id + ' as Unpaid');
+        $.ajax({
+            url: "{{route("invoice.setInvoiceAsUnpaid")}}",
+            type: "POST",
+            data: {
+                invoice_id: invoice_id,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                var invoice_acceptation = "#invoice_date_acceptation".concat(invoice_id);
+                var invoice_payment_status = "#invoice_payment_status".concat(invoice_id);
+                var pay_button = "#payInvoice_button".concat(invoice_id);
+                var unpay_button =  "#unpayInvoice_button".concat(invoice_id);
+
+                $(invoice_acceptation).text("");
+                $(invoice_payment_status).css("color", "red");
+                $(invoice_payment_status).text("Sin pagar");
+                $(unpay_button).hide();
+                $(pay_button).show();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "setInvoiceAsPaid" function');
             }  
         });
     }
