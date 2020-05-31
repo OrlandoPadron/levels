@@ -503,6 +503,15 @@ table.dataTable {
     cursor: pointer;
 }
 
+.activated i {
+    font-weight: bold;
+    color: #bb133d;
+}
+
+.activated > i:hover:before {
+    font-weight: normal;
+    color: #8e6bb6;
+}
 .tutorship-options:hover:before {
     font-weight: bold;
 }

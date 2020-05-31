@@ -14,7 +14,7 @@
                    <label for="title">Título</label><br>
                    <input type="text" name="title" value="Tutoría #{{$user->athlete->tutorships->count()+1}}"><br>
                    <label>Fecha</label><br>
-                   <input type="text" name="date" value="{{date("d/m/Y")}}"><br>
+                   <input type="date" name="date" value="{{date("Y-m-d")}}"><br>
                    <label>Objetivo</label><br>
                    <input type="text" name="goal" value=""><br>
                    <label>Descripción</label><br>

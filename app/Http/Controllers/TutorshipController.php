@@ -82,9 +82,15 @@ class TutorshipController extends Controller
      * @param  \App\Tutorship  $tutorship
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tutorship $tutorship)
+    public function update(Request $request)
     {
         //
+        $tutorship = Tutorship::find($request['id_tutorship']);
+        $tutorship->title = $request['title'];
+        $tutorship->goal = $request['goal'];
+        $tutorship->date = $request['date'];
+        $tutorship->description = $request['description'];
+        $tutorship->save();
     }
 
     /**
@@ -93,9 +99,10 @@ class TutorshipController extends Controller
      * @param  \App\Tutorship  $tutorship
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tutorship $tutorship)
+    public function destroy(Request $request)
     {
-        //
+        $tutorship = Tutorship::find($request['id_tutorship']);
+        $tutorship->delete();
     }
 
 
@@ -108,7 +115,5 @@ class TutorshipController extends Controller
             $tutorship->bookmarked = 1;
         }
         $tutorship->save();
-        $user = User::find($request['user_id']);
-        return redirect()->route('profile.show', ['user' => $user]);
     }
 }
