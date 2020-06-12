@@ -38,8 +38,16 @@
                     _token: "{{csrf_token()}}",
                 },
                 success: function(){
-                    $("p#fee-details").html(subscription+'<span id="fee-monthly-price"> '+parseFloat(price)+'€ /mes</span>');
+                    if (subscription != "" && price != ""){
+                        $("p#fee-details").html(subscription+'<span id="fee-monthly-price"> '+parseFloat(price)+'€ /mes</span>');
+                        $('.subscription_needed').hide();
+                        $('.fee-training').show();
+                    }else{
+                        $('.subscription_needed').show();
+                        $('.fee-training').hide();
+                    }
                     $("#closeModal").click();
+                    
 
                 },
                 error: function(){

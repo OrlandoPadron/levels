@@ -21,8 +21,8 @@
 @endif
 <!-- Create the editor container -->
 
-{{-- <div id="editor1">
-</div> --}}
+<div id="editor1">
+</div>
   
 
 @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
@@ -55,8 +55,9 @@
             <div class="tutorship-content">
                 <div class="tutorship-description">
                     <p class="tutorship-section-title">Descripción</p>
-                    <textarea id="description_textarea_{{$tutorship->id}}" style="display: none;" name="description" rows="4" cols="50">{{$tutorship->description}}</textarea>
-                    <p id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">{{$tutorship->description}}</p>
+                    {{-- <textarea id="description_textarea_{{$tutorship->id}}" style="display: none;" name="description" rows="4" cols="50">{{$tutorship->description}}</textarea> --}}
+                    <div id="editor_container_{{$tutorship->id}}"></div>
+                    <div id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">{!!$tutorship->description!!}</div>
                 </div>
             </div>
             <div id="add_details_{{$tutorship->id}}" style="display:none;" class="tutorship-add-details">
@@ -123,17 +124,12 @@
 <script>
 
     var edit_status = 0; //Allows edit toggle between views. 
-    var quill = new Quill('#editor1', {
-        modules: {
-        toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-        ]       
-        },
-        placeholder: 'Compose an epic...',
-        theme: 'snow'  // or 'bubble'
-    });
+    // https://codepen.io/Joeao/pen/BdOGKV
+
+    // $(".ql-toolbar").remove();
+    // $(".ql-snow").remove();
+    // $("#editor1").remove();
+    var quill = []; 
     var id_container= "#tutorship-container-";
     var id_title= "#paragraph_title_";
     var id_input_title = "#input_title_";
@@ -147,6 +143,7 @@
     var id_anchor = "#anchor_edit_button_";
     var id_title_paragraph = "#paragraph_title_";
     var id_goal_paragraph = "#paragraph_goal_";
+    var editor_container = "#editor_container_";
 
     
     function setBookmark(tutorshipId){ 
@@ -181,6 +178,34 @@
         });
     }
 
+    function showQuillEditorContainer(tutorshipId){
+        
+        console.log("dentro de show editor container " + editor_container.concat(tutorshipId) );
+        var description = $(id_description_paragraph.concat(tutorshipId)).html();
+        var html_quill_editor = "<div id='quill-editor-"+tutorshipId+"'>"+description+"</div>";
+        $(editor_container.concat(tutorshipId)).append(html_quill_editor);
+        
+        quill[tutorshipId] = new Quill('#quill-editor-'.concat(tutorshipId), {
+        modules: {
+        toolbar: [
+            [{ header: [1, 2, false] }],
+            ['bold', 'italic', 'underline'],
+            ['image', 'code-block']
+        ]       
+        },
+        placeholder: 'Empieza a escribir aquí...',
+        theme: 'snow'  // or 'bubble'
+        });
+    }
+
+    function destroyQuillEditorContainer(tutorshipId){
+        $(editor_container.concat(tutorshipId)).children().remove();
+        // $(".ql-toolbar").remove();
+        // $(".ql-snow").remove();
+
+
+    }
+
     function edit(tutorshipId){
         if (edit_status == 1){
             close_editor(tutorshipId);
@@ -199,8 +224,13 @@
             $(id_textarea.concat(tutorshipId)).show();
             $(id_add_details.concat(tutorshipId)).show();
             $(id_div_edit_buttons.concat(tutorshipId)).show();
-
             $(id_anchor.concat(tutorshipId)).addClass("activated");
+            if ($(editor_container.concat(tutorshipId)).children("#quill-editor-".concat(tutorshipId)).length){
+                close_editor(tutorshipId);
+            }else{
+                showQuillEditorContainer(tutorshipId);
+
+            }
         }
 
     }
@@ -219,6 +249,7 @@
         $(id_add_details.concat(tutorshipId)).hide();
         $(id_div_edit_buttons.concat(tutorshipId)).hide();
         $(id_anchor.concat(tutorshipId)).removeClass("activated");
+        destroyQuillEditorContainer(tutorshipId);
     }
 
 
@@ -229,7 +260,8 @@
         var title = $(id_input_title.concat(tutorshipId)).val();
         var date = $(id_input_date.concat(tutorshipId)).val();
         var goal = $(id_input_goal.concat(tutorshipId)).val();
-        var description = $(id_textarea.concat(tutorshipId)).val();
+        var description = quill[tutorshipId].root.innerHTML;;
+        //quill.root.innerHTML;
 
         $.ajax({
             url: "{{route("tutorship.update")}}",
@@ -252,7 +284,7 @@
             
                 $(id_title_paragraph.concat(tutorshipId)).html(title_updated);
                 $(id_goal_paragraph.concat(tutorshipId)).html(goal_updated);
-                $(id_description_paragraph.concat(tutorshipId)).text(description);
+                $(id_description_paragraph.concat(tutorshipId)).html(description);
                 close_editor(tutorshipId);
                 
             },
@@ -264,6 +296,10 @@
 
     }
 
+    function pruebas(tutorshipId){
+        var description = quill[tutorshipId].root.innerHTML;
+        console.log(description);
+    }
 
     function deleteTutorship(tutorshipId){
         console.log("Deleting tutorship...");

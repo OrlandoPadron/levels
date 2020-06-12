@@ -11,12 +11,11 @@
 </div>
 @include('modals.paymentSettingsModal')
 @if ($user->account_activated == 0)
-    @include('page_messages.account_deactivated_message')
-    
+    @include('page_messages.account_deactivated_message')   
 @endif
-@if ($user->athlete->subscription_description == null && $user->athlete->subscription_price == null)
+<div class="subscription_needed">
     @include('page_messages.subscription_needed_message')
-@else
+</div>
 <div class="fee-training">
     <div class="fee-training-title">
         <p class="bold second_title">Detalles mensualidad actual</p>
@@ -105,7 +104,6 @@
         </div>
     @endif
 </div>
-@endif
 <script>
     var status = -1; 
 
@@ -121,6 +119,20 @@
             "bFilter": false
         });
     } );
+
+    //Payment Configuration message required. 
+    $(document).ready(function(){
+        var subs_description = "{{$user->athlete->subscription_description}}";
+        var subscription_price = "{{$user->athlete->subscription_price}}";
+        if(subs_description == "" && subscription_price == ""){
+            $('.subscription_needed').show();
+            $('.fee-training').hide();
+            
+        }else{
+            $('.subscription_needed').hide();
+            $('.fee-training').show();
+        }
+    })
 
     function toggleMonthPayment(athlete_id, statusWhenInitialized){ 
         console.log("Toggle Month Payment");
