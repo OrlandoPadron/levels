@@ -27,10 +27,11 @@
 
 @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
     {{-- @if($loop->first) --}}
-        <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
+<div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="tutorship-heading">
-                <div class="tutorship-heading-title">
-                    <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title">{{$tutorship->title}} <span id="tutorship_date" class="light">({{Date::createFromFormat('Y-m-d', $tutorship->date)->format('d/m/Y')}})</span> </p>
+                <div class="tutorship-heading-title" >
+                    <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title"> 
+                        <a class="collapse-button" onclick="toggleCollapse({{$tutorship->id}})"><i id="collapse_icon_{{$tutorship->id}}" class="far {{$loop->first ? 'fa-minus-square' : 'fa-plus-square'}}"></i></a>{{$tutorship->title}} <span id="tutorship_date" class="light">({{Date::createFromFormat('Y-m-d', $tutorship->date)->format('d/m/Y')}})</span> </p>
                     <input style="display: none;" id="input_title_{{$tutorship->id}}" type="text" name="title" value="{{$tutorship->title}}"></input>
                     <input style="display: none;" id="input_date_{{$tutorship->id}}" type="date" name="date" value="{{$tutorship->date}}"></input>
                     <p id="paragraph_goal_{{$tutorship->id}}" class="tutorship-goal"><span class="tutorship-number"> #{{$tutorship->tutorship_number}} </span>{{$tutorship->goal}}</p>
@@ -54,14 +55,12 @@
             </div>
             <div class="tutorship-content">
                 <div class="tutorship-description">
-                    <p class="tutorship-section-title">Descripción</p>
                     {{-- <textarea id="description_textarea_{{$tutorship->id}}" style="display: none;" name="description" rows="4" cols="50">{{$tutorship->description}}</textarea> --}}
-                    <div id="editor_container_{{$tutorship->id}}"></div>
-                    <div id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">{!!$tutorship->description!!}</div>
+                    <div id="editor_container_{{$tutorship->id}}" class="quill-editor-container"></div>
+                    <div id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">
+                        {!!$tutorship->description!!}
+                    </div>
                 </div>
-            </div>
-            <div id="add_details_{{$tutorship->id}}" style="display:none;" class="tutorship-add-details">
-                <button>Añadir detalles</button>
             </div>
             <div id="edit_buttons_{{$tutorship->id}}" style="display:none;" class="tutorship-buttons">
                 <button onclick="savechanges({{$tutorship->id}})" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>
@@ -144,6 +143,7 @@
     var id_title_paragraph = "#paragraph_title_";
     var id_goal_paragraph = "#paragraph_goal_";
     var editor_container = "#editor_container_";
+    var collapse_icon = "#collapse_icon_";
 
     
     function setBookmark(tutorshipId){ 
@@ -188,10 +188,16 @@
         quill[tutorshipId] = new Quill('#quill-editor-'.concat(tutorshipId), {
         modules: {
         toolbar: [
-            [{ header: [1, 2, false] }],
-            ['bold', 'italic', 'underline'],
-            ['image', 'code-block']
-        ]       
+            [{ 'header': 1 }, { 'header': 2 }, {'header': 3}],     
+            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'align': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'indent': '-1'}, { 'indent': '+1' }],        
+            ['link'],
+
+        ]     
         },
         placeholder: 'Empieza a escribir aquí...',
         theme: 'snow'  // or 'bubble'
@@ -214,6 +220,11 @@
             console.log('Edit function');
             edit_status = 1; //Next time edit button is triggered, close_editor will be called. 
             //Show edit interface. 
+            if ($(id_container.concat(tutorshipId)).hasClass("tutorship-collapse")){
+                $(id_container.concat(tutorshipId)).removeClass("tutorship-collapse");
+                $("#collapse-icon").removeClass("fa-plus-square");
+                $("#collapse-icon").addClass("fa-minus-square");
+            }
             $(id_title.concat(tutorshipId)).hide();
             $(id_goal.concat(tutorshipId)).hide();
             $(id_description_paragraph.concat(tutorshipId)).hide();
@@ -260,7 +271,7 @@
         var title = $(id_input_title.concat(tutorshipId)).val();
         var date = $(id_input_date.concat(tutorshipId)).val();
         var goal = $(id_input_goal.concat(tutorshipId)).val();
-        var description = quill[tutorshipId].root.innerHTML;;
+        var description = quill[tutorshipId].getLength() == 1 ? "<p>Esta tutoría no tiene contenido.</p>" : quill[tutorshipId].root.innerHTML;
         //quill.root.innerHTML;
 
         $.ajax({
@@ -278,7 +289,8 @@
                 var date_noformat = new Date(Date.parse(date));
                 var formatted_date = date_noformat.getDate() + "/" + (date_noformat.getMonth() + 1) + "/" + date_noformat.getFullYear();
 
-                var title_updated = title.concat(' <span id="tutorship_date" class="light">('+formatted_date+')</span>');
+                var title_updated = title.concat('<span id="tutorship_date" class="light">('+formatted_date+')</span>');
+                var title_updated = '<a class="collapse-button" onclick="toggleCollapse('+tutorshipId+')"><i id="collapse-icon" class="far fa-minus-square"></i></a>'.concat(title_updated);
                 var tutorship_number = $(id_goal_paragraph.concat(tutorshipId)).children('.tutorship-number').text();
                 var goal_updated = '<span class="tutorship-number">'+tutorship_number+'</span>'+goal;
             
@@ -296,9 +308,20 @@
 
     }
 
-    function pruebas(tutorshipId){
-        var description = quill[tutorshipId].root.innerHTML;
-        console.log(description);
+    function toggleCollapse(tutorshipId){
+        if ($(id_container.concat(tutorshipId)).hasClass("tutorship-collapse")){
+            $(id_container.concat(tutorshipId)).removeClass("tutorship-collapse");
+            $(collapse_icon.concat(tutorshipId)).removeClass("fa-plus-square");
+            $(collapse_icon.concat(tutorshipId)).addClass("fa-minus-square");
+
+        }else{
+            $(id_container.concat(tutorshipId)).addClass("tutorship-collapse");
+            $(collapse_icon.concat(tutorshipId)).removeClass("fa-minus-square");
+            $(collapse_icon.concat(tutorshipId)).addClass("fa-plus-square");
+
+
+        }
+
     }
 
     function deleteTutorship(tutorshipId){

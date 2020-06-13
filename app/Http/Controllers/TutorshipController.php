@@ -43,7 +43,7 @@ class TutorshipController extends Controller
             'title' => $request['title'] != null ? $request['title'] : 'Tutoría #' . $tutorshipNumber,
             'date' => $request['date'] != null ? $request['date'] : date('d/m/Y'),
             'goal' => $request['goal'] != null ? $request['goal'] : "Objetivo no especificado.",
-            'description' => $request['description'] != null ? $request['description'] : "Sin descripción",
+            'description' => $request['description'] != null ? $request['description'] : "<p>Esta tutoría no tiene contenido.</p>",
             'athlete_associated' => $request['athlete_associated'],
             'bookmarked' => ($request['bookmark'] == 'bookmark_set') ? 1 : 0,
             'tutorship_number' => $tutorshipNumber,

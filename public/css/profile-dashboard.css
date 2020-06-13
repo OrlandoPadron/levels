@@ -601,10 +601,85 @@ table.dataTable {
 .tutorship-collapse > .tutorship-heading {
     padding-bottom: 25px;
 }
-.tutorship-collapse > .tutorship-heading:hover {
-    cursor: pointer;
+
+.tutorship-collapse > .tutorship-content,
+.tutorship-collapse > .tutorship-heading > .separation-tutorship {
+    display: none;
 }
 
 .tutorship-number {
     opacity: 50%;
+}
+
+/* Quill editor inside tutorships */
+.tutorship-section-content p {
+    margin-top: 35px;
+    margin-bottom: 10px;
+}
+
+.tutorship-section-content h1 {
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+.tutorship-section-content h2 {
+    margin-top: 30px;
+    margin-bottom: -15px;
+}
+
+.tutorship-section-content ul {
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.tutorship-section-content br {
+    display: none;
+}
+
+.tutorship-section-content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+.ql-align-center {
+    text-align: center;
+}
+.ql-align-right {
+    text-align: right;
+}
+.ql-align-justify {
+    text-align: justify;
+}
+
+/* Tutorship edit mode -> inputs styles */
+.tutorship-heading-title input {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    border-radius: 8px;
+    padding: 7px;
+    padding-left: 10px;
+    border: 1.8px solid #6013bb;
+}
+
+.tutorship-heading-title input:focus {
+    outline: none !important;
+}
+.tutorship-heading-title input:last-child {
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+.ql-toolbar {
+    margin-top: 15px;
+}
+
+/* Collapse button*/
+a.collapse-button :hover {
+    color: #6013bb;
+    cursor: pointer;
+}
+.collapse-button {
+    color: #8e6bb6;
+    margin-right: 10px;
 }

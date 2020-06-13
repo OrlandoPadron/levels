@@ -36,10 +36,10 @@ ul.items {
     margin-top: 40%;
 }
 
-a:active,
-a:link,
-a:visited,
-a:hover {
+.navbar a:active,
+.navbar a:link,
+.navbar a:visited,
+.navbar a:hover {
     color: white;
     text-decoration: none;
 }
