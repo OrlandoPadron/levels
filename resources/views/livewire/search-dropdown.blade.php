@@ -36,7 +36,7 @@
                     class="user_info"
                     @if($loop->last) @keydown.tab="isOpen = false" @endif 
                     >
-                        <a href="{{route('profile.show', $user->id)}}">{{$user->name . ' ' .$user->surname}}</a>
+                        <a href="{{route('profile.show', [$user->id, 'general'])}}">{{$user->name . ' ' .$user->surname}}</a>
                         @if(Auth::user()->id == $user->id)
                     <span class="user_info_usertype">{{$user->isTrainer == 1 ? 'Entrenador' : 'Deportista'}} (Tú) </span>
                         @else

@@ -1,9 +1,9 @@
 <div class="heading-section">
     @if ($user->account_activated == 1)
     <button class="btn-add-basic button-position"
-                @click="addTutorshipSession=!addTutorshipSession" 
+                @click="addTutorshipSession=!addTutorshipSession"
                 @keydown.escape.window="addTutorshipSession=false">
-        <i style="margin-right: 10px;" class="fas fa-people-arrows"></i> Añadir tutoría
+        <i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir tutoría
     </button>
 
     {{-- <form action="{{route('tutorship.toggleBookmark')}}" method="POST">
@@ -23,11 +23,35 @@
 
 <div id="editor1">
 </div>
-  
-
-@foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
-    {{-- @if($loop->first) --}}
-<div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
+<div id="all-tutorships-container">
+    <!-- Add new tutorship JS-->
+    <div id="tutorship-container-newTutorship" style="display: none" class="tutorship-container shadow-container">
+        <div class="tutorship-heading">
+            <div class="tutorship-heading-title" >
+                <input id="input_title_newTutorship" type="text" name="title" value="Tutoría #{{$user->athlete->tutorships->count()+1}}"></input>
+                <input id="input_date_newTutorship" type="date" name="date" value="{{date("Y-m-d")}}"></input>
+                <input id="input_goal_newTutorship" type="text" name="goal" value="" placeholder="Objetivo de la tutoría"></input>
+            </div>
+            <div class="tutorship-options">
+            </div>
+            <div class="separation-tutorship"></div>
+        </div>
+        <div class="tutorship-content">
+            <div class="tutorship-description">
+                <div id="editor_container_newTutorship" class="quill-editor-container"></div>
+                <div id="description_paragrahp_newTutorship" class="tutorship-section-content">
+                </div>
+            </div>
+        </div>
+        <div id="edit_buttons_newTutorship" class="tutorship-buttons">
+            <button onclick="savechanges('newTutorship')" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>
+            <button onclick="close_editor('newTutorship')" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
+        </div> 
+    </div>
+    <!-- End Add new tutorship JS-->
+    @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
+        {{-- @if($loop->first) --}}
+        <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="tutorship-heading">
                 <div class="tutorship-heading-title" >
                     <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title"> 
@@ -67,9 +91,11 @@
                 <button onclick="close_editor({{$tutorship->id}})" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
             </div> 
         </div>
-        
-@endforeach
 
+
+    @endforeach
+        
+</div>
 
 {{-- <div class="tutorship-container tutorship-collapse shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
     <div class="tutorship-heading">
@@ -289,7 +315,7 @@
                 var date_noformat = new Date(Date.parse(date));
                 var formatted_date = date_noformat.getDate() + "/" + (date_noformat.getMonth() + 1) + "/" + date_noformat.getFullYear();
 
-                var title_updated = title.concat('<span id="tutorship_date" class="light">('+formatted_date+')</span>');
+                var title_updated = title.concat('<span id="tutorship_date" class="light"> ('+formatted_date+')</span>');
                 var title_updated = '<a class="collapse-button" onclick="toggleCollapse('+tutorshipId+')"><i id="collapse-icon" class="far fa-minus-square"></i></a>'.concat(title_updated);
                 var tutorship_number = $(id_goal_paragraph.concat(tutorshipId)).children('.tutorship-number').text();
                 var goal_updated = '<span class="tutorship-number">'+tutorship_number+'</span>'+goal;
@@ -322,6 +348,16 @@
 
         }
 
+    }
+
+    function addNewTutorship(date){
+        //Form params
+        var user_id = {{$user->id}};
+        var title = "Tutoría #".concat({{$user->athlete->tutorships->count()+1}});
+
+        $("#tutorship-container-newTutorship").show();
+
+        
     }
 
     function deleteTutorship(tutorshipId){

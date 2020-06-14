@@ -614,7 +614,7 @@ table.dataTable {
 /* Quill editor inside tutorships */
 .tutorship-section-content p {
     margin-top: 35px;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .tutorship-section-content h1 {
@@ -628,7 +628,7 @@ table.dataTable {
 }
 
 .tutorship-section-content ul {
-    margin-top: 45px;
+    margin-top: 25px;
     margin-bottom: 45px;
 }
 
@@ -669,12 +669,23 @@ table.dataTable {
     margin-top: 10px;
     margin-bottom: 25px;
 }
+.tutorship-heading-title input:first-child {
+    margin-top: 15px;
+}
 
 .ql-toolbar {
     margin-top: 15px;
 }
 
 /* Collapse button*/
+
+a.collapse-button:active,
+a.collapse-button:link,
+a.collapse-button:visited,
+a.collapse-button:hover {
+    color: #8e6bb6;
+    text-decoration: none;
+}
 a.collapse-button :hover {
     color: #6013bb;
     cursor: pointer;

@@ -82,7 +82,7 @@ class TrainingPlanController extends Controller
         $athlete = Athlete::find($request['athlete_associated']);
         $id_user = $athlete->user->id;
         //dump($id_user);
-        return redirect()->route('profile.show', ['user' => $id_user]);
+        return redirect()->route('profile.show', ['user' => $id_user, 'tab' => 'plan']);
     }
 
     /**
@@ -129,6 +129,6 @@ class TrainingPlanController extends Controller
     {
         $plan = TrainingPlan::findOrFail($request['id_plan']);
         $plan->delete();
-        return redirect()->route('profile.show', ['user' => $request['user_id']]);
+        return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);
     }
 }

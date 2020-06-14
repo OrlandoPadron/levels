@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Athlete;
+use App\Invoice;
 use App\Tutorship;
 use Illuminate\Http\Request;
 
@@ -50,7 +51,7 @@ class TutorshipController extends Controller
         ]);
 
         $user = User::find($request['user_id']);
-        return redirect()->route('profile.show', ['user' => $user]);
+        return redirect()->route('profile.show', ['user' => $user, 'tab' => 'tutorias']);
     }
 
     /**

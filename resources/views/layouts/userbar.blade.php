@@ -30,7 +30,7 @@
         <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" style="height: 180px;">
         @endif
           <div class="dropdown-button-userbar-content-item">
-          <a href="{{route('profile.show', Auth::user()->id)}}"><i class="fas fa-user"></i>Mi perfil</a>
+          <a href="{{route('profile.show', [Auth::user()->id, "general"])}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>
           <div class="dropdown-button-userbar-content-item">
           <a href="{{route('profileEdit.show')}}"><i class="fas fa-user-edit"></i>Gestionar perfil</a>

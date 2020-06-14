@@ -28,7 +28,7 @@ Route::get('/home', 'HomeController@index')->name('home');
  */
 // Profile
 Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit.show');
-Route::get('/profile/{user}/dashboard', 'UserController@showProfile')->name('profile.show');
+Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
 
 //Files uploads and downloads

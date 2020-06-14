@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     //Shows user's profile
-    public function showProfile($id)
+    public function showProfile($id, $tab)
     {
         $user = User::find($id);
         if ($user->isTrainer == 1) {
@@ -29,7 +29,7 @@ class UserController extends Controller
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
                 'invoices' => $invoices,
-                'tab' => 'General',
+                'tab' => $tab != null ? $tab : 'General',
             ]);
         }
     }
@@ -103,7 +103,7 @@ class UserController extends Controller
         $trainer->trained_by_me = $array;
         $trainer->save();
 
-        return redirect()->route('profile.show', ["user" => $user]);
+        return redirect()->route('profile.show', ["user" => $user, 'tab' => 'general']);
     }
 
 
@@ -122,7 +122,7 @@ class UserController extends Controller
         $trainer->save();
 
         $user = User::find($request['user_id']);
-        return redirect()->route('profile.show', ["user" => $user]);
+        return redirect()->route('profile.show', ["user" => $user, 'tab' => 'general']);
     }
 
 
@@ -158,7 +158,7 @@ class UserController extends Controller
             $user = User::find($request['user_id']);
             $user->account_activated = 1;
             $user->save();
-            return redirect()->route('profile.show', ["user" => $user]);
+            return redirect()->route('profile.show', ["user" => $user, "tab" => 'general']);
         }
     }
 
@@ -174,7 +174,7 @@ class UserController extends Controller
             $user = User::find($request['user_id']);
             $user->account_activated = 0;
             $user->save();
-            return redirect()->route('profile.show', ["user" => $user]);
+            return redirect()->route('profile.show', ["user" => $user, "tab" => 'general']);
         }
     }
 }
