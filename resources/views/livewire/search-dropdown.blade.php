@@ -1,5 +1,5 @@
 <div class="search-container" x-data="{ isOpen: true}" @click.away="isOpen = false">
-    <form action="/" method="GET" autocomplete="off">
+    <form action="/" method="GET" autocomplete="off"  x-on:keydown.enter.prevent>
       <div class="wrap-search">
         <input 
         wire:model.debounce.500ms="search" 

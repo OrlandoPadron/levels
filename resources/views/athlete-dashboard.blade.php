@@ -35,36 +35,36 @@
         <div class="navbar-dashboard">
             <div class="container-dashboard">
                 <div class="navbar-dashboard-menu">
-                    <ul>
-                        <li x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
-                        <li x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}"><a href="#">Plan entrenamiento</a></li>
-                        <li x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
-                        <li x-on:click.prevent @click="sectionTab = 'tutorias'" :class="{'active-dashboard': sectionTab === 'tutorias'}"><a href="#">Tutorías</a></li>
-                        <li x-on:click.prevent @click="sectionTab = 'cuotas'" :class="{'active-dashboard': sectionTab === 'cuotas'}"><a href="#">Cuotas</a></li>
-                        <li x-on:click.prevent @click="sectionTab = 'cuenta'" :class="{'active-dashboard': sectionTab === 'cuenta'}"><a href="#">Cuenta</a></li>
+                    <ul id="navbar-dashboard-items">
+                        <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
+                        <li id="plan-navbar" onclick="changeUrlParameters('plan')" x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}"><a href="#">Plan entrenamiento</a></li>
+                        <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
+                        <li id="tutorias-navbar" onclick="changeUrlParameters('tutorias')" x-on:click.prevent @click="sectionTab = 'tutorias'" :class="{'active-dashboard': sectionTab === 'tutorias'}"><a href="#">Tutorías</a></li>
+                        <li id="cuotas-navbar" onclick="changeUrlParameters('cuotas')" x-on:click.prevent @click="sectionTab = 'cuotas'" :class="{'active-dashboard': sectionTab === 'cuotas'}"><a href="#">Cuotas</a></li>
+                        <li id="cuenta-navbar" onclick="changeUrlParameters('cuenta')" x-on:click.prevent @click="sectionTab = 'cuenta'" :class="{'active-dashboard': sectionTab === 'cuenta'}"><a href="#">Cuenta</a></li>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- End 'Navbar dashboard' -->
         <div class="content-dashboard">
-            <div class="container-dashboard">
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
+            <div id="container-dashboard" class="container-dashboard">
+                <div id="general-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
                     @include('sections_dashboard.general')
                 </div>
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
+                <div id="plan-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
                     @include('sections_dashboard.trainingPlans')
                 </div>
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
+                <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                     @include('sections_dashboard.files')
                 </div>
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'tutorias'">
+                <div id="tutorias-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'tutorias'">
                     @include('sections_dashboard.tutorship')
                 </div>
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuotas'">
+                <div id="cuotas-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuotas'">
                     @include('sections_dashboard.payment')
                 </div>
-                <div x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
+                <div id="cuenta-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
                     @include('sections_dashboard.account')
                 </div>
             </div>
@@ -80,3 +80,68 @@
 </div>
 
 
+<script>
+    var oldUrl = window.location.href; 
+    const regexGetPageSection = /([^\/]+$)/g;
+    
+    window.onpopstate= function(event){
+        if (event.state['section'] !== null){
+            var section = "#"+event.state['section'];
+            var sectionContainer = "-section-container";
+            console.log(section.concat(sectionContainer));
+            $("#container-dashboard").children().hide();
+            $("#navbar-dashboard-items").children().removeClass('active-dashboard');
+            $(section.concat("-navbar")).addClass('active-dashboard');
+            $(section.concat(sectionContainer)).show();
+        }
+    };
+
+    window.onload = function() {
+        var section = oldUrl.match(regexGetPageSection);
+        document.title = getSectionTitle(section[0]);
+        history.replaceState({
+            section:section[0]
+            }, getSectionTitle(section[0]), window.location.href);
+    };
+
+    function changeUrlParameters(tab){
+        var url = oldUrl.replace(regexGetPageSection, tab); 
+        
+        window.history.pushState({
+            section: tab
+        }, getSectionTitle(tab), url);
+        document.title = getSectionTitle(tab);
+
+    }
+
+    function getSectionTitle(tab){
+        var title = "Levels ";
+        switch(tab){
+
+            case 'general':
+                title = title.concat("| General");
+                break;
+            case 'plan':
+                title = title.concat("| Plan");
+                break;
+            case 'archivos':
+                title = title.concat("| Archivos");
+                break;
+            case 'tutorias':
+                title = title.concat("| Tutorías");
+                break;
+            case 'cuotas':
+                title = title.concat("| Cuotas");
+                break;
+            case 'cuenta':
+                title = title.concat("| Cuenta");
+                break;
+            default:
+                title =title.concat("| App");
+                break;
+
+        }
+        return title; 
+    }
+
+</script>
