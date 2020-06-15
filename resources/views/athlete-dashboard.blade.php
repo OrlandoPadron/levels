@@ -4,7 +4,14 @@
             <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
             <div class="text-info-dashboard">
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
-                <label id="user_type" class="primary-blue-color">{{$user->isTrainer == 0 ? 'Deportista' : 'Entrenador'}}</label>
+                <div class="text-info-user-type">
+                    <label id="user_type" class="primary-blue-color">{{$user->isTrainer == 0 ? 'Deportista' : 'Entrenador'}}</label>
+                    <div class="athlete-accounts-links">
+                        <a href="https://www.strava.com/?hl=es" target="_blank">Strava</a>
+                        <a href="https://connect.garmin.com/" target="_blank">Garmin Connect</a>
+                        <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
+                    </div>
+                </div>
                 <button class="btn-purple-basic"
                 @click="openShowProfileData=!openShowProfileData" 
                 @keydown.escape.window="openShowProfileData=false"
