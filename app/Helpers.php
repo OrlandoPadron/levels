@@ -50,3 +50,9 @@ function getTrainersNameByTrainerId($trainer_id)
     $trainer = Trainer::find($trainer_id)->user;
     return $trainer->name . ' ' . $trainer->surname;
 }
+
+function getAthleteById($id)
+{
+    $user = Athlete::find($id)->user;
+    return $user;
+}
