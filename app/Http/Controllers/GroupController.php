@@ -53,9 +53,13 @@ class GroupController extends Controller
      * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function show(Group $group)
+    public function show($id, $tab)
     {
-        //
+        $group = Group::find($id);
+        return view('show-group', [
+            'group' => $group,
+            'tab' => $tab != null ? $tab : 'General',
+        ]);
     }
 
     /**

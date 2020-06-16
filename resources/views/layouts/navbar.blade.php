@@ -1,7 +1,7 @@
 <div class="navbar" x-data="{openNewGroupForm: false}">
     <h1 class="app-name-navbar">Levels</h1>
     <ul class="items">
-      <div class="item-list active">
+      <div class="item-list {{request()->routeIs('profile.show') || request()->routeIs('home') ? 'active' : ''}}">
         <li>
           <div class="icon">
             <i class="fas fa-dumbbell"></i>
@@ -11,7 +11,7 @@
           </div>
         </li>
       </div>
-      <div class="item-list">
+      <div class="item-list {{request()->routeIs('group.show') ? 'active' : ''}}">
         <li>
           <div class="icon">
             <i class="fas fa-user-friends"></i>
@@ -37,7 +37,7 @@
           <ul class="group-list">
             @foreach(Auth::user()->trainer->groups->sortBy('title') as $group)
               <li>
-                <a href="">{{$group->title}}</a>
+                <a href="{{route('group.show', [$group->id, 'general'])}}">{{$group->title}}</a>
               </li>
             @endforeach
           </ul>

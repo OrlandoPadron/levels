@@ -1,7 +1,4 @@
 @extends('layouts.base-inside-app')
-@section('head')
-<link href="{{asset('css/profile-dashboard.css')}}" rel="stylesheet" />
-@endsection
 @section('content')
 
 @if($user->isTrainer == 1)

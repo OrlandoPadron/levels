@@ -1,0 +1,46 @@
+.content-group-dashboard {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 280px 60px 1fr;
+    grid-template-areas:
+        "groupinfo"
+        "navbar-dashboard"
+        "content-dashboard";
+    row-gap: 15px;
+}
+
+.groupinfo {
+    grid-area: groupinfo;
+    display: flex;
+    padding-top: 40px;
+}
+
+.groupinfo img {
+    width: 180px;
+    height: 180px;
+    margin-top: 0px;
+    margin-right: 3%;
+    border-radius: 10%;
+    border: 4px solid #000f2d;
+}
+
+.group-header {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+}
+
+#group-type {
+    font-size: 24px;
+    margin-bottom: -34px;
+}
+
+#group-title {
+    font-size: 50px;
+    margin-bottom: -15px;
+}
+#group-description {
+    font-size: 18px;
+}

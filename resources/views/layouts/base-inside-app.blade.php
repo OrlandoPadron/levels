@@ -10,6 +10,8 @@
     <link href="{{asset('css/navbar.css')}}" rel="stylesheet" />
     <link href="{{asset('css/userbar.css')}}" rel="stylesheet" />
     <link href="{{asset('css/grid.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/group-dashboard.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/profile-dashboard.css')}}" rel="stylesheet" />
     @livewireStyles
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

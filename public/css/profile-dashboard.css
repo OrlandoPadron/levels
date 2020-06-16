@@ -74,7 +74,7 @@
     align-items: center;
     align-content: center;
     border-left: 1.5px solid rgba(0, 0, 0, 0.3);
-    padding-left: 18px;
+    padding-left: 15px;
 }
 
 .athlete-accounts-links a {
@@ -146,6 +146,7 @@
 
 /* NAVBAR DASHBOARD */
 .navbar-dashboard {
+    grid-area: navbar-dashboard;
     margin-bottom: 0px;
 }
 .navbar-dashboard-menu ul {

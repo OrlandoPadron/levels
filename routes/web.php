@@ -75,3 +75,6 @@ Route::post('/destroy', 'TutorshipController@destroy')->name('tutorship.destroy'
 //Creation
 Route::post('/newGroup', 'GroupController@store')->name('group.store');
 Route::get('/group', 'GroupController@index')->name('group.show');
+
+//View
+Route::get('/group/{id}/{tab}', 'GroupController@show')->name('group.show');
