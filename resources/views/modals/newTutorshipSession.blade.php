@@ -1,5 +1,5 @@
 <!-- Payment settings -->
-<div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="addTutorshipSession">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="addTutorshipSession">
     <!-- Modal content -->
        <div class="modal-content" @click.away="addTutorshipSession=false">
            <div class="modal-header">

@@ -1,5 +1,5 @@
 <!-- Create New Group Modal -->
-<div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="openNewGroupForm">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="openNewGroupForm">
     <!-- Modal content -->
        <div class="modal-content" @click.away="openNewGroupForm=false">
            <div class="modal-header">

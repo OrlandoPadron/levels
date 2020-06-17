@@ -1,5 +1,5 @@
 <!-- 'Additional Info' modal-->
-<div class="modal" x-show.transition.duration.250ms.opacity="openShowProfileData">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="openShowProfileData">
 
     <!-- Modal content -->
     <div class="modal-content" @click.away="openShowProfileData=false">

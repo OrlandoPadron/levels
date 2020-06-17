@@ -74,7 +74,11 @@ Route::post('/destroy', 'TutorshipController@destroy')->name('tutorship.destroy'
  */
 //Creation
 Route::post('/newGroup', 'GroupController@store')->name('group.store');
-Route::get('/group', 'GroupController@index')->name('group.show');
 
 //View
-Route::get('/group/{id}/{tab}', 'GroupController@show')->name('group.show');
+Route::get('/group/{group}/{tab}', 'GroupController@show')->name('group.show');
+
+
+//Group Member methods  
+Route::post('/addToGroup', 'GroupController@addMember')->name('group.addMember');
+Route::post('/removeFromGroup', 'GroupController@removeMember')->name('group.removeMember');

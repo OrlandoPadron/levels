@@ -1,6 +1,7 @@
 <?php
 
 use App\User;
+use App\Group;
 use App\Athlete;
 use App\Trainer;
 use Illuminate\Support\Facades\Auth;
@@ -51,8 +52,35 @@ function getTrainersNameByTrainerId($trainer_id)
     return $trainer->name . ' ' . $trainer->surname;
 }
 
-function getAthleteById($id)
+function getUserUsingAthleteId($id)
 {
     $user = Athlete::find($id)->user;
     return $user;
+}
+
+/**
+ * Given a group, function returns all group members as User Model array. 
+ */
+function getGroupUsers($groupId)
+{
+    $athletesIds = Group::find($groupId)->athletes;
+    if (empty($athletesIds)) return collect();
+    $usersArray = collect();
+
+    foreach ($athletesIds as $athleteId) {
+        $user = Athlete::find($athleteId)->user;
+        $usersArray->add($user);
+    }
+    return $usersArray;
+}
+
+
+function athleteIsNotMemberOfThisGroup($groupId, $athlete_id)
+{
+    $groupMembers = (array) Group::find($groupId)->athletes;
+    if (in_array($athlete_id, $groupMembers)) {
+        return false;
+    } else {
+        return true;
+    }
 }

@@ -1,5 +1,5 @@
 <!-- Create New Training Plan Modal -->
-<div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="openNewPlan">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="openNewPlan">
  <!-- Modal content -->
     <div class="modal-content" @click.away="openNewPlan=false">
         <div class="modal-header">

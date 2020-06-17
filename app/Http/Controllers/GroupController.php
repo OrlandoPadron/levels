@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Group;
 use Illuminate\Http\Request;
 
@@ -94,5 +95,41 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         //
+    }
+
+
+
+    /**
+     * Add members to a specific group. 
+     */
+
+    public function addMember(Request $request)
+    {
+        if (isset($request['athletesId'])) {
+            $group = Group::find($request['group_id']);
+            $groupMembers = (array) $group->athletes;
+            foreach ($request['athletesId'] as $athleteId) {
+                if (!in_array($athleteId, $groupMembers)) {
+                    array_push($groupMembers, $athleteId);
+                }
+            }
+            $group->athletes = $groupMembers;
+            $group->save();
+            return redirect()->route('group.show', ["group" => $group, 'tab' => 'miembros']);
+        }
+    }
+    /**
+     * Remove member from a specific group. 
+     */
+
+    public function removeMember(Request $request)
+    {
+        if (isset($request['user_id'])) {
+            $athleteId = User::find($request['user_id'])->athlete->id;
+            $group = Group::find($request['group_id']);
+            $groupMembers = (array) $group->athletes;
+            $group->athletes = array_values(array_diff($groupMembers, (array) $athleteId));
+            $group->save();
+        }
     }
 }

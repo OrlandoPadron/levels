@@ -56,22 +56,22 @@
         <!-- End 'Navbar dashboard' -->
         <div class="content-dashboard">
             <div id="container-dashboard" class="container-dashboard">
-                <div id="general-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
+                <div id="general-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
                     @include('sections_dashboard.general')
                 </div>
-                <div id="plan-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
+                <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
                     @include('sections_dashboard.trainingPlans')
                 </div>
-                <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
+                <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                     @include('sections_dashboard.files')
                 </div>
-                <div id="tutorias-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'tutorias'">
+                <div id="tutorias-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'tutorias'">
                     @include('sections_dashboard.tutorship')
                 </div>
-                <div id="cuotas-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuotas'">
+                <div id="cuotas-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuotas'">
                     @include('sections_dashboard.payment')
                 </div>
-                <div id="cuenta-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
+                <div id="cuenta-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
                     @include('sections_dashboard.account')
                 </div>
             </div>
