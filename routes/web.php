@@ -65,9 +65,9 @@ Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan
 
 //Tutorship
 Route::post('/tutorship', 'TutorshipController@store')->name('tutorship.store');
-Route::post('/bookmark', 'TutorshipController@toggleBookmark')->name('tutorship.toggleBookmark');
-Route::post('/update', 'TutorshipController@update')->name('tutorship.update');
-Route::post('/destroy', 'TutorshipController@destroy')->name('tutorship.destroy');
+Route::post('/tbookmark', 'TutorshipController@toggleBookmark')->name('tutorship.toggleBookmark');
+Route::post('/tupdate', 'TutorshipController@update')->name('tutorship.update');
+Route::post('/tdestroy', 'TutorshipController@destroy')->name('tutorship.destroy');
 
 /**
  * GROUP ROUTES
@@ -82,3 +82,4 @@ Route::get('/group/{group}/{tab}', 'GroupController@show')->name('group.show');
 //Group Member methods  
 Route::post('/addToGroup', 'GroupController@addMember')->name('group.addMember');
 Route::post('/removeFromGroup', 'GroupController@removeMember')->name('group.removeMember');
+Route::post('/gdestroy', 'GroupController@destroy')->name('group.destroy');

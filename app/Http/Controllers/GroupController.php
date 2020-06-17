@@ -92,9 +92,13 @@ class GroupController extends Controller
      * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $group)
+    public function destroy(Request $request)
     {
-        //
+        if (isset($request['group_id'])) {
+            $group = Group::find($request['group_id']);
+            $group->delete();
+            return view('home');
+        }
     }
 
 

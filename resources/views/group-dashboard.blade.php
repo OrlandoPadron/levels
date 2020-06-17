@@ -36,6 +36,7 @@
             <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
             </div>
             <div id="gestionar-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'gestion'">
+                @include('sections_groups.manage')
             </div>
         </div>
     </div>
