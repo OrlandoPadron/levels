@@ -1,7 +1,12 @@
 <div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'miembros', addMembers: false, addTutorshipSession: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
-            <img src="/uploads/group_avatars/{{$group->group_image}}" alt="profile-avatar">
+            <div class="img-group-container">
+                <img src="/uploads/group_avatars/{{$group->group_image}}" alt="profile-avatar">
+                <a href="">
+                    <i class="fas fa-pencil-alt"></i>
+                </a>
+            </div>
             <div class="group-header">
                 <p id="group-type">Grupo</p>
                 <h1 id="group-title">{{$group->title}}</h1>
