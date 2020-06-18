@@ -56,6 +56,13 @@
     box-shadow: 4px 12px 9px -1px rgba(0, 0, 0, 0.15);
 }
 
+.inner-shadow {
+    /*This inner box-shadow solves some issues with with areas in the image.*/
+    -moz-box-shadow: inset 30px 30px 30px 40px #000000;
+    -webkit-box-shadow: inset 30px 30px 30px 40px #000000;
+    box-shadow: inset 30px 30px 30px 40px #000000;
+}
+
 /* Used on main info buttons */
 .btn-purple-basic {
     width: fit-content;

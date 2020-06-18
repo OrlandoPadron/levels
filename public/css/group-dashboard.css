@@ -23,10 +23,6 @@
     margin-top: 0px;
     border-radius: 10%;
     border: 4px solid #000f2d;
-    /*This inner box-shadow solves some issues with with areas in the image.*/
-    -moz-box-shadow: inset 30px 30px 30px 40px #000000;
-    -webkit-box-shadow: inset 30px 30px 30px 40px #000000;
-    box-shadow: inset 30px 30px 30px 40px #000000;
 }
 
 .group-header {
@@ -62,7 +58,7 @@
     position: relative;
     width: 180px;
     height: 180px;
-    margin-right: 30px;
+    margin-right: 50px;
 }
 
 .img-group-container img {
@@ -87,4 +83,7 @@
 }
 .img-group-container:hover a {
     opacity: 1;
+}
+.img-group-container:hover {
+    cursor: pointer;
 }

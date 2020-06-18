@@ -1,7 +1,7 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false,}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'mensajes', paymentSettings: false, addTutorshipSession: false,}">
     <div class="container-dashboard">
         <div class="userinfo">
-            <img src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
+            <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
             <div class="text-info-dashboard">
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
                 <div class="text-info-user-type">
@@ -45,6 +45,7 @@
                     <ul id="navbar-dashboard-items">
                         <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
                         <li id="plan-navbar" onclick="changeUrlParameters('plan')" x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}"><a href="#">Planes de entrenamiento</a></li>
+                        <li id="mensajes-navbar" onclick="changeUrlParameters('mensajes')" x-on:click.prevent @click="sectionTab = 'mensajes'" :class="{'active-dashboard': sectionTab === 'mensajes'}"><a href="#">Mensajes</a></li>
                         <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
                         <li id="tutorias-navbar" onclick="changeUrlParameters('tutorias')" x-on:click.prevent @click="sectionTab = 'tutorias'" :class="{'active-dashboard': sectionTab === 'tutorias'}"><a href="#">Tutorías</a></li>
                         <li id="cuotas-navbar" onclick="changeUrlParameters('cuotas')" x-on:click.prevent @click="sectionTab = 'cuotas'" :class="{'active-dashboard': sectionTab === 'cuotas'}"><a href="#">Cuotas</a></li>
@@ -61,6 +62,9 @@
                 </div>
                 <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
                     @include('sections_dashboard.trainingPlans')
+                </div>
+                <div id="mensajes-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'mensajes'">
+                    @include('sections_dashboard.messages')
                 </div>
                 <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                     @include('sections_dashboard.files')
@@ -130,6 +134,9 @@
                 break;
             case 'plan':
                 title = title.concat("| Plan");
+                break;
+            case 'mensajes':
+                title = title.concat("| Mensajes");
                 break;
             case 'archivos':
                 title = title.concat("| Archivos");

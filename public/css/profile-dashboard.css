@@ -745,3 +745,103 @@ a.collapse-button :hover {
     color: #8e6bb6;
     margin-right: 10px;
 }
+
+/*Messages Section*/
+.message-container {
+    width: 100%;
+    height: fit-content;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+    display: grid;
+    grid-template-rows: 100px 1fr;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "heading"
+        "message-content"
+        "message-replies";
+    margin-top: 30px;
+    margin-bottom: 50px;
+    gap: 10px;
+}
+
+.message-pinned {
+    border-top: 20px solid #6013bb;
+}
+
+.message-heading {
+    grid-area: heading;
+    display: grid;
+    height: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto;
+    grid-template-areas: "message-details options";
+    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+    margin-bottom: 100px;
+    align-items: center;
+}
+.message-details {
+    grid-area: message-details;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.message-details img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid black;
+}
+
+.message-details-autor {
+    margin-left: 20px;
+}
+.message-details-autor p {
+    margin: 0;
+    font-size: 18px;
+}
+.message-details-autor p:last-child {
+    font-size: 16px;
+}
+
+.message-details-autor span {
+    font-weight: normal;
+    margin-left: 2px;
+}
+
+.message-options {
+    grid-area: options;
+    display: flex;
+    flex-direction: row;
+    font-size: 26px;
+    align-items: center;
+    justify-content: flex-end;
+    color: #8e6bb6;
+}
+
+.message-options a {
+    margin-left: 16px;
+}
+
+.message-options a:hover {
+    color: #6013bb;
+    cursor: pointer;
+}
+
+.pinned {
+    color: #6013bb;
+}
+
+a.pinned:hover {
+    color: #8e6bb6;
+}
+
+.message-content {
+    grid-area: message-content;
+    height: 100%;
+    padding-left: 50px;
+    padding-right: 50px;
+}

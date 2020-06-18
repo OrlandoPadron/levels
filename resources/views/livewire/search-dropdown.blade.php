@@ -28,6 +28,7 @@
                 <li>
 
                     <img
+                    class="inner-shadow"
                     src="/uploads/avatars/{{$user->user_image}}"
                     alt="profile-pic"
                     class="user_picture"

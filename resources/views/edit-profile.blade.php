@@ -11,7 +11,7 @@
 <div class="content-edit">
     <div class="image-pack">
       <div class="image-container">
-        <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile_picture" />
+        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile_picture" />
         <form action="{{route('profile.update_avatar')}}" enctype="multipart/form-data" method="POST" id="myForm">
           @csrf
           <label id="swap-image" for="file-upload">Cambiar imagen</label>
