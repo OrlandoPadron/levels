@@ -504,10 +504,14 @@ table.dataTable {
     padding-right: 50px;
     height: auto;
     width: 100%;
-    color: #6013bb;
-    font-size: 24px;
+    color: #000f2d;
+    font-size: 18px;
     align-items: left;
     justify-self: left;
+}
+
+.tutorship-heading-title > .container-title {
+    font-size: 22px;
 }
 
 #tutorship_date {
@@ -515,12 +519,13 @@ table.dataTable {
 }
 
 .tutorship-heading-title > p.container-title {
-    margin-bottom: -10px;
+    margin-bottom: -12px;
 }
 
 .tutorship-goal {
-    font-size: 18px;
+    font-size: 16px;
     margin-bottom: 10px;
+    color: #8e6bb6;
 }
 
 .tutorship-options {
@@ -571,9 +576,9 @@ table.dataTable {
     grid-area: bar;
     height: 0px;
     margin-left: 50px;
-    background-color: red;
     width: 98%;
-    border-bottom: 1px solid rgba(96, 19, 187, 0.75);
+    margin-top: 10px;
+    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
 }
 
 .tutorship-content {
@@ -591,12 +596,6 @@ table.dataTable {
     align-items: left;
     justify-self: left;
     margin-bottom: 50px;
-}
-
-.tutorship-section-title {
-    font-weight: 500;
-    margin-bottom: -5px;
-    color: #6013bb;
 }
 
 .tutorship-section-content {
@@ -660,6 +659,7 @@ table.dataTable {
 
 .tutorship-number {
     opacity: 50%;
+    color: #8e6bb6;
 }
 
 /* Quill editor inside tutorships */
@@ -743,11 +743,12 @@ a.collapse-button :hover {
 }
 .collapse-button {
     color: #8e6bb6;
+    font-size: 24px;
     margin-right: 10px;
 }
 
-/*Messages Section*/
-.message-container {
+/*Forum Section*/
+.post-container {
     width: 100%;
     height: fit-content;
     border-radius: 10px;
@@ -755,22 +756,22 @@ a.collapse-button :hover {
     margin-right: auto;
     background-color: white;
     display: grid;
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: 100px 1fr 70px;
     grid-template-columns: auto;
     grid-template-areas:
         "heading"
-        "message-content"
-        "message-replies";
+        "post-content"
+        "post-footer";
     margin-top: 30px;
     margin-bottom: 50px;
     gap: 10px;
 }
 
-.message-pinned {
+.post-pinned {
     border-top: 20px solid #6013bb;
 }
 
-.message-heading {
+.post-heading {
     grid-area: heading;
     display: grid;
     height: 100%;
@@ -778,41 +779,43 @@ a.collapse-button :hover {
     padding-right: 50px;
     grid-template-columns: 70% 30%;
     grid-template-rows: auto;
-    grid-template-areas: "message-details options";
+    grid-template-areas: "post-details options";
     border-bottom: 1px solid rgba(134, 134, 134, 0.55);
     margin-bottom: 100px;
     align-items: center;
 }
-.message-details {
-    grid-area: message-details;
+.post-details {
+    grid-area: post-details;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-.message-details img {
+.post-details img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 2px solid black;
+    border: 2px solid #000f2d;
 }
 
-.message-details-autor {
+.post-details-autor {
     margin-left: 20px;
 }
-.message-details-autor p {
+.post-details-autor p {
     margin: 0;
+    color: #000f2d;
     font-size: 18px;
 }
-.message-details-autor p:last-child {
+.post-details-autor p:last-child {
     font-size: 16px;
+    color: #8e6bb6;
 }
 
-.message-details-autor span {
+.post-container span {
     font-weight: normal;
     margin-left: 2px;
 }
 
-.message-options {
+.post-options {
     grid-area: options;
     display: flex;
     flex-direction: row;
@@ -822,11 +825,11 @@ a.collapse-button :hover {
     color: #8e6bb6;
 }
 
-.message-options a {
+.post-options a {
     margin-left: 16px;
 }
 
-.message-options a:hover {
+.post-options a:hover {
     color: #6013bb;
     cursor: pointer;
 }
@@ -839,9 +842,72 @@ a.pinned:hover {
     color: #8e6bb6;
 }
 
-.message-content {
-    grid-area: message-content;
+.post-content {
+    grid-area: post-content;
     height: 100%;
     padding-left: 50px;
     padding-right: 50px;
+    padding-bottom: 20px;
+}
+
+.blurry-effect {
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+    mask-image: linear-gradient(180deg, #000 60%, transparent);
+    overflow: hidden;
+    height: 250px;
+}
+
+.post-footer {
+    grid-area: post-footer;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    font-size: 16px;
+    color: #000f2d;
+    border-top: 1px solid rgba(134, 134, 134, 0.55);
+}
+
+.post-footer i {
+    margin-right: 10px;
+}
+
+.post-footer p {
+    margin-left: 20px;
+    justify-self: flex-end;
+    padding-left: 15px;
+    border-left: 1px solid rgba(134, 134, 134, 0.55);
+}
+
+.post-footer a:hover {
+    color: #6013bb;
+    cursor: pointer;
+}
+
+/*Post hover effect*/
+.post-details:hover {
+    cursor: pointer;
+}
+
+/*Collapse Post*/
+div.post-container.post-collapse {
+    grid-template-rows: 80px 70px;
+    grid-template-columns: auto;
+    grid-template-areas:
+        "heading"
+        "post-footer";
+    padding-top: 10px;
+}
+.post-collapse > .post-heading {
+    border-bottom: none;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.post-collapse > .post-content {
+    display: none;
 }
