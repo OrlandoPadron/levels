@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Forum;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 
 /*
@@ -30,6 +31,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit.show');
 Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
+
+// Forum
+Route::get('/profile/{user}/dashboard/foro/{thread}', 'ForumController@show')->name('thread.show');
 
 //Files uploads and downloads
 Route::post('/upload', 'UserController@uploadFile')->name('profile.uploadFile');
@@ -68,6 +72,8 @@ Route::post('/tutorship', 'TutorshipController@store')->name('tutorship.store');
 Route::post('/tbookmark', 'TutorshipController@toggleBookmark')->name('tutorship.toggleBookmark');
 Route::post('/tupdate', 'TutorshipController@update')->name('tutorship.update');
 Route::post('/tdestroy', 'TutorshipController@destroy')->name('tutorship.destroy');
+
+
 
 /**
  * GROUP ROUTES

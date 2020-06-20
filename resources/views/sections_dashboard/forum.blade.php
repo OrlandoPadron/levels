@@ -17,7 +17,7 @@
 </div>
 <div class="post-container shadow-container post-pinned">
     <div class="post-heading">
-        <div class="post-details">
+        <div class="post-details" onclick="goToThreads()">
             <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">Empieza la temporada</p>
@@ -79,3 +79,11 @@
         <input type="text" name="" id="">
     </div> --}}
 </div>
+
+<script>
+    function goToThreads(){
+        document.location.href = "{{route('thread.show', [$user->id, 1])}}";
+        
+    }
+
+</script>

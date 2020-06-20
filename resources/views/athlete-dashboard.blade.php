@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'tutorias', paymentSettings: false, addTutorshipSession: false,}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false,}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -64,7 +64,12 @@
                     @include('sections_dashboard.trainingPlans')
                 </div>
                 <div id="foro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'foro'">
-                    @include('sections_dashboard.forum')
+                    @if(Request::get('thread_view') == 0)
+                        @include('sections_dashboard.forum')
+                    
+                    @else
+                    @include('sections_dashboard.thread')
+                    @endif
                 </div>
                 <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                     @include('sections_dashboard.files')
