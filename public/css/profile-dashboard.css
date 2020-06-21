@@ -592,14 +592,13 @@ table.dataTable {
     height: auto;
     width: 90%;
     color: black;
-    font-size: 18px;
     align-items: left;
     justify-self: left;
     margin-bottom: 50px;
 }
 
 .tutorship-section-content {
-    font-weight: 100;
+    font-weight: normal;
     margin-bottom: 30px;
 }
 
@@ -662,7 +661,7 @@ table.dataTable {
     color: #8e6bb6;
 }
 
-/* Quill editor inside tutorships */
+/* Quill editor inside tutorships  */
 .tutorship-section-content p {
     margin-top: 35px;
     margin-bottom: 5px;

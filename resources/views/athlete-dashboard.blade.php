@@ -130,7 +130,7 @@
     }
 
     function getSectionTitle(tab){
-        var title = "Levels ";
+        var title = "{{getName($user->id)}} ";
         switch(tab){
 
             case 'general':
@@ -139,8 +139,8 @@
             case 'plan':
                 title = title.concat("| Plan");
                 break;
-            case 'mensajes':
-                title = title.concat("| Mensajes");
+            case 'foro':
+                title = title.concat("| Foro");
                 break;
             case 'archivos':
                 title = title.concat("| Archivos");
