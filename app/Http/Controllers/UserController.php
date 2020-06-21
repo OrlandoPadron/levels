@@ -25,11 +25,13 @@ class UserController extends Controller
         } else {
             $trainingPlans = $user->athlete->trainingPlans;
             $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
+            $threads = $user->threads;
             return view('show-profile', [
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
                 'invoices' => $invoices,
                 'tab' => $tab != null ? $tab : 'General',
+                'threads' => $threads,
             ]);
         }
     }

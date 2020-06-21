@@ -66,7 +66,6 @@
                 <div id="foro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'foro'">
                     @if(Request::get('thread_view') == 0)
                         @include('sections_dashboard.forum')
-                    
                     @else
                     @include('sections_dashboard.thread')
                     @endif

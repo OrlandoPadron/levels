@@ -52,6 +52,26 @@ function getTrainersNameByTrainerId($trainer_id)
     return $trainer->name . ' ' . $trainer->surname;
 }
 
+
+/**
+ * Given an user id, returns his name. 
+ */
+
+function getName($user_id)
+{
+    $user = User::find($user_id);
+    return $user->name . ' ' . $user->surname;
+}
+
+/**
+ * Given an user id, return its user model. 
+ */
+
+function getUser($user_id)
+{
+    return User::findOrFail($user_id);
+}
+
 function getUserUsingAthleteId($id)
 {
     $user = Athlete::find($id)->user;

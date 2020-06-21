@@ -30,4 +30,9 @@ class Group extends Model
     {
         return $this->belongsTo(Trainer::class);
     }
+
+    public function threads()
+    {
+        return $this->hasMany(ForumThread::class, 'group_associated');
+    }
 }

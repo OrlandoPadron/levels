@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
-use App\Forum;
+use App\ForumReply;
 use Illuminate\Http\Request;
 
-class ForumController extends Controller
+class ForumReplyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -42,23 +41,21 @@ class ForumController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Forum  $forum
+     * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function show($userid, $thread)
+    public function show(ForumReply $forumReply)
     {
         //
-        $user = User::find($userid);
-        return redirect()->route('profile.show', ["user" => $user, 'tab' => 'foro', 'thread' => $thread]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Forum  $forum
+     * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function edit(Forum $forum)
+    public function edit(ForumReply $forumReply)
     {
         //
     }
@@ -67,10 +64,10 @@ class ForumController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Forum  $forum
+     * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Forum $forum)
+    public function update(Request $request, ForumReply $forumReply)
     {
         //
     }
@@ -78,10 +75,10 @@ class ForumController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Forum  $forum
+     * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Forum $forum)
+    public function destroy(ForumReply $forumReply)
     {
         //
     }

@@ -11,12 +11,14 @@
                 @csrf
                 <input type="text" name="group_id" hidden value="{{$group->id}}">
                 <ul id="ul_addMembers">
-                @foreach(Auth::user()->trainer->trained_by_me as $key=>$athlete_id)
-                    <li id="li_member_{{$athlete_id}}" style="{{athleteIsNotMemberOfThisGroup($group->id, $athlete_id) ? '' : 'display: none;'}}">
-                        <p>{{getUserUsingAthleteId($athlete_id)->name . ' ' . getUserUsingAthleteId($athlete_id)->surname}}</p>
-                        <input type="checkbox" name="athletesId[]" value="{{$athlete_id}}" id="cbox_{{$key}}"> <label for="cbox_{{$key}}">Añadir</label> 
-                    </li>               
-                @endforeach
+                @if(Auth::user()->trainer->trained_by_me != null)
+                    @foreach(Auth::user()->trainer->trained_by_me as $key=>$athlete_id)
+                        <li id="li_member_{{$athlete_id}}" style="{{athleteIsNotMemberOfThisGroup($group->id, $athlete_id) ? '' : 'display: none;'}}">
+                            <p>{{getUserUsingAthleteId($athlete_id)->name . ' ' . getUserUsingAthleteId($athlete_id)->surname}}</p>
+                            <input type="checkbox" name="athletesId[]" value="{{$athlete_id}}" id="cbox_{{$key}}"> <label for="cbox_{{$key}}">Añadir</label> 
+                        </li>               
+                    @endforeach
+                @endif
                     </ul>
                     <button type="submit">Confirmar</button>
             </form>

@@ -32,9 +32,6 @@ Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit
 Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
 
-// Forum
-Route::get('/profile/{user}/dashboard/foro/{thread}', 'ForumController@show')->name('thread.show');
-
 //Files uploads and downloads
 Route::post('/upload', 'UserController@uploadFile')->name('profile.uploadFile');
 

@@ -63,4 +63,9 @@ class User extends Authenticatable
             return $this->hasOne(Athlete::class);
         }
     }
+
+    public function threads()
+    {
+        return $this->hasMany(ForumThread::class, 'user_associated');
+    }
 }
