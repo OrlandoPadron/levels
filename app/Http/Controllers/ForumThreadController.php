@@ -44,9 +44,9 @@ class ForumThreadController extends Controller
      * @param  \App\ForumThread  $forumThread
      * @return \Illuminate\Http\Response
      */
-    public function show(ForumThread $forumThread)
+    public function show($threadId)
     {
-        //
+        return view("sections_dashboard.thread", ["thread" => ForumThread::findOrFail($threadId)]);
     }
 
     /**

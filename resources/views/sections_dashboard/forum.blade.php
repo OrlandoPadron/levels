@@ -1,6 +1,6 @@
 <div class="heading-section">
     @if ($user->account_activated == 1)
-    <button class="btn-add-basic button-position"
+    <button id="add-btn-forum" class="btn-add-basic button-position"
                 @click="addTutorshipSession=!addTutorshipSession"
                 @keydown.escape.window="addTutorshipSession=false">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo tema
@@ -13,14 +13,19 @@
         <button type="submit">pruebas</button>
     </form> --}}
     @endif
-    <h1 class="primary-blue-color">Foro</h1>
+   
+    <h1 id="forum-header" class="primary-blue-color">Foro</h1>
+ 
 </div>
+<div id="open-thread-container">
+</div>
+
 {{-- {{$threads->count()}} --}}
 @if($threads->count() != 0)
 @foreach ($threads->sortDesc() as $thread)
 <div class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}} {{$loop->first ? '' : 'post-collapse'}}">
     <div class="post-heading">
-        <div class="post-details" onclick="goToThreads()">
+        <div class="post-details" onclick="goToThreads({{$thread->id}})">
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
@@ -53,8 +58,27 @@
 @endif
 
 <script>
-    function goToThreads(){
-        
+    function goToThreads(thread_id){
+        $("#forum-header").html('<i style="margin-right: 15px;" class="fas fa-chevron-circle-left"></i>');
+        $("#forum-header").append("Volver atrás");
+
+        $("#forum-header").attr("onclick", 'closeThread()');
+        $("#forum-header").addClass("clickable");
+        $(".post-container").hide();
+        $("#add-btn-forum").hide();
+        $( "#open-thread-container" ).show();
+        $( "#open-thread-container" ).load( "/thread/".concat(thread_id));
     }
+
+    function closeThread(){
+        $("#forum-header").text("Foro");
+        $(".post-container").show();
+        $("#add-btn-forum").show();
+        $("#forum-header").removeAttr("onclick");
+        $("#forum-header").removeClass("clickable");
+        $( "#open-thread-container" ).hide();
+    }
+    
+
 
 </script>

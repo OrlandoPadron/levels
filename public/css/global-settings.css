@@ -15,6 +15,15 @@
     font-weight: bold;
 }
 
+.clickable {
+    width: fit-content;
+}
+
+.clickable:hover {
+    cursor: pointer;
+    text-decoration: underline;
+    filter: brightness(150%);
+}
 .underlined {
     border-bottom: 1px solid black;
     padding-bottom: 10px;
@@ -54,6 +63,11 @@
 .shadow-container {
     -webkit-box-shadow: 4px 12px 9px -1px rgba(0, 0, 0, 0.15);
     box-shadow: 4px 12px 9px -1px rgba(0, 0, 0, 0.15);
+}
+
+.shadow-editor {
+    -webkit-box-shadow: 2px 7px 5px -1px rgba(0, 0, 0, 0.15);
+    box-shadow: 2px 7px 5px -1px rgba(0, 0, 0, 0.15);
 }
 
 .inner-shadow {
