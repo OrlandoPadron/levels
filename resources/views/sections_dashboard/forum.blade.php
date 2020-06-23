@@ -6,12 +6,13 @@
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo tema
     </button>
 
-    {{-- <form action="{{route('tutorship.toggleBookmark')}}" method="POST">
+    <form action="{{route('reply.destroy')}}" method="POST">
         @csrf
-        <input type="text" name="user_id" value="22">
-        <input type="text" name="id_tutorship" value="6">
+        <input type="text" name="reply_id" value="3">
+        {{-- <input type="text" name="description" value="Prueba">
+        <input type="text" name="author" value="{{Auth::user()->id}}"> --}}
         <button type="submit">pruebas</button>
-    </form> --}}
+    </form>
     @endif
    
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>

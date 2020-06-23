@@ -16,7 +16,7 @@
     </div>
     <div class="post-content">
         <div>
-            <p>{{$thread->description}}</p>
+            {!!$thread->description!!}
         </div>
     </div>
 </div>
@@ -29,14 +29,15 @@
     </div>
     <div class="footer-add-reply">
         <a>Cancelar</a>
-        <button class="btn-purple-basic ">Responder</button>
+        <button onclick="newReply({{$thread->id}})" class="btn-purple-basic ">Responder</button>
     </div>
 </div>
 
 <h2>Respuestas</h2>
+<div id="all-replies">
 @if($thread->replies->count() != 0)
-    @foreach($thread->replies as $key => $reply)
-    <div class="reply-container shadow-container">
+    @foreach($thread->replies->sortDesc() as $key => $reply)
+    <div id="reply-container-{{$reply->id}}" class="reply-container shadow-container">
         <div class="reply-heading">
             <div class="reply-details">
                 <img src="/uploads/avatars/{{getUser($reply->author)->user_image}}" alt="user_img">
@@ -47,26 +48,28 @@
             </div>
             <div class="reply-options">
                 <a id="anchor_edit_button_" onclick="edit()"><i class="far fa-edit"></i></a>
-                <a onclick="deleteTutorship()"><i class="fas fa-trash"></i></a>
+                <a onclick="deleteReply({{$reply->id}})"><i class="fas fa-trash"></i></a>
             </div>
         </div>
         <div class="reply-content">
             <div>
-                <p>{{$reply->description}}</p>
+                {!!$reply->description!!}
             </div>
         </div>
     </div>
     @endforeach
 
+    
 @else
-<p>Sin respuestas</p>
+<p id="no_replies">Sin respuestas</p>
 @endif
+</div>
 
 <script>
-    var quill = new Quill('#editor-add-reply', {
+    var reply_container= "#reply-container-";
+    var quill_newReply = new Quill('#editor-add-reply', {
         modules: {
         toolbar: [
-            [{ 'size': ['small', false, 'large'] }],  // custom dropdown
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
             [{ 'align': [] }],
@@ -77,4 +80,66 @@
         placeholder: 'Puedes responder desde aquí...',
         theme: 'snow'  // or 'bubble'
     });
+
+    function newReply(thread_id){
+        if (quill_newReply.getLength() > 1){
+            var description = quill_newReply.root.innerHTML;
+            var reply;
+            $.ajax({
+                    url: "{{route("reply.store")}}",
+                    type: "POST",
+                    data: {
+                        thread_id: thread_id,
+                        description: description,
+                        author: 26,
+                        _token: "{{csrf_token()}}",
+                    },
+                    success: function(replyId){
+                        $.ajax({ 
+                            type: "GET",   
+                            url: "/component/reply/".concat(replyId),   
+                            async: false,
+                            success : function(text)
+                            {
+                                reply= text;
+                                $('#no_replies').remove();
+                                $('#all-replies').prepend(reply);
+                            }
+                        });
+                        quill_newReply.setContents([]);
+                        
+                    },
+                    error: function(){
+                        console.log('Error on ajax call "newReply" function');
+                    }  
+                });
+        }  
+            
+
+    }
+
+    function deleteReply(replyId){
+        console.log("Deleting reply...");
+
+        $.ajax({
+            url: "{{route("reply.destroy")}}",
+            type: "POST",
+            data: {
+                reply_id: replyId,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(repliesRemaining){
+                $(reply_container.concat(replyId)).hide();
+                if (repliesRemaining == 0){
+                    $('#all-replies').prepend('<p>Sin respuestas</p>');
+
+                }
+                
+            },
+            error: function(){
+                console.log('Error on ajax call "deleteReply" function');
+            }  
+        });
+
+    }
 </script>

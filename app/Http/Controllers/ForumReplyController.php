@@ -24,7 +24,6 @@ class ForumReplyController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -35,7 +34,14 @@ class ForumReplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request != null) {
+            $reply = ForumReply::create([
+                'thread_id' => $request['thread_id'],
+                'description' => $request['description'],
+                'author' => $request['author'],
+            ]);
+            return $reply->id;
+        }
     }
 
     /**
@@ -44,9 +50,9 @@ class ForumReplyController extends Controller
      * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function show(ForumReply $forumReply)
+    public function show($forumReplyId)
     {
-        //
+        return view("sections_dashboard.components.replyComponent", ["reply" => ForumReply::findOrFail($forumReplyId)]);
     }
 
     /**
@@ -78,8 +84,11 @@ class ForumReplyController extends Controller
      * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ForumReply $forumReply)
+    public function destroy(Request $request)
     {
-        //
+        $reply = ForumReply::find($request['reply_id']);
+        $thread_id = $reply->thread_id;
+        $reply->delete();
+        return ForumReply::where('thread_id', $thread_id)->count();
     }
 }

@@ -33,7 +33,12 @@ Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->nam
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
 
 // Forum, threads and replies 
+Route::post('/storeReply', 'ForumReplyController@store')->name('reply.store');
+Route::post('/destroyReply', 'ForumReplyController@destroy')->name('reply.destroy');
+
+// ->> JQ LOAD COMPONENTS 
 Route::get('/thread/{thread}', 'ForumThreadController@show')->name('thread.show');
+Route::get('/component/reply/{reply}', 'ForumReplyController@show')->name('reply.show');
 
 //Files uploads and downloads
 Route::post('/upload', 'UserController@uploadFile')->name('profile.uploadFile');
