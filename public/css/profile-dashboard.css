@@ -478,7 +478,6 @@ table.dataTable {
     grid-template-areas:
         "heading"
         "details"
-        "add-details"
         "buttons";
     margin-top: 30px;
     margin-bottom: 50px;
@@ -600,22 +599,6 @@ table.dataTable {
 .tutorship-section-content {
     font-weight: normal;
     margin-bottom: 30px;
-}
-
-.tutorship-add-details {
-    grid-area: add-details;
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    margin-top: -25px;
-    padding-left: 50px;
-    margin-bottom: 80px;
-    padding-right: 50px;
-    height: auto;
-    color: black;
-    font-size: 18px;
-    align-items: left;
-    justify-self: left;
 }
 
 .tutorship-buttons {
@@ -846,14 +829,15 @@ a.pinned:hover {
     height: 100%;
     padding-left: 50px;
     padding-right: 50px;
-    padding-bottom: 20px;
+    padding-bottom: 0px;
 }
 
 .blurry-effect {
     -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
     mask-image: linear-gradient(180deg, #000 60%, transparent);
     overflow: hidden;
-    height: 250px;
+    min-height: 100px;
+    max-height: 250px;
 }
 
 .post-footer {
@@ -1044,7 +1028,7 @@ div.post-container.post-collapse {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
-.ql-container {
+.editor-add-reply > .ql-container {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     min-height: 120px;
@@ -1069,4 +1053,52 @@ div.post-container.post-collapse {
 .footer-add-reply a:hover {
     cursor: pointer;
     color: #6013bb;
+}
+
+/* THREAD EDIT COMMAND*/
+.thread_editor_buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 50px;
+    height: auto;
+    color: black;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -40px;
+}
+
+.thread_editor_buttons button {
+    width: fit-content;
+}
+.thread_editor_buttons button:last-of-type {
+    margin-left: 15px;
+    width: 130px;
+}
+
+/*REPLY EDIT COMMAND*/
+.reply_editor_buttons {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 30px;
+    height: auto;
+    color: black;
+    font-size: 18px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.reply_editor_buttons button {
+    width: fit-content;
+}
+.reply_editor_buttons button:last-of-type {
+    margin-left: 15px;
+    width: 130px;
 }

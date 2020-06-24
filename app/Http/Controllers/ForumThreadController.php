@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\ForumThread;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,16 @@ class ForumThreadController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        ForumThread::create([
+            'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',
+            'description' => $request['description'] != null ? $request['description'] : "<p>Este hilo no tiene contenido.</p>",
+            'author' => $request['created_by'],
+            'user_associated' => $request['user_associated'],
+        ]);
+
+        $user = User::find($request['user_associated']);
+        return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
     }
 
     /**
@@ -67,9 +77,11 @@ class ForumThreadController extends Controller
      * @param  \App\ForumThread  $forumThread
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ForumThread $forumThread)
+    public function update(Request $request)
     {
-        //
+        $thread = ForumThread::find($request['id_thread']);
+        $thread->description = $request['description'] != null ? $request['description'] : 'Contenido no disponible';
+        $thread->save();
     }
 
     /**
@@ -78,8 +90,14 @@ class ForumThreadController extends Controller
      * @param  \App\ForumThread  $forumThread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ForumThread $forumThread)
+    public function destroy(Request $request)
     {
-        //
+        $thread = ForumThread::find($request['thread_id']);
+        $thread->delete();
+
+        if ($request['return_to_forum'] == 1) {
+            $user = $thread->model;
+            return redirect()->route('profile.show', ["user" => $user, 'tab' => 'foro']);
+        }
     }
 }

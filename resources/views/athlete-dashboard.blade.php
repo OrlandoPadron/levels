@@ -1,4 +1,4 @@
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false,}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false,}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">

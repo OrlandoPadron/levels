@@ -73,9 +73,11 @@ class ForumReplyController extends Controller
      * @param  \App\ForumReply  $forumReply
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ForumReply $forumReply)
+    public function update(Request $request)
     {
-        //
+        $reply = ForumReply::find($request['id_reply']);
+        $reply->description = $request['description'] != null ? $request['description'] : 'Contenido no disponible';
+        $reply->save();
     }
 
     /**

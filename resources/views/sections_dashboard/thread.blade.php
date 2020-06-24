@@ -1,25 +1,32 @@
 
-<div class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}}">
+@include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => false])
+
+{{-- <div class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}}">
     <div class="post-heading">
         <div class="post-details">
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
-                <p>Creado por <span>{{getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($thread->created_at->diffForHumans())}})</span></span></p>
+                <p>{{$thread->created_at == $thread->updated_at ? 'Creado ' : 'Modificado '}} por <span>{{getName($thread->author)}}<span id="thread_date_{{$thread->id}}" class="italic" style="margin-left: 5px;">({{$thread->created_at == $thread->updated_at ? ucfirst($thread->created_at->diffForHumans()) : $thread->updated_at->diffForHumans()}})</span></span></p>
             </div>
         </div>
         <div class="post-options">
-            <a id="anchor_edit_button_" onclick="edit()"><i class="far fa-edit"></i></a>
+            <a id="thread_edit_button_{{$thread->id}}" onclick="editThread({{$thread->id}})"><i class="far fa-edit"></i></a>
             <a onclick="deleteTutorship()"><i class="fas fa-trash"></i></a>
             <a class="{{$thread->pinned ? 'pinned' : ''}}""><i class="fas fa-thumbtack"></i></a>
         </div>
     </div>
     <div class="post-content">
-        <div>
+        <div id="thread_editor_container_{{$thread->id}}"></div>
+        <div id="thread_description_{{$thread->id}}">
             {!!$thread->description!!}
         </div>
+        <div id="thread_editor_buttons_{{$thread->id}}" class="thread_editor_buttons" style="display: none;">
+            <button onclick="saveThreadChanges({{$thread->id}})" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>
+            <button onclick="closeThreadEditor({{$thread->id}})" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
+        </div> 
     </div>
-</div>
+</div> --}}
 <div class="add-reply">
     <div class="top-add-reply">
         <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="">
@@ -37,26 +44,7 @@
 <div id="all-replies">
 @if($thread->replies->count() != 0)
     @foreach($thread->replies->sortDesc() as $key => $reply)
-    <div id="reply-container-{{$reply->id}}" class="reply-container shadow-container">
-        <div class="reply-heading">
-            <div class="reply-details">
-                <img src="/uploads/avatars/{{getUser($reply->author)->user_image}}" alt="user_img">
-                <div class="reply-details-autor">
-                    <p class="bold">RE: <span class="light">{{$thread->title}}</span></p>
-                    <p>{{getName($reply->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($reply->created_at->diffForHumans())}})</span></span></p>
-                </div>
-            </div>
-            <div class="reply-options">
-                <a id="anchor_edit_button_" onclick="edit()"><i class="far fa-edit"></i></a>
-                <a onclick="deleteReply({{$reply->id}})"><i class="fas fa-trash"></i></a>
-            </div>
-        </div>
-        <div class="reply-content">
-            <div>
-                {!!$reply->description!!}
-            </div>
-        </div>
-    </div>
+        @include('sections_dashboard.components.replyComponent', ["reply" => $reply])
     @endforeach
 
     
@@ -66,7 +54,91 @@
 </div>
 
 <script>
+    //Threads JS
+    var quillThreads = [];
+    var quill_thread_editor_container = "#thread_editor_container_";
+    var anchor_thread_edit_button = "#thread_edit_button_";
+    var thread_edit_buttons = "#thread_editor_buttons_";
+    var thread_description = "#thread_description_";
+
+
+    function editThread(threadId){
+        if (quillThreads[threadId] != null){
+            closeThreadEditor(threadId);
+            
+        }else{
+            //Show edit interface.
+            $(thread_edit_buttons.concat(threadId)).show();
+            $(anchor_thread_edit_button.concat(threadId)).addClass('activated');
+            $(thread_description.concat(threadId)).hide();
+
+            showQuillThreadEditor(threadId);
+        }
+    }
+
+    function showQuillThreadEditor(threadId){
+        var description = $(thread_description.concat(threadId)).html();
+        var html_quill_editor = "<div id='quill-editor-"+threadId+"'>"+description+"</div>";
+        $(quill_thread_editor_container.concat(threadId)).append(html_quill_editor);
+        
+        quillThreads[threadId] = new Quill('#quill-editor-'.concat(threadId), {
+        modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'align': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link'],
+
+        ]     
+        },
+        placeholder: 'Empieza a escribir aquí...',
+        theme: 'snow'  // or 'bubble'
+        });
+
+    }
+
+    function saveThreadChanges(threadId){
+        var description = quillThreads[threadId].getLength() == 1 ? "<p>Contenido eliminado.</p>" : quillThreads[threadId].root.innerHTML;
+        $.ajax({
+            url: "{{route("thread.update")}}",
+            type: "POST",
+            data: {
+                id_thread: threadId,
+                description: description,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                var date_span = "#thread_date_".concat(threadId);
+                $(date_span).text("(Modificado ahora mismo)");
+                $(thread_description.concat(threadId)).html(description);
+                $("#gthread_description_".concat(threadId)).html(description);
+                closeThreadEditor(threadId);
+                
+            },
+            error: function(){
+                console.log('Error on ajax call "saveThreadChanges" function');
+            }  
+        });
+    }
+
+    function closeThreadEditor(threadId){
+        //Hide edit interface. 
+        $(thread_edit_buttons.concat(threadId)).hide();
+        $(thread_description.concat(threadId)).show();
+        $(anchor_thread_edit_button.concat(threadId)).removeClass('activated');
+        destroyQuillEditorContainer(threadId, true);
+    }
+
+
+
+    //Replies JS
+    var quillReplies = [];
     var reply_container= "#reply-container-";
+    var quill_reply_editor_container = "#editor_container_";
+    var reply_description = "#reply_description_";
+    var reply_edit_buttons = "#reply_editor_buttons_";
+    var anchor_replay_edit_button = "#reply_edit_button_";
     var quill_newReply = new Quill('#editor-add-reply', {
         modules: {
         toolbar: [
@@ -81,7 +153,7 @@
         theme: 'snow'  // or 'bubble'
     });
 
-    function newReply(thread_id){
+    function newReply(threadId){
         if (quill_newReply.getLength() > 1){
             var description = quill_newReply.root.innerHTML;
             var reply;
@@ -89,7 +161,7 @@
                     url: "{{route("reply.store")}}",
                     type: "POST",
                     data: {
-                        thread_id: thread_id,
+                        thread_id: threadId,
                         description: description,
                         author: 26,
                         _token: "{{csrf_token()}}",
@@ -118,6 +190,76 @@
 
     }
 
+    function showQuillEditor(replyId){
+        var description = $(reply_description.concat(replyId)).html();
+        var html_quill_editor = "<div id='quill-editor-"+replyId+"'>"+description+"</div>";
+        $(quill_reply_editor_container.concat(replyId)).append(html_quill_editor);
+        
+        quillReplies[replyId] = new Quill('#quill-editor-'.concat(replyId), {
+        modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+            [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+            [{ 'align': [] }],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            ['link'],
+
+        ]     
+        },
+        placeholder: 'Empieza a escribir aquí...',
+        theme: 'snow'  // or 'bubble'
+        });
+    }
+
+    function editReply(replyId){
+        if (quillReplies[replyId] != null){
+            closeEditor(replyId);
+            
+        }else{
+            console.log('Edit function');
+            //Show edit interface.
+            $(reply_edit_buttons.concat(replyId)).show();
+            $(anchor_replay_edit_button.concat(replyId)).addClass('activated');
+            $(reply_description.concat(replyId)).hide();
+
+            showQuillEditor(replyId);
+        }
+
+    }
+
+    function saveChanges(replyId){
+        var description = quillReplies[replyId].getLength() == 1 ? "<p>Contenido eliminado.</p>" : quillReplies[replyId].root.innerHTML;
+
+        $.ajax({
+            url: "{{route("reply.update")}}",
+            type: "POST",
+            data: {
+                id_reply: replyId,
+                description: description,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                var date_span = "#reply_date_".concat(replyId);
+                $(date_span).text("(Modificado ahora mismo)");
+                $(reply_description.concat(replyId)).html(description);
+                closeEditor(replyId);
+                
+            },
+            error: function(){
+                console.log('Error on ajax call "saveChanges" function');
+            }  
+        });
+    }
+
+    function closeEditor(replyId){
+        //Hide edit interface. 
+        $(reply_edit_buttons.concat(replyId)).hide();
+        $(reply_description.concat(replyId)).show();
+        $(anchor_replay_edit_button.concat(replyId)).removeClass('activated');
+        destroyQuillEditorContainer(replyId, false);
+
+    }
+
     function deleteReply(replyId){
         console.log("Deleting reply...");
 
@@ -140,6 +282,18 @@
                 console.log('Error on ajax call "deleteReply" function');
             }  
         });
+
+    }
+
+    function destroyQuillEditorContainer(id, isThread){
+
+        if (isThread){
+            $(quill_thread_editor_container.concat(id)).children().remove();
+            quillThreads[id] = null;            
+        }else{
+            $(quill_reply_editor_container.concat(id)).children().remove();
+            quillReplies[id] = null;
+        }
 
     }
 </script>
