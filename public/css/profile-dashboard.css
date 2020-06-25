@@ -598,6 +598,7 @@ table.dataTable {
 
 .tutorship-section-content {
     font-weight: normal;
+    padding-top: 20px;
     margin-bottom: 30px;
 }
 
@@ -645,9 +646,10 @@ table.dataTable {
 }
 
 /* Quill editor inside tutorships  */
-.tutorship-section-content p {
-    margin-top: 35px;
-    margin-bottom: 5px;
+.tutorship-section-content p,
+.post-content p {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .tutorship-section-content h1 {
@@ -660,7 +662,8 @@ table.dataTable {
     margin-bottom: -15px;
 }
 
-.tutorship-section-content ul {
+.tutorship-section-content ul,
+.post-content ul {
     margin-top: 25px;
     margin-bottom: 45px;
 }
@@ -669,7 +672,8 @@ table.dataTable {
     display: none;
 }
 
-.tutorship-section-content a {
+.tutorship-section-content a,
+.post-content a {
     color: blue;
     text-decoration: underline;
 }
@@ -739,7 +743,7 @@ a.collapse-button :hover {
     background-color: white;
     display: grid;
     grid-template-rows: 100px 1fr 70px;
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
     grid-template-areas:
         "heading"
         "post-content"
@@ -827,9 +831,10 @@ a.pinned:hover {
 .post-content {
     grid-area: post-content;
     height: 100%;
+    word-wrap: break-word;
     padding-left: 50px;
     padding-right: 50px;
-    padding-bottom: 0px;
+    padding-top: 20px;
 }
 
 .blurry-effect {
@@ -872,7 +877,7 @@ a.pinned:hover {
 }
 
 /*Post hover effect*/
-.post-details:hover {
+.post-details:not(.thread-active):hover {
     cursor: pointer;
 }
 
@@ -905,7 +910,7 @@ div.post-container.post-collapse {
     background-color: white;
     display: grid;
     grid-template-rows: 100px 1fr;
-    grid-template-columns: auto;
+    grid-template-columns: 100%;
     grid-template-areas:
         "heading"
         "reply-content";
@@ -983,6 +988,7 @@ div.post-container.post-collapse {
     padding-left: 50px;
     padding-right: 50px;
     padding-bottom: 20px;
+    word-break: break-all;
 }
 
 /*Add reply box */
@@ -990,16 +996,15 @@ div.post-container.post-collapse {
     display: grid;
     height: fit-content;
     grid-template-areas:
-        "upper-area"
+        "upper"
         "footer";
     grid-template-columns: auto;
-    grid-template-rows: 1fr 80px;
     margin-top: 70px;
     margin-bottom: -20px;
 }
 
 .top-add-reply {
-    grid-area: upper-area;
+    grid-area: upper;
     display: flex;
     padding-left: 50px;
     padding-right: 50px;
@@ -1017,12 +1022,15 @@ div.post-container.post-collapse {
 .editor-add-reply {
     width: 100%;
     height: fit-content;
-
     background-color: white;
     border-radius: 10px;
 }
 .editor-add-reply > * {
     margin-top: 0;
+}
+
+.editor-add-reply p {
+    word-break: break-all;
 }
 .editor-add-reply > .ql-toolbar {
     border-top-left-radius: 10px;

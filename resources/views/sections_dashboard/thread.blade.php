@@ -130,6 +130,8 @@
         destroyQuillEditorContainer(threadId, true);
     }
 
+    
+
 
 
     //Replies JS
@@ -273,7 +275,7 @@
             success: function(repliesRemaining){
                 $(reply_container.concat(replyId)).hide();
                 if (repliesRemaining == 0){
-                    $('#all-replies').prepend('<p>Sin respuestas</p>');
+                    $('#all-replies').prepend('<p id="no_replies">Sin respuestas</p>');
 
                 }
                 

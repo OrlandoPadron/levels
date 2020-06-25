@@ -100,4 +100,12 @@ class ForumThreadController extends Controller
             return redirect()->route('profile.show', ["user" => $user, 'tab' => 'foro']);
         }
     }
+
+
+    public function pinThread(Request $request)
+    {
+        $thread = ForumThread::find($request['thread_id']);
+        $thread->pinned = $thread->pinned == 0 ? 1 : 0;
+        $thread->save();
+    }
 }

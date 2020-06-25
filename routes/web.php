@@ -36,6 +36,7 @@ Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_ava
 Route::post('/updateThread', 'ForumThreadController@update')->name('thread.update');
 Route::post('/createThread', 'ForumThreadController@store')->name('thread.store');
 Route::post('/destroyThread', 'ForumThreadController@destroy')->name('thread.destroy');
+Route::post('/pinThread', 'ForumThreadController@pinThread')->name('thread.pin');
 Route::post('/storeReply', 'ForumReplyController@store')->name('reply.store');
 Route::post('/updateReply', 'ForumReplyController@update')->name('reply.update');
 Route::post('/destroyReply', 'ForumReplyController@destroy')->name('reply.destroy');

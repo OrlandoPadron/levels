@@ -1,7 +1,7 @@
-<div id="thread_container_{{$thread->id}}" class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}} 
+<div id="{{$generalThreadView ? 'gthread_container_'.$thread->id : 'thread_container_'.$thread->id}}" class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}} 
     {{$generalThreadView ? ($loop->first ? '' : 'post-collapse') : ''}}">
     <div class="post-heading">
-        <div class="post-details" onclick="goToThreads({{$thread->id}})">
+        <div class="post-details {{$generalThreadView ? '' : 'thread-active'}}" onclick="{{$generalThreadView ? 'goToThreads('.$thread->id.')' : ''}}">
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
@@ -17,10 +17,10 @@
                 <input type="text" value="1" name="return_to_forum" hidden> 
             </form>
             <a onclick="document.getElementById('deleteThreadForm').submit()"><i class="fas fa-trash"></i></a>
-            <a class="{{$thread->pinned ? 'pinned' : ''}}""><i class="fas fa-thumbtack"></i></a>
+            <a id="pin_icon_{{$thread->id}}" class="{{$thread->pinned ? 'pinned' : ''}}" onclick="pinThread({{$thread->id}})"><i class="fas fa-thumbtack"></i></a>
             @else
             <a onclick="deleteThread({{$thread->id}})"><i class="fas fa-trash"></i></a>
-            <a class="{{$thread->pinned ? 'pinned' : ''}}""><i class="fas fa-thumbtack"></i></a>
+            <a id="gpin_icon_{{$thread->id}}" class="{{$thread->pinned ? 'pinned' : ''}}" onclick="pinThread({{$thread->id}})"><i class="fas fa-thumbtack"></i></a>
             @endif
         </div>
     </div>

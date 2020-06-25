@@ -66,13 +66,40 @@
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                $("#thread_container_".concat(threadId)).hide();
+                $("#gthread_container_".concat(threadId)).hide();
                 
             },
             error: function(){
                 console.log('Error on ajax call "deleteThread" function');
             }  
         });
+    }
+    function pinThread(threadId){
+        console.log("Thread is being pinned...");
+        $.ajax({
+            url: "{{route("thread.pin")}}",
+            type: "POST",
+            data: {
+                thread_id: threadId,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                var general_thread_container = "#gthread_container_"; //Main view container
+                var general_thread_pin_icon = "#gpin_icon_"; //Main view icon
+                var thread_container = "#thread_container_";
+                var thread_pin_icon = "#pin_icon_";
+
+                $(thread_container.concat(threadId)).toggleClass( "post-pinned" );
+                $(thread_pin_icon.concat(threadId)).toggleClass("pinned");
+                $(general_thread_container.concat(threadId)).toggleClass("post-pinned");
+                $(general_thread_pin_icon.concat(threadId)).toggleClass('pinned');
+                
+                
+            },
+            error: function(){
+                console.log('Error on ajax call "setBookmark" function');
+            }  
+        });        
     }
     
 
