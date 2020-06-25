@@ -92,7 +92,9 @@
                 $(thread_container.concat(threadId)).toggleClass( "post-pinned" );
                 $(thread_pin_icon.concat(threadId)).toggleClass("pinned");
                 $(general_thread_container.concat(threadId)).toggleClass("post-pinned");
+                $(general_thread_container.concat(threadId)).toggleClass("post-collapse");
                 $(general_thread_pin_icon.concat(threadId)).toggleClass('pinned');
+                
                 
                 
             },

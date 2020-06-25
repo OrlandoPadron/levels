@@ -1,5 +1,5 @@
 <div id="{{$generalThreadView ? 'gthread_container_'.$thread->id : 'thread_container_'.$thread->id}}" class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}} 
-    {{$generalThreadView ? ($loop->first ? '' : 'post-collapse') : ''}}">
+    {{$generalThreadView ? ($thread->pinned ? '' : 'post-collapse') : ''}}">
     <div class="post-heading">
         <div class="post-details {{$generalThreadView ? '' : 'thread-active'}}" onclick="{{$generalThreadView ? 'goToThreads('.$thread->id.')' : ''}}">
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
