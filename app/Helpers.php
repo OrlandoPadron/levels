@@ -79,6 +79,20 @@ function getUserUsingAthleteId($id)
 }
 
 /**
+ * Given a trainer_id, returns an array with all
+ * the users trained by that trainer
+ */
+function getArrayOfUsersTrainedByMe($trainer_id)
+{
+    $users = array();
+    $trainer = Trainer::findOrFail($trainer_id);
+    foreach ($trainer->trained_by_me as $trainer_id) {
+        array_push($users, getUserUsingAthleteId($trainer_id));
+    }
+    return $users;
+}
+
+/**
  * Given a group, function returns all group members as User Model array. 
  */
 function getGroupUsers($groupId)

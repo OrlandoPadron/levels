@@ -1,0 +1,153 @@
+.content-trainer-dashboard {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    padding-top: 20px;
+    grid-template-columns: 100%;
+    grid-template-rows: 150px 250px 1fr 1fr;
+    grid-template-areas:
+        "title"
+        "status-boxes"
+        "athletes"
+        "log";
+    row-gap: 15px;
+}
+.content-trainer-dashboard h1 {
+    font-size: 48px;
+}
+
+.content-trainer-dashboard > .container-dashboard {
+    grid-area: title;
+    display: flex;
+    align-items: center;
+}
+
+.boxes {
+    grid-area: status-boxes;
+    width: 80%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    justify-content: left;
+}
+
+.box-item-container {
+    width: 190px;
+    height: 190px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    color: #000f2d;
+}
+
+.box-item-container i {
+    font-size: 120px;
+    margin-top: 15px;
+}
+
+.box-item-container > .boxes-message-status {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.boxes :not(:first-of-type) {
+    margin-left: 60px;
+}
+
+.relative-container {
+    position: relative;
+}
+.relative-container > .fa-users {
+    position: absolute;
+    color: white;
+    top: 50%;
+    left: 50%;
+    margin-top: 60px;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 45px;
+}
+
+.box-item-container > .fa-comment-alt {
+    font-size: 100px;
+    padding-top: 5px;
+}
+
+.buble-notification {
+    position: relative;
+    top: -20px;
+    left: 30px;
+}
+
+.bubble-fix {
+    top: -20px;
+    left: 60px;
+}
+
+.bubble-circle {
+    display: flex;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(179, 0, 0);
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.athletes-trainer-dashboard {
+    grid-area: athletes;
+    width: 80%;
+    height: fit-content;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding-top: 0px;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: left;
+}
+
+.athletes-trained-by-me {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+}
+
+.athlete-component {
+    width: 150px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-right: 10px;
+}
+
+.athlete-component img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid #000f2d;
+}
+
+.athlete-component img:hover {
+    cursor: pointer;
+}
