@@ -47,7 +47,7 @@
 }
 
 .box-item-container i {
-    font-size: 120px;
+    font-size: 100px;
     margin-top: 15px;
 }
 
@@ -69,6 +69,7 @@
     top: 50%;
     left: 50%;
     margin-top: 60px;
+    padding-bottom: 5px;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     text-align: center;
@@ -77,17 +78,16 @@
 
 .box-item-container > .fa-comment-alt {
     font-size: 100px;
-    padding-top: 5px;
 }
 
 .buble-notification {
     position: relative;
-    top: -20px;
+    top: -30px;
     left: 30px;
 }
 
 .bubble-fix {
-    top: -20px;
+    top: -30px;
     left: 60px;
 }
 
@@ -111,7 +111,7 @@
     width: 80%;
     height: fit-content;
     margin-top: 40px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     padding-top: 0px;
     height: 100%;
     position: relative;
@@ -150,4 +150,18 @@
 
 .athlete-component img:hover {
     cursor: pointer;
+}
+
+.trainer-log {
+    grid-area: log;
+    width: 80%;
+    height: fit-content;
+    margin-top: 0px;
+    margin-bottom: 40px;
+    padding-top: 0px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    justify-content: left;
 }

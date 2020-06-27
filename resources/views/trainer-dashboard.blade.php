@@ -20,7 +20,7 @@
                 </div>
             </div>
             <i class="fas fa-comment-alt"></i>
-            <p class="boxes-message-status">Revisar actividad foros deportistas</p>
+            <p class="boxes-message-status">Foros deportistas</p>
         </div>
         <div class="box-item-container shadow-container">
 
@@ -33,7 +33,7 @@
                 </div>
             </div>
             <i class="fas fa-comment-alt"></i>
-            <p class="boxes-message-status">Revisar actividad foros grupales</p>
+            <p class="boxes-message-status">Foros grupales</p>
         </div>
         <div class="box-item-container shadow-container">
             <div class="buble-notification bubble-fix">
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <i class="fas fa-euro-sign"></i>
-            <p class="boxes-message-status">Revisar cuota de Junio</p>
+            <p class="boxes-message-status">Cuota de {{ucfirst(Date::now()->format('F'))}}</p>
         </div>
         {{-- <div class="box-item-container shadow-container">
             <div class="buble-notification bubble-fix">
@@ -65,6 +65,10 @@
                 </div>
             @endforeach
         </div>
+    </div>
+
+    <div class="trainer-log">
+        <h2>Actividad reciente</h2>
     </div>
 
 </div>
