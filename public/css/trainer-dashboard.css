@@ -48,13 +48,11 @@
     align-items: center;
     justify-content: center;
     padding-top: 10px;
-    color: #6013bb;
 }
 
 .box-item-container i {
     font-size: 100px;
     margin-top: 15px;
-    color: #6013bb;
 }
 
 .box-item-container > .boxes-message-status {
@@ -71,7 +69,7 @@
 }
 .relative-container > .fa-users {
     position: absolute;
-    color: white;
+    color: #bb6013;
     top: 50%;
     left: 50%;
     margin-top: 60px;
@@ -269,7 +267,7 @@ ul.trainer-log-list {
     .box-item-container i {
         -webkit-text-fill-color: white;
         -webkit-text-stroke-width: 3px;
-        -webkit-text-stroke-color: #6013bb;
+        /* -webkit-text-stroke-color: #136ebb; */
     }
     .relative-container > .fa-users {
         -webkit-text-stroke-width: 2px;

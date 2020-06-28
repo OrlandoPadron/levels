@@ -4,7 +4,7 @@
     </div>
 
     <div class="boxes">
-        <div class="box-item-container shadow-container" >
+        <div class="box-item-container shadow-container" style="color: #136ebb;" >
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle" >
                     <p id="#notification">1</p>
@@ -13,7 +13,7 @@
             <i class="fas fa-stopwatch"></i>
             <p class="boxes-message-status">Sesiones completadas</p>
         </div>
-        <div class="box-item-container shadow-container" >
+        <div class="box-item-container shadow-container" style="color: #6013bb;" >
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle" >
                     <p id="#notification">1</p>
@@ -22,7 +22,7 @@
             <i class="fas fa-comment-alt"></i>
             <p class="boxes-message-status">Foros deportistas</p>
         </div>
-        <div class="box-item-container shadow-container">
+        <div class="box-item-container shadow-container" style="color: #bb6013;">
 
             <div class="relative-container">
                 <i class="fas fa-users"></i>
@@ -35,7 +35,7 @@
             <i class="fas fa-comment-alt"></i>
             <p class="boxes-message-status">Foros grupales</p>
         </div>
-        <div class="box-item-container shadow-container">
+        <div class="box-item-container shadow-container" style="color: #6ebb13;">
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle">
                     <p id="#notification">1</p>
