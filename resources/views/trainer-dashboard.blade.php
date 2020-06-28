@@ -4,7 +4,7 @@
     </div>
 
     <div class="boxes">
-        <div class="box-item-container shadow-container">
+        <div class="box-item-container shadow-container" >
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle" >
                     <p id="#notification">1</p>
@@ -13,7 +13,7 @@
             <i class="fas fa-stopwatch"></i>
             <p class="boxes-message-status">Sesiones completadas</p>
         </div>
-        <div class="box-item-container shadow-container">
+        <div class="box-item-container shadow-container" >
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle" >
                     <p id="#notification">1</p>
@@ -37,7 +37,7 @@
         </div>
         <div class="box-item-container shadow-container">
             <div class="buble-notification bubble-fix">
-                <div class="bubble-circle" >
+                <div class="bubble-circle">
                     <p id="#notification">1</p>
                 </div>
             </div>
@@ -68,7 +68,72 @@
     </div>
 
     <div class="trainer-log">
-        <h2>Actividad reciente</h2>
+        <h2>Actividad reciente <span class="light">(Último mes)</span></h2>
+        <div class="trainer-log-container shadow-container">
+            <ul class="trainer-log-list">
+                <li>
+                    <div class="trainer-log-element">
+                        <div class="log-element-user">
+                            <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                            <div class="log-element-user-message">
+                                <p>Orlando Padrón ha subido un nuevo fichero</p>
+                                <p>Hace dos minutos</p>
+                            </div>
+                        </div>
+                        <div class="log-element-button">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="trainer-log-element">
+                        <div class="log-element-user">
+                            <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                            <div class="log-element-user-message">
+                                <p>Orlando Padrón ha subido un nuevo fichero</p>
+                                <p>Hace dos minutos</p>
+                            </div>
+                        </div>
+                        <div class="log-element-button">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="trainer-log-element">
+                        <div class="log-element-user">
+                            <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                            <div class="log-element-user-message">
+                                <p>Orlando Padrón ha subido un nuevo fichero</p>
+                                <p>Hace dos minutos</p>
+                            </div>
+                        </div>
+                        <div class="log-element-button">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                        
+                    </div>
+                </li>
+                <li>
+                    <div class="trainer-log-element">
+                        <div class="log-element-user">
+                            <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                            <div class="log-element-user-message">
+                                <p>Orlando Padrón ha subido un nuevo fichero</p>
+                                <p>Hace dos minutos</p>
+                            </div>
+                        </div>
+                        <div class="log-element-button">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                        
+                    </div>
+                </li>
+                
+            </ul>
+        </div>
     </div>
 
 </div>
