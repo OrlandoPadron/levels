@@ -14,7 +14,6 @@
         <button type="submit">pruebas</button>
     </form>
     @endif
-   
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>
  
 </div>
@@ -22,12 +21,27 @@
 <div id="open-thread-container">
 </div>
 
-{{-- {{$threads->count()}} --}}
-@if($threads->count() != 0)
-@foreach ($threads->sortDesc() as $thread)
-    @include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
-@endforeach
-@endif
+<div class="pinned-threads">
+    <h2 class="primary-blue-color">Hilo fijado</h2>
+    @if (($threads->filter->pinned)->isNotEmpty())
+        @include('sections_dashboard.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
+    @endif
+</div>
+<div class="non-pinned-threads">
+    <div class="filter-options">
+        <p>Mostrando primero </p>
+        <button onclick="filter('newest')">Más recientes</button>
+        <button onclick="filter('oldest')">Más antiguos</button>
+    </div>
+    <div class="non-pinned-threads-content">
+        @if($threads->count() != 0)
+        @foreach ($threads->filter(function($thread){return $thread->pinned==0;})->sortDesc() as $thread)
+            @include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
+        @endforeach
+        @endif
+    </div>
+
+</div>
 
 <script>
     function goToThreads(thread_id){
@@ -37,6 +51,8 @@
         $("#forum-header").attr("onclick", 'closeThread()');
         $("#forum-header").addClass("clickable");
         $(".post-container").fadeOut(500);
+        $(".pinned-threads").fadeOut(500);
+        $(".non-pinned-threads").fadeOut(500);
         $("#add-btn-forum").fadeOut(500);
         $( "#open-thread-container" ).fadeIn(500);
         $(".page-content").animate({ scrollTop: 0 }, "slow");
@@ -47,6 +63,8 @@
         $("#forum-header").text("Foro");
         $(".post-container").fadeIn(500);
         $("#add-btn-forum").fadeIn(500);
+        $(".pinned-threads").fadeIn(500);
+        $(".non-pinned-threads").fadeIn(500);
         $("#forum-header").removeAttr("onclick");
         $("#forum-header").removeClass("clickable");
         $( "#open-thread-container" ).fadeOut(500);
@@ -102,6 +120,33 @@
                 console.log('Error on ajax call "setBookmark" function');
             }  
         });        
+    }
+
+
+    function filter(option){
+        var threads = $(".non-pinned-threads-content").find(".post-container");
+        switch (option){
+            case 'oldest':
+                threads.sort(function(a, b){
+                    return $(a).attr("data-date")-$(b).attr("data-date")
+                });
+                $(".non-pinned-threads-content").html(threads);
+                break;
+
+            case 'newest':
+                threads.sort(function(a, b){
+                    return $(b).attr("data-date")-$(a).attr("data-date")
+                });
+                $(".non-pinned-threads-content").html(threads);
+                break;
+            defaul:
+                console.log('Unspecified case');
+                break;
+
+        }
+        
+       
+
     }
     
 

@@ -828,6 +828,20 @@ a.pinned:hover {
     color: #8e6bb6;
 }
 
+/*Pinned section*/
+
+.pinned-threads {
+    height: fit-content;
+    margin-top: -10px;
+    padding-bottom: 0px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+}
+
+.pinned-threads h2 {
+    margin-bottom: 40px;
+}
+
 .post-content {
     grid-area: post-content;
     height: 100%;
@@ -842,7 +856,7 @@ a.pinned:hover {
     mask-image: linear-gradient(180deg, #000 60%, transparent);
     overflow: hidden;
     min-height: 100px;
-    max-height: 250px;
+    max-height: 150px;
 }
 
 .post-footer {

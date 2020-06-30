@@ -1,11 +1,12 @@
 <div id="{{$generalThreadView ? 'gthread_container_'.$thread->id : 'thread_container_'.$thread->id}}" class="post-container shadow-container {{$thread->pinned ? 'post-pinned' : ''}} 
-    {{$generalThreadView ? ($thread->pinned ? '' : 'post-collapse') : ''}}">
+    {{$generalThreadView ? ($thread->pinned ?  '' : 'post-collapse') : ''}}"
+    data-date="{{$thread->created_at->timestamp}}">
     <div class="post-heading">
         <div class="post-details {{$generalThreadView ? '' : 'thread-active'}}" onclick="{{$generalThreadView ? 'goToThreads('.$thread->id.')' : ''}}">
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
-                <p>{{$thread->created_at == $thread->updated_at ? 'Creado ' : 'Modificado '}} por <span>{{getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{$thread->created_at == $thread->updated_at ? ucfirst($thread->created_at->diffForHumans()) : $thread->updated_at->diffForHumans()}})</span></span></p>
+                <p>Creado por <span>{{getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($thread->created_at->diffForHumans())}}) </span></span></p>
             </div>
         </div>
         <div class="post-options">
@@ -47,6 +48,7 @@
         <div id="thread_editor_container_{{$thread->id}}"></div>
         <div id="thread_description_{{$thread->id}}">
             {!!$thread->description!!}
+            
         </div>
         <div id="thread_editor_buttons_{{$thread->id}}" class="thread_editor_buttons" style="display: none;">
             <button onclick="saveThreadChanges({{$thread->id}})" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>

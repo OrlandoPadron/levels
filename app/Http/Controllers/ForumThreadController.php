@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\ForumThread;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ForumThreadController extends Controller
 {
@@ -106,6 +107,13 @@ class ForumThreadController extends Controller
     {
         $thread = ForumThread::find($request['thread_id']);
         $thread->pinned = $thread->pinned == 0 ? 1 : 0;
+
+        //We can only pin 1 thread -> setting as not pinned the previous pinned threads
+        DB::table('forum_threads')
+            ->where('pinned', '1')
+            ->where('id', '!=', $thread->id)
+            ->update(['pinned' => 0]);
+
         $thread->save();
     }
 }

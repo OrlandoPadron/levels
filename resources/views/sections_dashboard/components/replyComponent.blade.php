@@ -4,7 +4,7 @@
             <img src="/uploads/avatars/{{getUser($reply->author)->user_image}}" alt="user_img">
             <div class="reply-details-autor">
                 <p class="bold">RE: <span class="light">{{$reply->thread->title}}</span></p>
-                <p>{{getName($reply->author)}}<span id="reply_date_{{$reply->id}}" class="italic" style="margin-left: 5px;">({{$reply->created_at == $reply->updated_at ? $reply->created_at->diffForHumans() : 'Modificado '.$reply->updated_at->diffForHumans()}})</span></span></p>
+                <p>{{getName($reply->author)}}<span id="reply_date_{{$reply->id}}" class="italic" style="margin-left: 5px;">({{$reply->created_at->diffForHumans()}})</span></span></p>
             </div>
         </div>
         <div class="reply-options">
