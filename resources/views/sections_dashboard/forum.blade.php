@@ -32,6 +32,7 @@
         <p>Mostrando primero </p>
         <button onclick="filter('newest')">Más recientes</button>
         <button onclick="filter('oldest')">Más antiguos</button>
+        <input type="search" id="searchThread" onkeyup="search()">
     </div>
     <div class="non-pinned-threads-content">
         @if($threads->count() != 0)
@@ -147,6 +148,28 @@
         
        
 
+    }
+
+    function search() {
+        var searchInput = document.getElementById("searchThread");
+        var filter = searchInput.value.toLowerCase();
+        var threads = $(".non-pinned-threads-content").find(".post-container");
+        console.log(threads);   
+
+        /**
+            Search by title, author and description. 
+        */    
+        
+        for (i = 0; i < threads.length; i++) {
+            if (threads[i].innerText.toLowerCase().includes(filter)) {
+                var title = $(threads[i]).find('.post-details-autor').children("p:first").text();
+                console.log('titulo %o ', title);
+
+                $(threads[i]).show();
+            } else {
+                threads[i].style.display = "none";
+            }
+        }
     }
     
 
