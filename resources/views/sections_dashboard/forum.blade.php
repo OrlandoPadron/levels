@@ -5,14 +5,6 @@
                 @keydown.escape.window="openNewThreadForm=false">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
     </button>
-
-    <form action="{{route('reply.destroy')}}" method="POST">
-        @csrf
-        <input type="text" name="reply_id" value="3">
-        {{-- <input type="text" name="description" value="Prueba">
-        <input type="text" name="author" value="{{Auth::user()->id}}"> --}}
-        <button type="submit">pruebas</button>
-    </form>
     @endif
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>
  
@@ -21,13 +13,13 @@
 <div id="open-thread-container">
 </div>
 
-<div class="pinned-threads">
+<div class="pinned-threads" style="{{($threads->filter->pinned)->isEmpty() ? 'display:none;' : ''}}">
     <h2 class="primary-blue-color">Hilo fijado</h2>
     @if (($threads->filter->pinned)->isNotEmpty())
         @include('sections_dashboard.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
     @endif
 </div>
-<div class="non-pinned-threads">
+<div class="non-pinned-threads" >
     <div class="filter-options">
         <p>Mostrando primero </p>
         <button onclick="filter('newest')">Más recientes</button>
@@ -37,8 +29,12 @@
             <option value="title">Por título</option>
             <option value="author">Por autor</option>
         </select>
+        <div id="search-status" style="display: none">
+            <p>Mostrando <span id="numOfResults"></span> resultados para '<span id="search_value"></span>'. </p>
+
+        </div>
     </div>
-    <div class="non-pinned-threads-content">
+    <div id="non-pinned-threads-content" class="non-pinned-threads-content">
         @if($threads->count() != 0)
         @foreach ($threads->filter(function($thread){return $thread->pinned==0;})->sortDesc() as $thread)
             @include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
@@ -50,7 +46,7 @@
 
 <script>
     function goToThreads(thread_id){
-        $( "#open-thread-container" ).load( "/thread/".concat(thread_id));
+        $("#open-thread-container").load( "/thread/".concat(thread_id));
         $("#forum-header").html('<i style="margin-right: 15px;" class="fas fa-chevron-circle-left"></i>');
         $("#forum-header").append("Volver atrás");
         $("#forum-header").attr("onclick", 'closeThread()');
@@ -68,11 +64,15 @@
         $("#forum-header").text("Foro");
         $(".post-container").fadeIn(500);
         $("#add-btn-forum").fadeIn(500);
-        $(".pinned-threads").fadeIn(500);
+        if ($(".pinned-threads").children(".post-container").length){
+            $(".pinned-threads").fadeIn(500);
+        }
         $(".non-pinned-threads").fadeIn(500);
         $("#forum-header").removeAttr("onclick");
         $("#forum-header").removeClass("clickable");
         $( "#open-thread-container" ).fadeOut(500);
+        $( "#open-thread-container").empty();
+
         $(".page-content").animate({
              scrollTop: 0 
             }, "slow");
@@ -112,6 +112,58 @@
                 var thread_container = "#thread_container_";
                 var thread_pin_icon = "#pin_icon_";
 
+                /*
+                    JS interface cases 
+                    1. 'Pinned post' to 'Unpinned post'
+                    2. 'Unpinned post' to 'Pinned post' 
+                    3. 'Pinned post 1' to 'Pinned post 2' (Pinned post swap)
+                */
+
+                if ($(".pinned-threads").is(":visible")){
+                    // CASE 1 Removing pinned thread. 
+                    if ($(general_thread_container.concat(threadId)).hasClass("post-pinned")){
+                        $("#non-pinned-threads-content").prepend($(".pinned-threads").children(".post-container"));
+                        $(".pinned-threads").hide();
+                    }else{
+                        //CASE 3
+                        $(".pinned-threads").children(".post-container").toggleClass('post-pinned');
+                        $(".pinned-threads").children(".post-container").toggleClass('post-collapse');
+                        $(".pinned-threads").children(".post-container").find('.pinned').toggleClass('pinned');
+                        $("#non-pinned-threads-content").prepend($(".pinned-threads").children(".post-container"));
+                        $(".pinned-threads").append($(general_thread_container.concat(threadId)));
+                        $(".pinned-threads").show();
+                    }
+
+                }else{
+                    //Cases if the pin command is issued from an open thread. 
+                    if($("#open-thread-container").children().length != 0){
+                        if ($(".pinned-threads").has(".post-container").length){
+                            // CASE 1 Removing pinned thread. 
+                            if ($(general_thread_container.concat(threadId)).hasClass("post-pinned")){
+                                $("#non-pinned-threads-content").prepend($(".pinned-threads").children(".post-container"));
+                                $(".pinned-threads").hide();
+                                console.log("Case 1");
+                            }else{
+                                //CASE 3
+                                $(".pinned-threads").children(".post-container").toggleClass('post-pinned');
+                                $(".pinned-threads").children(".post-container").toggleClass('post-collapse');
+                                $(".pinned-threads").children(".post-container").find('.pinned').toggleClass('pinned');
+                                $("#non-pinned-threads-content").prepend($(".pinned-threads").children(".post-container"));
+                                $(".pinned-threads").append($(general_thread_container.concat(threadId)));
+                        }
+
+                        }else{
+                            $(".pinned-threads").append($(general_thread_container.concat(threadId)));
+ 
+                        }
+
+                    }else{
+                        // CASE 2 
+                        $(".pinned-threads").append($(general_thread_container.concat(threadId)));
+                        $(".pinned-threads").show();
+
+                    }
+                }
                 $(thread_container.concat(threadId)).toggleClass( "post-pinned" );
                 $(thread_pin_icon.concat(threadId)).toggleClass("pinned");
                 $(general_thread_container.concat(threadId)).toggleClass("post-pinned");
@@ -159,37 +211,46 @@
         var filter = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         var threads = $(".non-pinned-threads-content").find(".post-container");
         var filter_option = $( "#filter_option option:selected" ).val();
+        var numOfResults = 0; 
         
         /**
             Search by title, author and description. 
         */    
-
         for (i = 0; i < threads.length; i++) {
-            var title = $(threads[i]).find('.post-details-autor').children("p:first").text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-            var date = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").children("span:first").text();
-            var author = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").text().replace(date, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-
-        
+        var title = $(threads[i]).find('.post-details-autor').children("p:first").text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+        var date = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").children("span:first").text();
+        var author = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").text().replace(date, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    
             switch (filter_option){
-
                 case 'title':
                     if (title.includes(filter)) {
                         $(threads[i]).show();
+                        numOfResults++;
                     } else {
                         $(threads[i]).hide();
                     }
                     break;
-
                 case 'author':
                     if (author.includes(filter)) {
                         $(threads[i]).show();
+                        numOfResults++;
                     } else {
                         $(threads[i]).hide();
                     }                
                     break;
-            }            
+                }            
+        
+        }
+        /*
+            Showing/Hiding search input.
+        */
+        if (searchInput.value.length != 0){
+            $("#search-status").show().find("#search_value").text(searchInput.value);
+            $("#search-status").find("#numOfResults").text(numOfResults);
 
-            
+        }else{
+            $("#search-status").hide().find("#search_value").text(searchInput.value);
+
         }
     }
     
