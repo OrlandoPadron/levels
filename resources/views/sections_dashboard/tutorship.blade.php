@@ -14,6 +14,25 @@
     </form> --}}
     @endif
     <h1 class="primary-blue-color">Tutorías</h1>
+    <div class="filter-options">
+        <div class="filter-buttons">
+            <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
+            <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
+            <button class="filter-btn" onclick="filter('oldest')">Marcadas</button>
+        </div>
+        <div class="filter-search-bar">
+            <input type="search" id="searchThread" onkeyup="search()">
+            <select id="filter_option">
+                <option value="title">Título</option>
+                <option value="author">Cotenido</option>
+            </select>
+
+        </div>
+        <div id="search-status" class="search-status" style="display: none">
+            <p>Mostrando <span id="numOfResults"></span> resultados para "<span id="search_value"></span>". </p>
+
+        </div>
+    </div>
 </div>
 @include('modals.newTutorshipSession')
 @if ($user->account_activated == 0)

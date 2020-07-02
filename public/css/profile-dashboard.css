@@ -828,6 +828,107 @@ a.pinned:hover {
     color: #8e6bb6;
 }
 
+/* FORUM FILTERS*/
+.filter-options {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-areas:
+        "buttons-filter search-bar"
+        "search-status search-status";
+
+    margin-bottom: 50px;
+}
+
+.filter-buttons {
+    display: flex;
+    grid-area: buttons-filter;
+    align-items: center;
+}
+
+.filter-buttons > * {
+    margin-right: 15px;
+}
+.filter-btn {
+    width: fit-content;
+    height: fit-content;
+    font-size: 14px;
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+.filter-btn:not(.filter-selected):hover {
+    background-color: transparent;
+    color: #6013bb;
+}
+
+.filter-selected {
+    background-color: #000f2d;
+    color: white;
+    pointer-events: none;
+    padding: 10px 20px;
+}
+
+/*Filter's Searchbar */
+.filter-search-bar {
+    display: flex;
+    position: relative;
+    grid-area: search-bar;
+    justify-self: flex-end;
+}
+
+.filter-search-bar input {
+    border-radius: 20px;
+    border: 2px solid grey;
+    width: 350px;
+    height: 30px;
+    padding: 5px;
+    padding-left: 10px;
+    outline: none;
+    background-color: white;
+}
+
+.filter-search-bar input:focus {
+    border: 2px solid #6013bb;
+}
+.filter-search-bar select {
+    position: absolute;
+    right: 0px;
+    width: fit-content;
+    height: 30px;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 0 5px;
+    padding-left: 12px;
+    font-size: 14px;
+
+    outline: none;
+    background-color: #000f2d;
+    color: white;
+}
+.filter-search-bar select > * {
+    background-color: white;
+    color: black;
+    outline: none;
+}
+
+.filter-search-bar select:hover {
+    cursor: pointer;
+}
+
+.search-status {
+    grid-area: search-status;
+    margin-top: 30px;
+    margin-bottom: -20px;
+    font-size: 26px;
+    justify-self: left;
+}
+
+.search-status #search_value {
+    color: #6013bb;
+}
+
 /*Pinned section*/
 
 .pinned-threads {

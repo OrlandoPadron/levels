@@ -21,16 +21,20 @@
 </div>
 <div class="non-pinned-threads" >
     <div class="filter-options">
-        <p>Mostrando primero </p>
-        <button onclick="filter('newest')">Más recientes</button>
-        <button onclick="filter('oldest')">Más antiguos</button>
-        <input type="search" id="searchThread" onkeyup="search()">
-        <select id="filter_option">
-            <option value="title">Por título</option>
-            <option value="author">Por autor</option>
-        </select>
-        <div id="search-status" style="display: none">
-            <p>Mostrando <span id="numOfResults"></span> resultados para '<span id="search_value"></span>'. </p>
+        <div class="filter-buttons">
+            <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
+            <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
+        </div>
+        <div class="filter-search-bar">
+            <input type="search" id="searchThread" onkeyup="search()">
+            <select id="filter_option">
+                <option value="title">Título</option>
+                <option value="author">Autor</option>
+            </select>
+
+        </div>
+        <div id="search-status" class="search-status" style="display: none">
+            <p>Mostrando <span id="numOfResults"></span> resultados para "<span id="search_value"></span>". </p>
 
         </div>
     </div>
@@ -188,6 +192,7 @@
                     return $(a).attr("data-date")-$(b).attr("data-date")
                 });
                 $(".non-pinned-threads-content").html(threads);
+                // $.toggleClass("filter-selected")
                 break;
 
             case 'newest':
@@ -201,7 +206,11 @@
                 break;
 
         }
-        
+        var buttons = $(".filter-buttons").children("button");
+        for (i=0; i < buttons.length; i++){
+            $(buttons[i]).toggleClass("filter-selected");
+        }
+
        
 
     }
