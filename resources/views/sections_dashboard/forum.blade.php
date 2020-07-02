@@ -33,6 +33,10 @@
         <button onclick="filter('newest')">Más recientes</button>
         <button onclick="filter('oldest')">Más antiguos</button>
         <input type="search" id="searchThread" onkeyup="search()">
+        <select id="filter_option">
+            <option value="title">Por título</option>
+            <option value="author">Por autor</option>
+        </select>
     </div>
     <div class="non-pinned-threads-content">
         @if($threads->count() != 0)
@@ -152,23 +156,40 @@
 
     function search() {
         var searchInput = document.getElementById("searchThread");
-        var filter = searchInput.value.toLowerCase();
+        var filter = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
         var threads = $(".non-pinned-threads-content").find(".post-container");
-        console.log(threads);   
-
+        var filter_option = $( "#filter_option option:selected" ).val();
+        
         /**
             Search by title, author and description. 
         */    
-        
-        for (i = 0; i < threads.length; i++) {
-            if (threads[i].innerText.toLowerCase().includes(filter)) {
-                var title = $(threads[i]).find('.post-details-autor').children("p:first").text();
-                console.log('titulo %o ', title);
 
-                $(threads[i]).show();
-            } else {
-                threads[i].style.display = "none";
-            }
+        for (i = 0; i < threads.length; i++) {
+            var title = $(threads[i]).find('.post-details-autor').children("p:first").text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+            var date = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").children("span:first").text();
+            var author = $(threads[i]).find('.post-details-autor').children("p:nth-child(2)").children("span:first").text().replace(date, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+        
+            switch (filter_option){
+
+                case 'title':
+                    if (title.includes(filter)) {
+                        $(threads[i]).show();
+                    } else {
+                        $(threads[i]).hide();
+                    }
+                    break;
+
+                case 'author':
+                    if (author.includes(filter)) {
+                        $(threads[i]).show();
+                    } else {
+                        $(threads[i]).hide();
+                    }                
+                    break;
+            }            
+
+            
         }
     }
     
