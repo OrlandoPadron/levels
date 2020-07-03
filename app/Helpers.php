@@ -4,6 +4,7 @@ use App\User;
 use App\Group;
 use App\Athlete;
 use App\Trainer;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
 
@@ -117,4 +118,12 @@ function athleteIsNotMemberOfThisGroup($groupId, $athlete_id)
     } else {
         return true;
     }
+}
+
+
+function getNumberOfTutorshipsWithBookmark()
+{
+    return DB::table('tutorships')
+        ->where('bookmarked', 1)
+        ->count();
 }
