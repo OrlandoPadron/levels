@@ -20,6 +20,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>    
     
+    <!-- MarkJS library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js"></script>
+
     <!-- Main Quill library -->
     <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>
 
