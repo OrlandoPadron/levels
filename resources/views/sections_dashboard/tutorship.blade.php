@@ -15,22 +15,17 @@
     @endif
     <h1 class="primary-blue-color">Tutorías</h1>
     <div class="filter-options">
-        <div class="filter-buttons">
-            <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
-            <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
-            <button class="filter-btn" onclick="filter('oldest')">Marcadas</button>
+        <div class="filter-buttons" id="filter-buttons-tutorships">
+            <button class="filter-btn filter-selected" onclick="filterTutorships('newest')">Más recientes</button>
+            <button class="filter-btn" onclick="filterTutorships('oldest')">Más antiguos</button>
+            <button class="filter-btn" onclick="filterTutorships('bookmarked')">Marcadas</button>
         </div>
         <div class="filter-search-bar">
-            <input type="search" id="searchThread" onkeyup="search()">
-            <select id="filter_option">
-                <option value="title">Título</option>
-                <option value="author">Cotenido</option>
-            </select>
+            <input type="search" id="searchTutorship" onkeyup="searchTutorships()">
 
         </div>
-        <div id="search-status" class="search-status" style="display: none">
-            <p>Mostrando <span id="numOfResults"></span> resultados para "<span id="search_value"></span>". </p>
-
+        <div id="filter-status" class="search-status" style="display: none;">
+            <span>Actualmente no tienes ninguna tutoría marcada. </span>
         </div>
     </div>
 </div>
@@ -42,7 +37,7 @@
 <div id="all-tutorships-container">
     @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
         {{-- @if($loop->first) --}}
-    <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
+    <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}" data-date="{{$tutorship->created_at->timestamp}}" data-tutorshipId = "{{$tutorship->id}}">
         <div class="tutorship-heading">
             <div class="tutorship-heading-title" >
                 <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title"> 
@@ -91,7 +86,7 @@
 
     var edit_status = 0; //Allows edit toggle between views. 
     // https://codepen.io/Joeao/pen/BdOGKV
-
+    var numOfBookmarkedTutorships = {{getNumberOfTutorshipsWithBookmark()}};
     var quill = []; 
     var id_container= "#tutorship-container-";
     var id_title= "#paragraph_title_";
@@ -128,11 +123,13 @@
                     $(id_icon).removeClass("fas");
                     $(id_icon).addClass("far");
                     $(id_anchor).removeClass("tutorship-option-bookmarked");
+                    numOfBookmarkedTutorships--;
                 }else{
                     $(id_container.concat(tutorshipId)).addClass("tutorship-bookmarked");
                     $(id_icon).removeClass("far");
                     $(id_icon).addClass("fas");
                     $(id_anchor).addClass("tutorship-option-bookmarked");
+                    numOfBookmarkedTutorships++;
                 }
                 
             },
@@ -184,9 +181,7 @@
             edit_status = 1; //Next time edit button is triggered, close_editor will be called. 
             //Show edit interface. 
             if ($(id_container.concat(tutorshipId)).hasClass("tutorship-collapse")){
-                $(id_container.concat(tutorshipId)).removeClass("tutorship-collapse");
-                $("#collapse-icon").removeClass("fa-plus-square");
-                $("#collapse-icon").addClass("fa-minus-square");
+                toggleCollapse(tutorshipId);
             }
             $(id_title.concat(tutorshipId)).hide();
             $(id_goal.concat(tutorshipId)).hide();
@@ -253,7 +248,7 @@
                 var formatted_date = date_noformat.getDate() + "/" + (date_noformat.getMonth() + 1) + "/" + date_noformat.getFullYear();
 
                 var title_updated = title.concat('<span id="tutorship_date" class="light"> ('+formatted_date+')</span>');
-                var title_updated = '<a class="collapse-button" onclick="toggleCollapse('+tutorshipId+')"><i id="collapse-icon" class="far fa-minus-square"></i></a>'.concat(title_updated);
+                var title_updated = '<a class="collapse-button" onclick="toggleCollapse('+tutorshipId+')"><i id="collapse_icon_'+tutorshipId+'" class="far fa-minus-square"></i></a>'.concat(title_updated);
                 var tutorship_number = $(id_goal_paragraph.concat(tutorshipId)).children('.tutorship-number').text();
                 var goal_updated = '<span class="tutorship-number">'+tutorship_number+'</span>'+goal;
             
@@ -307,4 +302,129 @@
         });
 
     }
+
+    function filterTutorships(option){
+        var tutorships = $("#all-tutorships-container").find(".tutorship-container");
+        var optionSelected = 0;
+
+        collapseEverything(tutorships);
+
+        // !TODO
+        tutorships.first().find('.fa-minus-square').addClass('fa-plus-square');
+        tutorships.first().find('.fa-minus-square').removeClass();
+        switch (option){
+
+            case 'newest':
+                $(tutorships).show();
+                    
+                if ($("#filter-status").is(":visible")) $("#filter-status").hide();
+                tutorships.sort(function(a, b){
+                    return $(b).attr("data-date")-$(a).attr("data-date")
+                });
+                $("#all-tutorships-container").html(tutorships);
+                break;
+
+            case 'oldest':
+                $(tutorships).show();
+                if ($("#filter-status").is(":visible")) $("#filter-status").hide();
+                tutorships.sort(function(a, b){
+                    return $(a).attr("data-date")-$(b).attr("data-date")
+                });
+                $("#all-tutorships-container").html(tutorships);
+                optionSelected = 1;
+                break;
+
+            case 'bookmarked':
+                optionSelected = 2;
+                if (numOfBookmarkedTutorships > 0){
+                    for (i = 0; i< tutorships.length; i++){
+                        if ($(tutorships[i]).hasClass('tutorship-bookmarked')){
+                            $(tutorships[i]).show();
+                        }else{
+                            $(tutorships[i]).hide();
+                        }
+                    }
+                    tutorships.sort(function(a, b){
+                        return $(b).attr("data-date")-$(a).attr("data-date")
+                    });
+                    $("#all-tutorships-container").html(tutorships);
+
+                }else{
+                    $(tutorships).hide();
+                    $("#filter-status").show();
+                }
+                break; 
+
+            defaul:
+                console.log('Unspecified case');
+                break;
+
+        }
+        var buttons = $("#filter-buttons-tutorships").children("button");
+        for (i=0; i < buttons.length; i++){
+            $(buttons[i]).removeClass("filter-selected");
+        }
+        $(buttons[optionSelected]).addClass("filter-selected");
+
+
+       
+
+    }
+
+    function collapseEverything(tutorships){
+        for (i = 0; i < tutorships.length; i++){
+            if (!$(tutorships[i]).hasClass('tutorship-collapse')){
+                toggleCollapse($(tutorships[i]).attr('data-tutorshipId'));
+            }
+        }
+    }
+
+    function searchTutorships() {
+        var searchInput = document.getElementById("searchTutorship");
+        var filter = searchInput.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        var tutorships = $("#all-tutorships-container").find(".tutorship-container");
+        var filter_option = $( "#filter_option_tutorship option:selected" ).val();
+        var numOfResults = 0; 
+        console.log("Filter " + filter);
+        console.log("Filter option " + filter_option);
+
+        collapseEverything(tutorships);
+        
+        /**
+            Search by title, author and description. 
+        */    
+        for (i = 0; i < tutorships.length; i++) {
+        var heading = $(tutorships[i]).find('.tutorship-heading-title').text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/(\r\n|\n|\r)/gm,"").toLowerCase().trim();
+        // console.log(heading.trim());
+        var number = $(tutorships[i]).find('.tutorship-goal').children("span:first").text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        // console.log(number);
+        var goal = $(tutorships[i]).find('.tutorship-goal').text().replace(number, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        // console.log(goal);
+        var content = $(tutorships[i]).find('.tutorship-section-content').text().normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+        console.log(content);
+
+        
+            if (heading.includes(filter) || content.includes(filter)) {
+                $(tutorships[i]).show();
+                numOfResults++;
+            } else {
+                $(tutorships[i]).hide();
+            }
+        }
+                     
+        
+        // /*
+        //     Showing/Hiding search input.
+        // */
+        // if (searchInput.value.length != 0){
+        //     $("#search-status").show().find("#search_value").text(searchInput.value);
+        //     $("#search-status").find("#numOfResults").text(numOfResults);
+
+        // }else{
+        //     $("#search-status").hide().find("#search_value").text(searchInput.value);
+
+        // }
+    }
+    
+
 </script>

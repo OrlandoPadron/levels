@@ -21,12 +21,12 @@
 </div>
 <div class="non-pinned-threads" >
     <div class="filter-options">
-        <div class="filter-buttons">
+        <div class="filter-buttons" id="filter-buttons-forum">
             <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
             <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
         </div>
         <div class="filter-search-bar">
-            <input type="search" id="searchThread" onkeyup="search()">
+            <input type="search" id="searchThread" onkeyup="search()" placeholder="Buscar...">
             <select id="filter_option">
                 <option value="title">Título</option>
                 <option value="author">Autor</option>
@@ -186,30 +186,33 @@
 
     function filter(option){
         var threads = $(".non-pinned-threads-content").find(".post-container");
+        var optionSelected = 0;
         switch (option){
-            case 'oldest':
-                threads.sort(function(a, b){
-                    return $(a).attr("data-date")-$(b).attr("data-date")
-                });
-                $(".non-pinned-threads-content").html(threads);
-                // $.toggleClass("filter-selected")
-                break;
-
             case 'newest':
                 threads.sort(function(a, b){
                     return $(b).attr("data-date")-$(a).attr("data-date")
                 });
                 $(".non-pinned-threads-content").html(threads);
                 break;
+
+            case 'oldest':
+                threads.sort(function(a, b){
+                    return $(a).attr("data-date")-$(b).attr("data-date")
+                });
+                $(".non-pinned-threads-content").html(threads);
+                optionSelected=1; 
+                break;
+
             defaul:
                 console.log('Unspecified case');
                 break;
 
         }
-        var buttons = $(".filter-buttons").children("button");
+        var buttons = $("#filter-buttons-forum").children("button");
         for (i=0; i < buttons.length; i++){
-            $(buttons[i]).toggleClass("filter-selected");
+            $(buttons[i]).removeClass("filter-selected");
         }
+        $(buttons[optionSelected]).addClass("filter-selected");
 
        
 
