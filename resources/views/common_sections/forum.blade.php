@@ -1,22 +1,34 @@
 <div class="heading-section">
-    @if ($user->account_activated == 1)
-    <button id="add-btn-forum" class="btn-add-basic button-position"
-                @click="openNewThreadForm=!openNewThreadForm"
-                @keydown.escape.window="openNewThreadForm=false">
-        <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
-    </button>
+    @if (isset($user))
+        @if ($user->account_activated == 1)
+        <button id="add-btn-forum" class="btn-add-basic button-position"
+                    @click="openNewThreadForm=!openNewThreadForm"
+                    @keydown.escape.window="openNewThreadForm=false">
+            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
+        </button>
+        @endif
+    @else
+        <button id="add-btn-forum" class="btn-add-basic button-position"
+                    @click="openNewThreadForm=!openNewThreadForm"
+                    @keydown.escape.window="openNewThreadForm=false">
+            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
+</button>
     @endif
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>
  
 </div>
+@if(isset($user))
 @include('modals.addNewThread')
+@else
+@include('modals.addNewThreadToGroup')
+@endif
 <div id="open-thread-container">
 </div>
 
 <div class="pinned-threads" style="{{($threads->filter->pinned)->isEmpty() ? 'display:none;' : ''}}">
     <h2 class="primary-blue-color">Hilo fijado</h2>
     @if (($threads->filter->pinned)->isNotEmpty())
-        @include('sections_dashboard.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
+        @include('common_sections.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
     @endif
 </div>
 <div class="non-pinned-threads" >
@@ -41,7 +53,7 @@
     <div id="non-pinned-threads-content" class="non-pinned-threads-content">
         @if($threads->count() != 0)
         @foreach ($threads->filter(function($thread){return $thread->pinned==0;})->sortDesc() as $thread)
-            @include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
+            @include('common_sections.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
         @endforeach
         @endif
     </div>

@@ -57,11 +57,11 @@ class GroupController extends Controller
     public function show($id, $tab)
     {
         $group = Group::find($id);
-        $forum = $group->threads;
+        $threads = $group->threads;
         return view('show-group', [
             'group' => $group,
             'tab' => $tab != null ? $tab : 'General',
-            'forum' => $forum,
+            'threads' => $threads,
         ]);
     }
 

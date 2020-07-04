@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Group;
 use App\ForumThread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,16 +38,27 @@ class ForumThreadController extends Controller
      */
     public function store(Request $request)
     {
+        if (isset($request['user_associated'])) {
+            ForumThread::create([
+                'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',
+                'description' => $request['description'] != null ? $request['description'] : "<p>Este hilo no tiene contenido.</p>",
+                'author' => $request['created_by'],
+                'user_associated' => $request['user_associated'],
+            ]);
 
-        ForumThread::create([
-            'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',
-            'description' => $request['description'] != null ? $request['description'] : "<p>Este hilo no tiene contenido.</p>",
-            'author' => $request['created_by'],
-            'user_associated' => $request['user_associated'],
-        ]);
+            $user = User::find($request['user_associated']);
+            return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
+        } else {
+            ForumThread::create([
+                'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',
+                'description' => $request['description'] != null ? $request['description'] : "<p>Este hilo no tiene contenido.</p>",
+                'author' => $request['created_by'],
+                'group_associated' => $request['group_associated'],
+            ]);
 
-        $user = User::find($request['user_associated']);
-        return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
+            $group = Group::find($request['group_associated']);
+            return redirect()->route('group.show', ['group' => $group, 'tab' => 'foro']);
+        }
     }
 
     /**
@@ -57,7 +69,7 @@ class ForumThreadController extends Controller
      */
     public function show($threadId)
     {
-        return view("sections_dashboard.thread", ["thread" => ForumThread::findOrFail($threadId)]);
+        return view("common_sections.thread", ["thread" => ForumThread::findOrFail($threadId)]);
     }
 
     /**

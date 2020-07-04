@@ -1,5 +1,5 @@
 
-@include('sections_dashboard.components.threadComponent', ["thread" => $thread, "generalThreadView" => false])
+@include('common_sections.components.threadComponent', ["thread" => $thread, "generalThreadView" => false])
 <div class="add-reply">
     <div class="top-add-reply">
         <img src="/uploads/avatars/{{Auth::user()->user_image}}" alt="">
@@ -17,7 +17,7 @@
 <div id="all-replies">
 @if($thread->replies->count() != 0)
     @foreach($thread->replies->sortDesc() as $key => $reply)
-        @include('sections_dashboard.components.replyComponent', ["reply" => $reply])
+        @include('common_sections.components.replyComponent', ["reply" => $reply])
     @endforeach
 
     

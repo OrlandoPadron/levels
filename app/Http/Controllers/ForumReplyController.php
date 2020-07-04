@@ -52,7 +52,7 @@ class ForumReplyController extends Controller
      */
     public function show($forumReplyId)
     {
-        return view("sections_dashboard.components.replyComponent", ["reply" => ForumReply::findOrFail($forumReplyId)]);
+        return view("common_sections.components.replyComponent", ["reply" => ForumReply::findOrFail($forumReplyId)]);
     }
 
     /**

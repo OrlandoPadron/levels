@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Athlete;
+use App\ForumThread;
 use App\Invoice;
 
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class UserController extends Controller
         } else {
             $trainingPlans = $user->athlete->trainingPlans;
             $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
-            $threads = $user->threads;
+            $threads = ForumThread::where('user_associated', $user->id)->get();
             return view('show-profile', [
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
