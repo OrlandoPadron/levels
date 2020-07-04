@@ -1,9 +1,11 @@
-<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'foro', addMembers: false, addTutorshipSession: false, openNewThreadForm: false,}">
+<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'miembros', addMembers: false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
-            <div class="img-group-container">
+            <div class="img-group-container" 
+                @click="editGroupDetails=!editGroupDetails"
+                @keydown.escape.window="editGroupDetails=false">
                 <img class="inner-shadow" src="/uploads/group_avatars/{{$group->group_image}}" alt="profile-avatar">
-                <a href="">
+                <a href="" x-on:click.prevent>
                     <i class="fas fa-pencil-alt"></i>
                 </a>
             </div>
@@ -14,6 +16,7 @@
             </div>
         </div>        
     </div>
+    @include('modals.editGroupDetailsModal')
     <!-- Start 'Navbar dashboard' -->
     <div class="navbar-dashboard">
         <div class="container-dashboard">

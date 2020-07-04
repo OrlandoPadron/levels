@@ -10,24 +10,35 @@
 @include('modals.addMembersToGroupModal')
 <div class="members">
     @if(getGroupUsers($group->id)->isNotEmpty())
-        <table id="members_table">
-            <tr>
-                <th></th>
-                <th>Usuario</th>
-                <th>Rol</th>
-                <th>Gestionar</th>
-            </tr>
-            @foreach(getGroupUsers($group->id)->sortBy('name') as $key => $user)
-                <tr id="row_user_{{$user->id}}">
-                    <td class="members_table_image"><a href="{{route("profile.show", [$user->id, 'general'])}}"><img src="/uploads/avatars/{{$user->user_image}}" alt="user_img"></a></td>
-                    <td>{{$user->name . ' ' . $user->surname}}</td>
-                    <td>Miembro</td>
-                    <td>
-                        <button>Hacer admin</button>
-                        <button onclick="removeFromGroup({{$user->id}}, {{$user->athlete->id}})">Eliminar</button>
-                    </td>
+        <table id="members_table" class="data-table">
+            <thead>
+                <tr>
+                    <th>Usuario</th>
+                    <th>Rol</th>
+                    <th>Gestionar</th>
                 </tr>
-            @endforeach
+            </thead>
+            <tbody>
+                @foreach(getGroupUsers($group->id)->sortBy('name') as $key => $user)
+                    <tr class="datatable-row">
+                        <td>
+                            <div class="user_member_table_container">
+                                <div class="user_member_table">
+                                    <a href="{{route("profile.show", [$user->id, 'general'])}}">
+                                        <img src="/uploads/avatars/{{$user->user_image}}" alt="user_img">
+                                    </a>
+                                    <p>{{$user->name . ' ' . $user->surname}}</p>
+                                </div>
+
+                            </div>
+                        <td>Miembro</td>
+                        <td>
+                            <button>Hacer admin</button>
+                            <button onclick="removeFromGroup({{$user->id}}, {{$user->athlete->id}})">Eliminar</button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     @else
         <p>No hay miembros</p>
@@ -36,8 +47,21 @@
 
 <script>
 
-    var row_user = "#row_user_";
     var total_members; 
+
+    $(document).ready(function() {
+    $('#members_table').DataTable({
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        },
+        "columnDefs": [
+            { "orderable": false, "targets": [2] },
+
+        ],
+        "order": [ 0, 'asc' ],
+        "bFilter": true
+        });
+    } );
 
     window.onload = function() {
        total_members = {{getGroupUsers($group->id)->count()}};

@@ -365,3 +365,16 @@ button:hover {
     margin-right: 50px;
     font-size: 100px;
 }
+
+/*DataTable*/
+table.data-table {
+    text-align: center;
+}
+
+.data-table th {
+    border-bottom: 1px solid black;
+}
+
+.data-table td {
+    border-bottom: 1px solid black;
+}

@@ -46,11 +46,28 @@
 
 /*MEMBERS*/
 
-.members_table_image img {
+.user_member_table_container {
+    display: flex;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+.user_member_table {
+    display: inline-flex;
+    padding-left: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+.user_member_table img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-right: 30px;
     border: 2px solid #000f2d;
+}
+
+.user_member_table a {
+    display: flex;
+    color: black;
 }
 
 /*EDIT MODE - ICON OVER IMAGE*/
