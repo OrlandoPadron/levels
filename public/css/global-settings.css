@@ -385,13 +385,13 @@ table.data-table {
     width: 100%;
     background-color: white;
     border-radius: 10px;
-    padding: 10px 0px;
-    padding-bottom: 20px;
+    padding: 5px 0px;
+    padding-bottom: 10px;
     margin-bottom: 50px;
 }
 
 .text-container-content {
-    padding: 0px 40px;
+    padding: 0px 70px;
 }
 
 .heading-text-container {
@@ -419,7 +419,7 @@ table.data-table {
     grid-area: section;
     display: flex;
     align-self: center;
-    justify-self: right;
+    justify-self: left;
     margin-right: 10px;
     color: #6013bb;
     font-size: 20px;

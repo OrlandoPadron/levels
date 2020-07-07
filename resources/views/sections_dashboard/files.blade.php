@@ -23,14 +23,15 @@
     @include('page_messages.account_deactivated_message')
     
 @endif
-<form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
+<progress value="0" max="100" id="uploader">0%</progress>
+<input id="file-upload" multiple name="fileuploaded[]" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
+<button onclick="uploadFile()">Subir</button>
+
+{{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
     @csrf
     <label for="file-upload">Subir fichero</label>
     <input name="user_id" value="{{Auth::user()->id}}">
-    <input id="file-upload" multiple name="fileuploaded[]" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
-    <button type="submit">Subir
-    </button>
-</form>
+</form> --}}
 
 <h2 class="primary-blue-color">Ficheros de {{$user->name. ' '. $user->surname}}</h2>
 <table id="files-table" class="fee-table">
@@ -90,29 +91,41 @@
         "bFilter": false
         });
     } );
-</script>
+
+    function uploadFile(){
+        //Get file 
+        var file = document.getElementById("file-upload").files[0];
+        
+
+        //Create storage ref
+        var storageRef = firebase.storage().ref('prueba/prueba2.jpg');
+
+        //Upload file 
+        var task = storageRef.put(file);
+
+        //Update progress bar
+        var uploader = document.getElementById("uploader");
+
+        task.on('state_changed', 
+            function progress(snapshot){
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                uploader.value = progress;
+            },
+
+            function error(err){
+
+            },
+
+            function complete(){
+                alert("Se ha subido el fichero");
+                task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log('File available at', downloadURL);
+                });
+            }
+        );
 
 
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    }
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
-
-<script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyA78SiccN2Ja0DvcBvJQpcBYjhl9h08Bmc",
-    authDomain: "levels-11f76.firebaseapp.com",
-    databaseURL: "https://levels-11f76.firebaseio.com",
-    projectId: "levels-11f76",
-    storageBucket: "levels-11f76.appspot.com",
-    messagingSenderId: "295655081196",
-    appId: "1:295655081196:web:676fb218bc2539496551c9",
-    measurementId: "G-41719VQ8YE"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
 </script>

@@ -43,5 +43,31 @@
 
 
     @livewireScripts
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyA78SiccN2Ja0DvcBvJQpcBYjhl9h08Bmc",
+        authDomain: "levels-11f76.firebaseapp.com",
+        databaseURL: "https://levels-11f76.firebaseio.com",
+        projectId: "levels-11f76",
+        storageBucket: "levels-11f76.appspot.com",
+        messagingSenderId: "295655081196",
+        appId: "1:295655081196:web:676fb218bc2539496551c9",
+        measurementId: "G-41719VQ8YE"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // Get a reference to the storage service, which is used to create references in your storage bucket
+    var storage = firebase.storage();
+    </script>
 </body>
 </html>
