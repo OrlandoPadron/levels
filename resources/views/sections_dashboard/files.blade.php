@@ -25,7 +25,7 @@
 @endif
 <progress value="0" max="100" id="uploader">0%</progress>
 <input id="file-upload" multiple name="fileuploaded[]" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
-<button onclick="uploadFile()">Subir</button>
+<button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}})">Subir</button>
 
 {{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
     @csrf
@@ -92,19 +92,31 @@
         });
     } );
 
-    function uploadFile(){
+    function pruebas(time){
+
+    }
+
+    function uploadFile(uploaderUserId, profileOwnerUserId){
         //Get file 
         var file = document.getElementById("file-upload").files[0];
-        
 
         //Create storage ref
-        var storageRef = firebase.storage().ref('prueba/prueba2.jpg');
+        var storageRef = firebase.storage().ref('users/'+uploaderUserId+'/files/'+ file.name);
+
+        // Auth
+        firebase.auth().signInAnonymously().catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("Error " + errorCode + ' ' + errorMessage);
+        });
 
         //Upload file 
         var task = storageRef.put(file);
 
         //Update progress bar
         var uploader = document.getElementById("uploader");
+
 
         task.on('state_changed', 
             function progress(snapshot){
@@ -114,18 +126,24 @@
             },
 
             function error(err){
+                console.log(err.message_);
 
             },
 
             function complete(){
-                alert("Se ha subido el fichero");
                 task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-                    console.log('File available at', downloadURL);
+                    console.log('File available at', downloadURL); 
+                    saveReferenceIntoDatabase(profileOwnerUserId, downloadURL);
                 });
             }
         );
 
 
+    }
+
+    function saveReferenceIntoDatabase(profileOwnerUserId, downloadURL){
+        alert("Todo guardado"); 
+        location.reload();
     }
 
 </script>
