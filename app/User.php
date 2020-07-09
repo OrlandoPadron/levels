@@ -68,4 +68,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(ForumThread::class, 'user_associated');
     }
+
+
+    public function files()
+    {
+        return $this->hasMany(UserFile::class, 'owned_by');
+    }
 }

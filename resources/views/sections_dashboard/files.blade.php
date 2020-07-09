@@ -24,7 +24,7 @@
     
 @endif
 <progress value="0" max="100" id="uploader">0%</progress>
-<input id="file-upload" multiple name="fileuploaded[]" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
+<input id="file-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
 <button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}})">Subir</button>
 
 {{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
@@ -34,7 +34,7 @@
 </form> --}}
 
 <h2 class="primary-blue-color">Ficheros de {{$user->name. ' '. $user->surname}}</h2>
-<table id="files-table" class="fee-table">
+<table id="files-table" class="fee-table file-datatable">
     <thead>
         <tr>
             <th>Nombre del fichero</th>
@@ -44,48 +44,56 @@
         </tr>
     </thead>
     <tbody>
+        @foreach($userFiles as $key => $file)
         <tr>
-            <td>curriculum.pdf</td>
-            <td>Mi curriculum</td>
-            <td>PDF</td>
+            <td>{{$file->file_name}}</td>
+            <td>Sin descripción</td>
+            <td>{{strtoupper($file->extension)}}</td>
             <td>
-                <button>Ver</button>
+                <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                 <button>Eliminar</button>
             </td>
-        </tr>
-        <tr>
-            <td>test_esfuerzo.pdf</td>
-            <td>Mi curriculum</td>
-            <td>PDF</td>
-            <td>
-                <button>Ver</button>
-                <button>Eliminar</button>
-            </td>
-        </tr>
-        <tr>
-            <td>pruebas2020.pdf</td>
-            <td>Mi curriculum</td>
-            <td>PDF</td>
-            <td>
-                <button>Ver</button>
-                <button>Eliminar</button>
-            </td>
-        </tr>
+        </tr>     
+        @endforeach
             
         
     </tbody>
 </table>
 
 <h2 class="primary-blue-color">Ficheros compartidos con {{$user->name. ' '. $user->surname}}</h2>
-
+<table id="files-table2" class="fee-table file-datatable">
+    <thead>
+        <tr>
+            <th>Nombre del fichero</th>
+            <th>Descripción</th>
+            <th>Formato</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(getFilesSharedWithUser(Auth::user()->files, $user->id) as $key => $file)
+        <tr>
+            <td>{{$file->file_name}}</td>
+            <td>Sin descripción</td>
+            <td>{{strtoupper($file->extension)}}</td>
+            <td>
+                <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
+                <button>Eliminar</button>
+            </td>
+        </tr>     
+        @endforeach
+            
+        
+    </tbody>
+</table>
 <script>
     $(document).ready(function() {
-    $('#files-table').DataTable({
+    $('.file-datatable').DataTable({
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         "columnDefs": [
-            { "orderable": false, "targets": [1,2,3] },
+            { "orderable": false, "targets": [1,2] },
             { "searchable": false, "targets": 0 }
         ],
         "bFilter": false
@@ -96,12 +104,12 @@
 
     }
 
-    function uploadFile(uploaderUserId, profileOwnerUserId){
+    function uploadFile(fileOwnerUserId, sharedWithUserId){
         //Get file 
         var file = document.getElementById("file-upload").files[0];
 
         //Create storage ref
-        var storageRef = firebase.storage().ref('users/'+uploaderUserId+'/files/'+ file.name);
+        var storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ file.name);
 
         // Auth
         firebase.auth().signInAnonymously().catch(function(error) {
@@ -133,7 +141,7 @@
             function complete(){
                 task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     console.log('File available at', downloadURL); 
-                    saveReferenceIntoDatabase(profileOwnerUserId, downloadURL);
+                    saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL);
                 });
             }
         );
@@ -141,9 +149,32 @@
 
     }
 
-    function saveReferenceIntoDatabase(profileOwnerUserId, downloadURL){
-        alert("Todo guardado"); 
-        location.reload();
+    function saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL){
+        var fileName = file.name.split('.').slice(0, -1).join('.');
+        var fileExtension = file.name.split('.').pop();
+        $.ajax({
+            url: "{{route("userFile.store")}}",
+            type: "POST",
+            data: {
+                file_name: fileName,
+                extension: fileExtension,
+                size: file.size,
+                url: downloadURL,
+                owned_by: fileOwnerUserId,
+                shared_with: sharedWithUserId,
+
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo '" + fileName +"' se ha subido correctamente."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "saveFileReferenceIntoDatabase" function');
+            }  
+        });
     }
 
 </script>

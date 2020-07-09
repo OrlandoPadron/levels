@@ -127,3 +127,15 @@ function getNumberOfTutorshipsWithBookmark()
         ->where('bookmarked', 1)
         ->count();
 }
+
+
+function getFilesSharedWithUser($files, $userId)
+{
+    $sharedFiles = array();
+    foreach ($files as $file) {
+        if (in_array($userId, (array) $file->shared_with)) {
+            array_push($sharedFiles, $file);
+        }
+    }
+    return $sharedFiles;
+}

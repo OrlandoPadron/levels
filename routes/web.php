@@ -41,6 +41,8 @@ Route::post('/storeReply', 'ForumReplyController@store')->name('reply.store');
 Route::post('/updateReply', 'ForumReplyController@update')->name('reply.update');
 Route::post('/destroyReply', 'ForumReplyController@destroy')->name('reply.destroy');
 
+// UserFiles 
+Route::post('/newUserFile', 'UserFileController@store')->name('userFile.store');
 
 // ->> JQ LOAD COMPONENTS 
 Route::get('/thread/{thread}', 'ForumThreadController@show')->name('thread.show');

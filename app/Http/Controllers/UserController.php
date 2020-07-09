@@ -6,7 +6,7 @@ use App\User;
 use App\Athlete;
 use App\ForumThread;
 use App\Invoice;
-
+use App\UserFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -27,12 +27,14 @@ class UserController extends Controller
             $trainingPlans = $user->athlete->trainingPlans;
             $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
             $threads = ForumThread::where('user_associated', $user->id)->get();
+            $files = UserFile::where('owned_by', $user->id)->get();
             return view('show-profile', [
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
                 'invoices' => $invoices,
                 'tab' => $tab != null ? $tab : 'General',
                 'threads' => $threads,
+                'userFiles' => $files,
             ]);
         }
     }
