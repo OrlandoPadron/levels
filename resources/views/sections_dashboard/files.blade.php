@@ -71,14 +71,16 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(getFilesSharedWithUser(Auth::user()->files, $user->id) as $key => $file)
+        @foreach(getFilesSharedWithUser($user->id) as $key => $file)
         <tr>
             <td>{{$file->file_name}}</td>
             <td>Sin descripción</td>
             <td>{{strtoupper($file->extension)}}</td>
             <td>
                 <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
-                <button>Eliminar</button>
+                @if($file->owned_by == Auth::user()->id)
+                <button onclick="stopSharingFile({{$file->id}}, {{$user->id}}, '{{$file->file_name}}')">Dejar de compartir</button>
+                @endif
             </td>
         </tr>     
         @endforeach
@@ -173,6 +175,52 @@
             error: function(){
                 alert('Se ha producido un error.');
                 console.log('Error on ajax call "saveFileReferenceIntoDatabase" function');
+            }  
+        });
+    }
+
+    function deleteUserFile(fileOwnerUserId, file){
+        //Create storage ref
+        var storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ file);
+        
+        // Auth
+        firebase.auth().signInAnonymously().catch(function(error) {
+        // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("Error " + errorCode + ' ' + errorMessage);
+        });
+
+        // Delete the file
+        storageRef.delete().then(function() {
+            // File deleted successfully
+            console.log("Todo guay");
+        }).catch(function(error) {
+            // Uh-oh, an error occurred!
+            console.log("No tan guay");
+
+        });
+    }
+
+    function stopSharingFile(fileId, userId, fileName){
+        $.ajax({
+            url: "{{route("userFile.update")}}",
+            type: "POST",
+            data: {
+                fileId: fileId,
+                userId: userId,
+                method: 'stopSharing',
+
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo '" + fileName +"' se ha dejado de compartir con {{$user->name}}."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "stopSharingFile" function');
             }  
         });
     }

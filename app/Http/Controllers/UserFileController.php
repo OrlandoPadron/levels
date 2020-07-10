@@ -96,9 +96,18 @@ class UserFileController extends Controller
      * @param  \App\UserFile  $userFile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, UserFile $userFile)
+    public function update(Request $request)
     {
-        //
+        $method = $request['method'];
+        $file = UserFile::findOrFail($request['fileId']);
+        switch ($method) {
+            case 'stopSharing':
+                $sharedWithArray = (array) $file->shared_with;
+                $delete = array($request['userId']);
+                $file->shared_with = array_diff($sharedWithArray, $delete);
+                $file->save();
+                break;
+        }
     }
 
     /**

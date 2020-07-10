@@ -4,6 +4,7 @@ use App\User;
 use App\Group;
 use App\Athlete;
 use App\Trainer;
+use App\UserFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -129,9 +130,10 @@ function getNumberOfTutorshipsWithBookmark()
 }
 
 
-function getFilesSharedWithUser($files, $userId)
+function getFilesSharedWithUser($userId)
 {
     $sharedFiles = array();
+    $files = UserFile::where('shared_with', 'like', "%\"$userId\"%")->get();
     foreach ($files as $file) {
         if (in_array($userId, (array) $file->shared_with)) {
             array_push($sharedFiles, $file);
