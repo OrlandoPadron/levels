@@ -15,6 +15,17 @@ class UserFile extends Model
         'file_name', 'extension', 'size', 'url', 'owned_by', 'shared_with',
     ];
 
+
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'shared_with' => '[]',
+    ];
+
+
     /**
      * The attributes that should be casted to native types.
      *

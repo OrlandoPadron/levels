@@ -107,6 +107,15 @@ class UserFileController extends Controller
                 $file->shared_with = array_diff($sharedWithArray, $delete);
                 $file->save();
                 break;
+
+            case 'shareFile':
+                $sharedWithArray = (array) $file->shared_with;
+                if (!in_array($request['userId'], $sharedWithArray)) {
+                    array_push($sharedWithArray, $request['userId']);
+                }
+                $file->shared_with = $sharedWithArray;
+                $file->save();
+                break;
         }
     }
 
@@ -116,8 +125,8 @@ class UserFileController extends Controller
      * @param  \App\UserFile  $userFile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserFile $userFile)
+    public function destroy(Request $request)
     {
-        //
+        UserFile::find($request['fileId'])->delete();
     }
 }

@@ -129,6 +129,18 @@ function getNumberOfTutorshipsWithBookmark()
         ->count();
 }
 
+function getUserFilesNotSharedWithCurrentUser($userLoggedInId, $userId)
+{
+    $files = UserFile::where('owned_by', $userLoggedInId)
+        ->where('shared_with', 'not like', "%\"$userId\"%")
+        ->get();
+    return $files;
+}
+
+function getUsersFiles($userId)
+{
+    return UserFile::where('owned_by', $userId)->get();
+}
 
 function getFilesSharedWithUser($userId)
 {

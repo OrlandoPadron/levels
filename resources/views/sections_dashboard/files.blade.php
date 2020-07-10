@@ -26,6 +26,15 @@
 <progress value="0" max="100" id="uploader">0%</progress>
 <input id="file-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
 <button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}})">Subir</button>
+@if (getUserFilesNotSharedWithCurrentUser(Auth::user()->id, $user->id)->count() >0)
+<p>Compartir un fichero propio</p>
+<select name="cars" id="filesNotShared">
+    @foreach(getUserFilesNotSharedWithCurrentUser(Auth::user()->id, $user->id) as $key => $file)
+        <option value="{{$file->id}}">{{$file->file_name}}</option>
+    @endforeach
+</select>
+<button onclick="shareFile({{$user->id}})">Compartir</button>
+@endif
 
 {{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
     @csrf
@@ -51,7 +60,9 @@
             <td>{{strtoupper($file->extension)}}</td>
             <td>
                 <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
-                <button>Eliminar</button>
+                @if (Auth::user()->id == $user->id)
+                <button onclick="deleteUserFile({{Auth::user()->id}}, {{$file->file_name .'.'.$file->extension}}, {{$file->id}})">Eliminar</button>
+                @endif
             </td>
         </tr>     
         @endforeach
@@ -179,9 +190,9 @@
         });
     }
 
-    function deleteUserFile(fileOwnerUserId, file){
+    function deleteUserFile(fileOwnerUserId, fileName, fileId){
         //Create storage ref
-        var storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ file);
+        var storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ fileName);
         
         // Auth
         firebase.auth().signInAnonymously().catch(function(error) {
@@ -194,11 +205,60 @@
         // Delete the file
         storageRef.delete().then(function() {
             // File deleted successfully
-            console.log("Todo guay");
+            deleteFileReferenceFromDatabase(fileId, fileName);
         }).catch(function(error) {
             // Uh-oh, an error occurred!
             console.log("No tan guay");
 
+        });
+    }
+
+    function deleteFileReferenceFromDatabase(fileId, fileName){
+        $.ajax({
+            url: "{{route("userFile.destroy")}}",
+            type: "POST",
+            data: {
+                fileId: fileId,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo '" + fileName +"' se ha eliminado."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "deleteFileReferenceFromDatabase" function');
+            }  
+        });
+
+    }
+
+
+    function shareFile(userId){
+
+        var fileId = $("#filesNotShared").children("option:selected").val();
+        var fileName = $("#filesNotShared").children("option:selected").text();
+
+        $.ajax({
+            url: "{{route("userFile.update")}}",
+            type: "POST",
+            data: {
+                fileId: fileId,
+                userId: userId,
+                method: 'shareFile',
+
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Ha compartido su archivo '" + fileName +"' con {{$user->name}}."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "shareFile" function');
+            }  
         });
     }
 
