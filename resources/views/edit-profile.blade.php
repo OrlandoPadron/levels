@@ -8,58 +8,37 @@
 </script>
 @endsection
 @section('content')
-<div class="settings-profile-container">
+<div class="settings-profile-container" x-data="{sectionTab: 'general'}">
   <div class="settings-navbar">
     <div class="navbar-container">
       <ul>
-        <li class="active">
-          General
+        <li class="active" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active': sectionTab === 'general'}">
+          <a href="">General</a>
         </li>
-        <li>
-          Avatar
+        <li x-on:click.prevent @click="sectionTab = 'userAvatar'" :class="{'active': sectionTab === 'userAvatar'}">
+          <a href="">Imagen de usuario</a>
+        </li>
+        <li x-on:click.prevent @click="sectionTab = 'athleteRecord'" :class="{'active': sectionTab === 'athleteRecord'}">
+          <a href="">Ficha corredor</a>
+        </li>
+        <li class="active" x-on:click.prevent @click="sectionTab = 'thirdparties'" :class="{'active': sectionTab === 'thirdparties'}">
+          <a href="">Servicios de terceros</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="settings-content">
-    <h2 class="primary-blue-color heading-text-container">Configuración General</h2>
-    <div class="settings-content-section">
-      <h3 class="primary-blue-color settings-sub-heading">
-        Datos generales
-      </h3>
-      <ul>
-        <li class="item-with-input">
-          <p>Nombre</p>
-          <input type="text" value="Nombre">
-        </li>
-        <li class="item-with-input">
-          <p>Apellidos</p>
-          <input type="text" value="Apellidos">
-        </li>
-      </ul>
-
+    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
+      @include('sections_editProfile.general')
     </div>
-    <div class="settings-content-section">
-      <h3 class="primary-blue-color settings-sub-heading">Cuentas asociadas
-      </h3>
-      <p>Levels te permite añadir enlaces a tus perfiles de aplicaciones de terceros. 
-        Para ello, añade la dirección a tu perfil en los campos correspondientes.
-      </p>
-      <ul>
-        <li class="item-with-input">
-          <p>Strava</p>
-          <input type="text" value="" placeholder="https://www.strava.com/athletes/tu-id">
-        </li>
-        <li class="item-with-input">
-          <p>Garmin Connect</p>
-          <input type="text" value="" placeholder="Tu perfil de Garmin Connect">
-        </li>
-        <li class="item-with-input">
-          <p>TrainingPeaks</p>
-          <input type="text" value="" placeholder="Tu perfil de TrainingPeaks">
-        </li>
-      </ul>
-
+    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'userAvatar'">
+      @include('sections_editProfile.userAvatar')
+    </div>
+    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'athleteRecord'">
+      @include('sections_editProfile.athleteRecord')
+    </div>
+    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'thirdparties'">
+      @include('sections_editProfile.thirdparties')
     </div>
   </div>
 </div>
