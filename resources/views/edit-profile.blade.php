@@ -1,6 +1,6 @@
 @extends('layouts.base-inside-app')
 @section('head')
-<link href="{{asset('css/edit_profile.css')}}" rel="stylesheet" />
+<link href="{{asset('css/profile_settings.css')}}" rel="stylesheet" />
 <script>
   function submit(){
     document.getElementById("myForm").submit();
@@ -8,87 +8,59 @@
 </script>
 @endsection
 @section('content')
-<div class="content-edit">
-    <div class="image-pack">
-      <div class="image-container">
-        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile_picture" />
-        <form action="{{route('profile.update_avatar')}}" enctype="multipart/form-data" method="POST" id="myForm">
-          @csrf
-          <label id="swap-image" for="file-upload">Cambiar imagen</label>
-          <input onchange="submit()" id="file-upload" name="avatar" type="file" accept="image/*"/>
-          <label for="delete-file">Eliminar imagen</label>
-          <input onchange="submit()" type="checkbox" name="delete-avatar" id="delete-file" hidden>
-          {{-- <button id="save-changes" type="submit">
-            <i class="fas fa-check-circle"></i>Guardar
-          </button> --}}
-        </form>
-      </div>
-    </div>
-    <div class="data-pack">
-      <div class="profile-data">
-        <div class="personal-data">
-          <h1>Información perfil</h1>
-          <form action="">
-            <h2>Datos personales</h2>
-            <div class="basic-inputs">
-              <label for="">Nombre</label>
-              <input type="text" name="name" value="{{Auth::user()->name}}" />
-
-              <label for="">Apellidos</label>
-              <input type="text" name="surname" value="{{Auth::user()->surname}}" />
-            </div>
-            <button id="add-category">
-              <i class="fas fa-plus-circle"></i>Añadir nuevo campo
-            </button>
-            <button id="save-changes" type="submit">
-              <i class="fas fa-check-circle"></i>Guardar
-            </button>
-          </form>
-          <form id="form-additional-info" action="">
-            <h2>Información adicional</h2>
-            <textarea
-              rows="7"
-              name="additional-info"
-              form="form-additional-info"
-            >
-Escríbenos sobre ti...</textarea
-            >
-            <button id="save-changes" type="submit">
-              <i class="fas fa-check-circle"></i>Guardar
-            </button>
-          </form>
-          <div class="file-list">
-            <h2>Archivos adjuntos</h2>
-            <table>
-              <tr>
-                <th>Nombre fichero</th>
-                <th>Descripción</th>
-                <th>Gestionar</th>
-              </tr>
-              <tr>
-                <td>Peter</td>
-                <td>Griffin</td>
-                <td>$100</td>
-              </tr>
-            </table>
-            <form
-              id="add-files-documentation"
-              action=""
-              enctype="multipart/form-data"
-            >
-              <label>Descripción fichero:</label>
-              <input
-                type="text"
-                placeholder="Por ejemplo: 'Pruebas físicas'"
-              />
-              <input type="file" />
-              <button id="save-changes" type="submit">
-                <i class="fas fa-cloud-upload-alt"></i> Subir archivo
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
+<div class="settings-profile-container">
+  <div class="settings-navbar">
+    <div class="navbar-container">
+      <ul>
+        <li class="active">
+          General
+        </li>
+        <li>
+          Avatar
+        </li>
+      </ul>
     </div>
   </div>
+  <div class="settings-content">
+    <h2 class="primary-blue-color heading-text-container">Configuración General</h2>
+    <div class="settings-content-section">
+      <h3 class="primary-blue-color settings-sub-heading">
+        Datos generales
+      </h3>
+      <ul>
+        <li class="item-with-input">
+          <p>Nombre</p>
+          <input type="text" value="Nombre">
+        </li>
+        <li class="item-with-input">
+          <p>Apellidos</p>
+          <input type="text" value="Apellidos">
+        </li>
+      </ul>
+
+    </div>
+    <div class="settings-content-section">
+      <h3 class="primary-blue-color settings-sub-heading">Cuentas asociadas
+      </h3>
+      <p>Levels te permite añadir enlaces a tus perfiles de aplicaciones de terceros. 
+        Para ello, añade la dirección a tu perfil en los campos correspondientes.
+      </p>
+      <ul>
+        <li class="item-with-input">
+          <p>Strava</p>
+          <input type="text" value="" placeholder="https://www.strava.com/athletes/tu-id">
+        </li>
+        <li class="item-with-input">
+          <p>Garmin Connect</p>
+          <input type="text" value="" placeholder="Tu perfil de Garmin Connect">
+        </li>
+        <li class="item-with-input">
+          <p>TrainingPeaks</p>
+          <input type="text" value="" placeholder="Tu perfil de TrainingPeaks">
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
 @endsection

@@ -1,6 +1,9 @@
 @extends('layouts.base-inside-app')
 
 @section('content')
-    @include('trainer-dashboard')
+    @if(Auth::user()->isTrainer)
+        @include('trainer-dashboard')
+        
+    @endif
 
 @endsection

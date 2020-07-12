@@ -1,0 +1,88 @@
+.settings-profile-container {
+    width: 80%;
+    height: 100%;
+    display: grid;
+    grid-template-areas: "navbar content";
+    grid-template-columns: 25% 1fr;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    gap: 35px;
+}
+
+.settings-navbar {
+    grid-area: navbar;
+    height: fit-content;
+}
+
+.navbar-container {
+    width: 90%;
+    height: 200px;
+}
+
+.navbar-container ul {
+    list-style: none;
+    padding: 0 10px;
+}
+
+.navbar-container li {
+    width: 100%;
+    height: 35px;
+    display: flex;
+    padding-left: 10px;
+    justify-content: left;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.navbar-container .active {
+    background-color: #000f2d;
+    border-radius: 5px;
+    color: white;
+}
+
+.settings-content {
+    grid-area: content;
+    padding: 20px 10px;
+}
+
+.settings-profile-container h2 {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
+.item-with-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.item-with-input p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #6013bb;
+}
+
+.item-with-input input {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid black !important;
+    font-size: 14px;
+}
+
+.settings-content-section {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+}
+
+.settings-content-section ul {
+    padding: 0;
+}
+
+.settings-sub-heading {
+    margin-top: 30px;
+    margin-bottom: -5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
