@@ -30,6 +30,8 @@
     <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
 
+    <!-- Firebase Scripts -->
+    @include('scripts.firebaseScripts')
 
     @yield('head')
 </head>
