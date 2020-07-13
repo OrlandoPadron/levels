@@ -19,6 +19,9 @@
 @if($trainingPlans->isNotEmpty())
     <!-- Box training details -->
     @foreach ($trainingPlans as $key => $plan)
+    <progress value="0" max="100" id="uploader-plan">0%</progress>
+    <input id="plan-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
+    <button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}}, 'AddFileToTrainingPlan', {planId:{{$plan->id}}})">Subir</button>
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}} ">
             <div class="trainingPlan-status">
                 <div class="info-trainingPlan-status">
@@ -37,7 +40,7 @@
                 </div>
             </div>
             <div class="trainingPlan-options">
-                <button class="btn-purple-basic">Ver más detalles</button>
+                <button onclick=""class="btn-purple-basic">Ver más detalles</button>
                 <form action="{{route('trainingPlan.destroy')}}" method="POST">
                     @csrf
                     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>

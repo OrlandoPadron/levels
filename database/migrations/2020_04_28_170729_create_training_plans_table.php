@@ -20,6 +20,7 @@ class CreateTrainingPlansTable extends Migration
             $table->unsignedBigInteger('athlete_associated');
             $table->foreign('athlete_associated')->references('id')->on('athletes')->onDelete('cascade');
             $table->string('status');
+            $table->text('files_associated')->nullable();
             $table->timestamps();
         });
     }

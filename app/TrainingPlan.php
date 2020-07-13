@@ -13,7 +13,7 @@ class TrainingPlan extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'description', 'status', 'athlete_associated',
+        'title', 'description', 'status', 'athlete_associated', 'files_associated',
     ];
 
     /**
@@ -23,7 +23,19 @@ class TrainingPlan extends Model
      */
     protected $attributes = [
         'status' => 'active',
+        'files_associated' => '[]',
     ];
+
+
+    /**
+     * The attributes that should be casted to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'files_associated' => 'array',
+    ];
+
 
     //Relations between entities
 

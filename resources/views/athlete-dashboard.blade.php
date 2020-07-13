@@ -1,3 +1,7 @@
+@section('head')
+<!-- Firebase Scripts -->
+@include('scripts.firebaseScripts')
+@endsection
 <div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false,}">
     <div class="container-dashboard">
         <div class="userinfo">

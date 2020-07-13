@@ -6,9 +6,10 @@
      * @params fileOwnerUserId -> user who uploads the file
      * @params sharedWithUserId -> user target to share the file
      * @params method -> determines the type of entity is calling the function 
+     * @params additionalContent -> auxiliar array to provide extra information to some cases
      *
     */
-    function uploadFile(fileOwnerUserId, sharedWithUserId, method){
+    function uploadFile(fileOwnerUserId, sharedWithUserId, method, additionalContent = []){
         // Auth
         firebase.auth().signInAnonymously().catch(function(error) {
             // Handle Errors here.
@@ -36,8 +37,24 @@
                 //Update progress bar
                 uploader = document.getElementById("uploader");
                 break;
-        }
 
+            case 'AddFileToTrainingPlan':
+                //Get file 
+                file = document.getElementById("plan-upload").files[0];
+        
+                //Create storage ref
+                storageRef = firebase.storage().ref('users/'+sharedWithUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ file.name);
+        
+        
+                //Upload file 
+                task = storageRef.put(file);
+        
+                //Update progress bar
+                uploader = document.getElementById("uploader-plan");   
+                console.log(additionalContent['planId']);        
+                break;
+
+        }
 
         task.on('state_changed', 
             function progress(snapshot){
