@@ -114,9 +114,20 @@ class TrainingPlanController extends Controller
      * @param  \App\TrainingPlan  $trainingPlan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TrainingPlan $trainingPlan)
+    public function update(Request $request)
     {
-        //
+        switch ($request['method']) {
+            case 'addFileToPlan':
+                //Adds files to a specific training plan
+                $plan = TrainingPlan::findOrFail($request['planId']);
+                $files = (array) $plan->files_associated;
+                if (!in_array($request['fileId'], $files)) {
+                    array_push($files, $request['fileId']);
+                    $plan->files_associated = $files;
+                    $plan->save();
+                }
+                break;
+        }
     }
 
     /**

@@ -71,7 +71,15 @@
             function complete(){
                 task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     console.log('File available at', downloadURL); 
-                    saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL);
+                    switch(method){
+                        case 'AthleteFileSection':
+                            saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL, {method:'fileSection'});
+                            break;
+
+                        case 'AddFileToTrainingPlan':
+                            saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'trainingPlanSection'}, {planId: additionalContent['planId']});
+                            break;
+                    }
                 });
             }
         );
@@ -88,25 +96,51 @@
      * @params downloadURL -> firebase's URL linked to the file
      *
     */
-    function saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL){
+    function saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL, method, additionalContent=[]){
         var fileName = file.name.split('.').slice(0, -1).join('.');
         var fileExtension = file.name.split('.').pop();
+        var data;
+        switch(method['method']){
+            case 'fileSection':
+                data = {
+                    file_name: fileName,
+                    extension: fileExtension,
+                    size: file.size,
+                    url: downloadURL,
+                    owned_by: fileOwnerUserId,
+                    shared_with: sharedWithUserId,
+                    method: 'userFile',
+
+                    _token: "{{csrf_token()}}",
+                };
+                break;
+            case 'trainingPlanSection':
+                data = {
+                    file_name: fileName,
+                    extension: fileExtension,
+                    size: file.size,
+                    url: downloadURL,
+                    owned_by: sharedWithUserId,
+                    method: 'trainingFile',
+                    
+                    _token: "{{csrf_token()}}",
+                };
+                break;
+        }
         $.ajax({
             url: "{{route("userFile.store")}}",
             type: "POST",
-            data: {
-                file_name: fileName,
-                extension: fileExtension,
-                size: file.size,
-                url: downloadURL,
-                owned_by: fileOwnerUserId,
-                shared_with: sharedWithUserId,
-
-                _token: "{{csrf_token()}}",
-            },
-            success: function(){
+            data: data,
+            success: function(userFile){
                 alert("Su archivo '" + fileName +"' se ha subido correctamente."); 
-                location.reload();
+                if (method['method'] == 'trainingPlanSection'){
+                    console.log(JSON.stringify(userFile));
+                    console.log( "Plan id " + additionalContent['planId']);
+                    saveTrainingFileIntoTrainingPlan(userFile, additionalContent['planId']);
+                }else{
+                    location.reload();
+                }
+
                 
             },
             error: function(){
@@ -115,6 +149,30 @@
             }  
         });
     }
+
+
+    function saveTrainingFileIntoTrainingPlan(file, planId){
+        $.ajax({
+            url: "{{route("trainingPlan.update")}}",
+            type: "POST",
+            data: {
+                planId: planId,
+                fileId: file['id'],
+                method: 'addFileToPlan',
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo '" + file['file_name'] +"' se ha subido correctamente."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "saveTrainingFileIntoTrainingPlan" function');
+            }  
+        });
+    }
+
 
     
     /**

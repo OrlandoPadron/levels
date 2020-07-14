@@ -56,15 +56,26 @@ class UserFileController extends Controller
                 'owned_by' => $request['owned_by'],
             ]);
         }
-        // In case user is uploading a file into someone's profile.
-        if ($request['shared_with'] != $request['owned_by']) {
-            $sharedWith = (array) $userFile->shared_with;
-            if (!in_array($request['shared_with'], $sharedWith)) {
-                array_push($sharedWith, $request['shared_with']);
-            }
-            $userFile->shared_with = $sharedWith;
-            $userFile->save();
+        // Depending the type of file we're uploading.
+        switch ($request['method']) {
+            case 'userFile':
+                // In case user is uploading a file into someone's profile.
+                if ($request['shared_with'] != $request['owned_by']) {
+                    $sharedWith = (array) $userFile->shared_with;
+                    if (!in_array($request['shared_with'], $sharedWith)) {
+                        array_push($sharedWith, $request['shared_with']);
+                    }
+                    $userFile->shared_with = $sharedWith;
+                    $userFile->save();
+                }
+                break;
+            case 'trainingFile':
+                //Modify some values to represent a training plan file.
+                $userFile->isTrainingPlanFile = true;
+                $userFile->save();
+                break;
         }
+        return $userFile->toArray();
     }
 
     /**

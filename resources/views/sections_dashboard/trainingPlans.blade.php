@@ -19,10 +19,9 @@
 @if($trainingPlans->isNotEmpty())
     <!-- Box training details -->
     @foreach ($trainingPlans as $key => $plan)
-    <progress value="0" max="100" id="uploader-plan">0%</progress>
-    <input id="plan-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
-    <button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}}, 'AddFileToTrainingPlan', {planId:{{$plan->id}}})">Subir</button>
-        <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}} ">
+    <div class="alpine-container" x-data="{addFileToPlan{{$plan->id}}: false}">
+        @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
+        <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="trainingPlan-status">
                 <div class="info-trainingPlan-status">
                     <p class="title-plan bold">'{{$plan->title}}'</p>
@@ -36,11 +35,13 @@
                 <div class="trainingPlan-text">
                     <p class="title-description bold">Descripción del entrenamiento</p>
                     <p>{{$plan->description}}</p>
-
                 </div>
             </div>
             <div class="trainingPlan-options">
-                <button onclick=""class="btn-purple-basic">Ver más detalles</button>
+                <button 
+                @click="addFileToPlan{{$plan->id}}=!addFileToPlan{{$plan->id}}" 
+                @keydown.escape.window="addFileToPlan{{$plan->id}}=false"
+                class="btn-purple-basic">Ver más detalles</button>
                 <form action="{{route('trainingPlan.destroy')}}" method="POST">
                     @csrf
                     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
@@ -49,6 +50,8 @@
                 </form>
             </div>
         </div>
+    </div>
+
     @endforeach
     <!-- Ends Box training details -->
 @else

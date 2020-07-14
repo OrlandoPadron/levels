@@ -80,6 +80,7 @@ Route::post('/togglepayment', 'AthleteController@toggleCurrentMonthPaymentStatus
 //TrainingPlan routes
 Route::post('/training', 'TrainingPlanController@store')->name('trainingPlan.store');
 Route::post('/deletePlan', 'TrainingPlanController@destroy')->name('trainingPlan.destroy');
+Route::post('/updatePlan', 'TrainingPlanController@update')->name('trainingPlan.update');
 
 
 //Tutorship
