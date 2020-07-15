@@ -4,6 +4,7 @@ use App\User;
 use App\Group;
 use App\Athlete;
 use App\Trainer;
+use App\TrainingPlan;
 use App\UserFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -152,4 +153,15 @@ function getFilesSharedWithUser($userId)
         }
     }
     return $sharedFiles;
+}
+
+function getFilesAssociatedWithPlanId($planId)
+{
+
+    $files = array();
+    $files_associated = (array) TrainingPlan::findOrFail($planId)->files_associated;
+    foreach ($files_associated as $file_id) {
+        array_push($files, UserFile::findOrFail($file_id));
+    }
+    return $files;
 }

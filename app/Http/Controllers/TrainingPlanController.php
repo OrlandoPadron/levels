@@ -127,6 +127,15 @@ class TrainingPlanController extends Controller
                     $plan->save();
                 }
                 break;
+            case 'removeFileFromPlan':
+                //Removes file from a specific training plan 
+                $plan = TrainingPlan::findOrFail($request['planId']);
+                $files = (array) $plan->files_associated;
+                if (in_array($request['fileId'], $files)) {
+                    $plan->files_associated = array_diff($files, (array) $request['fileId']);
+                    $plan->save();
+                }
+                break;
         }
     }
 

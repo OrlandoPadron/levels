@@ -132,12 +132,12 @@
             type: "POST",
             data: data,
             success: function(userFile){
-                alert("Su archivo '" + fileName +"' se ha subido correctamente."); 
                 if (method['method'] == 'trainingPlanSection'){
                     console.log(JSON.stringify(userFile));
                     console.log( "Plan id " + additionalContent['planId']);
                     saveTrainingFileIntoTrainingPlan(userFile, additionalContent['planId']);
                 }else{
+                    alert("Su archivo '" + fileName +"' se ha subido correctamente."); 
                     location.reload();
                 }
 
@@ -182,7 +182,7 @@
      * @params fileId -> file's id
      *
     */
-    function deleteUserFile(fileOwnerUserId, fileName, fileId){
+    function deleteUserFile(fileOwnerUserId, fileName, fileId, method, additionalContent=[]){
         // Auth
         firebase.auth().signInAnonymously().catch(function(error) {
         // Handle Errors here.
@@ -190,15 +190,34 @@
             var errorMessage = error.message;
             console.log("Error " + errorCode + ' ' + errorMessage);
         });
-
-        //Create storage ref
-        var storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ fileName);
+        var storageRef;
         
+        switch(method){
+            case 'AthleteFileSection':
+                //Create storage ref
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ fileName);
+                break;
+
+            case 'TrainingPlanSection':
+                //Create storage ref
+                console.log("estamos");
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
+                break;            
+
+
+        }
 
         // Delete the file
         storageRef.delete().then(function() {
             // File deleted successfully
-            deleteFileReferenceFromDatabase(fileId, fileName);
+            switch(method){
+                case 'AthleteFileSection':
+                    deleteFileReferenceFromDatabase(fileId, fileName, method);
+                break;
+
+                case 'TrainingPlanSection':
+                    deleteFileReferenceFromDatabase(fileId, fileName, method, {planId:additionalContent['planId']});
+            }
         }).catch(function(error) {
             // Uh-oh, an error occurred!
             console.log("No tan guay");
@@ -213,7 +232,7 @@
      *
     */
 
-    function deleteFileReferenceFromDatabase(fileId, fileName){
+    function deleteFileReferenceFromDatabase(fileId, fileName, method, additionalContent=[]){
         $.ajax({
             url: "{{route("userFile.destroy")}}",
             type: "POST",
@@ -222,8 +241,17 @@
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                alert("Su archivo '" + fileName +"' se ha eliminado."); 
-                location.reload();
+                switch(method){
+                    case 'AthleteFileSection':
+                        alert("Su archivo '" + fileName +"' se ha eliminado."); 
+                        location.reload();
+                    break;
+
+                    case 'TrainingPlanSection':
+                        deleteFileReferenceFromTrainingPlan(fileId, additionalContent['planId']); 
+                    break;                       
+                }
+
                 
             },
             error: function(){
@@ -232,6 +260,28 @@
             }  
         });
 
+    }
+
+    function deleteFileReferenceFromTrainingPlan(fileId, planId){
+        $.ajax({
+            url: "{{route("trainingPlan.update")}}",
+            type: "POST",
+            data: {
+                planId: planId,
+                fileId: fileId,
+                method: 'removeFileFromPlan',
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo se ha eliminado correctamente."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "deleteFileReferenceFromTrainingPlan" function');
+            }  
+        });
     }
 
     /**

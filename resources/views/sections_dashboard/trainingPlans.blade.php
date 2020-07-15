@@ -41,7 +41,7 @@
                 <button 
                 @click="addFileToPlan{{$plan->id}}=!addFileToPlan{{$plan->id}}" 
                 @keydown.escape.window="addFileToPlan{{$plan->id}}=false"
-                class="btn-purple-basic">Ver más detalles</button>
+                class="btn-purple-basic">Ver archivos</button>
                 <form action="{{route('trainingPlan.destroy')}}" method="POST">
                     @csrf
                     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
