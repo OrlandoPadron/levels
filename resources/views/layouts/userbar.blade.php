@@ -1,5 +1,7 @@
 <div class="userbar">
-  <livewire:search-dropdown>
+  @if(Auth::user()->isTrainer)
+    <livewire:search-dropdown> 
+  @endif
     <div class="userbuttons">
       <div class="greetings">
         <div class="user-greetings">

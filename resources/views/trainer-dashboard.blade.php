@@ -1,8 +1,8 @@
-<div class="content-trainer-dashboard">
+<div class="content-trainer-dashboard" x-data="{feeStatusModal: false}">
     <div class="container-dashboard">
         <h1 class="primary-blue-color"><i class="fas fa-dumbbell"></i> Panel de Entrenador</h1>
     </div>
-
+    @include('modals.trainerPanelModals.feeStatusModal')
     <div class="boxes">
         <div class="box-item-container shadow-container" style="color: #136ebb;" >
             <div class="buble-notification bubble-fix">
@@ -35,10 +35,13 @@
             <i class="fas fa-comment-alt"></i>
             <p class="boxes-message-status">Foros grupales</p>
         </div>
-        <div class="box-item-container shadow-container" style="color: #6ebb13;">
+        <div class="box-item-container shadow-container" style="color: #6ebb13;"
+            @click="feeStatusModal=!feeStatusModal" 
+            @keydown.escape.window="feeStatusModal=false"
+        >
             <div class="buble-notification bubble-fix">
                 <div class="bubble-circle">
-                    <p id="#notification">1</p>
+                    <p id="#notification">{{collect(getArrayOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id))->count()}}</p>
                 </div>
             </div>
             <i class="fas fa-euro-sign"></i>

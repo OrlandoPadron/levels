@@ -89,11 +89,34 @@ function getArrayOfUsersTrainedByMe($trainer_id)
 {
     $users = array();
     $trainer = Trainer::findOrFail($trainer_id);
-    foreach ($trainer->trained_by_me as $trainer_id) {
-        array_push($users, getUserUsingAthleteId($trainer_id));
+    foreach ($trainer->trained_by_me as $user_id) {
+        array_push($users, getUserUsingAthleteId($user_id));
     }
     return $users;
 }
+
+function getArrayOfAthletesTrainedByTrainerId($trainerId)
+{
+    $athletes = array();
+    $trainer = Trainer::findOrFail($trainerId);
+    foreach ($trainer->trained_by_me as $user_id) {
+        array_push($athletes, getUserUsingAthleteId($user_id)->athlete);
+    }
+    return $athletes;
+}
+
+function getArrayOfAthletesWhoHaventPayMonthYet($trainerId)
+{
+    $athletes = getArrayOfAthletesTrainedByTrainerId($trainerId);
+    $haventPay = array();
+    foreach ($athletes as $athlete) {
+        if (!$athlete->monthPaid) {
+            array_push($haventPay, $athlete);
+        }
+    }
+    return $haventPay;
+}
+
 
 /**
  * Given a group, function returns all group members as User Model array. 

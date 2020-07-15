@@ -16,6 +16,15 @@ class Trainer extends Model
         'trained_by_me' => 'array',
     ];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'trained_by_me' => '[]',
+    ];
+
 
     //
     public function user()
