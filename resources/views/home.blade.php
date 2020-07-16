@@ -4,7 +4,7 @@
     @if(Auth::user()->isTrainer)
         @include('trainer-dashboard')
     @else 
-        <p>Esto es una prueba</p>
+        @include('athlete_home.athleteHome', ['tab' => 'general'])
     @endif
 
 @endsection

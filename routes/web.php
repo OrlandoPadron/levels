@@ -25,6 +25,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 /**
+ * Athlete ROUTES
+ */
+Route::get('/home/dashboard/{tab}', 'HomeController@athleteHome')->name('athlete.home');
+
+/**
  * USER CONTROLLER ROUTES
  */
 // Profile
