@@ -55,6 +55,11 @@ function getTrainersNameByTrainerId($trainer_id)
     return $trainer->name . ' ' . $trainer->surname;
 }
 
+function getTrainerByTrainerId($trainerId)
+{
+    return Trainer::findOrFail($trainerId);
+}
+
 
 /**
  * Given an user id, returns his name. 
