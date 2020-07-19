@@ -53,16 +53,76 @@
         <div class="content">
             <ul>
                 <li>
-                    Oe
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
                 </li>
                 <li>
-                    Oe
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
                 </li>
                 <li>
-                    Oe
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
                 </li>
                 <li>
-                    Oe
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="log-item">
+                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
+                        <div class="log-details">
+                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
+                            <p>Hace 2 minutos</p>
+                        </div>
+                        <div class="log-buttons">
+                            <button class="soft-btn">Ver detalles</button>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>

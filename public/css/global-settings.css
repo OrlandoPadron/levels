@@ -433,7 +433,7 @@ table.data-table {
 
 .box-container {
     height: 80px;
-    max-width: 700px;
+    max-width: 80%;
     background-color: white;
     border-radius: 5px;
     padding: 50px;
@@ -614,4 +614,62 @@ table.data-table {
 .box-container-log h2 {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     padding-bottom: 10px;
+}
+
+.box-container-log ul {
+    list-style: none;
+    margin: 0;
+    padding: 0 10px;
+    padding-top: 10px;
+}
+
+.box-container-log .content {
+    max-height: 380px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+}
+
+.log-item {
+    display: grid;
+    grid-template-areas: "img details buttons";
+    grid-template-columns: 100px 1fr 120px;
+    align-items: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.box-container-log ul li:not(:first-child) {
+    margin-top: 20px;
+}
+
+.log-item img {
+    grid-area: img;
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    border: 2px solid #000f2d;
+}
+
+.log-buttons {
+    grid-area: buttons;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+.log-details p {
+    margin: 0;
+}
+
+.log-details p:first-child {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.log-details p:nth-child(2) {
+    color: #6013bb;
+    font-size: 14px;
 }
