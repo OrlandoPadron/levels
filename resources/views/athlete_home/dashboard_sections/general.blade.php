@@ -1,16 +1,15 @@
-{{-- <p>{{$user->name}} es entrenado por</p>
-<p>{{getTrainersNameByTrainerId($user->athlete->trainer_id)}}</p> --}}
-
 <div class="box-container shadow-container">
     <div class="box-image">
-        <img class="inner-shadow" src="/uploads/avatars/{{getTrainerByTrainerId($user->athlete->trainer_id)->user->user_image}}" alt="">
+        <img class="inner-shadow" src="/uploads/avatars/{{$user->athlete->trainer_id != null ? getTrainerByTrainerId($user->athlete->trainer_id)->user->user_image : 'default_avatar.jpg'}}" alt="">
     </div>
     <div class="box-content">
-        <p>Tu entrenador es</p>
-        <p>{{getTrainersNameByTrainerId($user->athlete->trainer_id)}}</p>
+        <p>{{$user->athlete->trainer_id != null ? 'Tu entrenador es': ''}}</p>
+        <p>{{$user->athlete->trainer_id != null ? getTrainersNameByTrainerId($user->athlete->trainer_id) : 'Sin entrenador actualmente'}}</p>
     </div>
     <div class="box-container-buttons">
-        <button class="soft-btn">Ver perfil</button>
+        @if($user->athlete->trainer_id != null)
+            <button class="soft-btn">Ver perfil</button>
+        @endif
     </div>
 </div>
 <div class="general-dashboard-athlete">
@@ -36,6 +35,7 @@
             <p>3 nuevas respuestas</p>
         </div>
     </div>
+    @if ($user->athlete->monthPaid)
     <div class="box-container-notification shadow-container payment-notification">
         <div class="box-icon">
             <div class="box-icon-container">
@@ -47,84 +47,37 @@
             <p>Pagado</p>
         </div>
     </div>
+    @endif
 
     <div class="box-container-log shadow-container">
-        <h2>Actividad reciente <span class="light">(Último mes)</span></h2>
+        <h2>Actividad reciente <span class="light">(Últimos 30 días)</span></h2>
         <div class="content">
-            <ul>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
+            @if (getLoggedInUserLog()->count() > 0)
+                <ul>
+                @foreach(getLoggedInUserLog()->sortByDesc('created_at') as $key => $log)
+                    <li>
+                        <div class="log-item">
+                            <img class="inner-shadow" src="/uploads/avatars/{{$log->user->user_image}}" alt="profile-avatar">
+                            <div class="log-details">
+                                <p>{!!$log->author_id == Auth::user()->id ? 'Has ' . $log->action : getName($log->author_id) . ' ha ' . $log->action!!}</p>
+                                <p>{{ucfirst($log->created_at->diffForHumans())}}</p>
+                            </div>
+                            <div class="log-buttons">
+                                <button 
+                                onclick="changeUrlParameters('{{$log->tab}}')" 
+                                x-on:click.prevent @click="sectionTab = '{{$log->tab}}'" 
+                                :class="{'active-dashboard': sectionTab === '{{$log->tab}}'}"
+                                class="soft-btn">Ver sección</button>
+                            </div>
                         </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
-                        </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
-                        </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
-                        </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
-                        </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="log-item">
-                        <img class="inner-shadow" src="/uploads/avatars/{{Auth::user()->user_image}}" alt="profile-avatar">
-                        <div class="log-details">
-                            <p>Has subido el archivo 'analítica.pdf' a tus ficheros.</p>
-                            <p>Hace 2 minutos</p>
-                        </div>
-                        <div class="log-buttons">
-                            <button class="soft-btn">Ver detalles</button>
-                        </div>
-                    </div>
-                </li>
-            </ul>
+                    </li>
+                @endforeach
+                </ul>
+            @else
+                <p class="no-activity">
+                    Sin actividad reciente
+                </p>
+            @endif
         </div>
     </div>
 </div>

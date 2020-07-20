@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Group;
+use App\ActivityLog;
 use App\ForumThread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\ActivityLogController;
 
 class ForumThreadController extends Controller
 {
@@ -38,6 +41,7 @@ class ForumThreadController extends Controller
      */
     public function store(Request $request)
     {
+        $logController = new ActivityLogController();
         if (isset($request['user_associated'])) {
             ForumThread::create([
                 'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',
@@ -47,6 +51,17 @@ class ForumThreadController extends Controller
             ]);
 
             $user = User::find($request['user_associated']);
+
+            // Log storage. 
+            $log = array(
+                'author_id' => Auth::user()->id,
+                'action' => 'creado el hilo <span style="color:#6013bb;">\'' . $request['title'] . '\'</span>',
+                'tab' => 'foro',
+                'entity_implied' => $request['user_associated']
+            );
+            $logController->store($log);
+            // End log storage
+
             return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
         } else {
             ForumThread::create([
@@ -55,6 +70,16 @@ class ForumThreadController extends Controller
                 'author' => $request['created_by'],
                 'group_associated' => $request['group_associated'],
             ]);
+
+            // Log storage. 
+            $log = array(
+                'author_id' => Auth::user()->id,
+                'action' => 'creado el hilo <span style="color:#6013bb;">\'' . $request['title'] . '\'</span>',
+                'tab' => 'foro',
+                'entity_implied' => $request['group_associated']
+            );
+            $logController->store($log);
+            // End log storage
 
             $group = Group::find($request['group_associated']);
             return redirect()->route('group.show', ['group' => $group, 'tab' => 'foro']);
@@ -106,7 +131,20 @@ class ForumThreadController extends Controller
     public function destroy(Request $request)
     {
         $thread = ForumThread::find($request['thread_id']);
+
+        // Log storage. 
+        $log = array(
+            'author_id' => Auth::user()->id,
+            'action' => 'eliminado el hilo <span style="color:#6013bb;">\'' . $thread->title . '\'</span>',
+            'tab' => 'foro',
+            'entity_implied' => $thread->user_associated
+        );
+        $logController = new ActivityLogController();
+        $logController->store($log);
+        // End log storage
+
         $thread->delete();
+
 
         if ($request['return_to_forum'] == 1) {
             $user = $thread->model;

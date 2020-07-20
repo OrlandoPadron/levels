@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ForumReply;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForumReplyController extends Controller
 {
@@ -38,8 +39,20 @@ class ForumReplyController extends Controller
             $reply = ForumReply::create([
                 'thread_id' => $request['thread_id'],
                 'description' => $request['description'],
-                'author' => $request['author'],
+                'author' => Auth::user()->id,
             ]);
+
+            // Log storage. 
+            $log = array(
+                'author_id' => Auth::user()->id,
+                'action' => 'repondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
+                'tab' => 'foro',
+                'entity_implied' => $reply->thread->user_associated
+            );
+            $logController = new ActivityLogController();
+            $logController->store($log);
+            // End log storage
+
             return $reply->id;
         }
     }

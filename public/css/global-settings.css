@@ -642,6 +642,10 @@ table.data-table {
     margin-top: 20px;
 }
 
+.box-container-log li:last-child > .log-item {
+    border-bottom: none;
+}
+
 .log-item img {
     grid-area: img;
     width: 75px;
@@ -672,4 +676,10 @@ table.data-table {
 .log-details p:nth-child(2) {
     color: #6013bb;
     font-size: 14px;
+}
+
+.no-activity {
+    font-size: 22px;
+    padding: 5px 0px;
+    color: #6113bbd7;
 }

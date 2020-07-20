@@ -138,7 +138,6 @@
                     data: {
                         thread_id: threadId,
                         description: description,
-                        author: 26,
                         _token: "{{csrf_token()}}",
                     },
                     success: function(replyId){

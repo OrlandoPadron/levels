@@ -4,8 +4,10 @@ use App\User;
 use App\Group;
 use App\Athlete;
 use App\Trainer;
-use App\TrainingPlan;
 use App\UserFile;
+use App\ActivityLog;
+use App\TrainingPlan;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
@@ -192,4 +194,21 @@ function getFilesAssociatedWithPlanId($planId)
         array_push($files, UserFile::findOrFail($file_id));
     }
     return $files;
+}
+
+
+/**
+ * Returns the activity log of the current logged user within last 30 days. 
+ */
+
+function getLoggedInUserLog()
+{
+    $log = ActivityLog::where('isGroup', 0)
+        ->where('entity_implied', Auth::user()->id)
+        ->where(
+            'created_at',
+            '>=',
+            Carbon::now()->subDays(30)->toDateTimeString()
+        )->get();
+    return $log;
 }

@@ -32,7 +32,7 @@ class UserController extends Controller
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
                 'invoices' => $invoices,
-                'tab' => $tab != null ? $tab : 'General',
+                'tab' => $tab != null ? $tab : 'general',
                 'threads' => $threads,
                 'userFiles' => $files,
             ]);
@@ -41,7 +41,6 @@ class UserController extends Controller
 
     public function showEditProfile()
     {
-        $user = Auth::user();
         return view('edit-profile');
     }
 

@@ -31,6 +31,7 @@
                 <ul id="navbar-dashboard-items">
                     <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
                     <li id="plan-navbar" onclick="changeUrlParameters('plan')" x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}"><a href="#">Planes de entrenamiento</a></li>
+                    <li id="foro-navbar" onclick="changeUrlParameters('foro')" x-on:click.prevent @click="sectionTab = 'foro'" :class="{'active-dashboard': sectionTab === 'foro'}"><a href="#">Foro</a></li>
                     <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
                 </ul>
             </div>
@@ -101,28 +102,28 @@
         switch(tab){
 
             case 'general':
-                title = title.concat("| General");
+                title = title.concat(" | General");
                 break;
             case 'plan':
-                title = title.concat("| Plan");
+                title = title.concat(" | Plan");
                 break;
             case 'foro':
-                title = title.concat("| Foro");
+                title = title.concat(" | Foro");
                 break;
             case 'archivos':
-                title = title.concat("| Archivos");
+                title = title.concat(" | Archivos");
                 break;
             case 'tutorias':
-                title = title.concat("| Tutorías");
+                title = title.concat(" | Tutorías");
                 break;
             case 'cuotas':
-                title = title.concat("| Cuotas");
+                title = title.concat(" | Cuotas");
                 break;
             case 'cuenta':
-                title = title.concat("| Cuenta");
+                title = title.concat(" | Cuenta");
                 break;
             default:
-                title =title.concat("| App");
+                title =title.concat(" | App");
                 break;
 
         }

@@ -130,7 +130,6 @@
             section: tab
         }, getSectionTitle(tab), url);
         document.title = getSectionTitle(tab);
-
     }
 
     function getSectionTitle(tab){
@@ -138,28 +137,28 @@
         switch(tab){
 
             case 'general':
-                title = title.concat("| General");
+                title = title.concat(" | General");
                 break;
             case 'plan':
-                title = title.concat("| Plan");
+                title = title.concat(" | Plan");
                 break;
             case 'foro':
-                title = title.concat("| Foro");
+                title = title.concat(" | Foro");
                 break;
             case 'archivos':
-                title = title.concat("| Archivos");
+                title = title.concat(" | Archivos");
                 break;
             case 'tutorias':
-                title = title.concat("| Tutorías");
+                title = title.concat(" | Tutorías");
                 break;
             case 'cuotas':
-                title = title.concat("| Cuotas");
+                title = title.concat(" | Cuotas");
                 break;
             case 'cuenta':
-                title = title.concat("| Cuenta");
+                title = title.concat(" | Cuenta");
                 break;
             default:
-                title =title.concat("| App");
+                title =title.concat(" | App");
                 break;
 
         }
