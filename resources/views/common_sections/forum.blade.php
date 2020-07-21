@@ -62,6 +62,7 @@
 
 <script>
     function goToThreads(thread_id){
+        console.log('abrimos thread');
         $("#open-thread-container").load( "/thread/".concat(thread_id));
         $("#forum-header").html('<i style="margin-right: 15px;" class="fas fa-chevron-circle-left"></i>');
         $("#forum-header").append("Volver atrás");
@@ -73,6 +74,7 @@
         $("#add-btn-forum").fadeOut(500);
         $( "#open-thread-container" ).fadeIn(500);
         $(".page-content").animate({ scrollTop: 0 }, "slow");
+        updateNotificationLogJson(thread_id, 'forum');
 
     }
 

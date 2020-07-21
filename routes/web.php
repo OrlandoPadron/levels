@@ -94,7 +94,8 @@ Route::post('/tbookmark', 'TutorshipController@toggleBookmark')->name('tutorship
 Route::post('/tupdate', 'TutorshipController@update')->name('tutorship.update');
 Route::post('/tdestroy', 'TutorshipController@destroy')->name('tutorship.destroy');
 
-
+//Access log
+Route::post('/updateAccess', 'UserController@updateServiceAccessesDates')->name('user.updateAccess');
 
 /**
  * GROUP ROUTES

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\ForumReply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,6 +53,11 @@ class ForumReplyController extends Controller
             $logController = new ActivityLogController();
             $logController->store($log);
             // End log storage
+
+            //Updates thread 'updated_at' field
+            $reply->thread->updated_at = Carbon::now();
+            $reply->thread->save();
+
 
             return $reply->id;
         }

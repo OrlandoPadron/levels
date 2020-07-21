@@ -17,8 +17,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'surname', 'email', 'password',
-        'isTrainer',
+        'name', 'surname', 'surname2', 'email', 'password',
+        'isTrainer', 'notifications_json'
     ];
 
     /**
@@ -47,6 +47,7 @@ class User extends Authenticatable
     protected $attributes = [
         'isTrainer' => false,
         'admin' => false,
+        'notifications_json' => '{}',
     ];
 
 

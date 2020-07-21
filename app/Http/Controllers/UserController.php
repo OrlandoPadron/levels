@@ -7,11 +7,14 @@ use App\Athlete;
 use App\ForumThread;
 use App\Invoice;
 use App\UserFile;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
+
+use function GuzzleHttp\json_encode;
 
 class UserController extends Controller
 {
@@ -179,6 +182,32 @@ class UserController extends Controller
             $user->account_activated = 0;
             $user->save();
             return redirect()->route('profile.show', ["user" => $user, "tab" => 'general']);
+        }
+    }
+
+
+
+    /**
+     * Updates notifications json file in users database.
+     */
+
+    public function updateServiceAccessesDates(Request $request)
+    {
+
+        if (isset($request['method'])) {
+            $json_decode = json_decode(Auth::user()->notifications_json, true);
+
+            switch ($request['method']) {
+                case 'forum':
+                    $json_decode['forum'][$request['id']]['lastVisit'] = date("Y-m-d H:i:s", time());
+                    Auth::user()->notifications_json = json_encode($json_decode);
+                    Auth::user()->save();
+                    break;
+                case 'groupForum':
+                    break;
+                case 'trainingPlans':
+                    break;
+            }
         }
     }
 }

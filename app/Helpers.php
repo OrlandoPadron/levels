@@ -11,7 +11,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
+use Mockery\Undefined;
 
+use function GuzzleHttp\json_decode;
 
 function setActive($tab)
 {
@@ -211,4 +213,66 @@ function getLoggedInUserLog()
             Carbon::now()->subDays(30)->toDateTimeString()
         )->get();
     return $log;
+}
+
+/** Only for test -> DELETE */
+function test2()
+{
+    // $json = array(
+    //     "forum" => array(
+    //         "12" => array(
+    //             "lastVisit" => "date"
+    //         ),
+    //         "32" => array(
+    //             "lastVisit" => "date"
+    //         )
+
+    //     ),
+    //     "groupForm" => array(
+    //         "322" => array(
+    //             "lastVisit" => "date"
+    //         ),
+    //         "42" => array(
+    //             "lastVisit" => "date"
+    //         )
+
+    //     ),
+    //     "trainingPlans" => array(
+    //         "52" => array(
+    //             "lastVisit" => "date"
+    //         ),
+    //         "652" => array(
+    //             "lastVisit" => "date"
+    //         )
+
+    //     )
+
+    // );
+    $json = Auth::user()->notifications_json;
+    $json_decode = json_decode($json, true);
+    // dump("String: " . $json_encode);
+
+    $json_decode['forum']['13']['lastVisit'] = 'modificado';
+    Auth::user()->notifications_json = json_encode($json_decode);
+    Auth::user()->save();
+    foreach ($json_decode['forum'] as $id => $value) {
+        dump($id . ': ' . $value['lastVisit']);
+    }
+}
+
+
+function test()
+{
+    dump(Carbon::now()->timestamp);
+    dump(Auth::user()->created_at->timestamp);
+
+    dump(Auth::user()->notifications_json);
+    $json = json_decode(Auth::user()->notifications_json, true);
+    dump('Timestamp json');
+    $time = $json['forum']['1']['lastVisit'];
+    $carbon = Carbon::parse($time);
+    dump($carbon->timestamp);
+    dump('Timestamp now');
+
+    dump(Carbon::now()->timestamp);
 }

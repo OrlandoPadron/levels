@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('surname');
+            $table->string('surname2')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -24,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('isTrainer');
             $table->boolean('admin');
             $table->boolean('account_activated')->default('1');
+            $table->longText('notifications_json')->nullable();
             $table->string('user_image')->default('default_avatar.jpg');
             $table->timestamps();
         });

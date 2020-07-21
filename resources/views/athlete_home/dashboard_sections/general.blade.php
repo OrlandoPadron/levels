@@ -1,3 +1,11 @@
+{{-- {{test()}} --}}
+@dump($notifications)
+<form action="{{route("user.updateAccess")}}" method="POST">
+    @csrf
+    <input type="text" value="1" name="id">
+    <input type="text" value="forum" name="method">
+    <button type="submit">go</button>
+</form>
 <div class="box-container shadow-container">
     <div class="box-image">
         <img class="inner-shadow" src="/uploads/avatars/{{$user->athlete->trainer_id != null ? getTrainerByTrainerId($user->athlete->trainer_id)->user->user_image : 'default_avatar.jpg'}}" alt="">
