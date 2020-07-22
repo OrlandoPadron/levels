@@ -46,7 +46,7 @@ class ForumReplyController extends Controller
             // Log storage. 
             $log = array(
                 'author_id' => Auth::user()->id,
-                'action' => 'repondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
+                'action' => 'respondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
                 'tab' => 'foro',
                 'entity_implied' => $reply->thread->user_associated
             );

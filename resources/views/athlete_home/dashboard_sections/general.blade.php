@@ -21,6 +21,17 @@
     </div>
 </div>
 <div class="general-dashboard-athlete">
+    <div class="box-container-notification shadow-container plan-notification">
+        <div class="box-icon">
+            <div class="box-icon-container">
+                <i style="font-size: 36px;" class="fas fa-running"></i>
+            </div>
+        </div>
+        <div class="box-content">
+            <p>Plan de entrenamiento</p>
+            <p>Sin actividad reciente</p>
+        </div>
+    </div>
     <div class="box-container-notification shadow-container forum-notification">
         <div class="box-icon">
             <div class="box-icon-container">
@@ -29,7 +40,9 @@
         </div>
         <div class="box-content">
             <p>Foro personal</p>
-            <p>3 nuevas respuestas</p>
+            <p>{{$notifications['threads']['totalNumOfNewChanges'] > 0 ? 
+                $notifications['threads']['totalNumOfNewChanges'] . ($notifications['threads']['totalNumOfNewChanges'] = 1 ? ' respuesta nueva' : ' respuestas nuevas') 
+             : 'Sin actividad reciente'}}</p>
         </div>
     </div>
     <div class="box-container-notification shadow-container forumgroup-notification">
@@ -40,7 +53,9 @@
         </div>
         <div class="box-content">
             <p>Foros grupales</p>
-            <p>3 nuevas respuestas</p>
+            <p>{{$notifications['gthreads']['totalNumOfNewChanges'] > 0 ? 
+                $notifications['gthreads']['totalNumOfNewChanges'] . ($notifications['gthreads']['totalNumOfNewChanges'] == 1 ? ' respuesta nueva' : ' respuestas nuevas')  
+            : 'Sin actividad reciente'}}</p>
         </div>
     </div>
     @if ($user->athlete->monthPaid)

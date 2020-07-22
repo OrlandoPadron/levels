@@ -494,6 +494,7 @@ table.data-table {
 .general-dashboard-athlete {
     display: grid;
     grid-template-areas:
+        "plan log"
         "forum log"
         "forumGroup log"
         "payment log";
@@ -512,6 +513,10 @@ table.data-table {
 }
 .payment-notification {
     grid-area: payment;
+}
+
+.plan-notification {
+    grid-area: plan;
 }
 
 .box-container-notification {
@@ -598,6 +603,14 @@ table.data-table {
         rgb(255, 145, 0) 100%
     );
 }
+.plan-notification .box-icon-container {
+    background: rgb(149, 7, 230);
+    background: linear-gradient(
+        153deg,
+        rgb(0, 200, 84) 0%,
+        rgb(105, 197, 0) 100%
+    );
+}
 
 .box-container-log {
     grid-area: log;
@@ -624,7 +637,9 @@ table.data-table {
 }
 
 .box-container-log .content {
-    max-height: 380px;
+    min-height: 380px;
+    max-height: 550px;
+
     margin-bottom: 20px;
     overflow-y: auto;
 }
