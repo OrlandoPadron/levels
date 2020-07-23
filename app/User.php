@@ -48,6 +48,7 @@ class User extends Authenticatable
         'isTrainer' => false,
         'admin' => false,
         'notifications_json' => '{}',
+        'my_wall' => '{}',
     ];
 
 

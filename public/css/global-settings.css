@@ -493,6 +493,7 @@ table.data-table {
 
 .general-dashboard-athlete {
     display: grid;
+    max-height: fit-content;
     grid-template-areas:
         "plan log"
         "forum log"
@@ -614,6 +615,7 @@ table.data-table {
 
 .box-container-log {
     grid-area: log;
+    max-height: 100%;
     display: flex;
     flex-direction: column;
     background-color: white;

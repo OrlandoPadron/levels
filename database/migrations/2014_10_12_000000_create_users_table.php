@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->boolean('admin');
             $table->boolean('account_activated')->default('1');
             $table->longText('notifications_json')->nullable();
+            $table->longText('my_wall')->nullable();
             $table->string('user_image')->default('default_avatar.jpg');
             $table->timestamps();
         });

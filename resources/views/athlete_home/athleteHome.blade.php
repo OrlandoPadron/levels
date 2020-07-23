@@ -33,6 +33,7 @@
                     <li id="plan-navbar" onclick="changeUrlParameters('plan')" x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}"><a href="#">Planes de entrenamiento</a></li>
                     <li id="foro-navbar" onclick="changeUrlParameters('foro')" x-on:click.prevent @click="sectionTab = 'foro'" :class="{'active-dashboard': sectionTab === 'foro'}"><a href="#">Foro</a></li>
                     <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
+                    <li id="muro-navbar" onclick="changeUrlParameters('muro')" x-on:click.prevent @click="sectionTab = 'muro'" :class="{'active-dashboard': sectionTab === 'muro'}"><a href="#">Mi muro</a></li>
                 </ul>
             </div>
         </div>
@@ -48,13 +49,16 @@
             </div>
             <div id="foro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'foro'">
                 @if(Request::get('thread_view') == 0)
-                    @include('common_sections.forum')
+                @include('common_sections.forum')
                 @else
                 @include('sections_dashboard.thread')
                 @endif
             </div>
             <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                 @include('sections_dashboard.files')
+            </div>
+            <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'muro'">
+                @include('sections_dashboard.myWall')
             </div>
         </div>
     </div>
