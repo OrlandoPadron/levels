@@ -210,4 +210,31 @@ class UserController extends Controller
             }
         }
     }
+
+
+    /**
+     * Method relate to My Wall section. 
+     */
+
+    public function myWall(Request $request)
+    {
+
+        if (isset($request['method'])) {
+            $json_decode = json_decode(Auth::user()->my_wall, true);
+            switch ($request['method']) {
+                case 'newSection':
+                    $id = time();
+                    $position = count($json_decode) + 1;
+                    $json_decode[$id] = array(
+                        'title' => $request['title'],
+                        'content' => $request['content'],
+                        'position' => $position
+                    );
+                    Auth::user()->my_wall = json_encode($json_decode);
+                    Auth::user()->save();
+                    break;
+            }
+            return redirect()->route('athlete.home', 'muro');
+        }
+    }
 }

@@ -215,6 +215,22 @@ function getLoggedInUserLog()
     return $log;
 }
 
+/**
+ * Returns an associative array containing user's wall.
+ */
+function getUserWall($userId)
+{
+    return json_decode(User::findOrFail($userId)->my_wall, true);
+}
+/**
+ * Returns an associative array containing user's wall.
+ */
+function getUserWallElements($userId)
+{
+    return count(json_decode(User::findOrFail($userId)->my_wall, true));
+}
+
+
 /** Only for test -> DELETE */
 function test2()
 {
