@@ -220,9 +220,9 @@ class UserController extends Controller
     {
 
         if (isset($request['method'])) {
-            $json_decode = json_decode(Auth::user()->my_wall, true);
             switch ($request['method']) {
                 case 'newSection':
+                    $json_decode = json_decode(Auth::user()->my_wall, true);
                     $id = time();
                     $position = count($json_decode) + 1;
                     $json_decode[$id] = array(
@@ -232,6 +232,25 @@ class UserController extends Controller
                     );
                     Auth::user()->my_wall = json_encode($json_decode);
                     Auth::user()->save();
+                    break;
+
+                case 'updateSection':
+                    $json_decode = json_decode(Auth::user()->my_wall, true);
+                    $id = $request['id'];
+                    $json_decode[$id]['title'] = $request['title'];
+                    $json_decode[$id]['content'] = $request['content'];
+                    Auth::user()->my_wall = json_encode($json_decode);
+                    Auth::user()->save();
+                    break;
+
+                case 'deleteSection':
+                    $user = User::findOrFail($request['userId']);
+                    $json_decode = json_decode($user->my_wall, true);
+
+                    unset($json_decode[$request['id']]);
+
+                    $user->my_wall = json_encode($json_decode);
+                    $user->save();
                     break;
             }
             return redirect()->route('athlete.home', 'muro');

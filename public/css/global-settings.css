@@ -288,7 +288,7 @@ button:hover {
 
 .info-message p:not(:first-child) {
     margin-top: 10px;
-    font-size: 25px;
+    font-size: 20px;
     font-weight: 300;
 }
 
@@ -329,6 +329,29 @@ button:hover {
 .trainer-info-account i {
     margin-right: 50px;
     font-size: 100px;
+}
+
+/*My Wall Info Message*/
+.explanation-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 25px;
+    padding: 20px 60px;
+    padding-bottom: 30px;
+    background-color: white;
+    color: black;
+    border-radius: 7px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+}
+
+.explanation-info > .info-message p {
+    margin-bottom: 15px;
+}
+.explanation-info > .info-message p:first-child {
+    color: #6013bb;
+    margin-bottom: 30px;
 }
 
 /*WARNING MESSAGE*/
