@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false, addWallSection: false,}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false, addWallSection: false, uploadFile: false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -125,6 +125,9 @@
                 break;
             case 'cuenta':
                 title = title.concat(" | Cuenta");
+                break;
+            case 'muro':
+                title = title.concat(" | Mi muro");
                 break;
             default:
                 title =title.concat(" | App");

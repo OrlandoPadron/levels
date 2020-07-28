@@ -11,8 +11,8 @@
         <button id="add-btn-forum" class="btn-add-basic button-position"
                     @click="openNewThreadForm=!openNewThreadForm"
                     @keydown.escape.window="openNewThreadForm=false">
-            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
-</button>
+            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo g hilo
+        </button>
     @endif
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>
  
@@ -22,45 +22,59 @@
 @else
 @include('modals.addNewThreadToGroup')
 @endif
+
+<div id="forum-page-message" style="display: {{$threads->count() == 0 ? '' : 'none'}};">
+    @include('page_messages.threads_not_available_message')
+</div>
+
+@if($threads->count() > 0)
+
 <div id="open-thread-container">
 </div>
-
-<div class="pinned-threads" style="{{($threads->filter->pinned)->isEmpty() ? 'display:none;' : ''}}">
-    <h2 class="primary-blue-color">Hilo fijado</h2>
-    @if (($threads->filter->pinned)->isNotEmpty())
-        @include('common_sections.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
-    @endif
-</div>
-<div class="non-pinned-threads" >
-    <div class="filter-options">
-        <div class="filter-buttons" id="filter-buttons-forum">
-            <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
-            <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
-        </div>
-        <div class="filter-search-bar">
-            <input type="search" id="searchThread" onkeyup="search()" placeholder="Buscar...">
-            <select id="filter_option">
-                <option value="title">Título</option>
-                <option value="author">Autor</option>
-            </select>
-
-        </div>
-        <div id="search-status" class="search-status" style="display: none">
-            <p>Mostrando <span id="numOfResults"></span> resultados para "<span id="search_value"></span>". </p>
-
-        </div>
-    </div>
-    <div id="non-pinned-threads-content" class="non-pinned-threads-content">
-        @if($threads->count() != 0)
-        @foreach ($threads->filter(function($thread){return $thread->pinned==0;})->sortDesc() as $thread)
-            @include('common_sections.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
-        @endforeach
+<div id="thread-content">
+    <div class="pinned-threads" style="{{($threads->filter->pinned)->isEmpty() ? 'display:none;' : ''}}">
+        <h2 class="primary-blue-color">Hilo fijado</h2>
+        @if (($threads->filter->pinned)->isNotEmpty())
+            @include('common_sections.components.threadComponent', ["thread" => ($threads->filter->pinned)->first(), "generalThreadView" => true])
         @endif
     </div>
+    <div class="non-pinned-threads" >
+        <div class="filter-options">
+            <div class="filter-buttons" id="filter-buttons-forum">
+                <button class="filter-btn filter-selected" onclick="filter('newest')">Más recientes</button>
+                <button class="filter-btn" onclick="filter('oldest')">Más antiguos</button>
+            </div>
+            <div class="filter-search-bar">
+                <input type="search" id="searchThread" onkeyup="search()" placeholder="Buscar...">
+                <select id="filter_option">
+                    <option value="title">Título</option>
+                    <option value="author">Autor</option>
+                </select>
 
+            </div>
+            <div id="search-status" class="search-status" style="display: none">
+                <p>Mostrando <span id="numOfResults"></span> resultados para "<span id="search_value"></span>". </p>
+
+            </div>
+        </div>
+        <div id="non-pinned-threads-content" class="non-pinned-threads-content">
+            @if($threads->count() != 0)
+            @foreach ($threads->filter(function($thread){return $thread->pinned==0;})->sortDesc() as $thread)
+                @include('common_sections.components.threadComponent', ["thread" => $thread, "generalThreadView" => true])
+            @endforeach
+            @endif
+        </div>
+
+    </div>
 </div>
-
+@endif
 <script>
+    var totalThreads; 
+
+    $(document).ready(function(){
+        totalThreads = {{$threads->count()}};
+    });
+
     function goToThreads(thread_id){
         console.log('abrimos thread');
         $("#open-thread-container").load( "/thread/".concat(thread_id));
@@ -108,6 +122,12 @@
             },
             success: function(){
                 $("#gthread_container_".concat(threadId)).hide();
+                totalThreads--; 
+                if (totalThreads == 0){
+                    $("#forum-page-message").show();
+                    $("#thread-content").hide();
+
+                }
                 
             },
             error: function(){

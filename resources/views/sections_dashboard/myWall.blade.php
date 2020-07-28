@@ -7,8 +7,11 @@
         @keydown.escape.window="addWallSection=false">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir sección
     </button>
-    @endif
     <h1 class="primary-blue-color">Mi muro</h1>
+    @else
+    <h1 class="primary-blue-color">Muro de {{$user->name}}</h1>
+
+    @endif
 </div>
 @include('modals.addSectionToMyWall')
 
@@ -34,10 +37,12 @@
                 </select>
             </div>
         </div>
+        @if ($user->id == Auth::user()->id)
         <div class="container-options my-wall-options">
             <i onclick="editWallSection({{$id}})" class="far fa-edit"></i>
             <i onclick="deleteWallSection({{$id}},{{$user->id}})" class="fas fa-trash"></i>
         </div>
+        @endif
     </div>
     <div class="my-wall shadow-container ">
         <div id="text-content-{{$id}}" class="text-container-content my-wall-content">

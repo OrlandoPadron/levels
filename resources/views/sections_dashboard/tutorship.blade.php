@@ -21,7 +21,7 @@
             <button class="filter-btn" onclick="filterTutorships('bookmarked')">Marcadas</button>
         </div>
         <div class="filter-search-bar">
-            <input type="search" id="searchTutorship" autocomplete="off">
+            <input type="search" id="searchTutorship" autocomplete="off" placeholder="Buscar...">
 
         </div>
         <div id="filter-status-tutorship" class="search-status" style="display: none;">

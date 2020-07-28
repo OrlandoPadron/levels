@@ -38,25 +38,29 @@ class HomeController extends Controller
 
     public function athleteHome($tab)
     {
-        $trainingPlans = Auth::user()->athlete->trainingPlans;
-        $invoices = Invoice::where('athlete_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
-        $threads = ForumThread::where('user_associated', Auth::user()->id)->get();
-        $files = UserFile::where('owned_by', Auth::user()->id)->get();
-        $groups = Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
-        $notifications = array(
-            "threads" => $this->getForumElementsUserHasntSeenYet($threads),
-            "gthreads" => $this->getGroupForumElementsUserHasntSeenYet($groups),
+        if (!Auth::user()->isTrainer) {
+            $trainingPlans = Auth::user()->athlete->trainingPlans;
+            $invoices = Invoice::where('athlete_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
+            $threads = ForumThread::where('user_associated', Auth::user()->id)->get();
+            $files = UserFile::where('owned_by', Auth::user()->id)->get();
+            $groups = Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
+            $notifications = array(
+                "threads" => $this->getForumElementsUserHasntSeenYet($threads),
+                "gthreads" => $this->getGroupForumElementsUserHasntSeenYet($groups),
 
-        );
-        return view('home', [
-            'user' => Auth::user(),
-            'trainingPlans' => $trainingPlans,
-            'invoices' => $invoices,
-            'tab' => $tab != null ? $tab : 'general',
-            'threads' => $threads,
-            'userFiles' => $files,
-            'notifications' => $notifications,
-        ]);
+            );
+            return view('home', [
+                'user' => Auth::user(),
+                'trainingPlans' => $trainingPlans,
+                'invoices' => $invoices,
+                'tab' => $tab != null ? $tab : 'general',
+                'threads' => $threads,
+                'userFiles' => $files,
+                'notifications' => $notifications,
+            ]);
+        } else {
+            return redirect()->route('home');
+        }
     }
 
 

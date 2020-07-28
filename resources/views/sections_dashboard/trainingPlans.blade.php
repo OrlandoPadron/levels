@@ -1,10 +1,9 @@
 <div class="heading-section">
-    @if ($user->account_activated == 1)
+    @if ($user->account_activated == 1 && (Auth::user()->isTrainer))
     <button class="btn-add-basic button-position"
                     @click="openNewPlan=!openNewPlan" 
-                    @keydown.escape.window="openNewPlan=false"
-                    
-                ><i class="fas fa-plus"></i>Nuevo plan
+                    @keydown.escape.window="openNewPlan=false">
+                    <i class="fas fa-plus"></i>Nuevo plan
     </button>
     @endif
     <h1 class="primary-blue-color">Planes de entrenamiento</h1>

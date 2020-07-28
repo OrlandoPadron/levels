@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false,}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false, addWallSection: false, uploadFile:false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
@@ -53,6 +53,7 @@
                         <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
                         <li id="tutorias-navbar" onclick="changeUrlParameters('tutorias')" x-on:click.prevent @click="sectionTab = 'tutorias'" :class="{'active-dashboard': sectionTab === 'tutorias'}"><a href="#">Tutorías</a></li>
                         <li id="cuotas-navbar" onclick="changeUrlParameters('cuotas')" x-on:click.prevent @click="sectionTab = 'cuotas'" :class="{'active-dashboard': sectionTab === 'cuotas'}"><a href="#">Cuotas</a></li>
+                        <li id="muro-navbar" onclick="changeUrlParameters('muro')" x-on:click.prevent @click="sectionTab = 'muro'" :class="{'active-dashboard': sectionTab === 'muro'}"><a href="#">Muro</a></li>
                         <li id="cuenta-navbar" onclick="changeUrlParameters('cuenta')" x-on:click.prevent @click="sectionTab = 'cuenta'" :class="{'active-dashboard': sectionTab === 'cuenta'}"><a href="#">Cuenta</a></li>
                     </ul>
                 </div>
@@ -85,6 +86,9 @@
                 </div>
                 <div id="cuenta-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
                     @include('sections_dashboard.account')
+                </div>
+                <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'muro'">
+                    @include('sections_dashboard.myWall')
                 </div>
             </div>
         </div>
@@ -157,6 +161,9 @@
             case 'cuenta':
                 title = title.concat(" | Cuenta");
                 break;
+            case 'muro':
+                title = title.concat(" | Muro");
+                break;                
             default:
                 title =title.concat(" | App");
                 break;

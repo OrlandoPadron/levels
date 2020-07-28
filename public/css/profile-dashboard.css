@@ -1337,3 +1337,8 @@ div.post-container.post-collapse {
 .wall-buttons > .btn-gray-basic {
     width: 150px;
 }
+
+/*FILES SECTION*/
+.general-file-table-container > div:first-child {
+    margin-bottom: 70px;
+}
