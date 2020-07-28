@@ -1259,6 +1259,20 @@ div.post-container.post-collapse {
     margin-bottom: 50px;
 }
 
+.wall-title-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.wall-title-container > .wall-position {
+    margin-left: 15px;
+}
+
+.wall-title-container > .wall-position label {
+    margin-right: 5px;
+}
+
 .wall-heading input {
     width: 300px;
     margin-top: 10px;

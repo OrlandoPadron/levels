@@ -220,7 +220,12 @@ function getLoggedInUserLog()
  */
 function getUserWall($userId)
 {
-    return json_decode(User::findOrFail($userId)->my_wall, true);
+    $json_decode = json_decode(User::findOrFail($userId)->my_wall, true);
+    uasort($json_decode, function ($a, $b) {
+        if ($a['position'] == $b['position']) return 0;
+        return ($a['position'] < $b['position']) ? -1 : 1;
+    });
+    return $json_decode;
 }
 /**
  * Returns an associative array containing user's wall.
@@ -234,61 +239,9 @@ function getUserWallElements($userId)
 /** Only for test -> DELETE */
 function test2()
 {
-    // $json = array(
-    //     "forum" => array(
-    //         "12" => array(
-    //             "lastVisit" => "date"
-    //         ),
-    //         "32" => array(
-    //             "lastVisit" => "date"
-    //         )
-
-    //     ),
-    //     "groupForm" => array(
-    //         "322" => array(
-    //             "lastVisit" => "date"
-    //         ),
-    //         "42" => array(
-    //             "lastVisit" => "date"
-    //         )
-
-    //     ),
-    //     "trainingPlans" => array(
-    //         "52" => array(
-    //             "lastVisit" => "date"
-    //         ),
-    //         "652" => array(
-    //             "lastVisit" => "date"
-    //         )
-
-    //     )
-
-    // );
-    $json = Auth::user()->notifications_json;
-    $json_decode = json_decode($json, true);
-    // dump("String: " . $json_encode);
-
-    $json_decode['forum']['13']['lastVisit'] = 'modificado';
-    Auth::user()->notifications_json = json_encode($json_decode);
-    Auth::user()->save();
-    foreach ($json_decode['forum'] as $id => $value) {
-        dump($id . ': ' . $value['lastVisit']);
-    }
 }
 
 
 function test()
 {
-    dump(Carbon::now()->timestamp);
-    dump(Auth::user()->created_at->timestamp);
-
-    dump(Auth::user()->notifications_json);
-    $json = json_decode(Auth::user()->notifications_json, true);
-    dump('Timestamp json');
-    $time = $json['forum']['1']['lastVisit'];
-    $carbon = Carbon::parse($time);
-    dump($carbon->timestamp);
-    dump('Timestamp now');
-
-    dump(Carbon::now()->timestamp);
 }

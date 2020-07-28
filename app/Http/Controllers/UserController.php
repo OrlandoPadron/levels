@@ -228,7 +228,7 @@ class UserController extends Controller
                     $json_decode[$id] = array(
                         'title' => $request['title'],
                         'content' => $request['content'],
-                        'position' => $position
+                        'position' => strval($position),
                     );
                     Auth::user()->my_wall = json_encode($json_decode);
                     Auth::user()->save();
@@ -239,6 +239,14 @@ class UserController extends Controller
                     $id = $request['id'];
                     $json_decode[$id]['title'] = $request['title'];
                     $json_decode[$id]['content'] = $request['content'];
+
+                    //Change orders in case we should do it. 
+                    if ($request['newPosition'] !== "-1") {
+                        $oldPosition = $json_decode[$id]['position'];
+                        $json_decode[$id]['position'] = $request['newPosition'];
+                        $id_target = $this->getIdOfSectionWithDuplicatedNewPosition($request['newPosition']);
+                        $json_decode[$id_target]['position'] = $oldPosition;
+                    }
                     Auth::user()->my_wall = json_encode($json_decode);
                     Auth::user()->save();
                     break;
@@ -254,6 +262,16 @@ class UserController extends Controller
                     break;
             }
             return redirect()->route('athlete.home', 'muro');
+        }
+    }
+
+    public function getIdOfSectionWithDuplicatedNewPosition($newPosition)
+    {
+        $json_decode = json_decode(Auth::user()->my_wall, true);
+        foreach ($json_decode as $id => $section) {
+            if (strval($section['position']) == strval($newPosition)) {
+                return $id;
+            }
         }
     }
 }

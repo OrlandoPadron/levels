@@ -23,17 +23,18 @@
 <div id="wall-container-{{$id}}" class="wall-container">
     <div class="wall-heading">
         <h2 id="wall-section-title-{{$id}}" class="primary-blue-color wall-title">{{$wall['title']}}</h2>
-        <input style="display:none;" id="input-section-title-{{$id}}" type="text" name="title" placeholder="Título sección" value="{{$wall['title']}}"></input>
-        <div class="container-options my-wall-options">
-            <div class="wall-position">
+        <div class="wall-title-container">
+            <input style="display:none;" id="input-section-title-{{$id}}" type="text" name="title" placeholder="Título sección" value="{{$wall['title']}}"></input>
+            <div id="wall-position-{{$id}}" class="wall-position" style="display: none;">
                 <label for="position">Posición</label>
-                <select id="position" name="position">
+                <select onchange="changeSectionOrder({{$id}})" id="section-position-{{$id}}" name="position">
                     @for($i = 1; $i <= getUserWallElements($user->id); $i++)
                     <option value="{{$i}}" {{$wall['position'] == $i ? 'selected' : ''}}>{{$i}}</option>
                     @endfor
                 </select>
-                
             </div>
+        </div>
+        <div class="container-options my-wall-options">
             <i onclick="editWallSection({{$id}})" class="far fa-edit"></i>
             <i onclick="deleteWallSection({{$id}},{{$user->id}})" class="fas fa-trash"></i>
         </div>
@@ -58,11 +59,11 @@
 
     var editMode = [];
     var quill = []; 
+    var newSectionOrder = [];
     var totalSections = 0; 
 
     $(document).ready(function(){
         totalSections = {{count(getUserWall($user->id))}};
-        console.log(totalSections);
     });
 
     function showMyWallQuillEditor(id){
@@ -98,6 +99,7 @@
             $("#text-content-".concat(id)).hide();
             $("#wall-saving-buttons-".concat(id)).show();
             $("#input-section-title-".concat(id)).show();
+            $("#wall-position-".concat(id)).show();
             $("#wall-section-title-".concat(id)).hide();
 
             showMyWallQuillEditor(id);
@@ -112,8 +114,13 @@
     function saveWallSectionChanges(id){
         //Getting new changes. 
         var title = $('#input-section-title-'.concat(id)).val();
-        console.log(title);
+        // console.log(title);
         var content = quill[id].getLength() == 1 ? "<p>Sin contenido.</p>" : quill[id].root.innerHTML;
+        var newPosition = "-1"; 
+                
+        if (typeof newSectionOrder[id] !== 'undefined'){
+            newPosition = newSectionOrder[id]; 
+        }
 
         $.ajax({
             url: "{{route("user.myWall")}}",
@@ -123,6 +130,7 @@
                 title: title,
                 content: content, 
                 method: 'updateSection',
+                newPosition: newPosition,
                 _token: "{{csrf_token()}}",
             },
             success: function(){
@@ -130,11 +138,16 @@
                 //Updating and showing changes into UI. 
                 $("#text-content-".concat(id)).html(content);
                 $("#wall-section-title-".concat(id)).text(title);
-                
-                closeWallEditMode(id);
+                if (newPosition != "-1"){
+                    location.reload();
+                }else{
+                    closeWallEditMode(id);
+
+                }
                 
             },
-            error: function(){
+            error: function(callback){
+                console.log(callback);
                 console.log('Error on ajax call "saveWallSectionChanges" function');
             }  
         });
@@ -170,6 +183,7 @@
         $("#text-content-".concat(id)).show();
         $("#wall-saving-buttons-".concat(id)).hide();
         $("#input-section-title-".concat(id)).hide();
+        $("#wall-position-".concat(id)).hide();
         $("#wall-section-title-".concat(id)).show();
         destroyWallQuillEditor(id); 
     }
@@ -177,4 +191,11 @@
     function destroyWallQuillEditor(id){
         $('#wallQuillEditor-container-'.concat(id)).children().remove();
     }
+
+    function changeSectionOrder(id){
+        newSectionOrder[id]= $("#section-position-".concat(id)).children("option:selected").val();
+
+        
+    }
+
 </script>
