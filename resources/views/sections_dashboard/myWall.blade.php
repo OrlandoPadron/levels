@@ -20,7 +20,9 @@
 </div>
 
 
-
+@if (isset($trainerWall))
+<p>Está</p>
+@endif
 
 @foreach(getUserWall($user->id) as $id => $wall)
 <div id="wall-container-{{$id}}" class="wall-container">

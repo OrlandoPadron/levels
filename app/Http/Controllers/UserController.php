@@ -22,15 +22,18 @@ class UserController extends Controller
     public function showProfile($id, $tab)
     {
         $user = User::find($id);
+        $threads = ForumThread::where('user_associated', $user->id)->get();
+        $files = UserFile::where('owned_by', $user->id)->get();
         if ($user->isTrainer == 1) {
             return view('show-profile', [
-                'user' => $user
+                'user' => $user,
+                'tab' => $tab != null ? $tab : 'general',
+                'threads' => $threads,
+                'userFiles' => $files,
             ]);
         } else {
             $trainingPlans = $user->athlete->trainingPlans;
             $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
-            $threads = ForumThread::where('user_associated', $user->id)->get();
-            $files = UserFile::where('owned_by', $user->id)->get();
             return view('show-profile', [
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,

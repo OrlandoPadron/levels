@@ -2,7 +2,7 @@
 @section('content')
 
 @if($user->isTrainer == 1)
-    <p>Es un entrenador</p>
+    @include('trainer-profile')
 @else
     @include('athlete-dashboard')
 @endif

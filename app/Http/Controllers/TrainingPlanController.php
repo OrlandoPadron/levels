@@ -136,6 +136,9 @@ class TrainingPlanController extends Controller
                     $plan->save();
                 }
                 break;
+
+            case 'updatePlan':
+                break;
         }
     }
 

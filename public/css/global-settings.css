@@ -544,7 +544,7 @@ table.data-table {
 }
 
 .box-container-notification {
-    max-width: 400px;
+    width: 400px;
     height: 50px;
     background-color: white;
     border-radius: 5px;
@@ -623,8 +623,8 @@ table.data-table {
     background: rgb(149, 7, 230);
     background: linear-gradient(
         153deg,
-        rgb(255, 238, 0) 0%,
-        rgb(255, 145, 0) 100%
+        rgb(245, 245, 0) 0%,
+        rgb(255, 115, 0) 100%
     );
 }
 .plan-notification .box-icon-container {

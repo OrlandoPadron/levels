@@ -16,7 +16,7 @@
     </div>
     <div class="box-container-buttons">
         @if($user->athlete->trainer_id != null)
-            <button class="soft-btn">Ver perfil</button>
+            <button class="soft-btn" onclick="window.location = '{{route('profile.show', [getUserIdByTrainerId(Auth::user()->athlete->trainer_id), "general"])}}'">Ver perfil</button>
         @endif
     </div>
 </div>

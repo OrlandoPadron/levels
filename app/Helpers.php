@@ -30,6 +30,7 @@ function setActive($tab)
  */
 function iAmcurrentlyTrainingThisAthlete($athlete_id)
 {
+    if (!Auth::user()->isTrainer) return false;
     $athletes_trained = (array) Auth::user()->trainer->trained_by_me;
     if (in_array($athlete_id, $athletes_trained)) {
         return true;
@@ -48,6 +49,11 @@ function getTrainersName($user_id)
     $trainers_id = User::find($user_id)->athlete->trainer_id;
     $trainer = Trainer::find($trainers_id)->user;
     return $trainer->name . ' ' . $trainer->surname;
+}
+
+function getUserIdByTrainerId($trainerId)
+{
+    return Trainer::findOrFail($trainerId)->user->id;
 }
 
 /**
@@ -235,6 +241,21 @@ function getUserWallElements($userId)
     return count(json_decode(User::findOrFail($userId)->my_wall, true));
 }
 
+/**
+ * Returns a collection containing all groups where user belongs
+ */
+function getUserGroups()
+{
+    if (Auth::user()->isTrainer == 1) {
+        return Auth::user()->trainer->groups;
+    } else {
+
+
+
+
+        return collect([]);
+    }
+}
 
 /** Only for test -> DELETE */
 function test2()

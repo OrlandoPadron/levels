@@ -4,59 +4,50 @@
     </div>
     @include('modals.trainerPanelModals.feeStatusModal')
     <div class="boxes">
-        <div class="box-item-container shadow-container" style="color: #136ebb;" >
-            <div class="buble-notification bubble-fix">
-                <div class="bubble-circle" >
-                    <p id="#notification">1</p>
+        <div class="box-container-notification shadow-container plan-notification">
+            <div class="box-icon">
+                <div class="box-icon-container">
+                    <i style="font-size: 36px;" class="fas fa-running"></i>
                 </div>
             </div>
-            <i class="fas fa-stopwatch"></i>
-            <p class="boxes-message-status">Sesiones completadas</p>
+            <div class="box-content">
+                <p>Planes de entrenamiento</p>
+                <p>Sin actividad reciente</p>
+            </div>
         </div>
-        <div class="box-item-container shadow-container" style="color: #6013bb;" >
-            <div class="buble-notification bubble-fix">
-                <div class="bubble-circle" >
-                    <p id="#notification">1</p>
+        <div class="box-container-notification shadow-container forum-notification">
+            <div class="box-icon">
+                <div class="box-icon-container">
+                    <i class="fas fa-comment-alt"></i>
                 </div>
             </div>
-            <i class="fas fa-comment-alt"></i>
-            <p class="boxes-message-status">Foros deportistas</p>
+            <div class="box-content">
+                <p>Foro personal</p>
+                <p>prueasasdsdsdba</p>
+            </div>
         </div>
-        <div class="box-item-container shadow-container" style="color: #bb6013;">
-
-            <div class="relative-container">
-                <i class="fas fa-users"></i>
-            </div>
-            <div class="buble-notification">
-                <div class="bubble-circle" >
-                    <p id="#notification">1</p>
+        <div class="box-container-notification shadow-container forumgroup-notification">
+            <div class="box-icon">
+                <div class="box-icon-container">
+                    <i class="fas fa-users"></i>
                 </div>
             </div>
-            <i class="fas fa-comment-alt"></i>
-            <p class="boxes-message-status">Foros grupales</p>
+            <div class="box-content">
+                <p>Foros grupales</p>
+                <p>prueba</p>
+            </div>
         </div>
-        <div class="box-item-container shadow-container" style="color: #6ebb13;"
-            @click="feeStatusModal=!feeStatusModal" 
-            @keydown.escape.window="feeStatusModal=false"
-        >
-            <div class="buble-notification bubble-fix">
-                <div class="bubble-circle">
-                    <p id="#notification">{{collect(getArrayOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id))->count()}}</p>
+        <div class="box-container-notification shadow-container payment-notification">
+            <div class="box-icon">
+                <div class="box-icon-container">
+                    <i style="margin-left:-5px;" class="fas fa-euro-sign"></i>
                 </div>
             </div>
-            <i class="fas fa-euro-sign"></i>
-            <p class="boxes-message-status">Cuota de {{ucfirst(Date::now()->format('F'))}}</p>
+            <div class="box-content">
+                <p>Estado mes {{ucfirst(Date::now()->format('F'))}}</p>
+                <p>Pagado</p>
+            </div>
         </div>
-        {{-- <div class="box-item-container shadow-container">
-            <div class="buble-notification bubble-fix">
-                <div class="bubble-circle" >
-                    <p id="#notification">1</p>
-                </div>
-            </div>
-            <i class="fas fa-euro-sign"></i>
-            <p class="boxes-message-status">Revisar cuota de Junio</p>
-            
-        </div> --}}
     </div>
     <div class="athletes-trainer-dashboard">
         <h2>Deportistas entrenados por ti <span class="light">({{count(Auth::user()->trainer->trained_by_me)}})</span></h2>

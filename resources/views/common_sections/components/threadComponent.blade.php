@@ -6,9 +6,10 @@
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
-                <p>Creado por <span>{{getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($thread->created_at->diffForHumans())}}) </span></span></p>
+                <p>Creado por <span>{{$thread->author == Auth::user()->id ? 'ti' : getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($thread->created_at->diffForHumans())}}) </span></span></p>
             </div>
         </div>
+        @if($thread->author == Auth::user()->id || Auth::user()->admin)
         <div class="post-options">
             @if (!$generalThreadView)
             <a id="thread_edit_button_{{$thread->id}}" onclick="editThread({{$thread->id}})"><i class="far fa-edit"></i></a>
@@ -24,6 +25,7 @@
             <a id="gpin_icon_{{$thread->id}}" class="{{$thread->pinned ? 'pinned' : ''}}" onclick="pinThread({{$thread->id}})"><i class="fas fa-thumbtack"></i></a>
             @endif
         </div>
+        @endif
     </div>
     @if($generalThreadView)
     <div class="post-content">

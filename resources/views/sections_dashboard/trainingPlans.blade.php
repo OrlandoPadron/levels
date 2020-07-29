@@ -12,14 +12,19 @@
     
     @endif
 </div>
-
+@if(Auth::user()->isTrainer)
 @include('modals.newPlanModal')
+@endif
 {{-- && currentlyTrainingAthlete($user->athlete->id) --}}
 @if($trainingPlans->isNotEmpty())
     <!-- Box training details -->
-    @foreach ($trainingPlans as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan{{$plan->id}}: false}">
+    @foreach ($trainingPlans->filter(function ($plan){
+        if ($plan->status == 'active') return $plan;
+    }) as $key => $plan)
+    <div class="alpine-container" x-data="{addFileToPlan{{$plan->id}}: false, editPlan:false}">
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
+        @include('modals.editPlanModal', ["plan" => $plan])
+
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="trainingPlan-status">
                 <div class="info-trainingPlan-status">
@@ -41,12 +46,18 @@
                 @click="addFileToPlan{{$plan->id}}=!addFileToPlan{{$plan->id}}" 
                 @keydown.escape.window="addFileToPlan{{$plan->id}}=false"
                 class="btn-purple-basic">Ver archivos</button>
+                @if(Auth::user()->isTrainer && iAmcurrentlyTrainingThisAthlete($user->athlete->id))
+                <button 
+                @click="editPlan=!editPlan"
+                @keydown.escape.window="editPlan=false"
+                class="btn-gray-basic">Editar plan</button>
                 <form action="{{route('trainingPlan.destroy')}}" method="POST">
                     @csrf
                     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
                     <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                    <button class="btn-gray-basic">Eliminar</button>
+                    <button class="btn-red-basic">Eliminar</button>
                 </form>
+                @endif
             </div>
         </div>
     </div>
@@ -56,39 +67,4 @@
 @else
     @include('page_messages.training_plans_not_available_message')   
 @endif
-            {{-- @if($trainingPlans->isNotEmpty() && currentlyTrainingAthlete($user->athlete->id))
-                @foreach ($trainingPlans as $key => $plan)
-                    <h1 class="underlined">{{$key+1 . ') \''}}{{$plan->title .'\''}}</h1>
-                    <h3>Asociado a: {{$user->name . ' ' . $user->surname}}</h3>
-                    <h3>Entrenado por: {{getTrainersName($user->id)}}</h3>
-                    <h3>Descripción:</h3>
-                    <p>{{$plan->description}}</p>
-                    
-                    <p>Formado por {{count($plan->macrocycles)}} macrociclos.</p>
-                    <ul>
-                        @foreach ($plan->macrocycles as $keyMacro => $macrocycle)
-                            <li>{{$macrocycle->title}} -> el cual consta los siguientes mesociclos:
-                                <ul>
-                                    @foreach ($macrocycle->mesocycles as $keyMes=>$mesocycle)
-                                        <li>Mesociclo #{{$keyMes + 1}} -> formado por los siguientes microciclos (semanas): 
-                                            <ul>
-                                                @foreach($mesocycle->microcycles as $microcycle)
-                                                    <li>
-                                                        {{$microcycle->title}} -> Número de sesiones = {{count($microcycle->sessions)}}
-                                                    </li>
-                                                @endforeach
-
-                                            </ul>
-                                        </li>
-                                    @endforeach
-                                </ul>
-                            
-                            </li>
-                        @endforeach
-
-                    </ul>
-
-
-                @endforeach
-
-            @endif --}}
+        

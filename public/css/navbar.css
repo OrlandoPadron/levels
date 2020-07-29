@@ -65,7 +65,7 @@ a:hover {
     margin-left: -40px;
 }
 
-.item-list:not(.active):hover {
+.item-list:not(.item-list-group):not(.active):hover {
     background-color: #282f3f;
     cursor: pointer;
 }
