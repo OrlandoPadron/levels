@@ -10,9 +10,6 @@
     <h1 class="primary-blue-color">Cuotas</h1>
 </div>
 @include('modals.paymentSettingsModal')
-@if ($user->account_activated == 0)
-    @include('page_messages.account_deactivated_message')   
-@endif
 <div class="subscription_needed">
     @include('page_messages.subscription_needed_message')
 </div>

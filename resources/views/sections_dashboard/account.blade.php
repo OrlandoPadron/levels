@@ -1,13 +1,4 @@
 <div class="heading-section">
-    @if ($user->account_activated == 0)
-    <div class="warning-account">
-        <i class="fas fa-exclamation-triangle"></i>
-        <div class="warning-message">
-            <p>La cuenta se encuentra desactivada.</p>
-            <p>Puedes volver a activarla pulsando sobre el botón <span class="bold">'Activar Cuenta'</span>.</p>
-        </div>
-    </div>
-    @endif
     <h1 class="primary-blue-color">Detalles de la cuenta</h1>
 </div>
 

@@ -21,10 +21,6 @@
 
  
 </div>
-@if ($user->account_activated == 0)
-    @include('page_messages.account_deactivated_message')
-    
-@endif
 
 
 {{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
@@ -34,7 +30,11 @@
 </form> --}}
 <div class="general-file-table-container">
     <div class="file-table-container">
+        @if(Auth::user()->id == $user->id)
+        <h2 class="primary-blue-color">Tus archivos</h2>
+        @else
         <h2 class="primary-blue-color">Archivos de {{$user->name. ' '. $user->surname}}</h2>
+        @endif
         <table id="files-table" class="fee-table file-datatable">
             <thead>
                 <tr>
@@ -64,9 +64,9 @@
         </table>
     
     </div>
-    
+    @if(!Auth::user()->isTrainer)
     <div class="file-table-container">
-        <h2 class="primary-blue-color">Archivos compartidos con {{$user->name. ' '. $user->surname}}</h2>
+        <h2 class="primary-blue-color">Archivos compartidos {{Auth::user()->id == $user->id ? 'contigo' : 'con ' . $user->name. ' '. $user->surname}}</h2>
         <table id="files-table2" class="fee-table file-datatable">
             <thead>
                 <tr>
@@ -96,6 +96,7 @@
         </table>
     
     </div>
+    @endif
 
 </div>
 

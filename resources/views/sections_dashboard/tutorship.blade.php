@@ -5,15 +5,15 @@
                 @keydown.escape.window="addTutorshipSession=false">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir tutoría
     </button>
-
-    {{-- <form action="{{route('tutorship.toggleBookmark')}}" method="POST">
-        @csrf
-        <input type="text" name="user_id" value="22">
-        <input type="text" name="id_tutorship" value="6">
-        <button type="submit">pruebas</button>
-    </form> --}}
     @endif
     <h1 class="primary-blue-color">Tutorías</h1>
+</div>
+@include('modals.newTutorshipSession')
+<div id="tutorships-page-message" style="display: {{$user->athlete->tutorships->count() == 0 ? '' : 'none'}};">
+    @include('page_messages.no_tutorship_found_message')
+</div>
+<div id="tutorships-container">
+    @if($user->athlete->tutorships->count() > 0)
     <div class="filter-options">
         <div class="filter-buttons" id="filter-buttons-tutorships">
             <button class="filter-btn filter-selected" onclick="filterTutorships('newest')">Más recientes</button>
@@ -22,7 +22,6 @@
         </div>
         <div class="filter-search-bar">
             <input type="search" id="searchTutorship" autocomplete="off" placeholder="Buscar...">
-
         </div>
         <div id="filter-status-tutorship" class="search-status" style="display: none;">
             <span>Actualmente no tienes ninguna tutoría marcada. </span>
@@ -30,61 +29,61 @@
         <div id="search-status-tutorship" class="search-status" style="display: none;">
         </div>
     </div>
-</div>
-@include('modals.newTutorshipSession')
-@if ($user->account_activated == 0)
-    @include('page_messages.account_deactivated_message')
-@endif
-<!-- Create the editor container -->
-<div id="all-tutorships-container">
-    @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
-        {{-- @if($loop->first) --}}
-    <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}" data-date="{{$tutorship->created_at->timestamp}}" data-tutorshipId = "{{$tutorship->id}}">
-        <div class="tutorship-heading">
-            <div class="tutorship-heading-title" >
-                <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title"> 
-                    <a class="collapse-button" onclick="toggleCollapse({{$tutorship->id}})"><i id="collapse_icon_{{$tutorship->id}}" class="far {{$loop->first ? 'fa-minus-square' : 'fa-plus-square'}}"></i></a>{{$tutorship->title}} <span id="tutorship_date" class="light">({{Date::createFromFormat('Y-m-d', $tutorship->date)->format('d/m/Y')}})</span> </p>
-                <input style="display: none;" id="input_title_{{$tutorship->id}}" type="text" name="title" value="{{$tutorship->title}}"></input>
-                <input style="display: none;" id="input_date_{{$tutorship->id}}" type="date" name="date" value="{{$tutorship->date}}"></input>
-                <p id="paragraph_goal_{{$tutorship->id}}" class="tutorship-goal"><span class="tutorship-number"> #{{$tutorship->tutorship_number}} </span>{{$tutorship->goal}}</p>
-                <input style="display: none;" id="input_goal_{{$tutorship->id}}" type="text" name="goal" value="{{$tutorship->goal}}"></input>
+    <!-- Create the editor container -->
+    <div id="all-tutorships-container">
+        @foreach($user->athlete->tutorships->sortByDesc('created_at') as $key => $tutorship)
+            {{-- @if($loop->first) --}}
+        <div id="tutorship-container-{{$tutorship->id}}" class="tutorship-container {{$tutorship->bookmarked == 1 ? 'tutorship-bookmarked' : ''}} {{$loop->first ? '' : 'tutorship-collapse'}} shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}" data-date="{{$tutorship->created_at->timestamp}}" data-tutorshipId = "{{$tutorship->id}}">
+            <div class="tutorship-heading">
+                <div class="tutorship-heading-title" >
+                    <p id="paragraph_title_{{$tutorship->id}}" class="bold container-title"> 
+                        <a class="collapse-button" onclick="toggleCollapse({{$tutorship->id}})"><i id="collapse_icon_{{$tutorship->id}}" class="far {{$loop->first ? 'fa-minus-square' : 'fa-plus-square'}}"></i></a>{{$tutorship->title}} <span id="tutorship_date" class="light">({{Date::createFromFormat('Y-m-d', $tutorship->date)->format('d/m/Y')}})</span> </p>
+                    <input style="display: none;" id="input_title_{{$tutorship->id}}" type="text" name="title" value="{{$tutorship->title}}"></input>
+                    <input style="display: none;" id="input_date_{{$tutorship->id}}" type="date" name="date" value="{{$tutorship->date}}"></input>
+                    <p id="paragraph_goal_{{$tutorship->id}}" class="tutorship-goal"><span class="tutorship-number"> #{{$tutorship->tutorship_number}} </span>{{$tutorship->goal}}</p>
+                    <input style="display: none;" id="input_goal_{{$tutorship->id}}" type="text" name="goal" value="{{$tutorship->goal}}"></input>
+                </div>
+                <div class="tutorship-options">
+                    <a id="anchor_edit_button_{{$tutorship->id}}" onclick="edit({{$tutorship->id}})"><i class="far fa-edit"></i></a>
+                    <a onclick="deleteTutorship({{$tutorship->id}})" style="margin-right: 15px;"><i class="fas fa-trash"></i></a>
+                    {{-- <a><i class="fas fa-edit"></i></a>
+                    <a><i class="far fa-bookmark"></i></a> --}}
+                    <a id="anchor-{{$tutorship->id}}" 
+                        {{$tutorship->bookmarked == 1 ? 'class=tutorship-option-bookmarked':''}} 
+                        onclick="setBookmark({{$tutorship->id}})">
+                        <i 
+                            id="icon-{{$tutorship->id}}" 
+                            class="{{$tutorship->bookmarked == 1 ? 'fas ' : 'far '}}fa-bookmark">
+                        </i>
+                    </a>
+                </div>
+                <div class="separation-tutorship"></div>
             </div>
-            <div class="tutorship-options">
-                <a id="anchor_edit_button_{{$tutorship->id}}" onclick="edit({{$tutorship->id}})"><i class="far fa-edit"></i></a>
-                <a onclick="deleteTutorship({{$tutorship->id}})" style="margin-right: 15px;"><i class="fas fa-trash"></i></a>
-                {{-- <a><i class="fas fa-edit"></i></a>
-                <a><i class="far fa-bookmark"></i></a> --}}
-                <a id="anchor-{{$tutorship->id}}" 
-                    {{$tutorship->bookmarked == 1 ? 'class=tutorship-option-bookmarked':''}} 
-                    onclick="setBookmark({{$tutorship->id}})">
-                    <i 
-                        id="icon-{{$tutorship->id}}" 
-                        class="{{$tutorship->bookmarked == 1 ? 'fas ' : 'far '}}fa-bookmark">
-                    </i>
-                </a>
-            </div>
-            <div class="separation-tutorship"></div>
-        </div>
-        <div class="tutorship-content">
-            <div class="tutorship-description">
-                {{-- <textarea id="description_textarea_{{$tutorship->id}}" style="display: none;" name="description" rows="4" cols="50">{{$tutorship->description}}</textarea> --}}
-                <div id="editor_container_{{$tutorship->id}}"></div>
-                <div id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">
-                    {!!$tutorship->description!!}
+            <div class="tutorship-content">
+                <div class="tutorship-description">
+                    {{-- <textarea id="description_textarea_{{$tutorship->id}}" style="display: none;" name="description" rows="4" cols="50">{{$tutorship->description}}</textarea> --}}
+                    <div id="editor_container_{{$tutorship->id}}"></div>
+                    <div id="description_paragrahp_{{$tutorship->id}}" class="tutorship-section-content">
+                        {!!$tutorship->description!!}
+                    </div>
                 </div>
             </div>
+            <div id="edit_buttons_{{$tutorship->id}}" style="display:none;" class="tutorship-buttons">
+                <button onclick="savechanges({{$tutorship->id}})" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>
+                <button onclick="close_editor({{$tutorship->id}})" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
+            </div> 
         </div>
-        <div id="edit_buttons_{{$tutorship->id}}" style="display:none;" class="tutorship-buttons">
-            <button onclick="savechanges({{$tutorship->id}})" class="btn-add-basic"><i class="fas fa-save"></i> Guardar cambios</button>
-            <button onclick="close_editor({{$tutorship->id}})" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
-        </div> 
+    
+    
+        @endforeach
+            
     </div>
 
-
-    @endforeach
-        
+    @endif
 </div>
 <script>
+    var totalTutorships; 
+
 
     var edit_status = 0; //Allows edit toggle between views. 
     // https://codepen.io/Joeao/pen/BdOGKV
@@ -109,7 +108,9 @@
     $("#searchTutorship").keyup(delay(function (e) {
         searchTutorships();
     }, 500));
-    
+    $(document).ready(function(){
+        totalTutorships = {{$user->athlete->tutorships->count()}};
+    });
     function setBookmark(tutorshipId){ 
         console.log("Bookmarked");
         $.ajax({
@@ -154,7 +155,6 @@
         modules: {
         toolbar: [
             [{ 'header': 1 }, { 'header': 2 }, {'header': 3}],     
-            [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
             [{ 'align': [] }],
@@ -299,6 +299,11 @@
             },
             success: function(){
                 $(id_container.concat(tutorshipId)).hide();
+                totalTutorships--;
+                if (totalTutorships == 0){
+                    $('#tutorships-page-message').show();
+                    $('#tutorships-container').hide();
+                }
                 
             },
             error: function(){
@@ -444,7 +449,7 @@
                 var html = '<p>Mostrando <span id="numOfOccurrences-tutorship">'+numOfOccurrences+'</span>'+ (numOfOccurrences == 1 ? ' coincidencia ' : ' coincidencias ') + 'en <span id="numOfTutorships">'+numOfResults+'</span> '+(numOfResults == 1 ? ' tutoría':' tutorías diferentes')+'.</p>';
 
             }else{
-                var html = '<p>No se han encontrado resultados para "<span>'+$(searchInput).val()+'</span>"</p>';
+                var html = '<p>No se han encontrado resultados para "<span id="search_value">'+$(searchInput).val()+'</span>"</p>';
             }
 
             $("#search-status-tutorship").html(html);

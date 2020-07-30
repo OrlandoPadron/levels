@@ -24,6 +24,13 @@
                 @include('modals.additionalInfoModal')
         </div>
     </div>
+    @if ($user->account_activated==0)
+    <div class="content-dashboard">
+        <div id="container-dashboard" class="container-dashboard">
+            @include('page_messages.account_deactivated_message')
+        </div>
+    </div>
+    @else
     <!-- Start 'Navbar dashboard' -->
     <div class="navbar-dashboard">
         <div class="container-dashboard">
@@ -62,6 +69,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 
 </div>

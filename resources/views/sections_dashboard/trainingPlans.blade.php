@@ -7,10 +7,6 @@
     </button>
     @endif
     <h1 class="primary-blue-color">Planes de entrenamiento</h1>
-    @if ($user->account_activated == 0)
-    @include('page_messages.account_deactivated_message')
-    
-    @endif
 </div>
 @if(Auth::user()->isTrainer)
 @include('modals.newPlanModal')

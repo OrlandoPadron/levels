@@ -264,7 +264,11 @@ class UserController extends Controller
                     $user->save();
                     break;
             }
-            return redirect()->route('athlete.home', 'muro');
+            if (Auth::user()->isTrainer) {
+                return redirect()->route('profile.show', [Auth::user()->id, "general"]);
+            } else {
+                return redirect()->route('athlete.home', 'muro');
+            }
         }
     }
 

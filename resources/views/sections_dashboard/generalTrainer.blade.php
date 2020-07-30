@@ -1,22 +1,19 @@
 <div class="heading-section">
-    @if ($user->account_activated == 0)
-    @endif
     @if ($user->id == Auth::user()->id)
     <button class="btn-add-basic button-position"
         @click="addWallSection=!addWallSection"
         @keydown.escape.window="addWallSection=false">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir sección
     </button>
-    <h1 class="primary-blue-color">Mi muro</h1>
+    <h1 class="primary-blue-color">Detalles Generales</h1>
     @else
-    <h1 class="primary-blue-color">Muro de {{$user->name}}</h1>
-
+    <h1 class="primary-blue-color">Detalles Generales</h1>
     @endif
 </div>
 @include('modals.addSectionToMyWall')
 
 <div id="my-wall-page-message" style="display: {{count(getUserWall($user->id)) == 0 ? '' : 'none'}};">
-    @include('page_messages.my_wall_info')
+    @include('page_messages.general_trainer_info')
 </div>
 
 

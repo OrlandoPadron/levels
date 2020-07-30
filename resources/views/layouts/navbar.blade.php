@@ -2,7 +2,7 @@
     <h1 class="app-name-navbar">Levels</h1>
     <ul class="items">
       @if(Auth::user()->isTrainer)
-      <div class="item-list {{request()->routeIs('profile.show') || request()->routeIs('home') ? 'active' : ''}}">
+      <div class="item-list {{request()->routeIs('home') ? 'active' : ''}}" onclick="location.href='{{route('home')}}'">
         <li>
           <div class="icon">
             <i class="fas fa-dumbbell"></i>

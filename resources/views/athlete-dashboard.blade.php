@@ -60,35 +60,68 @@
             </div>
         </div>
         <!-- End 'Navbar dashboard' -->
+        
         <div class="content-dashboard">
             <div id="container-dashboard" class="container-dashboard">
                 <div id="general-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
-                    @include('sections_dashboard.general')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.general')
+                    @endif
                 </div>
                 <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'plan'">
-                    @include('sections_dashboard.trainingPlans')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.trainingPlans')
+                    @endif
                 </div>
                 <div id="foro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'foro'">
-                    @if(Request::get('thread_view') == 0)
-                        @include('common_sections.forum')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
                     @else
-                    @include('sections_dashboard.thread')
+                        @if(Request::get('thread_view') == 0)
+                            @include('common_sections.forum')
+                        @else
+                        @include('sections_dashboard.thread')
+                        @endif
                     @endif
                 </div>
                 <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
-                    @include('sections_dashboard.files')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.files')
+                    @endif                        
                 </div>
                 <div id="tutorias-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'tutorias'">
-                    @include('sections_dashboard.tutorship')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.tutorship')
+                    @endif
                 </div>
                 <div id="cuotas-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuotas'">
-                    @include('sections_dashboard.payment')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else   
+                        @include('sections_dashboard.payment')
+                    @endif                        
                 </div>
                 <div id="cuenta-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
-                    @include('sections_dashboard.account')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.account')
+                    @endif
                 </div>
                 <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'muro'">
-                    @include('sections_dashboard.myWall')
+                    @if ($user->account_activated==0)
+                        @include('page_messages.account_deactivated_message')
+                    @else
+                        @include('sections_dashboard.myWall')
+                    @endif
                 </div>
             </div>
         </div>

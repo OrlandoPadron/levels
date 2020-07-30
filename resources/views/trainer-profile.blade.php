@@ -30,9 +30,9 @@
             <div class="navbar-dashboard-menu">
                 <ul id="navbar-dashboard-items">
                     <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
-                    <li id="foro-navbar" onclick="changeUrlParameters('foro')" x-on:click.prevent @click="sectionTab = 'foro'" :class="{'active-dashboard': sectionTab === 'foro'}"><a href="#">Foro</a></li>
+                    @if(Auth::user()->id == $user->id)
                     <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
-                    <li id="muro-navbar" onclick="changeUrlParameters('muro')" x-on:click.prevent @click="sectionTab = 'muro'" :class="{'active-dashboard': sectionTab === 'muro'}"><a href="#">Mi muro</a></li>
+                    @endif
                 </ul>
             </div>
         </div>
@@ -40,19 +40,14 @@
     <!-- End 'Navbar dashboard' -->
     <div class="content-dashboard">
         <div id="container-dashboard" class="container-dashboard">
-            <div id="foro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'foro'">
-                @if(Request::get('thread_view') == 0)
-                @include('common_sections.forum')
-                @else
-                @include('sections_dashboard.thread')
-                @endif
+            <div id="general-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'general'">
+                @include('sections_dashboard.generalTrainer')
             </div>
+            @if(Auth::user()->id == $user->id)
             <div id="archivos-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                 @include('sections_dashboard.files')
             </div>
-            <div id="muro-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'muro'">
-                @include('sections_dashboard.myWall')
-            </div>
+            @endif
         </div>
     </div>
 
@@ -101,26 +96,8 @@
             case 'general':
                 title = title.concat(" | General");
                 break;
-            case 'plan':
-                title = title.concat(" | Plan");
-                break;
-            case 'foro':
-                title = title.concat(" | Foro");
-                break;
             case 'archivos':
                 title = title.concat(" | Archivos");
-                break;
-            case 'tutorias':
-                title = title.concat(" | Tutorías");
-                break;
-            case 'cuotas':
-                title = title.concat(" | Cuotas");
-                break;
-            case 'cuenta':
-                title = title.concat(" | Cuenta");
-                break;
-            case 'muro':
-                title = title.concat(" | Mi muro");
                 break;
             default:
                 title =title.concat(" | App");

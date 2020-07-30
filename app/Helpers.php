@@ -15,15 +15,6 @@ use Mockery\Undefined;
 
 use function GuzzleHttp\json_decode;
 
-function setActive($tab)
-{
-    if ($tab == "general") {
-        return request()->routeIs('profile.show') ? 'active-dashboard' : '';
-    }
-    return Request::get('tab') == $tab ? 'active-dashboard' : '';
-}
-
-
 /**
  * Function used to determine if a given trainer is currently training a 
  * specific athlete. 
@@ -213,6 +204,18 @@ function getLoggedInUserLog()
 {
     $log = ActivityLog::where('isGroup', 0)
         ->where('entity_implied', Auth::user()->id)
+        ->where(
+            'created_at',
+            '>=',
+            Carbon::now()->subDays(30)->toDateTimeString()
+        )->get();
+    return $log;
+}
+
+function getUserLog($id)
+{
+    $log = ActivityLog::where('isGroup', 0)
+        ->where('entity_implied', $id)
         ->where(
             'created_at',
             '>=',

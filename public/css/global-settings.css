@@ -573,6 +573,12 @@ table.data-table {
     border-radius: 50%;
 }
 
+.hover-scale:hover {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.02);
+}
+
 .box-icon-container i {
     color: white;
     font-size: 30px;
