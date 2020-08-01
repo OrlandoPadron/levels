@@ -46,37 +46,12 @@ class TrainingPlanController extends Controller
             'description' => isset($request['description']) ? $request['description'] : null,
             'athlete_associated' => $request['athlete_associated'],
             'status' => 'active',
+            'start_date' => isset($request['startDate']) ? $request['startDate'] : null,
+            'end_date' => isset($request['endDate']) ? $request['endDate'] : null,
 
         ]);
 
-        // Let's add it the macrocycles. 
-        for ($i = 1; $i <= $request['num_macrocycles']; $i++) {
-            $title = "Macrociclo #" . strval($i);
-            $macrocycle = Macrocycle::create([
-                'title' => $title,
-                'tplan_associated' => $trainingPlan->id,
-            ]);
-            // Add mesocycles to macrocycles
-            for ($j = 1; $j <= $request['num_mesocycles']; $j++) {
-                $mesocycle = Mesocycle::create([
-                    'macrocycle_associated' => $macrocycle->id,
-                ]);
-                // Add microcycles to mesocycles
-                for ($k = 1; $k <= $request['num_microcycles']; $k++) {
-                    $title = 'M' . strval($j) . ' | Semana Nº ' . strval($k);
-                    $microcycle = Microcycle::create([
-                        'title' => $title,
-                        'mesocycle_associated' => $mesocycle->id,
-                    ]);
-                    // Add sessions to microcycle
-                    // for ($l = 1; $l <= $request['num_sessions']; $l++) {
-                    //     Session::create([
-                    //         'microcycle_associated' => $microcycle->id,
-                    //     ]);
-                    // }
-                }
-            }
-        }
+
 
 
         $athlete = Athlete::find($request['athlete_associated']);
@@ -138,7 +113,16 @@ class TrainingPlanController extends Controller
                 break;
 
             case 'updatePlan':
-                break;
+                $plan = TrainingPlan::findOrFail($request['id_plan']);
+                //Updating plan values
+                $plan->title = $request['title'];
+                $plan->description = $request['description'];
+                $plan->start_date = $request['startDate'];
+                $plan->end_date = $request['endDate'];
+                $plan->status = $request['status'];
+
+                $plan->save();
+                return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);
         }
     }
 

@@ -11,19 +11,14 @@
                 @csrf
                 <h2 class="underlined">Información general</h2>
                 <label for="title">Título</label><br>
-                <input type="text" name="title"><br>
+                <input type="text" name="title" required><br>
+                <label for="startDate">Fecha de inicio</label><br>
+                <input type="date" name="startDate" value="{{date("Y-m-d")}}" required><br>
+                <label for="endDate">Fecha de finalización</label><br>
+                <input type="date" name="endDate" value="{{date("Y-m-d")}}" required><br>
                 <label for="description">Descripción / Objetivos</label><br>
                 <textarea cols="50" rows="5" name="description"></textarea><br>
                 <input type="text" hidden name="athlete_associated" value="{{$user->athlete->id}}">
-                <h2 class="underlined">Organización</h2>
-                <label for="">Macrociclos</label>
-                <input type="number" min="1" name="num_macrocycles"><br>
-                <label for="">Mesociclos</label>
-                <input type="number"  min="1" name="num_mesocycles"><br>
-                <label for="">Semanas/Mesociclos (microciclos)</label>
-                <input type="number"  min="1" name="num_microcycles"><br>
-                {{-- <label for="">Nº sesiones por semana</label>
-                <input type="number"  min="1" name="num_sessions"><br> --}}
                 <button type="submit">Crear</button>
             </form>
 

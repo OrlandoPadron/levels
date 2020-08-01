@@ -30,7 +30,12 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->isTrainer) {
-            return view('home');
+            $trainer_notifications = array(
+                "athletesHaventPaid" => getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id)
+            );
+            return view('home', [
+                "notifications" => $trainer_notifications
+            ]);
         } else {
             return redirect()->route('athlete.home', 'general');
         }

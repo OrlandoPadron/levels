@@ -254,6 +254,11 @@ li.active-dashboard a:hover {
     font-weight: bold;
     margin-left: 5px;
 }
+.status-plan-finished {
+    color: #d80000;
+    font-weight: bold;
+    margin-left: 5px;
+}
 
 .separation-plan {
     margin-bottom: 10px;

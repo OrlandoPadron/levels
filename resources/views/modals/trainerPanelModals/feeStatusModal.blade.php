@@ -9,7 +9,7 @@
            <div class="modal-body">
             <p>Fee status</p>
             <h2>Gente que no ha pagado</h2>
-            @foreach (getArrayOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id) as $athlete)
+            @foreach (getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id) as $athlete)
                 <p>{{$athlete->user->name}}</p>
             @endforeach
             <h2>Gente que ha pagado</h2>

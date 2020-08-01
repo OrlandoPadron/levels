@@ -44,8 +44,17 @@
                 </div>
             </div>
             <div class="box-content">
-                <p>Estado mes {{ucfirst(Date::now()->format('F'))}}</p>
-                <p>Pagado</p>
+                <p id="trainer_notification_month_status">
+                    Estado mes {{ucfirst(Date::now()->format('F'))}}
+                    @if($notifications['athletesHaventPaid']->count() == 0)
+                    <i class="fas fa-check-circle"></i>
+                    @endif
+                </p>
+                <p>{{$notifications['athletesHaventPaid']->count() > 0 ? 
+                    ($notifications['athletesHaventPaid']->count() == 1 ? 
+                      '1 deportista pendiente' : $notifications['athletesHaventPaid']->count() . ' deportistas pendientes' ) 
+                    : 'Ningún pago pendiente'}}
+                </p>
             </div>
         </div>
     </div>

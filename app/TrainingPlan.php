@@ -14,6 +14,7 @@ class TrainingPlan extends Model
      */
     protected $fillable = [
         'title', 'description', 'status', 'athlete_associated', 'files_associated',
+        'start_date', 'end_date',
     ];
 
     /**
@@ -34,6 +35,9 @@ class TrainingPlan extends Model
      */
     protected $casts = [
         'files_associated' => 'array',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+
     ];
 
 

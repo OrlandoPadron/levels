@@ -69,6 +69,16 @@
     width: inherit;
     margin: 0;
 }
+
+#trainer_notification_month_status {
+    display: flex;
+    align-items: center;
+}
+#trainer_notification_month_status i {
+    font-size: 14px;
+    margin-left: 6px;
+}
+
 .athletes-trainer-dashboard {
     grid-area: athletes;
     width: 80%;

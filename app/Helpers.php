@@ -111,7 +111,7 @@ function getArrayOfAthletesTrainedByTrainerId($trainerId)
     return $athletes;
 }
 
-function getArrayOfAthletesWhoHaventPayMonthYet($trainerId)
+function getCollectionOfAthletesWhoHaventPayMonthYet($trainerId)
 {
     $athletes = getArrayOfAthletesTrainedByTrainerId($trainerId);
     $haventPay = array();
@@ -120,7 +120,7 @@ function getArrayOfAthletesWhoHaventPayMonthYet($trainerId)
             array_push($haventPay, $athlete);
         }
     }
-    return $haventPay;
+    return collect($haventPay);
 }
 
 

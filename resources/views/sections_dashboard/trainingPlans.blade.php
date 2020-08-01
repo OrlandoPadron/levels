@@ -13,11 +13,15 @@
 @endif
 {{-- && currentlyTrainingAthlete($user->athlete->id) --}}
 @if($trainingPlans->isNotEmpty())
+    @if ($trainingPlans->filter(function ($plan){
+    if ($plan->status == 'active') return $plan;
+    })->count() > 0)
+    <h2 class="primary-blue-color heading-text-container">Planes activos</h2>
     <!-- Box training details -->
     @foreach ($trainingPlans->filter(function ($plan){
         if ($plan->status == 'active') return $plan;
-    }) as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan{{$plan->id}}: false, editPlan:false}">
+    })->sortByDesc('created_at') as $key => $plan)
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
         @include('modals.editPlanModal', ["plan" => $plan])
 
@@ -25,8 +29,8 @@
             <div class="trainingPlan-status">
                 <div class="info-trainingPlan-status">
                     <p class="title-plan bold">'{{$plan->title}}'</p>
-                    <p class="duration-plan">Marzo 2020 — Diciembre 2020</p>
-                    <p class="status-plan"><i class="fas fa-check-circle"></i>Estado: <span class="status-plan-active">{{$plan->status == 'active' ? 'Activo' : 'Finalizado'}}</span></p>
+                    <p class="duration-plan">{{$plan->start_date->format("d/m/Y")}} — {{$plan->end_date->format("d/m/Y")}}</p>
+                <p class="status-plan"><i class="fas fa-check-circle"></i>Estado: <span class="status-plan-{{$plan->status == 'active' ? 'active' : 'finished'}}">{{$plan->status == 'active' ? 'Activo' : 'Finalizado'}}</span></p>
                 </div>
                 
             </div>
@@ -34,32 +38,75 @@
                 <div class="separation-plan"></div>
                 <div class="trainingPlan-text">
                     <p class="title-description bold">Descripción del entrenamiento</p>
-                    <p>{{$plan->description}}</p>
+                    <p>{{$plan->description == null ? 'Plan sin descripción' : $plan->description}}</p>
                 </div>
             </div>
             <div class="trainingPlan-options">
                 <button 
-                @click="addFileToPlan{{$plan->id}}=!addFileToPlan{{$plan->id}}" 
-                @keydown.escape.window="addFileToPlan{{$plan->id}}=false"
+                @click="addFileToPlan=!addFileToPlan" 
+                @keydown.escape.window="addFileToPlan=false"
                 class="btn-purple-basic">Ver archivos</button>
                 @if(Auth::user()->isTrainer && iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                 <button 
                 @click="editPlan=!editPlan"
                 @keydown.escape.window="editPlan=false"
-                class="btn-gray-basic">Editar plan</button>
-                <form action="{{route('trainingPlan.destroy')}}" method="POST">
-                    @csrf
-                    <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
-                    <input type="text" value="{{$user->id}}" name="user_id" hidden>
-                    <button class="btn-red-basic">Eliminar</button>
-                </form>
+                class="btn-gray-basic">Gestionar plan</button>
                 @endif
             </div>
         </div>
     </div>
 
     @endforeach
+    @endif
     <!-- Ends Box training details -->
+    @if ($trainingPlans->filter(function ($plan){
+        if ($plan->status == 'finished') return $plan;
+    })->count() > 0)
+    <h2 class="primary-blue-color heading-text-container">Planes finalizados</h2>
+    <!-- Finished training plans -->
+    @foreach ($trainingPlans->filter(function ($plan){
+        if ($plan->status == 'finished') return $plan;
+    })->sortByDesc('created_at') as $key => $plan)
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false}">
+        @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
+        @include('modals.editPlanModal', ["plan" => $plan])
+
+        <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
+            <div class="trainingPlan-status">
+                <div class="info-trainingPlan-status">
+                    <p class="title-plan bold">'{{$plan->title}}'</p>
+                    <p class="duration-plan">{{$plan->start_date->format("d/m/Y")}} — {{$plan->end_date->format("d/m/Y")}}</p>
+                    <p class="status-plan"><i class="fas fa-check-circle"></i>Estado: <span class="status-plan-finished">{{$plan->status == 'active' ? 'Activo' : 'Finalizado'}}</span></p>
+                </div>
+                
+            </div>
+            <div class="trainingPlan-description">
+                <div class="separation-plan"></div>
+                <div class="trainingPlan-text">
+                    <p class="title-description bold">Descripción del entrenamiento</p>
+                    <p>{{$plan->description == null ? 'Plan sin descripción' : $plan->description}}</p>
+                
+                </div>
+            </div>
+            <div class="trainingPlan-options">
+                <button 
+                @click="addFileToPlan=!addFileToPlan" 
+                @keydown.escape.window="addFileToPlan=false"
+                class="btn-purple-basic">Ver archivos</button>
+                @if(Auth::user()->isTrainer && iAmcurrentlyTrainingThisAthlete($user->athlete->id))
+                <button 
+                @click="editPlan=!editPlan"
+                @keydown.escape.window="editPlan=false"
+                class="btn-gray-basic">Gestionar plan</button>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    @endforeach
+
+    <!-- Ends finished training plans -->
+    @endif
 @else
     @include('page_messages.training_plans_not_available_message')   
 @endif

@@ -1,9 +1,9 @@
 <!-- Add File to Training Plan -->
-<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="addFileToPlan{{$plan->id}}">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="addFileToPlan">
     <!-- Modal content -->
-       <div class="modal-content" @click.away="addFileToPlan{{$plan->id}}=false">
+       <div class="modal-content" @click.away="addFileToPlan=false">
            <div class="modal-header">
-               <span id="closeModal" class="close" @click="addFileToPlan{{$plan->id}}=!addFileToPlan{{$plan->id}}">&times;</span>
+               <span id="closeModal" class="close" @click="addFileToPlan=!addFileToPlan">&times;</span>
                <h2>Añadir fichero al plan</h2>
            </div>
            <div class="modal-body">
