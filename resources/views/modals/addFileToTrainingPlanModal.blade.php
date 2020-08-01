@@ -16,7 +16,8 @@
                     <ul>
                     @foreach(getFilesAssociatedWithPlanId($plan->id) as $key => $file)
                         <li>
-                            <a href="{{$file->url}}" target="_blank" style="color: black;">{{$file->file_name}}</a>
+                            <span>{{$file->file_name}}</span>
+                            <button onclick="viewFile('{{$file->url}}', {{$plan->id}})">Ver fichero</button>
                             <button onclick="deleteUserFile({{$user->id}}, '{{$file->file_name .'.'. $file->extension}}', {{$file->id}}, 'TrainingPlanSection', {planId:{{$plan->id}}})">Eliminar fichero</button>
                         </li>
                     @endforeach
@@ -31,4 +32,11 @@
    </div>
 
 <script>
+
+    function viewFile(fileUrl, trainingPlanId){
+        updateNotificationLogJson(trainingPlanId,'trainingPlans');
+        window.open( 
+              fileUrl, "_blank"); 
+    }
+
 </script>

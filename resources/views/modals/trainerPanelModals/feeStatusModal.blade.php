@@ -9,9 +9,9 @@
            <div class="modal-body">
             <p>Fee status</p>
             <h2>Gente que no ha pagado</h2>
-            @foreach (getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id) as $athlete)
+            {{-- @foreach ()
                 <p>{{$athlete->user->name}}</p>
-            @endforeach
+            @endforeach --}}
             <h2>Gente que ha pagado</h2>
             @foreach(collect(getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id))->filter->monthPaid as $key => $athlete)
                 <p>{{$athlete->user->name}}</p>

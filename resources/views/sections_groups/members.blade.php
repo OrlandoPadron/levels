@@ -7,7 +7,9 @@
     </button>
     <h1 class="primary-blue-color">Miembros</h1>
 </div>
+@if(Auth::user()->isTrainer)
 @include('modals.addMembersToGroupModal')
+@endif
 <div class="members">
     @if(getGroupUsers($group->id)->isNotEmpty())
         <table id="members_table" class="data-table">

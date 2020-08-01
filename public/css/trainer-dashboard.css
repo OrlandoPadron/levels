@@ -70,11 +70,11 @@
     margin: 0;
 }
 
-#trainer_notification_month_status {
+.trainer_notification_status {
     display: flex;
     align-items: center;
 }
-#trainer_notification_month_status i {
+.trainer_notification_status i {
     font-size: 14px;
     margin-left: 6px;
 }

@@ -61,8 +61,11 @@ class ForumThreadController extends Controller
             );
             $logController->store($log);
             // End log storage
-
-            return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
+            if (Auth::user()->isTrainer) {
+                return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
+            } else {
+                return redirect()->route('athlete.home', 'foro');
+            }
         } else {
             ForumThread::create([
                 'title' => $request['title'] != null ? $request['title'] : 'Hilo sin título',

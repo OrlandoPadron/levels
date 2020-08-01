@@ -41,8 +41,10 @@
         <div class="box-content">
             <p>Foro personal</p>
             <p>{{$notifications['threads']['totalNumOfNewChanges'] > 0 ? 
-                $notifications['threads']['totalNumOfNewChanges'] . ($notifications['threads']['totalNumOfNewChanges'] = 1 ? ' respuesta nueva' : ' respuestas nuevas') 
-             : 'Sin actividad reciente'}}</p>
+                ($notifications['threads']['totalNumOfNewChanges'] == 1 ? 
+                  '1 respuesta nueva' : $notifications['threads']['totalNumOfNewChanges'] . ' respuestas nuevas' ) 
+                : 'Sin actividad reciente'}}
+            </p>
         </div>
     </div>
     <div class="box-container-notification shadow-container forumgroup-notification">
@@ -54,8 +56,9 @@
         <div class="box-content">
             <p>Foros grupales</p>
             <p>{{$notifications['gthreads']['totalNumOfNewChanges'] > 0 ? 
-                $notifications['gthreads']['totalNumOfNewChanges'] . ($notifications['gthreads']['totalNumOfNewChanges'] == 1 ? ' respuesta nueva' : ' respuestas nuevas')  
-            : 'Sin actividad reciente'}}</p>
+                ($notifications['gthreads']['totalNumOfNewChanges'] == 1 ? 
+                  '1 respuesta nueva' : $notifications['gthreads']['totalNumOfNewChanges'] . ' respuestas nuevas' ) 
+                : 'Sin actividad reciente'}}</p>
         </div>
     </div>
     @if ($user->athlete->monthPaid)

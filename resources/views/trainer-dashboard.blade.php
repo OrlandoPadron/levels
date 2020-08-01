@@ -1,3 +1,5 @@
+@dump($notifications)
+
 <div class="content-trainer-dashboard" x-data="{feeStatusModal: false}">
     <div class="container-dashboard">
         <h1 class="primary-blue-color"><i class="fas fa-dumbbell"></i> Panel de Entrenador</h1>
@@ -11,8 +13,15 @@
                 </div>
             </div>
             <div class="box-content">
-                <p>Planes de entrenamiento</p>
-                <p>Sin actividad reciente</p>
+                <p class="trainer_notification_status">Planes de entrenamiento
+                    @if($notifications['trainingPlansUpdates']['totalChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                    @endif
+                </p>
+                <p>{{$notifications['trainingPlansUpdates']['totalChanges'] > 0 ? 
+                    ($notifications['trainingPlansUpdates']['totalChanges'] == 1 ? 
+                      '1 cambio pendiente' : $notifications['trainingPlansUpdates']['totalChanges'] . ' cambios pendientes' ) 
+                    : 'Sin actividad reciente'}}</p>
             </div>
         </div>
         <div class="box-container-notification shadow-container forum-notification">
@@ -22,8 +31,14 @@
                 </div>
             </div>
             <div class="box-content">
-                <p>Foro personal</p>
-                <p>prueasasdsdsdba</p>
+                <p class="trainer_notification_status">Foros de deportistas 
+                    @if($notifications['athletesThreads']['totalChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                    @endif</p>
+                <p>{{$notifications['athletesThreads']['totalChanges'] > 0 ? 
+                    ($notifications['athletesThreads']['totalChanges'] == 1 ? 
+                      '1 respuesta nueva' : $notifications['athleteThreads']['totalChanges'] . ' respuestas nuevas' ) 
+                    : 'Sin actividad reciente'}}</p>
             </div>
         </div>
         <div class="box-container-notification shadow-container forumgroup-notification">
@@ -33,8 +48,14 @@
                 </div>
             </div>
             <div class="box-content">
-                <p>Foros grupales</p>
-                <p>prueba</p>
+                <p class="trainer_notification_status">Foros grupales 
+                    @if($notifications['gThreads']['totalNumOfNewChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                    @endif</p>
+                <p>{{$notifications['gThreads']['totalNumOfNewChanges'] > 0 ? 
+                    ($notifications['gThreads']['totalNumOfNewChanges'] == 1 ? 
+                      '1 respuesta nueva' : $notifications['gThreads']['totalNumOfNewChanges'] . ' respuestas nuevas' ) 
+                    : 'Sin actividad reciente'}}</p>
             </div>
         </div>
         <div class="box-container-notification shadow-container payment-notification">
@@ -44,7 +65,7 @@
                 </div>
             </div>
             <div class="box-content">
-                <p id="trainer_notification_month_status">
+                <p class="trainer_notification_status">
                     Estado mes {{ucfirst(Date::now()->format('F'))}}
                     @if($notifications['athletesHaventPaid']->count() == 0)
                     <i class="fas fa-check-circle"></i>

@@ -44,9 +44,11 @@
             </div>
             <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
             </div>
+            @if(Auth::user()->isTrainer)
             <div id="gestionar-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'gestion'">
                 @include('sections_groups.manage')
             </div>
+            @endif
         </div>
     </div>
 </div>

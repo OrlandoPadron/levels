@@ -78,6 +78,8 @@
 
                         case 'AddFileToTrainingPlan':
                             saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'trainingPlanSection'}, {planId: additionalContent['planId']});
+                            updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
+                            
                             break;
                     }
                 });

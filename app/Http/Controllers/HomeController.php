@@ -7,6 +7,7 @@ use App\UserFile;
 use Carbon\Carbon;
 use App\ForumThread;
 use App\Group;
+use App\TrainingPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -30,8 +31,12 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->isTrainer) {
+            $groups = Auth::user()->trainer->groups;
             $trainer_notifications = array(
-                "athletesHaventPaid" => getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id)
+                "trainingPlansUpdates" => $this->getArrayOfTrainingPlansUpdates(),
+                "athletesHaventPaid" => $this->getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id),
+                "athletesThreads" => $this->getArrayOfThreadsTrainerHasntSeenYet(),
+                "gThreads" => $this->getGroupForumElementsUserHasntSeenYet($groups)
             );
             return view('home', [
                 "notifications" => $trainer_notifications
@@ -50,6 +55,7 @@ class HomeController extends Controller
             $files = UserFile::where('owned_by', Auth::user()->id)->get();
             $groups = Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
             $notifications = array(
+                "trainingPlansUpdates" => $this->getArrayOfTrainingPlansUpdates(),
                 "threads" => $this->getForumElementsUserHasntSeenYet($threads),
                 "gthreads" => $this->getGroupForumElementsUserHasntSeenYet($groups),
 
@@ -66,6 +72,93 @@ class HomeController extends Controller
         } else {
             return redirect()->route('home');
         }
+    }
+
+
+    public function getArrayOfTrainingPlansUpdates()
+    {
+        $arrayOfTrainingPlanChanges = array();
+        $totalTrainingPlanChanges = 0;
+        //Getting notifications file log. 
+        $json = json_decode(Auth::user()->notifications_json, true);
+
+
+        //Getting all the training plans associated with the current logged user. 
+        $activeTrainingPlans = array();
+        if (Auth::user()->isTrainer) {
+            $athletesTrainedByMe = getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id);
+            foreach ($athletesTrainedByMe as $athlete) {
+                $athleteTrainingPlans = $athlete->trainingPlans;
+                foreach ($athleteTrainingPlans as $plan) {
+                    if ($plan->status == 'active') array_push($activeTrainingPlans, $plan);
+                }
+            }
+        } else {
+            //In case the logged in user is an athlete. 
+            $athleteTrainingPlans = Auth::user()->athlete->trainingPlans;
+            foreach ($athleteTrainingPlans as $plan) {
+                if ($plan->status == 'active') array_push($activeTrainingPlans, $plan);
+            }
+        }
+
+        //Comparing the last update of each training plan file. 
+        foreach ($activeTrainingPlans as $plan) {
+            $planFiles = getFilesAssociatedWithPlanId($plan->id);
+            $idOfFilesUpdated = array();
+            foreach ($planFiles as $file) {
+                $lastTimeUserViewedPlan = isset($json['trainingPlans'][$plan->id]['lastVisit']) ?
+                    Carbon::parse($json['trainingPlans'][$plan->id]['lastVisit'])->timestamp : 0;
+                if ($file->updated_at->timestamp > $lastTimeUserViewedPlan) {
+                    array_push($idOfFilesUpdated, $file->id);
+                    $totalTrainingPlanChanges++;
+                }
+            }
+
+            //Assembling array(tutorship + arrayOfFilesUpdated)
+            if (count($idOfFilesUpdated) > 0) {
+                $array = array(
+                    'trainingPlan' => $plan,
+                    'idOfFilesUpdated' => $idOfFilesUpdated,
+                );
+                array_push($arrayOfTrainingPlanChanges, $array);
+            }
+        }
+        //Saving the total changes and returning array. 
+        $arrayOfTrainingPlanChanges['totalChanges'] = $totalTrainingPlanChanges;
+        return $arrayOfTrainingPlanChanges;
+    }
+
+    public function getCollectionOfAthletesWhoHaventPayMonthYet($trainerId)
+    {
+        $athletes = getArrayOfAthletesTrainedByTrainerId($trainerId);
+        $haventPay = array();
+        foreach ($athletes as $athlete) {
+            if (!$athlete->monthPaid) {
+                array_push($haventPay, $athlete);
+            }
+        }
+        return collect($haventPay);
+    }
+
+    public function getArrayOfThreadsTrainerHasntSeenYet()
+    {
+        $threadsTrainerHasntSeentYet = array();
+        $changesCount = 0;
+
+        //Check every single thread of every athlete trained by trainer to display changes. 
+        $athletes = getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id);
+
+        foreach ($athletes as $athlete) {
+            $threads = ForumThread::where('user_associated', $athlete->user->id)->get();
+            $arrayOfUpdatedThreads = $this->getForumElementsUserHasntSeenYet($threads);
+            if ($arrayOfUpdatedThreads['totalNumOfNewChanges'] > 0) {
+                $threadsTrainerHasntSeentYet['athlete_' . $athlete->id] = $arrayOfUpdatedThreads;
+                $changesCount += $arrayOfUpdatedThreads['totalNumOfNewChanges'];
+            }
+        }
+        //Saving the total changes and returning array. 
+        $threadsTrainerHasntSeentYet['totalChanges'] = $changesCount;
+        return $threadsTrainerHasntSeentYet;
     }
 
 

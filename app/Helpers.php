@@ -111,18 +111,6 @@ function getArrayOfAthletesTrainedByTrainerId($trainerId)
     return $athletes;
 }
 
-function getCollectionOfAthletesWhoHaventPayMonthYet($trainerId)
-{
-    $athletes = getArrayOfAthletesTrainedByTrainerId($trainerId);
-    $haventPay = array();
-    foreach ($athletes as $athlete) {
-        if (!$athlete->monthPaid) {
-            array_push($haventPay, $athlete);
-        }
-    }
-    return collect($haventPay);
-}
-
 
 /**
  * Given a group, function returns all group members as User Model array. 
@@ -252,11 +240,7 @@ function getUserGroups()
     if (Auth::user()->isTrainer == 1) {
         return Auth::user()->trainer->groups;
     } else {
-
-
-
-
-        return collect([]);
+        return Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
     }
 }
 
