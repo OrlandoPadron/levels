@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\User;
 use App\UserFile;
 use Illuminate\Http\Request;
@@ -73,6 +74,17 @@ class UserFileController extends Controller
                 //Modify some values to represent a training plan file.
                 $userFile->isTrainingPlanFile = true;
                 $userFile->save();
+                break;
+            case 'groupFile':
+                //Modify group files associated list 
+                $group = Group::findOrFail($request['shared_with']);
+                $files_array = (array) $group->files;
+                if (!in_array($userFile->id, $files_array)) {
+                    array_push($files_array, $userFile->id);
+                    $group->files = $files_array;
+                    $group->save();
+                }
+
                 break;
         }
         return $userFile->toArray();

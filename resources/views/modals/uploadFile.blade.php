@@ -6,9 +6,9 @@
                <span id="closeModal" class="close" @click="uploadFile=!uploadFile">&times;</span>
                <h2>Subir fichero a mi muro</h2>
            </div>
-           @if(!isset($isGroup))
            <div class="modal-body">
-                <h2 class="primary-blue-color">Subida/Descarga de Archivos</h2>
+               <h2 class="primary-blue-color">Subida/Descarga de Archivos</h2>
+            @if(!isset($isGroup))
 
                 <progress value="0" max="100" id="uploader">0%</progress>
                 <input id="file-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
@@ -21,11 +21,13 @@
                     @endforeach
                 </select>
                 <button onclick="shareFile({{$user->id}})">Compartir</button>
-                @endif
-           </div>
-           @else
-           <p>Nada que ver</p>
-           @endif
+            @endif
+            @else
+            <progress value="0" max="100" id="uploader">0%</progress>
+            <input id="file-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
+            <button onclick="uploadFile({{Auth::user()->id}}, {{$group->id}}, 'GroupFileSection')">Subir</button>
+            @endif
+            </div>
            <div class="modal-footer">
                <h3>Modal Footer</h3>
            </div>

@@ -38,6 +38,21 @@
                 uploader = document.getElementById("uploader");
                 break;
 
+            case 'GroupFileSection':
+                //Get file 
+                file = document.getElementById("file-upload").files[0];
+                
+                //Create storage ref
+                storageRef = firebase.storage().ref('groups/'+sharedWithUserId+'/files/'+ file.name);
+
+
+                //Upload file 
+                task = storageRef.put(file);
+
+                //Update progress bar
+                uploader = document.getElementById("uploader");
+                break;
+
             case 'AddFileToTrainingPlan':
                 //Get file 
                 file = document.getElementById("plan-upload").files[0];
@@ -79,6 +94,12 @@
                         case 'AddFileToTrainingPlan':
                             saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'trainingPlanSection'}, {planId: additionalContent['planId']});
                             updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
+                            
+                            break;
+
+                        case 'GroupFileSection':
+                            saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'groupFileSection'});
+                            // updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
                             
                             break;
                     }
@@ -128,6 +149,19 @@
                     _token: "{{csrf_token()}}",
                 };
                 break;
+            case 'groupFileSection':
+                data = {
+                    file_name: fileName,
+                    extension: fileExtension,
+                    size: file.size,
+                    url: downloadURL,
+                    owned_by: fileOwnerUserId,
+                    shared_with: sharedWithUserId,
+                    method: 'groupFile',
+                    
+                    _token: "{{csrf_token()}}",
+                };
+                break;
         }
         $.ajax({
             url: "{{route("userFile.store")}}",
@@ -145,9 +179,10 @@
 
                 
             },
-            error: function(){
+            error: function(callback){
                 alert('Se ha producido un error.');
                 console.log('Error on ajax call "saveFileReferenceIntoDatabase" function');
+                console.log(callback);
             }  
         });
     }
