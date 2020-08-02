@@ -6,6 +6,7 @@ use App\Athlete;
 use App\Trainer;
 use App\UserFile;
 use App\ActivityLog;
+use App\ForumThread;
 use App\TrainingPlan;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -212,6 +213,30 @@ function getUserLog($id)
     return $log;
 }
 
+function getGroupLog($group_id)
+{
+    return ActivityLog::where('isGroup', 1)
+        ->where('entity_implied', $group_id)
+        ->where(
+            'created_at',
+            '>=',
+            Carbon::now()->subDays(30)->toDateTimeString()
+        )->get();
+}
+
+
+function getGroupFiles($group_id)
+{
+
+    $arrayFilesId = (array) Group::findOrFail($group_id)->files;
+    $files = array();
+    foreach ($arrayFilesId as $id) {
+        array_push($files, UserFile::findOrFail($id));
+    }
+    return $files;
+}
+
+
 /**
  * Returns an associative array containing user's wall.
  */
@@ -244,6 +269,16 @@ function getUserGroups()
     }
 }
 
+function getFileModelGivenItsId($file_id)
+{
+    return UserFile::findOrFail($file_id);
+}
+
+
+function getThreadGivenItsId($thread_id)
+{
+    return ForumThread::findOrFail($thread_id);
+}
 /** Only for test -> DELETE */
 function test2()
 {

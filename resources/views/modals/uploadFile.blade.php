@@ -6,6 +6,7 @@
                <span id="closeModal" class="close" @click="uploadFile=!uploadFile">&times;</span>
                <h2>Subir fichero a mi muro</h2>
            </div>
+           @if(!isset($isGroup))
            <div class="modal-body">
                 <h2 class="primary-blue-color">Subida/Descarga de Archivos</h2>
 
@@ -22,11 +23,11 @@
                 <button onclick="shareFile({{$user->id}})">Compartir</button>
                 @endif
            </div>
+           @else
+           <p>Nada que ver</p>
+           @endif
            <div class="modal-footer">
                <h3>Modal Footer</h3>
            </div>
        </div>
    </div>
-
-<script>
-</script>

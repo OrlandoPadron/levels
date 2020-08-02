@@ -152,7 +152,7 @@ class HomeController extends Controller
             $threads = ForumThread::where('user_associated', $athlete->user->id)->get();
             $arrayOfUpdatedThreads = $this->getForumElementsUserHasntSeenYet($threads);
             if ($arrayOfUpdatedThreads['totalNumOfNewChanges'] > 0) {
-                $threadsTrainerHasntSeentYet['athlete_' . $athlete->id] = $arrayOfUpdatedThreads;
+                $threadsTrainerHasntSeentYet[$athlete->id] = $arrayOfUpdatedThreads;
                 $changesCount += $arrayOfUpdatedThreads['totalNumOfNewChanges'];
             }
         }

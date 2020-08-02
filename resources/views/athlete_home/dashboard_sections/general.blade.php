@@ -21,25 +21,35 @@
     </div>
 </div>
 <div class="general-dashboard-athlete">
-    <div class="box-container-notification shadow-container plan-notification">
+    <div class="box-container-notification shadow-container plan-notification hover-scale"
+    onclick="changeUrlParameters('plan')" @click="sectionTab = 'plan'">
         <div class="box-icon">
             <div class="box-icon-container">
                 <i style="font-size: 36px;" class="fas fa-running"></i>
             </div>
         </div>
         <div class="box-content">
-            <p>Plan de entrenamiento</p>
+            <p class="notification_status">Plan de entrenamiento
+                @if($notifications['trainingPlansUpdates']['totalChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                @endif
+            </p>
             <p>Sin actividad reciente</p>
         </div>
     </div>
-    <div class="box-container-notification shadow-container forum-notification">
+    <div class="box-container-notification shadow-container forum-notification hover-scale"
+    onclick="changeUrlParameters('foro')" @click="sectionTab = 'foro'">
         <div class="box-icon">
             <div class="box-icon-container">
                 <i class="fas fa-comment-alt"></i>
             </div>
         </div>
         <div class="box-content">
-            <p>Foro personal</p>
+            <p class="notification_status">Foro personal
+                @if($notifications['threads']['totalNumOfNewChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                @endif
+            </p>
             <p>{{$notifications['threads']['totalNumOfNewChanges'] > 0 ? 
                 ($notifications['threads']['totalNumOfNewChanges'] == 1 ? 
                   '1 respuesta nueva' : $notifications['threads']['totalNumOfNewChanges'] . ' respuestas nuevas' ) 
@@ -47,14 +57,18 @@
             </p>
         </div>
     </div>
-    <div class="box-container-notification shadow-container forumgroup-notification">
+    <div class="box-container-notification shadow-container forumgroup-notification hover-scale">
         <div class="box-icon">
             <div class="box-icon-container">
                 <i class="fas fa-users"></i>
             </div>
         </div>
         <div class="box-content">
-            <p>Foros grupales</p>
+            <p class="notification_status">Foros grupales
+                @if($notifications['gthreads']['totalNumOfNewChanges'] == 0)
+                    <i class="fas fa-check-circle"></i>
+                @endif
+            </p>
             <p>{{$notifications['gthreads']['totalNumOfNewChanges'] > 0 ? 
                 ($notifications['gthreads']['totalNumOfNewChanges'] == 1 ? 
                   '1 respuesta nueva' : $notifications['gthreads']['totalNumOfNewChanges'] . ' respuestas nuevas' ) 

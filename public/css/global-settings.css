@@ -729,3 +729,12 @@ table.data-table {
     padding: 5px 0px;
     color: #6113bbd7;
 }
+
+.notification_status {
+    display: flex;
+    align-items: center;
+}
+.notification_status i {
+    font-size: 14px;
+    margin-left: 6px;
+}

@@ -307,7 +307,7 @@
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                alert("Ha compartido su archivo '" + fileName +"' con {{$user->name}}."); 
+                alert("Ha compartido su archivo '" + fileName +"'."); 
                 location.reload();
                 
             },
@@ -337,7 +337,7 @@
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                alert("Su archivo '" + fileName +"' se ha dejado de compartir con {{$user->name}}."); 
+                alert("Su archivo '" + fileName +"' se ha dejado de compartir."); 
                 location.reload();
                 
             },

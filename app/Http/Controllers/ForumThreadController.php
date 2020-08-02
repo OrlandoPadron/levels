@@ -61,6 +61,7 @@ class ForumThreadController extends Controller
             );
             $logController->store($log);
             // End log storage
+
             if (Auth::user()->isTrainer) {
                 return redirect()->route('profile.show', ['user' => $user, 'tab' => 'foro']);
             } else {

@@ -1,19 +1,23 @@
 @dump($notifications)
 
-<div class="content-trainer-dashboard" x-data="{feeStatusModal: false}">
+<div class="content-trainer-dashboard" x-data="{planStatusModal:false, forumStatusModal: false, feeStatusModal: false}">
     <div class="container-dashboard">
         <h1 class="primary-blue-color"><i class="fas fa-dumbbell"></i> Panel de Entrenador</h1>
     </div>
     @include('modals.trainerPanelModals.feeStatusModal')
+    @include('modals.trainerPanelModals.trainingPlanStatusModal')
+    @include('modals.trainerPanelModals.forumStatusModal')
     <div class="boxes">
-        <div class="box-container-notification shadow-container plan-notification">
+        <div class="box-container-notification shadow-container plan-notification"
+                @click="planStatusModal=!planStatusModal" 
+                @keydown.escape.window="planStatusModal=false">
             <div class="box-icon">
                 <div class="box-icon-container">
                     <i style="font-size: 36px;" class="fas fa-running"></i>
                 </div>
             </div>
             <div class="box-content">
-                <p class="trainer_notification_status">Planes de entrenamiento
+                <p class="notification_status">Planes de entrenamiento
                     @if($notifications['trainingPlansUpdates']['totalChanges'] == 0)
                     <i class="fas fa-check-circle"></i>
                     @endif
@@ -24,20 +28,22 @@
                     : 'Sin actividad reciente'}}</p>
             </div>
         </div>
-        <div class="box-container-notification shadow-container forum-notification">
+        <div class="box-container-notification shadow-container forum-notification"
+                @click="forumStatusModal=!forumStatusModal" 
+                @keydown.escape.window="forumStatusModal=false">
             <div class="box-icon">
                 <div class="box-icon-container">
                     <i class="fas fa-comment-alt"></i>
                 </div>
             </div>
             <div class="box-content">
-                <p class="trainer_notification_status">Foros de deportistas 
+                <p class="notification_status">Foros de deportistas 
                     @if($notifications['athletesThreads']['totalChanges'] == 0)
                     <i class="fas fa-check-circle"></i>
                     @endif</p>
                 <p>{{$notifications['athletesThreads']['totalChanges'] > 0 ? 
                     ($notifications['athletesThreads']['totalChanges'] == 1 ? 
-                      '1 respuesta nueva' : $notifications['athleteThreads']['totalChanges'] . ' respuestas nuevas' ) 
+                      '1 respuesta nueva' : $notifications['athletesThreads']['totalChanges'] . ' respuestas nuevas' ) 
                     : 'Sin actividad reciente'}}</p>
             </div>
         </div>
@@ -48,7 +54,7 @@
                 </div>
             </div>
             <div class="box-content">
-                <p class="trainer_notification_status">Foros grupales 
+                <p class="notification_status">Foros grupales 
                     @if($notifications['gThreads']['totalNumOfNewChanges'] == 0)
                     <i class="fas fa-check-circle"></i>
                     @endif</p>
@@ -58,15 +64,17 @@
                     : 'Sin actividad reciente'}}</p>
             </div>
         </div>
-        <div class="box-container-notification shadow-container payment-notification">
+        <div class="box-container-notification shadow-container payment-notification"
+                @click="feeStatusModal=!feeStatusModal" 
+                @keydown.escape.window="feeStatusModal=false">
             <div class="box-icon">
                 <div class="box-icon-container">
                     <i style="margin-left:-5px;" class="fas fa-euro-sign"></i>
                 </div>
             </div>
             <div class="box-content">
-                <p class="trainer_notification_status">
-                    Estado mes {{ucfirst(Date::now()->format('F'))}}
+                <p class="notification_status">
+                    Estado del mes ({{ucfirst(Date::now()->format('F'))}})
                     @if($notifications['athletesHaventPaid']->count() == 0)
                     <i class="fas fa-check-circle"></i>
                     @endif
