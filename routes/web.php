@@ -103,8 +103,8 @@ Route::post('/myWall', 'UserController@myWall')->name('user.myWall');
 /**
  * GROUP ROUTES
  */
-//Creation
 Route::post('/newGroup', 'GroupController@store')->name('group.store');
+Route::post('/updateGroup', 'GroupController@update')->name('group.update');
 
 //View
 Route::get('/group/{group}/{tab}', 'GroupController@show')->name('group.show');

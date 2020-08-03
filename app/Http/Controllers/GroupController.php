@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Group;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller
 {
@@ -85,7 +87,33 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
-        //
+        if (isset($request['group_id'])) {
+            $group = Group::findOrFail($request['group_id']);
+            $group->title = $request['title'] != null ? $request['title'] : 'Sin título';
+            $group->description = $request['description'] != null ? $request['description'] : 'Sin descripción';
+
+
+            //Handle group uploaded avatar
+            if ($request->hasFile('group_avatar')) {
+                $avatar = $request->file('group_avatar');
+                $filename = time() . '.' . $avatar->getClientOriginalExtension();
+                Image::make($avatar)->fit(500, 500)->save(public_path('uploads/group_avatars/' . $filename));
+
+
+                // Delete previous avatar
+                $previous_file = $group->group_image;
+                if ($previous_file != 'default_group_avatar.jpg') {
+                    if (file_exists('uploads/group_avatars/' . $previous_file)) {
+                        unlink('uploads/group_avatars/' . $previous_file);
+                    }
+                }
+
+                //Update avatar
+                $group->group_image = $filename;
+            }
+            $group->save();
+            return Redirect::back();
+        }
     }
 
     /**
@@ -98,8 +126,16 @@ class GroupController extends Controller
     {
         if (isset($request['group_id'])) {
             $group = Group::find($request['group_id']);
+
+            //Unlink group image from app. 
+            if ($group->group_image != 'default_group_avatar.jpg') {
+                if (file_exists('uploads/group_avatars/' . $group->group_image)) {
+                    unlink('uploads/group_avatars/' . $group->group_image);
+                }
+            }
+
             $group->delete();
-            return view('home');
+            return redirect()->route('home');
         }
     }
 
