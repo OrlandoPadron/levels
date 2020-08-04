@@ -173,8 +173,6 @@ button:hover {
 
 /* The Modal (background) */
 .modal {
-    /* display: none;
-    hiddenby default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
     padding-top: 100px; /* Location of the box */
@@ -193,7 +191,7 @@ button:hover {
     background-color: white;
     margin: auto;
     padding: 0;
-    /* border: 3px solid white; */
+    /* border: 3px solid black; */
     width: 80%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     border-top-right-radius: 10px;
@@ -234,9 +232,11 @@ button:hover {
 
 .modal-body {
     padding: 20px 50px;
-    overflow-y: auto;
+    overflow-y: hidden;
     background-color: #f2f1f2;
-    height: 500px;
+    height: fit-content;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .modal-body-container {
@@ -273,7 +273,7 @@ button:hover {
 }
 
 .modal-body div {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .modal-body .flex-horizontal {
@@ -305,13 +305,16 @@ button:hover {
 
 .modal-buttons {
     display: grid;
+    padding: 20px 0px;
     grid-template-areas: "alternative principal";
     align-items: center;
 }
 .principal-button {
     grid-area: principal;
+    height: 100%;
     display: flex;
     justify-self: right;
+    align-items: center;
 }
 
 .alternative-buttons {
@@ -334,7 +337,12 @@ button:hover {
     margin-right: 10px;
 }
 .alternative-buttons :first-child {
-    margin-bottom: 5px;
+    margin-bottom: 7px;
+}
+
+/*Edit plan modal*/
+.edit-plan-modal {
+    width: 900px;
 }
 
 /* End modal */

@@ -10,6 +10,7 @@ use App\Session;
 use App\TrainingPlan;
 use App\UserFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TrainingPlanController extends Controller
 {
@@ -131,6 +132,13 @@ class TrainingPlanController extends Controller
 
                 $plan->save();
                 return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);
+
+            case 'togglePlanStatus':
+                $plan = TrainingPlan::findOrFail($request['id_plan']);
+                $plan->status = $plan->status == 'active' ? 'finished' : 'active';
+                $plan->save();
+
+                return Redirect::back();
         }
     }
 
