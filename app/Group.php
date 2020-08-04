@@ -21,7 +21,7 @@ class Group extends Model
      * @var array
      */
     protected $casts = [
-        'athletes' => 'array',
+        'users' => 'array',
         'files' => 'array',
     ];
 

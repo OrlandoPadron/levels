@@ -72,7 +72,7 @@ class UserFileController extends Controller
                 break;
             case 'trainingFile':
                 //Modify some values to represent a training plan file.
-                $userFile->isTrainingPlanFile = true;
+                $userFile->file_type = 1;
                 $userFile->save();
                 break;
             case 'groupFile':

@@ -12,7 +12,7 @@ class UserFile extends Model
      * @var array
      */
     protected $fillable = [
-        'file_name', 'extension', 'size', 'url', 'owned_by', 'shared_with',
+        'file_name', 'extension', 'size', 'url', 'owned_by', 'shared_with', 'file_type',
     ];
 
 

@@ -45,7 +45,9 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($userFiles as $key => $file)
+                @foreach($userFiles->filter(function($file){
+                    if ($file->file_type != 1) return $file;
+                }) as $key => $file)
                 <tr>
                     <td>{{$file->file_name}}</td>
                     <td>Sin descripción</td>
@@ -64,7 +66,8 @@
         </table>
     
     </div>
-    @if(!Auth::user()->isTrainer)
+    {{-- !TODO MEJORAR  --}}
+    @if(Auth::user()->isTrainer)
     <div class="file-table-container">
         <h2 class="primary-blue-color">Archivos compartidos {{Auth::user()->id == $user->id ? 'contigo' : 'con ' . $user->name. ' '. $user->surname}}</h2>
         <table id="files-table2" class="fee-table file-datatable">

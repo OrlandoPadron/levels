@@ -21,6 +21,7 @@
         var storageRef;
         var task;
         var uploader;
+        var fileName = "sin nombre";
 
         switch (method){
             case 'AthleteFileSection':
@@ -56,9 +57,11 @@
             case 'AddFileToTrainingPlan':
                 //Get file 
                 file = document.getElementById("plan-upload").files[0];
+
+                fileName = $("#fileName").val().trim(); 
         
                 //Create storage ref
-                storageRef = firebase.storage().ref('users/'+sharedWithUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ file.name);
+                storageRef = firebase.storage().ref('users/'+sharedWithUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
         
         
                 //Upload file 
@@ -67,6 +70,25 @@
                 //Update progress bar
                 uploader = document.getElementById("uploader-plan");   
                 console.log(additionalContent['planId']);        
+                break;
+
+            case 'UpdateFileTrainingPlan':
+                //Get file 
+                file = document.getElementById("plan-upload-upgrade").files[0];
+                
+                //Create storage ref
+                storageRef = firebase.storage().ref('users/'
+                +sharedWithUserId+'/trainingPlans/'+ 
+                additionalContent['planId'] +'/files/'+ 
+                additionalContent['filename']);
+
+                
+                //Upload file 
+                task = storageRef.put(file);
+
+                //Update progress bar
+                uploader = document.getElementById("uploader-plan");   
+                console.log(additionalContent['planId'] + " updating file...");        
                 break;
 
         }
@@ -88,17 +110,22 @@
                     console.log('File available at', downloadURL); 
                     switch(method){
                         case 'AthleteFileSection':
-                            saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL, {method:'fileSection'});
+                            saveFileReferenceIntoDatabase(file, fileName, fileOwnerUserId, sharedWithUserId, downloadURL, {method:'fileSection'});
                             break;
 
                         case 'AddFileToTrainingPlan':
-                            saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'trainingPlanSection'}, {planId: additionalContent['planId']});
+                            saveFileReferenceIntoDatabase(file, fileName, fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'trainingPlanSection'}, {planId: additionalContent['planId']});
                             updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
                             
                             break;
+                        
+                        case 'UpdateFileTrainingPlan':
+                            console.log('Update file step 2...');
+                            updateTrainingPlanFileReferenceFromDatabase(additionalContent['fileId'], file.size, downloadURL);
+                            break;
 
                         case 'GroupFileSection':
-                            saveFileReferenceIntoDatabase(file,fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'groupFileSection'});
+                            saveFileReferenceIntoDatabase(file, fileName, fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'groupFileSection'});
                             // updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
                             
                             break;
@@ -119,8 +146,8 @@
      * @params downloadURL -> firebase's URL linked to the file
      *
     */
-    function saveFileReferenceIntoDatabase(file, fileOwnerUserId, sharedWithUserId, downloadURL, method, additionalContent=[]){
-        var fileName = file.name.split('.').slice(0, -1).join('.');
+    function saveFileReferenceIntoDatabase(file,fileName, fileOwnerUserId, sharedWithUserId, downloadURL, method, additionalContent=[]){
+        // var fileName = file.name.split('.').slice(0, -1).join('.');
         var fileExtension = file.name.split('.').pop();
         var data;
         switch(method['method']){
@@ -321,64 +348,26 @@
         });
     }
 
-    /**
-     * Shares an already uploaded file to a specific user's profile. 
-     * @params userId -> user who is receiving the shared file.
-    */
 
-    function shareFile(userId){
-
-        var fileId = $("#filesNotShared").children("option:selected").val();
-        var fileName = $("#filesNotShared").children("option:selected").text();
-
+    function updateTrainingPlanFileReferenceFromDatabase(fileId, fileSize, downloadURL){
         $.ajax({
-            url: "{{route("userFile.update")}}",
+            url: "{{route("trainingPlan.update")}}",
             type: "POST",
             data: {
                 fileId: fileId,
-                userId: userId,
-                method: 'shareFile',
-
+                size: fileSize,
+                url: downloadURL,
+                method: 'updateFile',
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                alert("Ha compartido su archivo '" + fileName +"'."); 
+                alert("Su archivo se ha actualizado correctamente."); 
                 location.reload();
                 
             },
             error: function(){
                 alert('Se ha producido un error.');
-                console.log('Error on ajax call "shareFile" function');
-            }  
-        });
-    }
-
-    
-    /**
-     * Stops sharing a given file with a given user. 
-     * @params fileId -> file's id
-     * @params userId -> user who has the shared file.
-     * @params fileName -> file's name
-    */
-    function stopSharingFile(fileId, userId, fileName){
-        $.ajax({
-            url: "{{route("userFile.update")}}",
-            type: "POST",
-            data: {
-                fileId: fileId,
-                userId: userId,
-                method: 'stopSharing',
-
-                _token: "{{csrf_token()}}",
-            },
-            success: function(){
-                alert("Su archivo '" + fileName +"' se ha dejado de compartir."); 
-                location.reload();
-                
-            },
-            error: function(){
-                alert('Se ha producido un error.');
-                console.log('Error on ajax call "stopSharingFile" function');
+                console.log('Error on ajax call "updateTrainingPlanFileReferenceFromDatabase" function');
             }  
         });
     }

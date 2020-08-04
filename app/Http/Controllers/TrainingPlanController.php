@@ -8,6 +8,7 @@ use App\Mesocycle;
 use App\Microcycle;
 use App\Session;
 use App\TrainingPlan;
+use App\UserFile;
 use Illuminate\Http\Request;
 
 class TrainingPlanController extends Controller
@@ -110,6 +111,13 @@ class TrainingPlanController extends Controller
                     $plan->files_associated = array_diff($files, (array) $request['fileId']);
                     $plan->save();
                 }
+                break;
+
+            case 'updateFile':
+                $file = UserFile::findOrFail($request['fileId']);
+                $file->size = $request['size'];
+                $file->url = $request['url'];
+                $file->save();
                 break;
 
             case 'updatePlan':

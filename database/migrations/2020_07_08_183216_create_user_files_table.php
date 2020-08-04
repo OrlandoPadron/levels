@@ -22,7 +22,7 @@ class CreateUserFilesTable extends Migration
             $table->unsignedBigInteger('owned_by');
             $table->foreign('owned_by')->references('id')->on('users')->onDelete('cascade');
             $table->text('shared_with')->nullable();
-            $table->boolean('isTrainingPlanFile')->default(false);
+            $table->bigInteger('file_type')->default(0);
             $table->timestamps();
         });
     }

@@ -204,7 +204,7 @@ button:hover {
 
 /* The Close Button */
 .close {
-    color: rgb(255, 255, 255, 0.7);
+    color: #000f2d;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -219,29 +219,122 @@ button:hover {
 
 .modal-header {
     padding: 2px 16px;
-    background-color: #000f2d;
-    color: white;
+    background-color: #ffffff;
+    color: #000f2d;
+    text-align: center;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
-    border-left: 4px solid #000f2d;
-    border-right: 4px solid #000f2d;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+}
+
+.modal-header h2 {
+    padding-top: 15px;
 }
 
 .modal-body {
     padding: 20px 50px;
     overflow-y: auto;
-
+    background-color: #f2f1f2;
     height: 500px;
+}
+
+.modal-body-container {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    /* background-color: red; */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .modal-footer {
     padding: 2px 16px;
-    background-color: #000f2d;
-    color: white;
+    background-color: white;
+    color: #000f2d;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    border-left: 4px solid #000f2d;
-    border-right: 4px solid #000f2d;
+    border-left: 4px solid white;
+    border-right: 4px solid white;
+}
+
+.modal-body .item-with-input input {
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 14px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-body .item-with-input p,
+.modal-body .item-with-text-area p {
+    color: #6013bb;
+}
+
+.modal-body div {
+    margin-bottom: 5px;
+}
+
+.modal-body .flex-horizontal {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+.modal-body .flex-horizontal :first-child {
+    margin-right: 10px;
+}
+.modal-body .flex-horizontal div {
+    width: 50%;
+}
+.modal-body .flex-horizontal input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-body .item-with-text-area textarea {
+    width: 100%;
+    box-sizing: border-box;
+    height: 150px;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid black;
+    font-size: 14px;
+    font-family: "Nunito", sans-serif;
+}
+
+.modal-buttons {
+    display: grid;
+    grid-template-areas: "alternative principal";
+    align-items: center;
+}
+.principal-button {
+    grid-area: principal;
+    display: flex;
+    justify-self: right;
+}
+
+.alternative-buttons {
+    grid-area: alternative;
+    display: flex;
+    flex-direction: column;
+    color: #000f2d;
+}
+
+.alternative-buttons a:hover {
+    cursor: pointer;
+    color: #6013bb;
+}
+
+.alternative-buttons a:hover:last-child {
+    color: red;
+}
+
+.alternative-buttons a > i {
+    margin-right: 10px;
+}
+.alternative-buttons :first-child {
+    margin-bottom: 5px;
 }
 
 /* End modal */

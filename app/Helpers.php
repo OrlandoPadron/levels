@@ -265,7 +265,7 @@ function getUserGroups()
     if (Auth::user()->isTrainer == 1) {
         return Auth::user()->trainer->groups;
     } else {
-        return Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
+        return Group::where('users', 'like', "%" . Auth::user()->id . "%")->get();
     }
 }
 

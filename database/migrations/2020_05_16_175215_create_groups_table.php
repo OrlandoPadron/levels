@@ -20,7 +20,7 @@ class CreateGroupsTable extends Migration
             $table->string('group_image')->default('default_group_avatar.jpg');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('trainers')->onDelete('cascade');
-            $table->text('athletes')->nullable();
+            $table->text('users')->nullable();
             $table->text('files')->nullable();
             $table->timestamps();
         });

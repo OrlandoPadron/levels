@@ -53,7 +53,7 @@ class HomeController extends Controller
             $invoices = Invoice::where('athlete_id', Auth::user()->id)->orderBy('id', 'DESC')->get();
             $threads = ForumThread::where('user_associated', Auth::user()->id)->get();
             $files = UserFile::where('owned_by', Auth::user()->id)->get();
-            $groups = Group::where('athletes', 'like', "%" . Auth::user()->athlete->id . "%")->get();
+            $groups = Group::where('users', 'like', "%" . Auth::user()->id . "%")->get();
             $notifications = array(
                 "trainingPlansUpdates" => $this->getArrayOfTrainingPlansUpdates(),
                 "threads" => $this->getForumElementsUserHasntSeenYet($threads),
