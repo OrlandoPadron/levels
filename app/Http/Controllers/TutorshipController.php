@@ -7,6 +7,7 @@ use App\Athlete;
 use App\Invoice;
 use App\Tutorship;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TutorshipController extends Controller
 {
@@ -44,14 +45,13 @@ class TutorshipController extends Controller
             'title' => $request['title'] != null ? $request['title'] : 'Tutoría #' . $tutorshipNumber,
             'date' => $request['date'] != null ? $request['date'] : date('d/m/Y'),
             'goal' => $request['goal'] != null ? $request['goal'] : "Objetivo no especificado.",
-            'description' => $request['description'] != null ? $request['description'] : "<p>Esta tutoría no tiene contenido.</p>",
+            'description' => "<p>Esta tutoría aún no tiene contenido.</p>",
             'athlete_associated' => $request['athlete_associated'],
-            'bookmarked' => ($request['bookmark'] == 'bookmark_set') ? 1 : 0,
+            'bookmarked' => 0,
             'tutorship_number' => $tutorshipNumber,
         ]);
 
-        $user = User::find($request['user_id']);
-        return redirect()->route('profile.show', ['user' => $user, 'tab' => 'tutorias']);
+        return Redirect::back();
     }
 
     /**

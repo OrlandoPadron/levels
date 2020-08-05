@@ -21,10 +21,10 @@
     @foreach ($trainingPlans->filter(function ($plan){
         if ($plan->status == 'active') return $plan;
     })->sortByDesc('created_at') as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated:true}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated: false}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
+        @include('modals.filesAssociatedWithTrainingPlanModal', ["plan" => $plan])
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
         @include('modals.editPlanModal', ["plan" => $plan])
-        @include('modals.filesAssociatedWithTrainingPlanModal', ["plan" => $plan])
 
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="trainingPlan-status">
@@ -44,8 +44,8 @@
             </div>
             <div class="trainingPlan-options">
                 <button 
-                @click="addFileToPlan=!addFileToPlan" 
-                @keydown.escape.window="addFileToPlan=false"
+                @click="showFilesAssociated=!showFilesAssociated"
+                @keydown.escape.window="showFilesAssociated=false"
                 class="btn-purple-basic">Ver archivos</button>
                 @if(Auth::user()->isTrainer && iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                 <button 
@@ -92,8 +92,8 @@
             </div>
             <div class="trainingPlan-options">
                 <button 
-                @click="addFileToPlan=!addFileToPlan" 
-                @keydown.escape.window="addFileToPlan=false"
+                @click="showFilesAssociated=!showFilesAssociated" 
+                @keydown.escape.window="showFilesAssociated=false"
                 class="btn-purple-basic">Ver archivos</button>
                 @if(Auth::user()->isTrainer && iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                 <button 
@@ -112,4 +112,3 @@
 @else
     @include('page_messages.training_plans_not_available_message')   
 @endif
-        

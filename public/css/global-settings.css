@@ -303,6 +303,7 @@ div.modal-body {
     border: 1px solid black;
     font-size: 14px;
     font-family: "Nunito", sans-serif;
+    resize: none;
 }
 
 .modal-body .file-table-container {
@@ -363,10 +364,33 @@ div.modal-body {
 /*Edit plan modal*/
 .edit-plan-modal {
     width: 900px;
+    padding-bottom: 5px;
 }
 /*Associated plan files modal*/
 .plan-files {
     width: 1000px;
+    height: fit-content;
+}
+
+.plan-files p {
+    margin-bottom: 20px;
+}
+
+/*Add new tutorship modal*/
+.new-tutorship-modal {
+    width: 600px;
+    padding-bottom: 5px;
+}
+
+/*Set payment fee modal*/
+.set-payment-modal {
+    width: 500px;
+    padding-bottom: 5px;
+}
+
+/*Add thread modal*/
+.add-thread-modal {
+    width: 700px;
     height: fit-content;
 }
 
@@ -377,6 +401,54 @@ div.modal-body {
 }
 
 /* End modal */
+
+/*BASIC TABLE*/
+.basic-table {
+    text-align: center;
+}
+.basic-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.basic-table thead,
+.basic-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed; /* even columns width , fix width of table too*/
+}
+
+.basic-table thead {
+    width: calc(
+        100% - 1em
+    ); /* scrollbar is average 1em/16px width, remove it from thead width */
+}
+.basic-table th {
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+}
+
+.basic-table tr:not(:last-child) {
+    border-bottom: 1px solid black;
+}
+
+.basic-table tbody {
+    display: block;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.basic-table .table-buttons {
+    display: flex;
+    width: 100px;
+    flex-direction: column;
+    margin-left: auto;
+    margin-right: auto;
+}
+.basic-table .table-buttons button:not(:last-child) {
+    margin-bottom: 5px;
+}
+
+/*END BASIC TABLE*/
 
 .month_paid {
     color: #00d89d;

@@ -1,5 +1,5 @@
 <!-- Add File to Training Plan -->
-<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="addFileToPlan">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.550ms.opacity="addFileToPlan">
     <!-- Modal content -->
        <div class="modal-content" @click.away="addFileToPlan=false">
            <div class="modal-header">
