@@ -50,12 +50,12 @@
     </div>
 </div>
 
-<form action="{{route('trainingPlan.destroy')}}" method="POST" id="destroyPlanForm">
+<form action="{{route('trainingPlan.destroy')}}" method="POST" id="destroyPlanForm{{$plan->id}}">
     @csrf
     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
     <input type="text" value="{{$user->id}}" name="user_id" hidden>
 </form>
-<form action="{{route('trainingPlan.update')}}" method="POST" id="togglePlanStatusForm">
+<form action="{{route('trainingPlan.update')}}" method="POST" id="togglePlanStatusForm{{$plan->id}}">
     @csrf
     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
     <input type="text" name="method" value="togglePlanStatus" hidden>
@@ -64,12 +64,13 @@
 <script>
 
     function submitForm(method){
+        var planId = {{$plan->id}};
         switch(method){
             case 'destroyPlan':
-                $('#destroyPlanForm').submit();
+                $('#destroyPlanForm'.concat(planId)).submit();
                 break;
             case 'togglePlanStatus':
-                $('#togglePlanStatusForm').submit();
+                $('#togglePlanStatusForm'.concat(planId)).submit();
                 break;
 
         }

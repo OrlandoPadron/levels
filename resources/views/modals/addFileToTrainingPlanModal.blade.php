@@ -10,7 +10,7 @@
                 {{$plan->id}}
                 <progress value="0" max="100" id="uploader-plan">0%</progress><br>
                 <label for="fileName">Nombre del fichero</label><br>
-                <input type="text" name="fileName" id="fileName"><br>
+                <input type="text" name="fileName"><br>
                 <input id="plan-upload" name="fileuploaded" type="file" accept="application/pdf, application/msword, image/*, application/vnd.ms-powerpoint, .csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel, video/*, audio/*"/>
                 <button onclick="uploadFile({{Auth::user()->id}}, {{$user->id}}, 'AddFileToTrainingPlan', {planId:{{$plan->id}}})">Subir</button>
                 <div class="files">

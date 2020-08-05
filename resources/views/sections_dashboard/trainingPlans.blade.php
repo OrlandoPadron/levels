@@ -21,9 +21,10 @@
     @foreach ($trainingPlans->filter(function ($plan){
         if ($plan->status == 'active') return $plan;
     })->sortByDesc('created_at') as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated:true}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
         @include('modals.editPlanModal', ["plan" => $plan])
+        @include('modals.filesAssociatedWithTrainingPlanModal', ["plan" => $plan])
 
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="trainingPlan-status">
@@ -67,9 +68,10 @@
     @foreach ($trainingPlans->filter(function ($plan){
         if ($plan->status == 'finished') return $plan;
     })->sortByDesc('created_at') as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false}">
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated:false}">
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
         @include('modals.editPlanModal', ["plan" => $plan])
+        @include('modals.filesAssociatedWithTrainingPlanModal', ["plan" => $plan])
 
         <div class="trainingPlan-container shadow-container {{$user->account_activated == 1 ? '' : 'account_deactivated'}}">
             <div class="trainingPlan-status">

@@ -210,7 +210,7 @@ button:hover {
 
 .close:hover,
 .close:focus {
-    color: white;
+    color: #6013bb;
     text-decoration: none;
     cursor: pointer;
 }
@@ -274,7 +274,7 @@ button:hover {
     font-size: 16px;
 }
 
-.modal-body div {
+div.modal-body {
     margin-bottom: 10px;
 }
 
@@ -303,6 +303,19 @@ button:hover {
     border: 1px solid black;
     font-size: 14px;
     font-family: "Nunito", sans-serif;
+}
+
+.modal-body .file-table-container {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.modal-body .file-table-container table {
+    text-align: center;
+}
+.modal-body table.dataTable {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 
 .modal-buttons {
@@ -342,9 +355,25 @@ button:hover {
     margin-bottom: 7px;
 }
 
+/*Create plan modal*/
+.create-plan-modal {
+    width: 900px;
+}
+
 /*Edit plan modal*/
 .edit-plan-modal {
     width: 900px;
+}
+/*Associated plan files modal*/
+.plan-files {
+    width: 1000px;
+    height: fit-content;
+}
+
+.plan-files .modal-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* End modal */
