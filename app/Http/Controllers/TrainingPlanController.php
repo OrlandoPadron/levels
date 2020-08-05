@@ -128,7 +128,6 @@ class TrainingPlanController extends Controller
                 $plan->description = $request['description'];
                 $plan->start_date = $request['startDate'];
                 $plan->end_date = $request['endDate'];
-                $plan->status = $request['status'];
 
                 $plan->save();
                 return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);

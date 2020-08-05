@@ -33,7 +33,7 @@
                     <input type="text" name="method" value="updatePlan" hidden>
                     <div class="modal-buttons">
                         <div class="alternative-buttons">
-                            <a onclick="submitForm('togglePlanStatus');"><i class="fas fa-calendar-check"></i>Marcar como finalizado</a>
+                            <a onclick="submitForm('togglePlanStatus');"><i class="fas fa-calendar-check"></i>Marcar como {{$plan->status == 'active' ? 'finalizado' : 'activo'}}</a>
                             <a onclick="submitForm('destroyPlan');"><i class="fas fa-trash"></i>Eliminar plan</a>
                         </div>
                         <div class="principal-button">
