@@ -1,6 +1,7 @@
 <!-- Create New Training Plan Modal -->
 <div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="editPlan">
  <!-- Modal content -->
+ @dump($plan->id)
     <div class="modal-content edit-plan-modal" @click.away="editPlan=false">
         <div class="modal-header">
             <span class="close" @click="editPlan=!editPlan">&times;</span>
@@ -33,8 +34,8 @@
                     <input type="text" name="method" value="updatePlan" hidden>
                     <div class="modal-buttons">
                         <div class="alternative-buttons">
-                            <a onclick="submitForm('togglePlanStatus');"><i class="fas fa-calendar-check"></i>Marcar como {{$plan->status == 'active' ? 'finalizado' : 'activo'}}</a>
-                            <a onclick="submitForm('destroyPlan');"><i class="fas fa-trash"></i>Eliminar plan</a>
+                            <a onclick="submitForm('togglePlanStatus', {{$plan->id}});"><i class="fas fa-calendar-check"></i>Marcar como {{$plan->status == 'active' ? 'finalizado' : 'activo'}}</a>
+                            <a onclick="submitForm('destroyPlan', {{$plan->id}});"><i class="fas fa-trash"></i>Eliminar plan</a>
                         </div>
                         <div class="principal-button">
                             <button class="btn-add-basic" type="submit">Guardar cambios</button>
@@ -48,23 +49,22 @@
 
         </div>
     </div>
+    <form action="{{route('trainingPlan.destroy')}}" method="POST" id="destroyPlanForm{{$plan->id}}">
+        @csrf
+        <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
+        <input type="text" value="{{$user->id}}" name="user_id" hidden>
+    </form>
+    <form action="{{route('trainingPlan.update')}}" method="POST" id="togglePlanStatusForm{{$plan->id}}">
+        @csrf
+        <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
+        <input type="text" name="method" value="togglePlanStatus" hidden>
+    </form>
 </div>
 
-<form action="{{route('trainingPlan.destroy')}}" method="POST" id="destroyPlanForm{{$plan->id}}">
-    @csrf
-    <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
-    <input type="text" value="{{$user->id}}" name="user_id" hidden>
-</form>
-<form action="{{route('trainingPlan.update')}}" method="POST" id="togglePlanStatusForm{{$plan->id}}">
-    @csrf
-    <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
-    <input type="text" name="method" value="togglePlanStatus" hidden>
-</form>
 
 <script>
 
-    function submitForm(method){
-        var planId = {{$plan->id}};
+    function submitForm(method, planId){
         switch(method){
             case 'destroyPlan':
                 $('#destroyPlanForm'.concat(planId)).submit();

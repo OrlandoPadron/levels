@@ -1,10 +1,10 @@
 <!-- Add New Section to My Wall -->
-<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="uploadFile">
+<div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="shareFile">
     <!-- Modal content -->
-       <div class="modal-content upload-file-modal" @click.away="uploadFile=false">
+       <div class="modal-content upload-file-modal" @click.away="shareFile=false">
            <div class="modal-header">
-               <span id="closeModal" class="close" @click="uploadFile=!uploadFile">&times;</span>
-               <h2>Subir archivo</h2>
+               <span id="closeModal" class="close" @click="shareFile=!shareFile">&times;</span>
+               <h2>Compartir un archivo</h2>
            </div>
            <div class="modal-body">
                 <div class="modal-body-container">
@@ -20,8 +20,13 @@
 
                     </div>
                     <div class="item-with-input">
-                        <p>Nombre del archivo</p>
-                        <input type="text" name="title" id="file-name-input" placeholder="Nombre del archivo" required>
+                        <p>Selecciona el archivo que desees compartir</p>
+                        <select name="userFiles" id="filesNotShared">
+                            <option selected value="0"> -- Archivo no seleccionado --</option>
+                            @foreach(getUserFilesNotSharedWithCurrentUser(Auth::user()->id, $user->id) as $key => $file)
+                                <option value="{{$file->id}}">{{$file->file_name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="item-with-progressbar">
                         <p>Estado de la subida</p>

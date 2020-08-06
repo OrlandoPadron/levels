@@ -269,9 +269,41 @@ button:hover {
 }
 
 .modal-body .item-with-input p,
-.modal-body .item-with-text-area p {
+.modal-body .item-with-text-area p,
+.modal-body .item-with-progressbar p {
     color: #6013bb;
     font-size: 16px;
+}
+
+.modal-body .item-with-button-add-file {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* background-color: red; */
+}
+
+.modal-body .item-with-button-add-file > .soft-btn {
+    width: 150px;
+    color: #6013bb;
+    margin-right: 10px;
+}
+.modal-body .item-with-button-add-file p {
+    margin-right: 10px;
+}
+.modal-body .item-with-button-add-file i {
+    font-size: 16px;
+    color: rgba(128, 128, 128, 0.3);
+}
+.modal-body .item-with-button-add-file > i.input-active {
+    color: #00d89d;
+}
+
+.modal-body .item-with-progressbar {
+    margin-top: 10px;
+}
+.modal-body .item-with-progressbar progress[value] {
+    width: 100%;
+    height: 20px;
 }
 
 div.modal-body {
@@ -400,6 +432,27 @@ div.modal-body {
     justify-content: center;
 }
 
+/*Upload files modal*/
+.upload-file-modal {
+    width: 700px;
+    height: 400px;
+}
+
+.upload-file-modal .modal-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.upload-file-modal .btn-add-basic:disabled {
+    background: rgba(128, 128, 128, 0.3);
+}
+.upload-file-modal .btn-add-basic:disabled:hover {
+    background: rgba(128, 128, 128, 0.3);
+    filter: none;
+    cursor: auto;
+}
 /* End modal */
 
 /*BASIC TABLE*/

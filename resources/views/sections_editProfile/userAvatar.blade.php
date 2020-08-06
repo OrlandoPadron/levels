@@ -8,7 +8,7 @@
         @csrf
         
         <input onchange="submit();" id="file-upload" name="avatar" type="file" accept="image/*" hidden/>
-        <input type="button" class="btn-purple-basic" value="Subir imagen"onclick="document.getElementById('file-upload').click();"/>
+        <input type="button" class="btn-purple-basic" value="Seleccionar imagen" onclick="document.getElementById('file-upload').click();"/>
         <label for="delete-file">Eliminar imagen actual</label>
         <input onchange="submit()" type="checkbox" name="delete-avatar" id="delete-file" hidden>
       </form>

@@ -1,5 +1,10 @@
 <div class="heading-section">
     @if ($user->account_activated == 1)
+    <button id="add-btn-forum" class="btn-gray-basic button-position" style="margin-left: 10px;"
+                @click="shareFile=!shareFile"
+                @keydown.escape.window="shareFile=false">
+        <i style="margin-right: 2px;" class="fas fa-share-square"></i> Compartir archivo
+    </button>
     <button id="add-btn-forum" class="btn-add-basic button-position"
                 @click="uploadFile=!uploadFile"
                 @keydown.escape.window="uploadFile=false">
@@ -18,6 +23,7 @@
     <h1 id="forum-header" class="primary-blue-color">Archivos</h1>
 
     @include('modals.uploadFile')
+    @include('modals.shareFile')
 
  
 </div>

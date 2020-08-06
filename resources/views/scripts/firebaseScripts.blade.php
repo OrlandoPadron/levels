@@ -31,6 +31,7 @@
                 //Create storage ref
                 storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ file.name);
         
+                fileName = $('#file-name-input').val().trim(); 
         
                 //Upload file 
                 task = storageRef.put(file);

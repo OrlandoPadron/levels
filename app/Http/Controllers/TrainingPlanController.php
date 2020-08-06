@@ -130,7 +130,7 @@ class TrainingPlanController extends Controller
                 $plan->end_date = $request['endDate'];
 
                 $plan->save();
-                return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);
+                return Redirect::back();
 
             case 'togglePlanStatus':
                 $plan = TrainingPlan::findOrFail($request['id_plan']);
