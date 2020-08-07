@@ -1,39 +1,29 @@
 <div class="heading-section">
     @if ($user->account_activated == 1)
-    <button id="add-btn-forum" class="btn-gray-basic button-position" style="margin-left: 10px;"
-                @click="shareFile=!shareFile"
-                @keydown.escape.window="shareFile=false">
+    @if(Auth::user()->id != $user->id)
+        <button id="add-btn-forum" class="btn-gray-basic button-position" style="margin-left: 10px;"
+        @click="shareFile=!shareFile"
+        @keydown.escape.window="shareFile=false">
         <i style="margin-right: 2px;" class="fas fa-share-square"></i> Compartir archivo
-    </button>
-    <button id="add-btn-forum" class="btn-add-basic button-position"
-                @click="uploadFile=!uploadFile"
-                @keydown.escape.window="uploadFile=false">
-        <i style="margin-right: 5px;" class="fas fa-plus"></i> Subir archivo
-    </button>
-
-    {{-- <form action="{{route('reply.destroy')}}" method="POST">
-        @csrf
-        <input type="text" name="reply_id" value="3">
-        {{-- <input type="text" name="description" value="Prueba">
-        <input type="text" name="author" value="{{Auth::user()->id}}"> --}}
-        {{-- <button type="submit">pruebas</button> --}}
-    {{-- </form> --}} 
+        </button>
+    @endif
+        <button id="add-btn-forum" class="btn-add-basic button-position"
+                    @click="uploadFile=!uploadFile"
+                    @keydown.escape.window="uploadFile=false">
+            <i style="margin-right: 5px;" class="fas fa-plus"></i> Subir archivo
+        </button>
     @endif
 
     <h1 id="forum-header" class="primary-blue-color">Archivos</h1>
 
     @include('modals.uploadFile')
+    @if(Auth::user()->id != $user->id)
     @include('modals.shareFile')
+    @endif
 
  
 </div>
 
-
-{{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
-    @csrf
-    <label for="file-upload">Subir fichero</label>
-    <input name="user_id" value="{{Auth::user()->id}}">
-</form> --}}
 <div class="general-file-table-container">
     <div class="file-table-container">
         @if(Auth::user()->id == $user->id)
@@ -45,7 +35,6 @@
             <thead>
                 <tr>
                     <th>Nombre del fichero</th>
-                    <th>Descripción</th>
                     <th>Formato</th>
                     <th>Opciones</th>
                 </tr>
@@ -56,7 +45,6 @@
                 }) as $key => $file)
                 <tr>
                     <td>{{$file->file_name}}</td>
-                    <td>Sin descripción</td>
                     <td>{{strtoupper($file->extension)}}</td>
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
@@ -80,7 +68,6 @@
             <thead>
                 <tr>
                     <th>Nombre del fichero</th>
-                    <th>Descripción</th>
                     <th>Formato</th>
                     <th>Opciones</th>
                 </tr>
@@ -89,7 +76,6 @@
                 @foreach(getFilesSharedWithUser($user->id) as $key => $file)
                 <tr>
                     <td>{{$file->file_name}}</td>
-                    <td>Sin descripción</td>
                     <td>{{strtoupper($file->extension)}}</td>
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>

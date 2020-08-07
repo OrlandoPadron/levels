@@ -1,4 +1,4 @@
-<!-- Add New Section to My Wall -->
+<!-- UploadFile Modal -->
 <div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="uploadFile">
     <!-- Modal content -->
        <div class="modal-content upload-file-modal" @click.away="uploadFile=false">
@@ -12,7 +12,7 @@
                         <button class="soft-btn" onclick="document.getElementById('file-upload').click();">Seleccionar archivo</button>
                         <p id="selected-file-name">Ningún archivo seleccionado</p>
                         <i id="file-load-status-icon" class="fas fa-check-circle"></i>
-                        <input onchange="changeUI()" id="file-upload" name="fileuploaded" type="file" 
+                        <input onchange="changeUI('upload')" id="file-upload" name="fileuploaded" type="file" 
                         accept="application/pdf, application/msword, image/*, 
                         application/vnd.ms-powerpoint, .csv, 
                         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, 
@@ -41,31 +41,6 @@
                
        </div>
    </div>
-
-   <script>
-
-    function changeUI(){
-        var file = document.getElementById("file-upload").files[0];
-        if (file != undefined){
-            var filename = file.name.split('.').slice(0, -1).join('.');
-            console.log('Hay fichero');
-            $('#upload-btn').prop('disabled', false);
-            $('#selected-file-name').text(file.name);
-            $('#file-name-input').val(filename);
-            $('#file-load-status-icon').addClass("input-active");
-        }else{
-            console.log('No hay fichero');
-            $('#upload-btn').prop('disabled', true);
-            $('#selected-file-name').text('Ningún archivo seleccionado');
-            $('#file-name-input').val('');
-            $('#file-load-status-icon').removeClass("input-active");
-
-
-
-        }
-    }
-
-   </script>
 
    {{-- <h2 class="primary-blue-color">Subida/Descarga de Archivos</h2>
             @if(!isset($isGroup))

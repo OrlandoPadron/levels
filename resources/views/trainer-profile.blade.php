@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-profile-dashboard" x-data="{openShowProfileData: false, sectionTab: '{{$tab}}', openNewThreadForm:false, addWallSection: false, uploadFile: false}">
+<div class="content-profile-dashboard" x-data="{openShowProfileData: false, sectionTab: '{{$tab}}', openNewThreadForm:false, uploadFile: false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">

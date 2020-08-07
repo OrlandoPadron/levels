@@ -21,7 +21,7 @@
     @foreach ($trainingPlans->filter(function ($plan){
         if ($plan->status == 'active') return $plan;
     })->sortByDesc('created_at') as $key => $plan)
-    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated: false}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
+    <div class="alpine-container" x-data="{addFileToPlan: false, editPlan:false, showFilesAssociated: true}" {!!$loop->last ? 'style=margin-bottom:80px;' : ''!!}>
         @include('modals.filesAssociatedWithTrainingPlanModal', ["plan" => $plan])
         @include('modals.addFileToTrainingPlanModal', ["plan" => $plan])
         @include('modals.editPlanModal', ["plan" => $plan])

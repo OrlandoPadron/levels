@@ -270,7 +270,8 @@ button:hover {
 
 .modal-body .item-with-input p,
 .modal-body .item-with-text-area p,
-.modal-body .item-with-progressbar p {
+.modal-body .item-with-progressbar p,
+.modal-body .item-with-select p {
     color: #6013bb;
     font-size: 16px;
 }
@@ -336,6 +337,21 @@ div.modal-body {
     font-size: 14px;
     font-family: "Nunito", sans-serif;
     resize: none;
+}
+
+.modal-body .item-with-select select {
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.modal-body .item-with-select p:nth-child(2) {
+    text-align: justify;
+    color: #000f2d;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 20px;
 }
 
 .modal-body .file-table-container {
@@ -432,26 +448,48 @@ div.modal-body {
     justify-content: center;
 }
 
+.add-thread-modal .modal-buttons,
+.new-tutorship-modal .modal-buttons,
+.set-payment-modal .modal-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: -10px;
+}
+
 /*Upload files modal*/
 .upload-file-modal {
     width: 700px;
     height: 400px;
 }
 
-.upload-file-modal .modal-buttons {
+.create-plan-modal .modal-buttons,
+.upload-file-modal .modal-buttons,
+.share-file-modal .modal-buttons {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 10px;
 }
 
-.upload-file-modal .btn-add-basic:disabled {
+.upload-file-modal .btn-add-basic:disabled,
+.share-file-modal .btn-add-basic:disabled,
+.plan-files .btn-add-basic:disabled {
     background: rgba(128, 128, 128, 0.3);
 }
-.upload-file-modal .btn-add-basic:disabled:hover {
+.upload-file-modal .btn-add-basic:disabled:hover,
+.share-file-modal .btn-add-basic:disabled:hover,
+.plan-files .btn-add-basic:disabled:hover {
     background: rgba(128, 128, 128, 0.3);
     filter: none;
     cursor: auto;
+}
+
+/*Upload files modal*/
+.share-file-modal {
+    width: 700px;
+    height: 200px;
 }
 /* End modal */
 

@@ -1,8 +1,6 @@
 <div class="heading-section">
     @if ($user->id == Auth::user()->id)
-    <button class="btn-add-basic button-position"
-        @click="addWallSection=!addWallSection"
-        @keydown.escape.window="addWallSection=false">
+    <button  type="submit" form="addSectionToWallForm" class="btn-add-basic button-position">
         <i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir sección
     </button>
     <h1 class="primary-blue-color">Detalles Generales</h1>
@@ -10,7 +8,11 @@
     <h1 class="primary-blue-color">Detalles Generales</h1>
     @endif
 </div>
-@include('modals.addSectionToMyWall')
+
+<form action="{{route('user.myWall')}}" method="POST" id="addSectionToWallForm">
+    @csrf
+    <input type="text" name="method" hidden value="newSection">
+</form>
 
 <div id="my-wall-page-message" style="display: {{count(getUserWall($user->id)) == 0 ? '' : 'none'}};">
     @include('page_messages.general_trainer_info')

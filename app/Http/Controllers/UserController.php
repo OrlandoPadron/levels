@@ -232,8 +232,8 @@ class UserController extends Controller
                     $id = time();
                     $position = count($json_decode) + 1;
                     $json_decode[$id] = array(
-                        'title' => $request['title'],
-                        'content' => $request['content'],
+                        'title' => 'Sin título',
+                        'content' => 'Sin contenido',
                         'position' => strval($position),
                     );
                     Auth::user()->my_wall = json_encode($json_decode);

@@ -1,7 +1,6 @@
 <!-- Create New Training Plan Modal -->
 <div id="myModal" class="modal" x-show.transition.duration.250ms.opacity="editPlan">
  <!-- Modal content -->
- @dump($plan->id)
     <div class="modal-content edit-plan-modal" @click.away="editPlan=false">
         <div class="modal-header">
             <span class="close" @click="editPlan=!editPlan">&times;</span>

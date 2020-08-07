@@ -83,5 +83,72 @@
                 console.log('Error on ajax call "stopSharingFile" function');
             }  
         });
-    }     
+    }  
+
+
+
+    /*UPLOAD FILE AND SHARE FILE SCRIPTS */
+    
+    function changeUI(method, optionalId = 0){
+        switch (method){
+            case 'upload':
+                var file = document.getElementById("file-upload").files[0];
+                if (file != undefined){
+                    var filename = file.name.split('.').slice(0, -1).join('.');
+                    $('#upload-btn').prop('disabled', false);
+                    $('#selected-file-name').text(file.name);
+                    $('#file-name-input').val(filename);
+                    $('#file-load-status-icon').addClass("input-active");
+                }else{
+                    $('#upload-btn').prop('disabled', true);
+                    $('#selected-file-name').text('Ningún archivo seleccionado');
+                    $('#file-name-input').val('');
+                    $('#file-load-status-icon').removeClass("input-active");
+                }            
+                break;
+            case 'share':
+                var valueSelect = ($("#filesNotShared").val()); 
+                if (valueSelect == 0){
+                    $('#share-btn').prop('disabled', true);
+                }else{
+                    $('#share-btn').prop('disabled', false);
+                }
+                break;
+
+            case 'uploadToTrainingPlan':
+                var file = document.getElementById("file-upload-".concat(optionalId)).files[0];
+                if (file != undefined){
+                    var filename = file.name.split('.').slice(0, -1).join('.');
+                    $('#upload-btn-'.concat(optionalId)).prop('disabled', false);
+                    $('#selected-file-name-'.concat(optionalId)).text(file.name);
+                    $('#file-name-input-'.concat(optionalId)).val(filename);
+                    $('#file-load-status-icon-'.concat(optionalId)).addClass("input-active");
+                }else{
+                    $('#upload-btn-'.concat(optionalId)).prop('disabled', true);
+                    $('#selected-file-name-'.concat(optionalId)).text('Ningún archivo seleccionado');
+                    $('#file-name-input-'.concat(optionalId)).val('');
+                    $('#file-load-status-icon-'.concat(optionalId)).removeClass("input-active");
+                }            
+                break;
+            
+            case 'updateFileFromTrainingPlan':
+                var file = document.getElementById("file-plan-update-".concat(optionalId)).files[0];
+                if (file != undefined){
+                    var filename = file.name.split('.').slice(0, -1).join('.');
+
+                    $('#update-plan-file-btn-'.concat(optionalId)).prop('disabled', false);
+                    $('#update-file-load-status-icon-'.concat(optionalId)).addClass("input-active");
+                    $('#selected-update-file-name-'.concat(optionalId)).text(filename);
+                
+                }else{
+                    $('#update-plan-file-btn-'.concat(optionalId)).prop('disabled', true);
+                    $('#update-file-load-status-icon-'.concat(optionalId)).removeClass("input-active");
+                    $('#selected-update-file-name-'.concat(optionalId)).text('Ningún archivo seleccionado');
+                    $('#file-load-status-icon-'.concat(optionalId)).removeClass("input-active");
+                }    
+                break;
+
+        }
+
+    }   
 </script> 

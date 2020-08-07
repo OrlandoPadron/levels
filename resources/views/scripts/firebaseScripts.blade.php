@@ -28,10 +28,12 @@
                 //Get file 
                 file = document.getElementById("file-upload").files[0];
         
-                //Create storage ref
-                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ file.name);
-        
                 fileName = $('#file-name-input').val().trim(); 
+                firebaseFileName = fileName.concat(file.name.split('.').pop());
+
+                //Create storage ref
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ firebaseFileName);
+        
         
                 //Upload file 
                 task = storageRef.put(file);
@@ -57,39 +59,22 @@
 
             case 'AddFileToTrainingPlan':
                 //Get file 
-                file = document.getElementById("plan-upload").files[0];
+                file = document.getElementById("file-upload-".concat(additionalContent['planId'])).files[0];
+                
+                fileName = $('#file-name-input-'.concat(additionalContent['planId'])).val().trim(); 
+                firebaseFileName = fileName.concat(file.name.split('.').pop());
 
-                fileName = $("#fileName").val().trim(); 
         
                 //Create storage ref
-                storageRef = firebase.storage().ref('users/'+sharedWithUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
+                storageRef = firebase.storage().ref('users/'+sharedWithUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ firebaseFileName);
         
         
                 //Upload file 
                 task = storageRef.put(file);
         
                 //Update progress bar
-                uploader = document.getElementById("uploader-plan");   
+                uploader = document.getElementById("uploader-".concat(additionalContent['planId']));   
                 console.log(additionalContent['planId']);        
-                break;
-
-            case 'UpdateFileTrainingPlan':
-                //Get file 
-                file = document.getElementById("plan-upload-upgrade").files[0];
-                
-                //Create storage ref
-                storageRef = firebase.storage().ref('users/'
-                +sharedWithUserId+'/trainingPlans/'+ 
-                additionalContent['planId'] +'/files/'+ 
-                additionalContent['filename']);
-
-                
-                //Upload file 
-                task = storageRef.put(file);
-
-                //Update progress bar
-                uploader = document.getElementById("uploader-plan");   
-                console.log(additionalContent['planId'] + " updating file...");        
                 break;
 
         }
@@ -119,11 +104,6 @@
                             updateNotificationLogJson(additionalContent['planId'],'trainingPlans');
                             
                             break;
-                        
-                        case 'UpdateFileTrainingPlan':
-                            console.log('Update file step 2...');
-                            updateTrainingPlanFileReferenceFromDatabase(additionalContent['fileId'], file.size, downloadURL);
-                            break;
 
                         case 'GroupFileSection':
                             saveFileReferenceIntoDatabase(file, fileName, fileOwnerUserId, sharedWithUserId, downloadURL, {method: 'groupFileSection'});
@@ -136,6 +116,65 @@
         );
 
 
+    }
+    
+    /**
+     * The method updates the file from a training plan. 
+     * The update goes on cascade, first updating firebase data and then the database row.  
+     * @params file -> file occurrence.
+     * @params fileOwnerUserId -> user who uploads the file
+     * @params sharedWithUserId -> user target to share the file
+     * @params downloadURL -> firebase's URL linked to the file
+     *
+    */
+
+
+    function updatePlanFile(fileId, userId, planId, fileName){
+        // Auth
+        firebase.auth().signInAnonymously().catch(function(error) {
+            // Handle Errors here.
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log("Error " + errorCode + ' ' + errorMessage);
+        });
+
+        //Get file 
+        file = document.getElementById("file-plan-update-".concat(planId)).files[0];
+                
+        //Create storage ref
+        storageRef = firebase.storage().ref('users/'
+        +userId+'/trainingPlans/'+ 
+        planId +'/files/'+ 
+        fileName);
+
+        
+        //Upload file 
+        task = storageRef.put(file);
+
+        //Update progress bar
+        uploader = document.getElementById("uploader-update-".concat(planId));   
+        console.log(planId + " updating file...");     
+        task.on('state_changed', 
+            function progress(snapshot){
+                var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                uploader.value = progress;
+            },
+
+            function error(err){
+                console.log(err.message_);
+
+            },
+
+            function complete(){
+                task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                    console.log('File available at', downloadURL); 
+                    console.log('Update file step 2...');
+                    updateTrainingPlanFileReferenceFromDatabase(fileId, file.size, downloadURL);
+
+                });
+            }
+        );   
     }
 
     /**

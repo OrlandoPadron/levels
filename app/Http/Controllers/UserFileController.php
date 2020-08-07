@@ -36,13 +36,17 @@ class UserFileController extends Controller
      */
     public function store(Request $request)
     {
-        //Check if the user is uploading a duplicate file. 
-        $userFile = UserFile::where([
-            ['file_name', '=', $request['file_name']],
-            ['extension', '=', $request['extension']],
-            ['size', '=', $request['size']],
-            ['owned_by', '=', $request['owned_by']]
-        ])->first();
+        //Check if the user is uploading a duplicate file 
+        //(Training files skip this step). 
+        $userFile = null;
+        if ($request['method'] != 'trainingFile') {
+            $userFile = UserFile::where([
+                ['file_name', '=', $request['file_name']],
+                ['extension', '=', $request['extension']],
+                ['size', '=', $request['size']],
+                ['owned_by', '=', $request['owned_by']]
+            ])->first();
+        }
 
         // Update that file's url. 
         if ($userFile != null) {
