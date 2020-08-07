@@ -8,53 +8,62 @@
            </div>
            <div class="modal-body">
                <div class="modal-body-container">
-                   <p>Archivos asociados a <span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span></p>
-                   <div class="file-table-container basic-table">
-                    @php
-                        $countOfFiles = count(getFilesAssociatedWithPlanId($plan->id));
-                        dump($countOfFiles);
-                    @endphp
-                    @if ($countOfFiles > 0)
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Nombre</thstyle=>
-                                    <th>Tipo</th>
-                                    <th>Última actualización</th>
-                                    <th>Opciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach(getFilesAssociatedWithPlanId($plan->id) as $key => $file)
+                   <div id="file-view-mode-{{$plan->id}}">
+                        @php
+                            $countOfFiles = count(getFilesAssociatedWithPlanId($plan->id));
+                        @endphp
+                        @if($countOfFiles > 0)
+                        <p>Archivos asociados a <span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span></p>
+                        @else
+                        <div class="training-plan-no-files-message ">
+                            <p><span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span> aún no tiene archivos.</p>
+                        </div>
+                        @endif
+                        <div class="file-table-container basic-table">
+                            @if ($countOfFiles > 0)
+                            <table>
+                                <thead>
                                     <tr>
-                                        <td>{{$file->file_name}}</td>
-                                        <td>{{'.'.$file->extension}}</td>
-                                        <td>{{$plan->updated_at->diffForHumans()}}</td>
-                                        <td>
-                                            <div class="table-buttons">
-                                                <button onclick="viewFile('{{$file->url}}', {{$plan->id}})">Ver</button>
-                                                <button onclick="showUpdateFileMode({{$plan->id}},  
-                                                    {'fileId': {{$file->id}}, 'userId': {{$user->id}}, 'filename': '{{$file->file_name}}','extension': '{{$file->extension}}' })">Actualizar</button>
-                                                <button onclick="deleteUserFile({{$user->id}}, 
-                                                '{{$file->file_name .'.'. $file->extension}}', {{$file->id}}, 
-                                                'TrainingPlanSection', {planId:{{$plan->id}}})">Eliminar</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    
-                                @endforeach
-                                    
-                                    
-                                    
-                            </tbody>
-                    </table>
-                    @else
-                    <p>No hay ficheros</p>
-                    @endif
-                   </div>
+                                        <th>Nombre</thstyle=>
+                                            <th>Tipo</th>
+                                            <th>Última modificación</th>
+                                            <th>Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach(getFilesAssociatedWithPlanId($plan->id) as $key => $file)
+                                            <tr>
+                                                <td>{{$file->file_name}}</td>
+                                                <td>{{'.'.$file->extension}}</td>
+                                                <td>{{$file->updated_at->diffForHumans()}}</td>
+                                                <td>
+                                                    <div class="table-buttons">
+                                                        <button onclick="viewFile('{{$file->url}}', {{$plan->id}})">Ver</button>
+                                                        <button onclick="showUpdateFileMode({{$plan->id}},  
+                                                            {'fileId': {{$file->id}}, 'userId': {{$user->id}}, 'filename': '{{$file->file_name}}','extension': '{{$file->extension}}' })">Actualizar</button>
+                                                        <button onclick="deleteUserFile({{$user->id}}, 
+                                                        '{{$file->file_name .'.'. $file->extension}}', {{$file->id}}, 
+                                                        'TrainingPlanSection', {planId:{{$plan->id}}})">Eliminar</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                            
+                                            
+                                            
+                                    </tbody>
+                            </table>
+                            @endif
+                        </div>
+                    </div>
                    {{-- Update plan file section --}}
-                   <div style="display:none;" id="update-file-mode-{{$plan->id}}">
-                        <p>Actualizar archivo</p>
+                   <div style="display:none;" id="update-file-mode-{{$plan->id}}" class="update-file-section">
+                        <p>Actualizar archivo <span class="italic"></span></p>
+                        <div id="upload-error-{{$plan->id}}" style="display: none;" class="item-with-error">
+                            <p><i class="fas fa-exclamation-circle"></i> Error</p>
+                            <p>El archivo '<span></span>' no es válido. Asegúrese de estar seleccionando una modificación del archivo original.</p>
+                        </div>    
+
                         <div class="item-with-button-add-file">
                             <button class="soft-btn" onclick="document.getElementById('file-plan-update-{{$plan->id}}').click();">Seleccionar archivo</button>
                             <p id="selected-update-file-name-{{$plan->id}}">Ningún archivo seleccionado</p>
@@ -72,13 +81,15 @@
     
                         </div>
                         <div class="modal-buttons">
-                            <div class="principal-button">
+                            <div class="principal-button update-plan-file-buttons">
+                                <button onclick="closeUpdateFileMode({{$plan->id}})" class="btn-gray-basic">Cancelar</button>
                                 <button disabled id="update-plan-file-btn-{{$plan->id}}" class="btn-add-basic">Actualizar</button>
                             </div>
         
                         </div>
                    </div>
                    {{-- End update plan file section --}}
+                   @if(Auth::user()->isTrainer)
                    <div id="add-new-plan-file-{{$plan->id}}" class="modal-buttons">
                     <div class="principal-button">
                         <button class="btn-add-basic"
@@ -86,6 +97,7 @@
                         @keydown.escape.window="addFileToPlan=false"
                         >Añadir nuevo archivo</button>
                     </div>
+                    @endif
 
                 </div>
                </div>
@@ -102,8 +114,9 @@
     }
 
     function showUpdateFileMode(planId, additionalContent = []){
-        console.log(additionalContent);
+        $('#file-view-mode-'.concat(planId)).hide();
         $('#add-new-plan-file-'.concat(planId)).hide();
+        $('#update-file-mode-'.concat(planId)).find("span:first-child").text('"'+additionalContent['filename']+'"');
         $('#update-file-mode-'.concat(planId)).fadeIn(250);
         $("#update-plan-file-btn-".concat(planId)).click(function(){
             var fileName = additionalContent['filename'].concat("." + additionalContent['extension']);
@@ -116,10 +129,17 @@
                 updatePlanFile(fileId, userId, planId, fileName);
 
             }else{
-                alert('Archivo no válido.'); 
+                $('#upload-error-'.concat(planId)).fadeIn(250);
+                $('#upload-error-'.concat(planId)).find("span").text(newFile.name);
             }
 
         });
+    }
+
+    function closeUpdateFileMode(planId){
+        $('#file-view-mode-'.concat(planId)).fadeIn(250);
+        $('#add-new-plan-file-'.concat(planId)).fadeIn(250);
+        $('#update-file-mode-'.concat(planId)).hide();
     }
 
 

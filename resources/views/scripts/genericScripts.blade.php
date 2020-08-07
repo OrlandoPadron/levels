@@ -135,12 +135,14 @@
                 var file = document.getElementById("file-plan-update-".concat(optionalId)).files[0];
                 if (file != undefined){
                     var filename = file.name.split('.').slice(0, -1).join('.');
-
+                   
+                    $('#upload-error-'.concat(optionalId)).hide();
                     $('#update-plan-file-btn-'.concat(optionalId)).prop('disabled', false);
                     $('#update-file-load-status-icon-'.concat(optionalId)).addClass("input-active");
                     $('#selected-update-file-name-'.concat(optionalId)).text(filename);
                 
                 }else{
+                    $('#upload-error-'.concat(optionalId)).hide();
                     $('#update-plan-file-btn-'.concat(optionalId)).prop('disabled', true);
                     $('#update-file-load-status-icon-'.concat(optionalId)).removeClass("input-active");
                     $('#selected-update-file-name-'.concat(optionalId)).text('Ningún archivo seleccionado');

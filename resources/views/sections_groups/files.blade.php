@@ -7,7 +7,7 @@
 
     <h1 id="forum-header" class="primary-blue-color">Archivos</h1>
 
-    @include('modals.uploadFile', ['isGroup' => true])
+    {{-- @include('modals.uploadFile', ['isGroup' => true]) --}}
 
  
 </div>

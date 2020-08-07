@@ -29,7 +29,7 @@
                 file = document.getElementById("file-upload").files[0];
         
                 fileName = $('#file-name-input').val().trim(); 
-                firebaseFileName = fileName.concat(file.name.split('.').pop());
+                firebaseFileName = fileName.concat('.'+file.name.split('.').pop());
 
                 //Create storage ref
                 storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ firebaseFileName);
@@ -62,7 +62,7 @@
                 file = document.getElementById("file-upload-".concat(additionalContent['planId'])).files[0];
                 
                 fileName = $('#file-name-input-'.concat(additionalContent['planId'])).val().trim(); 
-                firebaseFileName = fileName.concat(file.name.split('.').pop());
+                firebaseFileName = fileName.concat('.'+file.name.split('.').pop());
 
         
                 //Create storage ref
