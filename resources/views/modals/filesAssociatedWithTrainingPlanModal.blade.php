@@ -16,7 +16,7 @@
                         <p>Archivos asociados a <span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span></p>
                         @else
                         <div class="training-plan-no-files-message ">
-                            <p><span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span> aún no tiene archivos.</p>
+                            <p><span class="italic" style="font-weight: 500; color: #6013bb;">"{{$plan->title}}"</span> no tiene archivos.</p>
                         </div>
                         @endif
                         <div class="file-table-container basic-table">
@@ -89,15 +89,13 @@
                         </div>
                    </div>
                    {{-- End update plan file section --}}
-                   @if(Auth::user()->isTrainer)
                    <div id="add-new-plan-file-{{$plan->id}}" class="modal-buttons">
-                    <div class="principal-button">
+                    <div  {!!!Auth::user()->isTrainer ? 'style=display:none;' : ''!!} class="principal-button">
                         <button class="btn-add-basic"
                         @click="showFilesAssociated=!showFilesAssociated,addFileToPlan=!addFileToPlan" 
                         @keydown.escape.window="addFileToPlan=false"
                         >Añadir nuevo archivo</button>
                     </div>
-                    @endif
 
                 </div>
                </div>
