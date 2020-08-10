@@ -104,3 +104,28 @@
 .img-group-container:hover {
     cursor: pointer;
 }
+
+/*Members table*/
+
+.members table {
+    text-align: center;
+}
+
+.members .table-user {
+    display: flex;
+    width: 300px;
+    word-wrap: break-word;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+.members .table-user img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #000f2d;
+    margin-right: 25px;
+}

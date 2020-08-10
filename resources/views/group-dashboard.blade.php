@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: 'archivos', addMembers: false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
+<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: true, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
             <div class="img-group-container" 

@@ -90,7 +90,7 @@
     <div class="athletes-trainer-dashboard">
         <h2>Deportistas entrenados por ti <span class="light">({{count(Auth::user()->trainer->trained_by_me)}})</span></h2>
         <div class="athletes-trained-by-me">
-            @foreach(collect(getArrayOfUsersTrainedByMe(Auth::user()->trainer->id))->sortBy('name') as $key => $user)
+            @foreach(collect(getArrayOfUsersTrainedByMe())->sortBy('name') as $key => $user)
                 <div class="athlete-component">
                     <a href="{{route("profile.show", [$user->id, 'general'])}}"><img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar"></a>
                     <p>{{$user->name. ' '. $user->surname}}</p>

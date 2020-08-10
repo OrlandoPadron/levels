@@ -92,10 +92,10 @@ function getUserUsingAthleteId($id)
  * Given a trainer_id, returns an array with all
  * the users trained by that trainer
  */
-function getArrayOfUsersTrainedByMe($trainer_id)
+function getArrayOfUsersTrainedByMe()
 {
     $users = array();
-    $trainer = Trainer::findOrFail($trainer_id);
+    $trainer = Trainer::findOrFail(Auth::user()->trainer->id);
     foreach ($trainer->trained_by_me as $user_id) {
         array_push($users, getUserUsingAthleteId($user_id));
     }
@@ -112,32 +112,80 @@ function getArrayOfAthletesTrainedByTrainerId($trainerId)
     return $athletes;
 }
 
+function getAllTrainersAsUsers()
+{
+    return User::where('isTrainer', '1')->get();
+}
+
 
 /**
  * Given a group, function returns all group members as User Model array. 
  */
 function getGroupUsers($groupId)
 {
-    $athletesIds = Group::find($groupId)->athletes;
-    if (empty($athletesIds)) return collect();
-    $usersArray = collect();
+    $group = Group::findOrFail($groupId);
+    $usersId = $group->users;
 
-    foreach ($athletesIds as $athleteId) {
-        $user = Athlete::find($athleteId)->user;
-        $usersArray->add($user);
+    $group_members = collect();
+    $group_members->add($group->creator->user);
+
+    if (empty($usersId)) return $group_members;
+
+    foreach ($usersId as $id) {
+        $group_members->add(User::findOrFail($id));
     }
-    return $usersArray;
+    return $group_members;
 }
 
 
-function athleteIsNotMemberOfThisGroup($groupId, $athlete_id)
+function getUserRole($groupId, $userId)
 {
-    $groupMembers = (array) Group::find($groupId)->athletes;
-    if (in_array($athlete_id, $groupMembers)) {
-        return false;
+    $group = Group::findOrFail($groupId);
+    $admins = $group->admins;
+    if ($group->creator->user->id == $userId) {
+        return 'Propietario';
+    } elseif (in_array($userId, $admins)) {
+        return 'Administrador';
     } else {
-        return true;
+        return 'Miembro';
     }
+}
+
+
+function isUserMemberOfThisGroup($groupId, $userId)
+{
+    $groupMembers = (array) Group::find($groupId)->users;
+    if (in_array($userId, $groupMembers)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function getUsersTrainedByMeWhoArentInTheGroupYet($groupId)
+{
+    $users = getArrayOfUsersTrainedByMe();
+    $users_not_in_group = collect();
+
+    foreach ($users as $user) {
+        if (!isUserMemberOfThisGroup($groupId, $user->id)) $users_not_in_group->add($user);
+    }
+
+    return $users_not_in_group;
+}
+
+function getAllTrainersWhoArentInThisGroupYet($groupId)
+{
+    $users = getAllTrainersAsUsers();
+    $trainers_not_in_group = collect();
+
+    foreach ($users as $user) {
+        if ($user->id != Auth::user()->id) {
+            if (!isUserMemberOfThisGroup($groupId, $user->id)) $trainers_not_in_group->add($user);
+        }
+    }
+
+    return $trainers_not_in_group;
 }
 
 

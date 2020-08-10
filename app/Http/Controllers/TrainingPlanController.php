@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Athlete;
-use App\Macrocycle;
-use App\Mesocycle;
-use App\Microcycle;
 use App\Session;
-use App\TrainingPlan;
 use App\UserFile;
+use App\Mesocycle;
+use App\Macrocycle;
+use App\Microcycle;
+use App\TrainingPlan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 
 class TrainingPlanController extends Controller
@@ -96,12 +97,14 @@ class TrainingPlanController extends Controller
         switch ($request['method']) {
             case 'addFileToPlan':
                 //Adds files to a specific training plan
-                $plan = TrainingPlan::findOrFail($request['planId']);
-                $files = (array) $plan->files_associated;
-                if (!in_array($request['fileId'], $files)) {
-                    array_push($files, $request['fileId']);
-                    $plan->files_associated = $files;
-                    $plan->save();
+                if (Auth::user()->isTrainer) {
+                    $plan = TrainingPlan::findOrFail($request['planId']);
+                    $files = (array) $plan->files_associated;
+                    if (!in_array($request['fileId'], $files)) {
+                        array_push($files, $request['fileId']);
+                        $plan->files_associated = $files;
+                        $plan->save();
+                    }
                 }
                 break;
             case 'removeFileFromPlan':

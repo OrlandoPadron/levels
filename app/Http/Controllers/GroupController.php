@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Group;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Redirect;
 
@@ -147,18 +148,20 @@ class GroupController extends Controller
 
     public function addMember(Request $request)
     {
-        if (isset($request['athletesId'])) {
-            $group = Group::find($request['group_id']);
-            $groupMembers = (array) $group->athletes;
-            foreach ($request['athletesId'] as $athleteId) {
-                if (!in_array($athleteId, $groupMembers)) {
-                    array_push($groupMembers, $athleteId);
+        if (Auth::user()->isTrainer) {
+            if (isset($request['usersId'])) {
+                $group = Group::find($request['group_id']);
+                $groupMembers = (array) $group->users;
+                foreach ($request['usersId'] as $userId) {
+                    if (!in_array($userId, $groupMembers)) {
+                        array_push($groupMembers, $userId);
+                    }
                 }
+                $group->users = $groupMembers;
+                $group->save();
             }
-            $group->athletes = $groupMembers;
-            $group->save();
-            return redirect()->route('group.show', ["group" => $group, 'tab' => 'miembros']);
         }
+        return redirect()->route('group.show', ["group" => $group, 'tab' => 'miembros']);
     }
     /**
      * Remove member from a specific group. 
@@ -167,11 +170,18 @@ class GroupController extends Controller
     public function removeMember(Request $request)
     {
         if (isset($request['user_id'])) {
-            $athleteId = User::find($request['user_id'])->athlete->id;
-            $group = Group::find($request['group_id']);
-            $groupMembers = (array) $group->athletes;
-            $group->athletes = array_values(array_diff($groupMembers, (array) $athleteId));
-            $group->save();
+            $userLoggedRole = getUserRole($request['group_id'], Auth::user()->id);
+            $userDeletedRole = getUserRole($request['group_id'], $request['user_id']);
+            if ($userLoggedRole == 'Propietario' || 'Administrador') {
+                $group = Group::findOrFail($request['group_id']);
+                $groupMembers = (array) $group->users;
+                $group->users = array_values(array_diff($groupMembers, (array) $request['user_id']));
+
+                if ($userDeletedRole == 'Administrador') {
+                    $group->admins = array_values(array_diff((array)$group->admins, (array) $request['user_id']));
+                }
+                $group->save();
+            }
         }
     }
 }

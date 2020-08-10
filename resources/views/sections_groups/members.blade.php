@@ -1,55 +1,91 @@
 <div class="heading-section">
+    @if(Auth::user()->isTrainer)
     <button class="btn-add-basic button-position"
                     @click="addMembers=!addMembers" 
                     @keydown.escape.window="addMembers=false"
                     
                 ><i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir miembros
     </button>
+        
+    @endif
     <h1 class="primary-blue-color">Miembros</h1>
 </div>
 @if(Auth::user()->isTrainer)
 @include('modals.addMembersToGroupModal')
 @endif
 <div class="members">
-    @if(getGroupUsers($group->id)->isNotEmpty())
-        <table id="members_table" class="data-table">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Rol</th>
-                    <th>Gestionar</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(getGroupUsers($group->id)->sortBy('name') as $key => $user)
-                    <tr class="datatable-row">
-                        <td>
-                            <div class="user_member_table_container">
-                                <div class="user_member_table">
-                                    <a href="{{route("profile.show", [$user->id, 'general'])}}">
-                                        <img src="/uploads/avatars/{{$user->user_image}}" alt="user_img">
-                                    </a>
-                                    <p>{{$user->name . ' ' . $user->surname}}</p>
-                                </div>
 
-                            </div>
-                        <td>Miembro</td>
-                        <td>
-                            <button>Hacer admin</button>
-                            <button onclick="removeFromGroup({{$user->id}}, {{$user->athlete->id}})">Eliminar</button>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    @else
-        <p>No hay miembros</p>
-    @endif
+    <table id="members_table">
+        <thead>
+            <th>Usuario</th>
+            <th>Perfil</th>
+            <th>Rol dentro del grupo</th>
+            @if(getUserRole($group->id, Auth::user()->id) == 'Propietario')
+            <th>Gestionar</th>
+            @endif
+        </thead>
+        <tbody>
+        @foreach(getGroupUsers($group->id) as $key=>$user)
+            <tr>
+                <td>
+                    <div class="table-user">
+                        <img src="/uploads/avatars/{{$user->user_image}}" alt="avatar">
+                        <p>{{$user->name . ' ' . $user->surname}}</p>
+                    </div>
+                </td>
+                <td>
+                    @if($user->isTrainer)
+                    <p>Entrenador</p>
+                    @else
+                    <p>Deportista</p>
+                    @endif
+                </td>
+                <td>
+                    <p>{{getUserRole($group->id, $user->id)}}</p>
+                </td>
+                @php
+                  $userLoggedRole = getUserRole($group->id, Auth::user()->id);
+                  $userRole = getUserRole($group->id,$user->id);
+                @endphp
+                @switch($userLoggedRole)
+                    @case('Propietario')
+                    <td>
+                        @if(Auth::user()->id!=$user->id)
+                            @if($userRole != 'Administrador')
+                                <button>Convertir en administrador</button>
+                            @else
+                                <button>Retirar administrador</button>
+                            @endif
+                        <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
+                        @endif
+                    </td>
+                        @break
+                    @case('Administrador')
+                    <td>
+                        @if (Auth::user()->id != $user->id)
+                            @if($userRole != 'Propietario' && $userRole!= 'Administrador')
+                            <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
+                            @endif
+                        @endif
+                    </td>    
+                    @break
+                    <td>
+                        @if(Auth::user()->id!=$user->id)
+                        <button>Hacer admin</button>
+                        <button onclick="removeFromGroup({{$user->id}})">Eliminar</button>
+                        @endif
+                    </td>
+                    @default
+                        @break
+                        
+                @endswitch
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
 </div>
 
 <script>
-
-    var total_members; 
 
     $(document).ready(function() {
     $('#members_table').DataTable({
@@ -57,7 +93,7 @@
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         "columnDefs": [
-            { "orderable": false, "targets": [2] },
+            { "orderable": false, "targets": [3] },
 
         ],
         "order": [ 0, 'asc' ],
@@ -65,11 +101,7 @@
         });
     } );
 
-    window.onload = function() {
-       total_members = {{getGroupUsers($group->id)->count()}};
-    };
-
-    function removeFromGroup(id, athleteId){
+    function removeFromGroup(id){
         console.log('Remove from Group User ' + id);
         $.ajax({
             url: "{{route("group.removeMember")}}",
@@ -80,17 +112,8 @@
                 _token: "{{csrf_token()}}",
             },
             success: function(){
-                total_members--;
-                $(row_user.concat(id)).hide();
-                
-                //Modal update
-                $("#li_member_".concat(athleteId)).show();
-                
-                if (total_members==0){
-                    $("#members_table").hide();
-                    $(".members").append().html("<p>No hay miembros</p>");
-
-                }
+                alert('Miembro eliminado del grupo');
+                location.reload();
                 
             },
             error: function(){

@@ -271,7 +271,8 @@ button:hover {
 .modal-body .item-with-input p,
 .modal-body .item-with-text-area p,
 .modal-body .item-with-progressbar p,
-.modal-body .item-with-select p {
+.modal-body .item-with-select p,
+.modal-body .item-with-container p {
     color: #6013bb;
     font-size: 16px;
 }
@@ -352,6 +353,62 @@ div.modal-body {
     font-size: 14px;
     margin-top: -10px;
     margin-bottom: 20px;
+}
+
+.modal-body .item-with-container > div {
+    padding: 10px;
+    background-color: #f2f1f2;
+    border-radius: 10px;
+    max-height: 200px;
+    min-height: fit-content;
+}
+
+.modal-body .item-with-container div > ul {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    list-style: none;
+    max-height: 180px;
+    min-height: fit-content;
+    margin: 0;
+    overflow-y: auto;
+}
+.modal-body .item-with-container li:not(:last-of-type) {
+    margin-bottom: 30px;
+}
+
+.flexbox-vertical-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flexbox-vertical-container label {
+    display: flex;
+    width: 120px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.user-and-avatar {
+    display: flex;
+    width: 100%;
+    padding-left: 20px !important;
+    align-items: center;
+    flex-direction: row;
+}
+
+.user-and-avatar img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #000f2d;
+    margin-right: 20px;
+}
+
+.user-and-avatar p {
+    color: black !important;
 }
 
 .modal-body .file-table-container {
@@ -441,6 +498,29 @@ div.modal-body {
     width: 700px;
     height: fit-content;
 }
+/*Add member to group*/
+.add-member-to-group-modal {
+    width: 900px;
+    height: fit-content;
+}
+
+.add-member-to-group-modal .item-with-container:not(:last-of-type) {
+    margin-bottom: 20px;
+}
+
+.add-member-to-group-modal .modal-buttons {
+    display: flex;
+    justify-content: center;
+}
+.add-member-to-group-modal .soft-btn:hover {
+    cursor: pointer;
+    filter: brightness(120%);
+}
+
+.members-selected {
+    color: grey;
+    font-style: italic;
+}
 
 .plan-files .modal-buttons {
     display: flex;
@@ -475,12 +555,14 @@ div.modal-body {
 
 .upload-file-modal .btn-add-basic:disabled,
 .share-file-modal .btn-add-basic:disabled,
-.plan-files .btn-add-basic:disabled {
+.plan-files .btn-add-basic:disabled,
+.add-member-to-group-modal .btn-add-basic:disabled {
     background: rgba(128, 128, 128, 0.3);
 }
 .upload-file-modal .btn-add-basic:disabled:hover,
 .share-file-modal .btn-add-basic:disabled:hover,
-.plan-files .btn-add-basic:disabled:hover {
+.plan-files .btn-add-basic:disabled:hover,
+.add-member-to-group-modal .btn-add-basic:disabled:hover {
     background: rgba(128, 128, 128, 0.3);
     filter: none;
     cursor: auto;

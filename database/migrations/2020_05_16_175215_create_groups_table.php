@@ -22,6 +22,7 @@ class CreateGroupsTable extends Migration
             $table->foreign('created_by')->references('id')->on('trainers')->onDelete('cascade');
             $table->text('users')->nullable();
             $table->text('files')->nullable();
+            $table->text('admins')->nullable();
             $table->timestamps();
         });
     }

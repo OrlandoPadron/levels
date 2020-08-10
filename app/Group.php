@@ -23,12 +23,13 @@ class Group extends Model
     protected $casts = [
         'users' => 'array',
         'files' => 'array',
+        'admins' => 'array',
     ];
 
 
-    public function trainer()
+    public function creator()
     {
-        return $this->belongsTo(Trainer::class);
+        return $this->belongsTo(Trainer::class, 'created_by');
     }
 
     public function threads()

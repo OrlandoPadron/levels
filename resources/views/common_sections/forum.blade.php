@@ -11,7 +11,7 @@
         <button id="add-btn-forum" class="btn-add-basic button-position"
                     @click="openNewThreadForm=!openNewThreadForm"
                     @keydown.escape.window="openNewThreadForm=false">
-            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo g hilo
+            <i style="margin-right: 5px;" class="fas fa-plus"></i> Nuevo hilo
         </button>
     @endif
     <h1 id="forum-header" class="primary-blue-color">Foro</h1>
