@@ -129,3 +129,14 @@
     border: 2px solid #000f2d;
     margin-right: 25px;
 }
+
+#remove-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    margin-top: 10px;
+}
+
+#remove-group form {
+    margin-top: -40px;
+}

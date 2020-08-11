@@ -22,7 +22,6 @@
                             <div class="principal-button">
                                 <button class="btn-add-basic" type="submit">Crear hilo</button>
                             </div>
-
                         </div>
                     
                     </div>

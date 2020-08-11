@@ -562,13 +562,15 @@ div.modal-body {
 .upload-file-modal .btn-add-basic:disabled,
 .share-file-modal .btn-add-basic:disabled,
 .plan-files .btn-add-basic:disabled,
-.add-member-to-group-modal .btn-add-basic:disabled {
+.add-member-to-group-modal .btn-add-basic:disabled,
+.edit-group-modal .btn-add-basic:disabled {
     background: rgba(128, 128, 128, 0.3);
 }
 .upload-file-modal .btn-add-basic:disabled:hover,
 .share-file-modal .btn-add-basic:disabled:hover,
 .plan-files .btn-add-basic:disabled:hover,
-.add-member-to-group-modal .btn-add-basic:disabled:hover {
+.add-member-to-group-modal .btn-add-basic:disabled:hover,
+.edit-group-modal .btn-add-basic:disabled:hover {
     background: rgba(128, 128, 128, 0.3);
     filter: none;
     cursor: auto;
@@ -610,6 +612,98 @@ div.modal-body {
     width: 700px;
     height: 200px;
 }
+
+/*Edit Group Modal*/
+.grid-edit-group-container {
+    display: grid;
+    height: fit-content;
+    grid-template-areas: "image-container form";
+    grid-template-columns: 1fr 1fr;
+    /* background-color: red; */
+}
+
+.edit-group-image {
+    grid-area: image-container;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 25px;
+}
+.edit-group-image img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10%;
+    border: 3px solid #000f2d;
+}
+
+.edit-group-image button {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.edit-group-image label:hover {
+    color: #6013bb;
+    cursor: pointer;
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.edit-form textarea {
+    height: 100px !important;
+}
+
+.edit-group-modal {
+    width: 800px;
+    height: fit-content;
+}
+.edit-group-modal .modal-body-container {
+    width: 100%;
+}
+
+.edit-group-modal .modal-buttons {
+    justify-content: center;
+    margin-top: -25px;
+}
+
+.edit-group-modal .modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #000f2d;
+    border: 2px solid #000f2d;
+}
+.edit-group-modal .modal-footer h3 {
+    border-right: 2px solid white;
+    color: white;
+    padding-right: 10px;
+}
+
+.edit-group-modal .modal-body {
+    margin: 0;
+}
+
+.edit-group-modal .modal-footer button {
+    width: 120px;
+    height: 30px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-left: 10px;
+}
+
+/*End Edit Group Modal*/
+
 /* End modal */
 
 /*BASIC TABLE*/

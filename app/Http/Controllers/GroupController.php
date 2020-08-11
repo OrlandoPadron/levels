@@ -113,8 +113,8 @@ class GroupController extends Controller
                 $group->group_image = $filename;
             }
             $group->save();
-            return Redirect::back();
         }
+        return Redirect::back();
     }
 
     /**
