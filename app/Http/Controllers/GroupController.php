@@ -184,4 +184,23 @@ class GroupController extends Controller
             }
         }
     }
+
+    /**
+     * Toggles the 'administrator' role on group member. 
+     */
+
+    public function toggleGroupAdmin(Request $request)
+    {
+        if (isset($request['group_id'])) {
+            $group = Group::findOrFail($request['group_id']);
+            $admins = (array) $group->admins;
+            if (in_array($request['user_id'], $admins)) {
+                $group->admins = array_values(array_diff($admins, (array) $request['user_id']));
+            } else {
+                array_push($admins, $request['user_id']);
+                $group->admins = $admins;
+            }
+            $group->save();
+        }
+    }
 }

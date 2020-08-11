@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: true, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
+<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: false, shareFile:false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
             <div class="img-group-container" 
@@ -30,7 +30,6 @@
                     <li id="noticias-navbar" onclick="changeUrlParameters('foro')" x-on:click.prevent @click="sectionTab = 'foro'" :class="{'active-dashboard': sectionTab === 'foro'}"><a href="#">Foro</a></li>
                     <li id="miembros-navbar" onclick="changeUrlParameters('miembros')" x-on:click.prevent @click="sectionTab = 'miembros'" :class="{'active-dashboard': sectionTab === 'miembros'}"><a href="#">Miembros</a></li>
                     <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
-                    <li id="gestionar-navbar" onclick="changeUrlParameters('gestion')" x-on:click.prevent @click="sectionTab = 'gestion'" :class="{'active-dashboard': sectionTab === 'gestion'}"><a href="#">Gestionar grupo</a></li>
                 </ul>
             </div>
         </div>
@@ -46,15 +45,15 @@
             </div>
             <div id="miembros-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'miembros'">
                 @include('sections_groups.members')
+                @if(Auth::user()->isTrainer)
+                    @if($group->created_by == Auth::user()->trainer->id)
+                        @include('sections_groups.manage')
+                    @endif
+                @endif
             </div>
             <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                 @include('sections_groups.files')
             </div>
-            @if(Auth::user()->isTrainer)
-            <div id="gestionar-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'gestion'">
-                @include('sections_groups.manage')
-            </div>
-            @endif
         </div>
     </div>
 </div>
@@ -108,9 +107,6 @@
                 break;
             case 'archivos':
                 title = title.concat(" | Archivos");
-                break;
-            case 'gestion':
-                title = title.concat(" | Gestionar");
                 break;
             default:
                 title =title.concat(" | App");

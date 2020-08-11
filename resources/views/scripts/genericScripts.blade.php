@@ -55,6 +55,33 @@
         });
     }
 
+    function shareFileWithGroup(groupId){
+
+        var fileId = $("#filesNotShared").children("option:selected").val();
+        var fileName = $("#filesNotShared").children("option:selected").text();
+
+        $.ajax({
+            url: "{{route("userFile.update")}}",
+            type: "POST",
+            data: {
+                fileId: fileId,
+                groupId: groupId,
+                method: 'shareFileWithGroup',
+
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Ha compartido su archivo '" + fileName +"'."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "shareFileWithGroup" function');
+            }  
+        });
+    }
+
 
     /**
     * Stops sharing a given file with a given user. 
@@ -85,6 +112,28 @@
         });
     }  
 
+    function stopSharingGroupFile(groupId, fileId, fileName){
+        $.ajax({
+            url: "{{route("userFile.update")}}",
+            type: "POST",
+            data: {
+                fileId: fileId,
+                groupId: groupId,
+                method: 'groupStopSharing',
+
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert("Su archivo '" + fileName +"' se ha dejado de compartir."); 
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "stopSharingFile" function');
+            }  
+        });
+    }
 
 
     /*UPLOAD FILE AND SHARE FILE SCRIPTS */
@@ -148,6 +197,43 @@
                     $('#selected-update-file-name-'.concat(optionalId)).text('Ningún archivo seleccionado');
                     $('#file-load-status-icon-'.concat(optionalId)).removeClass("input-active");
                 }    
+                break;
+
+            case 'groupUpload':
+                var file = document.getElementById("group-file-upload").files[0];
+                if (file != undefined){
+                    var filename = file.name.split('.').slice(0, -1).join('.');
+                    $('#group-upload-btn').prop('disabled', false);
+                    $('#group-selected-file-name').text(file.name);
+                    $('#group-file-name-input').val(filename);
+                    $('#group-file-load-status-icon').addClass("input-active");
+                }else{
+                    $('#group-upload-btn').prop('disabled', true);
+                    $('#group-selected-file-name').text('Ningún archivo seleccionado');
+                    $('#group-file-name-input').val('');
+                    $('#group-file-load-status-icon').removeClass("input-active");
+                }            
+                break;
+
+            case 'addMembersToGroup':
+                var total=$(document).find('input[name="usersId[]"]:checked').length;
+                if (total > 0){
+                    $('#upload-btn').prop('disabled', false);
+                }else{
+                    $('#upload-btn').prop('disabled', true);
+                }
+
+                //Transform Add button to Remove button
+                var buttonText = $("#addLabelGroup_".concat(optionalId)).text().trim();
+                if (buttonText == 'Añadir'){
+                    $("#addLabelGroup_".concat(optionalId)).text('No añadir');
+                    $("#addLabelGroup_".concat(optionalId)).addClass('col-red');
+
+                }else{
+                    $("#addLabelGroup_".concat(optionalId)).text('Añadir');
+                    $("#addLabelGroup_".concat(optionalId)).removeClass('col-red');
+                }
+
                 break;
 
         }

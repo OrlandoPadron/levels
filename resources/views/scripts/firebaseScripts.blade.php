@@ -44,17 +44,20 @@
 
             case 'GroupFileSection':
                 //Get file 
-                file = document.getElementById("file-upload").files[0];
+                file = document.getElementById("group-file-upload").files[0];
+                
+                fileName = $('#group-file-name-input').val().trim(); 
+                firebaseFileName = fileName.concat('.'+file.name.split('.').pop());
                 
                 //Create storage ref
-                storageRef = firebase.storage().ref('groups/'+sharedWithUserId+'/files/'+ file.name);
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ firebaseFileName);
 
 
                 //Upload file 
                 task = storageRef.put(file);
 
                 //Update progress bar
-                uploader = document.getElementById("uploader");
+                uploader = document.getElementById("group-uploader");
                 break;
 
             case 'AddFileToTrainingPlan':

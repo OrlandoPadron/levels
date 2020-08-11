@@ -203,6 +203,17 @@ function getUserFilesNotSharedWithCurrentUser($userLoggedInId, $userId)
         ->get();
     return $files;
 }
+function getFilesNotSharedWithGroup($userLoggedInId, $groupId)
+{
+    $groupFiles = (array) Group::findOrFail($groupId)->files;
+    $userFiles = UserFile::where('owned_by', $userLoggedInId)->get();
+    $filesNotSharedWithGroup = collect();
+
+    foreach ($userFiles as $file) {
+        if (!in_array($file->id, $groupFiles)) $filesNotSharedWithGroup->add($file);
+    }
+    return $filesNotSharedWithGroup;
+}
 
 function getUsersFiles($userId)
 {

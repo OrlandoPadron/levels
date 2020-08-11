@@ -159,6 +159,12 @@
     font-size: 14px;
     color: #6013bb;
 }
+
+.soft-btn.col-red {
+    border: 2px solid #ff2a5d;
+    color: #ff2a5d;
+}
+
 .container-dashboard {
     width: 80%;
     position: relative;
@@ -517,9 +523,9 @@ div.modal-body {
     filter: brightness(120%);
 }
 
-.members-selected {
-    color: grey;
-    font-style: italic;
+.no-members-left-to-add p {
+    text-align: center;
+    color: black !important;
 }
 
 .plan-files .modal-buttons {

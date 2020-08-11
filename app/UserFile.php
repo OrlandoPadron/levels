@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class UserFile extends Model
 {
     /**
+     * LOGIC OF 'FILE_TYPE' ATTRIBUTE
+     * Meant to be an indicator to tell the system which 
+     * kind of file is it dealing with. 
+     * Codes:
+     * 0 -> Basic file (Default)
+     * 1 -> Training plan file 
+     */
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

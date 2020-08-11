@@ -88,6 +88,9 @@ class UserFileController extends Controller
                     $group->files = $files_array;
                     $group->save();
                 }
+                //Modify some values to represent a group file.
+                $userFile->file_type = 2;
+                $userFile->save();
 
                 break;
         }
@@ -142,6 +145,24 @@ class UserFileController extends Controller
                 }
                 $file->shared_with = $sharedWithArray;
                 $file->save();
+                break;
+
+            case 'shareFileWithGroup':
+                $group = Group::findOrFail($request['groupId']);
+                $groupFiles = (array) $group->files;
+                if (!in_array($file->id, $groupFiles)) {
+                    array_push($groupFiles, $file->id);
+                }
+                $group->files = $groupFiles;
+                $group->save();
+
+                break;
+
+            case 'groupStopSharing':
+                $group = Group::findOrFail($request['groupId']);
+                $group->files = array_diff($group->files, (array) $file->id);;
+                $group->save();
+
                 break;
         }
     }

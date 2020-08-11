@@ -26,6 +26,10 @@
         </thead>
         <tbody>
         @foreach(getGroupUsers($group->id) as $key=>$user)
+            @php
+              $userLoggedRole = getUserRole($group->id, Auth::user()->id);
+              $userRole = getUserRole($group->id,$user->id);
+            @endphp
             <tr>
                 <td>
                     <div class="table-user">
@@ -35,46 +39,42 @@
                 </td>
                 <td>
                     @if($user->isTrainer)
-                    <p>Entrenador</p>
+                    <p style="color:#6013bb;">Entrenador</p>
                     @else
                     <p>Deportista</p>
                     @endif
                 </td>
                 <td>
-                    <p>{{getUserRole($group->id, $user->id)}}</p>
+                    <p>{{$userRole}}</p>
                 </td>
-                @php
-                  $userLoggedRole = getUserRole($group->id, Auth::user()->id);
-                  $userRole = getUserRole($group->id,$user->id);
-                @endphp
                 @switch($userLoggedRole)
                     @case('Propietario')
-                    <td>
-                        @if(Auth::user()->id!=$user->id)
-                            @if($userRole != 'Administrador')
-                                <button>Convertir en administrador</button>
-                            @else
-                                <button>Retirar administrador</button>
-                            @endif
-                        <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
-                        @endif
-                    </td>
-                        @break
-                    @case('Administrador')
-                    <td>
-                        @if (Auth::user()->id != $user->id)
-                            @if($userRole != 'Propietario' && $userRole!= 'Administrador')
+                        <td>
+                            @if(Auth::user()->id!=$user->id)
+                                @if($userRole != 'Administrador')
+                                    <button onclick="toggleGroupAdmin({{$group}}, {{$user->id}})">Convertir en administrador</button>
+                                @else
+                                    <button onclick="toggleGroupAdmin({{$group}}, {{$user->id}})">Retirar administrador</button>
+                                @endif
                             <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
                             @endif
-                        @endif
-                    </td>    
+                        </td>
+                        @break
+                    @case('Administrador')
+                        <td>
+                            @if (Auth::user()->id != $user->id)
+                                @if($userRole != 'Propietario' && $userRole!= 'Administrador')
+                                <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
+                                @endif
+                            @endif
+                        </td>    
                     @break
-                    <td>
+                    {{-- <td>
                         @if(Auth::user()->id!=$user->id)
                         <button>Hacer admin</button>
                         <button onclick="removeFromGroup({{$user->id}})">Eliminar</button>
                         @endif
-                    </td>
+                    </td> --}}
                     @default
                         @break
                         
@@ -119,6 +119,27 @@
             error: function(){
                 alert('Se ha producido un error.');
                 console.log('Error on ajax call "removeFromGroup" function');
+            }  
+        });
+    }
+
+    function toggleGroupAdmin(groupId, userId){
+        $.ajax({
+            url: "{{route("group.toggleGroupAdmin")}}",
+            type: "POST",
+            data: {
+                group_id: {{$group->id}},
+                user_id: userId,
+                _token: "{{csrf_token()}}",
+            },
+            success: function(){
+                alert('Se han cambiado los permisos.');
+                location.reload();
+                
+            },
+            error: function(){
+                alert('Se ha producido un error.');
+                console.log('Error on ajax call "toggleGroupAdmin" function');
             }  
         });
     }
