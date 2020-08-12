@@ -26,6 +26,17 @@ class Group extends Model
         'admins' => 'array',
     ];
 
+    /**
+     * The model's default values for attributes.
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'users' => '[]',
+        'files' => '[]',
+        'admins' => '[]',
+    ];
+
 
     public function creator()
     {

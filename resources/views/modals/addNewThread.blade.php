@@ -16,7 +16,7 @@
                         </div>
                         <div class="item-with-text-area">
                             <p>Descripción</p>
-                            <textarea name="description" placeholder="Escriba aquí el contenido del hilo... "></textarea><br>
+                            <textarea name="description" placeholder="Escriba aquí el contenido del hilo... "></textarea>
                         </div>
                         <div class="modal-buttons">
                             <div class="principal-button">

@@ -17,7 +17,7 @@
                                 <img class="inner-shadow" src="/uploads/group_avatars/{{$group->group_image}}"
                                 alt="group_avatar" id="group_avatar_preview">
                                 <button type="button" onclick="document.getElementById('file-upload').click();" class="soft-btn">Añadir imagen</button>
-                                <label for="delete-file">Restablecer imagen</label>
+                                <label for="removeGroupImageForm" onclick="document.getElementById('removeGroupImageForm').submit()">Restablecer imagen</label>
                                 
                                 <input onchange="changeImagePreview(event)" id="file-upload" name="group_avatar" type="file" accept="image/*" hidden/>
                             
@@ -41,25 +41,25 @@
                         </div>
 
                     </div>
-                
                 </div>
-                   {{-- <label for="title">Titulo</label><br>
-                   <input type="text" name="title" value="{{$group->title}}"><br>
-                   <label for="description">Descripción</label><br>
-                   <textarea cols="50" rows="5" name="description">{{$group->description}}</textarea><br>
-                   <input onchange="changeImagePreview(event)" id="file-upload" name="group_avatar" type="file" accept="image/*"/><br>
-
-                   <button type="submit">Guardar</button> --}}
                </form>
-           </div>
-           <div class="modal-footer">
-               <h3>Opciones avanzadas</h3>
-               <form action="{{route('group.destroy')}}" method="POST">
+               <form action="{{route('group.removeGroupImage')}}" method="POST" id="removeGroupImageForm">
                     @csrf
                     <input type="text" name="group_id" value="{{$group->id}}" hidden>
-                    <button class="btn-gray-basic" type="submit">Eliminar grupo</button>
                 </form>
            </div>
+           @if(Auth::user()->isTrainer)
+                @if($group->created_by == Auth::user()->trainer->id)
+                <div class="modal-footer">
+                    <h3>Opciones avanzadas</h3>
+                    <form action="{{route('group.destroy')}}" method="POST">
+                         @csrf
+                         <input type="text" name="group_id" value="{{$group->id}}" hidden>
+                         <button class="btn-gray-basic" type="submit">Eliminar grupo</button>
+                     </form>
+                </div>
+                @endif
+            @endif
        </div>
    </div>
 

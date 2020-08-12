@@ -106,6 +106,7 @@ Route::post('/myWall', 'UserController@myWall')->name('user.myWall');
 Route::post('/newGroup', 'GroupController@store')->name('group.store');
 Route::post('/updateGroup', 'GroupController@update')->name('group.update');
 Route::post('/toggleAdmin', 'GroupController@toggleGroupAdmin')->name('group.toggleGroupAdmin');
+Route::post('/removeGroupImage', 'GroupController@removeGroupImage')->name('group.removeGroupImage');
 
 //View
 Route::get('/group/{group}/{tab}', 'GroupController@show')->name('group.show');

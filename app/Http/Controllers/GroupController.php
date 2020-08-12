@@ -126,7 +126,7 @@ class GroupController extends Controller
     public function destroy(Request $request)
     {
         if (isset($request['group_id'])) {
-            $group = Group::find($request['group_id']);
+            $group = Group::findOrFail($request['group_id']);
 
             //Unlink group image from app. 
             if ($group->group_image != 'default_group_avatar.jpg') {
@@ -161,7 +161,7 @@ class GroupController extends Controller
                 $group->save();
             }
         }
-        return redirect()->route('group.show', ["group" => $group, 'tab' => 'miembros']);
+        return Redirect::back();
     }
     /**
      * Remove member from a specific group. 
@@ -202,5 +202,23 @@ class GroupController extends Controller
             }
             $group->save();
         }
+    }
+
+    public function removeGroupImage(Request $request)
+    {
+        if (isset($request['group_id'])) {
+            $group = Group::findOrFail($request['group_id']);
+            // Delete previous avatar
+            $previous_file = $group->group_image;
+            if ($previous_file != 'default_group_avatar.jpg') {
+                if (file_exists('uploads/avatars/group_avatars/' . $previous_file)) {
+                    unlink('uploads/avatars/group_avatars/' . $previous_file);
+                }
+            }
+            //Updates avatar
+            $group->group_image = 'default_group_avatar.jpg';
+            $group->save();
+        }
+        return Redirect::back();
     }
 }

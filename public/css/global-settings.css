@@ -504,6 +504,12 @@ div.modal-body {
     width: 700px;
     height: fit-content;
 }
+/*New group modal*/
+.new-group-modal {
+    width: 700px;
+    height: fit-content;
+}
+
 /*Add member to group*/
 .add-member-to-group-modal {
     width: 900px;

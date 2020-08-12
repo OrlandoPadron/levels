@@ -2,7 +2,7 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
-<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: false, shareFile:false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: true, uploadFile: false,}">
+<div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: false, shareFile:false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
             <div class="img-group-container" 
@@ -13,7 +13,10 @@
                     <i class="fas fa-pencil-alt"></i>
                 </a>
             </div>
-            <div class="group-header">
+            <div class="group-header"
+                @click="editGroupDetails=!editGroupDetails"
+                @keydown.escape.window="editGroupDetails=false"
+            >
                 <p id="group-type">Grupo</p>
                 <h1 id="group-title">{{$group->title}}</h1>
                 <p id="group-description">{{$group->description}}</p>
@@ -28,8 +31,8 @@
                 <ul id="navbar-dashboard-items">
                     <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
                     <li id="noticias-navbar" onclick="changeUrlParameters('foro')" x-on:click.prevent @click="sectionTab = 'foro'" :class="{'active-dashboard': sectionTab === 'foro'}"><a href="#">Foro</a></li>
-                    <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
                     <li id="miembros-navbar" onclick="changeUrlParameters('miembros')" x-on:click.prevent @click="sectionTab = 'miembros'" :class="{'active-dashboard': sectionTab === 'miembros'}"><a href="#">Miembros</a></li>
+                    <li id="archivos-navbar" onclick="changeUrlParameters('archivos')" x-on:click.prevent @click="sectionTab = 'archivos'" :class="{'active-dashboard': sectionTab === 'archivos'}"><a href="#">Archivos</a></li>
                 </ul>
             </div>
         </div>
@@ -45,11 +48,6 @@
             </div>
             <div id="miembros-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'miembros'">
                 @include('sections_groups.members')
-                @if(Auth::user()->isTrainer)
-                    @if($group->created_by == Auth::user()->trainer->id)
-                        @include('sections_groups.manage')
-                    @endif
-                @endif
             </div>
             <div id="archivos-section-container" x-show.transition.in.opacity.duration.500ms="sectionTab === 'archivos'">
                 @include('sections_groups.files')
