@@ -16,26 +16,29 @@
                         <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
                     </div>
                 </div>
-                <button class="btn-purple-basic"
-                @click="openShowProfileData=!openShowProfileData" 
-                @keydown.escape.window="openShowProfileData=false"
-                >Información adicional</button>
-                @if ($user->athlete->trainer_id != null)
-                    @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
-                        <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
+                <div id="user-dashboard-buttons-container">
+                    <button class="btn-purple-basic"
+                    @click="openShowProfileData=!openShowProfileData" 
+                    @keydown.escape.window="openShowProfileData=false"
+                    >Información adicional</button>
+                    @if ($user->athlete->trainer_id != null)
+                        @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
+                            <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
+                                @csrf
+                                <button type="submit" class="soft-btn stop-training"><i class="fas fa-minus-circle"></i> Dejar de entrenar</button>
+                                <input type="text" name="user_id" value="{{$user->id}}" hidden>
+                
+                            </form>
+                        @endif
+                    @else
+                        <form action="{{route('trainUser')}}" method="POST">
                             @csrf
                             <input type="text" name="user_id" value="{{$user->id}}" hidden>
-                            <button type="submit" class="btn-basic stop-training-button"><i class="fas fa-minus-circle"></i> Dejar de entrenar</button>
-            
+                            <button type="submit" class="soft-btn start-training"><i class="fas fa-stopwatch"></i> Entrenar</button>
                         </form>
                     @endif
-                @else
-                    <form action="{{route('trainUser')}}" method="POST">
-                        @csrf
-                        <input type="text" name="user_id" value="{{$user->id}}" hidden>
-                        <button type="submit" class="btn-basic train-button"><i class="fas fa-stopwatch"></i> Entrenar</button>
-                    </form>
-                @endif
+
+                </div>
 
             </div>
                 @include('modals.additionalInfoModal')

@@ -2,7 +2,11 @@
     {{$generalThreadView ? ($thread->pinned ?  '' : 'post-collapse') : ''}}"
     data-date="{{$thread->created_at->timestamp}}">
     <div class="post-heading">
+        @if(isset($group))
+        <div class="post-details {{$generalThreadView ? '' : 'thread-active'}}" onclick="{{$generalThreadView ? 'goToThreads('.$thread->id.', 1)' : ''}}">
+        @else
         <div class="post-details {{$generalThreadView ? '' : 'thread-active'}}" onclick="{{$generalThreadView ? 'goToThreads('.$thread->id.')' : ''}}">
+        @endif
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
@@ -36,7 +40,11 @@
         </div>
     </div>
     <div class="post-footer">
-        <a  onclick="goToThreads({{$thread->id}})"><i class="fas fa-comment-alt"></i>{{$thread->replies->count()}} {{$thread->replies->count() == 1 ? 'respuesta' : 'respuestas'}}</a>
+        @if(isset($group))
+        <a onclick="goToThreads({{$thread->id}}, 1)"><i class="fas fa-comment-alt"></i>{{$thread->replies->count()}} {{$thread->replies->count() == 1 ? 'respuesta' : 'respuestas'}}</a>
+        @else
+        <a onclick="goToThreads({{$thread->id}})"><i class="fas fa-comment-alt"></i>{{$thread->replies->count()}} {{$thread->replies->count() == 1 ? 'respuesta' : 'respuestas'}}</a>
+        @endif
         @if($thread->replies->count() == 0)
         <p>Último mensaje por <span>{{getName($thread->author)}}<span class="italic"> ({{ucfirst($thread->created_at->diffForHumans())}})</span></span></p>
         @else   

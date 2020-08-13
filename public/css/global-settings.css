@@ -818,6 +818,15 @@ div.modal-body {
     margin-right: 50px;
     font-size: 100px;
 }
+.info-account.no-athletes-to-train i {
+    margin-right: 40px;
+    margin-left: 40px;
+    font-size: 80px;
+}
+
+.info-account.info-account.no-athletes-to-train {
+    margin: 0px;
+}
 
 .trainer-info-account {
     display: flex;

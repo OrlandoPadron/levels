@@ -48,6 +48,11 @@ function getUserIdByTrainerId($trainerId)
     return Trainer::findOrFail($trainerId)->user->id;
 }
 
+function getGroupById($groupId)
+{
+    return Group::findOrFail($groupId);
+}
+
 /**
  * Returns trainers name given a trainer_id. 
  */

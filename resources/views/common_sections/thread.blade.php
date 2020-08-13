@@ -16,7 +16,7 @@
 <h2>Respuestas</h2>
 <div id="all-replies">
 @if($thread->replies->count() != 0)
-    @foreach($thread->replies->sortDesc() as $key => $reply)
+    @foreach($thread->replies as $key => $reply)
         @include('common_sections.components.replyComponent', ["reply" => $reply])
     @endforeach
 

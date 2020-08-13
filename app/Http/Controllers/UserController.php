@@ -207,6 +207,9 @@ class UserController extends Controller
                     Auth::user()->save();
                     break;
                 case 'groupForum':
+                    $json_decode['groupForum'][$request['id']]['lastVisit'] = date("Y-m-d H:i:s", time());
+                    Auth::user()->notifications_json = json_encode($json_decode);
+                    Auth::user()->save();
                     break;
                 case 'trainingPlans':
                     $json_decode['trainingPlans'][$request['id']]['lastVisit'] = date("Y-m-d H:i:s", time());

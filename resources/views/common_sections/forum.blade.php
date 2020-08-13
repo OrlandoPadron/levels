@@ -75,7 +75,7 @@
         totalThreads = {{$threads->count()}};
     });
 
-    function goToThreads(thread_id){
+    function goToThreads(thread_id, isGroup=0){
         console.log('abrimos thread');
         $("#open-thread-container").load( "/thread/".concat(thread_id));
         $("#forum-header").html('<i style="margin-right: 15px;" class="fas fa-chevron-circle-left"></i>');
@@ -88,7 +88,12 @@
         $("#add-btn-forum").fadeOut(500);
         $( "#open-thread-container" ).fadeIn(500);
         $(".page-content").animate({ scrollTop: 0 }, "slow");
-        updateNotificationLogJson(thread_id, 'forum');
+        if (isGroup == 1){
+            updateNotificationLogJson(thread_id, 'groupForum');
+        }else{
+            updateNotificationLogJson(thread_id, 'forum');
+
+        }
 
     }
 

@@ -33,6 +33,33 @@
     flex-direction: column;
 }
 
+#user-dashboard-buttons-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: -20px;
+    align-items: center;
+}
+#user-dashboard-buttons-container .btn-purple-basic {
+    top: 0;
+    margin-right: 10px;
+}
+#user-dashboard-buttons-container .soft-btn {
+    width: 180px;
+    font-size: 16px;
+    min-width: fit-content;
+}
+#user-dashboard-buttons-container .soft-btn i {
+    margin-right: 2px;
+}
+#user-dashboard-buttons-container .soft-btn.start-training:hover {
+    border: 2px solid green !important;
+    color: green;
+}
+#user-dashboard-buttons-container .soft-btn.stop-training:hover {
+    border: 2px solid red !important;
+    color: red;
+}
+
 #user_name_dashboard {
     margin-top: 0px;
     font-size: 48px;
