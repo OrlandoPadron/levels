@@ -1,38 +1,54 @@
 <!-- Fee Status modal -->
 <div id="myModal" style="display: none;" class="modal" x-show.transition.duration.250ms.opacity="planStatusModal">
     <!-- Modal content -->
-       <div class="modal-content" @click.away="planStatusModal=false">
+    <div class="modal-content training-status-modals" @click.away="planStatusModal=false">
            <div class="modal-header">
                <span id="closeModal" class="close" @click="planStatusModal=!planStatusModal">&times;</span>
-               <h2>Estado de Mes</h2>
+               <h2>Planes de Entrenamiento</h2>
            </div>
            <div class="modal-body">
-            <p>Training Plan status</p>
-            <h2>Planes actualizados</h2>
-            @foreach ($notifications['trainingPlansUpdates'] as $array)
-                @if (!$loop->last)
-                @php
-                    $user = getUserUsingAthleteId($array['trainingPlan']['athlete_associated']);
-                @endphp
-                <p>{{$array['trainingPlan']['title']}}</p>
-                <p>Usuario: {{$user->name}}</p>
-                <p>Ficheros modificados</p>
-                @foreach ($array['idOfFilesUpdated'] as $fileid)
-                    @php
-                        $file = getFileModelGivenItsId($fileid);
-                    @endphp
-                    <p>{{$file->file_name}}</p>
-                    <a style="color:black;" href="{{route('profile.show', ['user'=> $file->user->id, 'tab'=>'plan'])}}">Ver sección</a>
-                @endforeach
-                @endif
-            @endforeach
-           </div>
-
-           <div class="modal-footer">
-               <h3>Modal Footer</h3>
+                <div class="modal-body-container">
+                    <div class="item-with-container">
+                        <p>Actualizaciones pendientes</p>
+                        <div>
+                            @if($notifications['trainingPlansUpdates']['totalChanges'] > 0)
+                            <ul>
+                                @foreach ($notifications['trainingPlansUpdates'] as $array)
+                                    @if (!$loop->last)
+                                    @php
+                                        $user = getUserUsingAthleteId($array['trainingPlan']['athlete_associated']);
+                                        $plan = $array['trainingPlan'];
+                                        $numOfFilesUpdated = count($array['idOfFilesUpdated']);
+                                    @endphp
+                                    <li>
+                                        <div class="flexbox-vertical-container">
+                                            <div class="user-and-avatar">
+                                                <img src="/uploads/avatars/{{$user->user_image}}" alt="avatar">
+                                                <div class="title-and-subtitle">
+                                                    <p>{{$user->name . ' ' . $user->surname}}</p>
+                                                    <p class="purple">{{$plan->title}} 
+                                                        <span class="low-emphasis">
+                                                            | Archivos actualizados: {{$numOfFilesUpdated}}
+                                                        </span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <button class="soft-btn" onclick="window.location='{{route('profile.show', ['user'=> $user->id, 'tab'=>'plan'])}}'">
+                                                Ver
+                                            </button>
+                                        </div>
+                                    </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                            @else
+                            <div class="no-users-left-message">
+                                <p>Sin actividad reciente</p>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
            </div>
        </div>
    </div>
-
-<script>
-</script>

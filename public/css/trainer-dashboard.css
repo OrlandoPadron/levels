@@ -116,6 +116,61 @@
     cursor: pointer;
 }
 
+.title-and-subtitle {
+    display: flex;
+    flex-direction: column;
+}
+.title-and-subtitle p:first-child {
+    font-weight: 600;
+}
+
+.title-and-subtitle p:nth-child(2) {
+    margin-top: -15px;
+    font-size: 14px;
+}
+
+.title-and-subtitle .red-message {
+    color: #ff2a5d !important;
+}
+.title-and-subtitle .green-message {
+    color: rgb(2, 110, 0) !important;
+}
+.title-and-subtitle .purple {
+    color: #6013bb !important;
+}
+
+.training-status-modals {
+    width: 1000px;
+}
+
+.training-status-modals .flexbox-vertical-container {
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.training-status-modals .user-and-avatar {
+    padding: 0 !important;
+}
+.training-status-modals li:not(:last-of-type) {
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.training-status-modals li:not(:first-of-type) {
+    margin-top: -15px;
+}
+
+.training-status-modals .item-with-container {
+    margin-bottom: 30px;
+}
+.training-status-modals .item-with-container:last-of-type {
+    margin-bottom: 50px;
+}
+
+.no-users-left-message p {
+    text-align: center;
+    color: black !important;
+}
+
 /*ICON STROKE SUPPORT*/
 @supports (-webkit-text-stroke: 1px black) {
     .box-item-container i {

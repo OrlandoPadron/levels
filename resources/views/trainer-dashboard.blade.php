@@ -1,6 +1,6 @@
-@dump($notifications)
+{{-- @dump($notifications) --}}
 
-<div class="content-trainer-dashboard" x-data="{planStatusModal:false, forumStatusModal: false, feeStatusModal: false}">
+<div class="content-trainer-dashboard" x-data="{planStatusModal:false, forumStatusModal: true, feeStatusModal: false}">
     <div class="container-dashboard">
         <h1 class="primary-blue-color"><i class="fas fa-dumbbell"></i> Panel de Entrenador</h1>
     </div>

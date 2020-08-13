@@ -86,7 +86,7 @@ class HomeController extends Controller
         //Getting all the training plans associated with the current logged user. 
         $activeTrainingPlans = array();
         if (Auth::user()->isTrainer) {
-            $athletesTrainedByMe = getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id);
+            $athletesTrainedByMe = array_reverse(getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id));
             foreach ($athletesTrainedByMe as $athlete) {
                 $athleteTrainingPlans = $athlete->trainingPlans;
                 foreach ($athleteTrainingPlans as $plan) {
@@ -130,7 +130,7 @@ class HomeController extends Controller
 
     public function getCollectionOfAthletesWhoHaventPayMonthYet($trainerId)
     {
-        $athletes = getArrayOfAthletesTrainedByTrainerId($trainerId);
+        $athletes = array_reverse(getArrayOfAthletesTrainedByTrainerId($trainerId));
         $haventPay = array();
         foreach ($athletes as $athlete) {
             if (!$athlete->monthPaid) {
@@ -146,7 +146,7 @@ class HomeController extends Controller
         $changesCount = 0;
 
         //Check every single thread of every athlete trained by trainer to display changes. 
-        $athletes = getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id);
+        $athletes = array_reverse(getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id));
 
         foreach ($athletes as $athlete) {
             $threads = ForumThread::where('user_associated', $athlete->user->id)->get();
