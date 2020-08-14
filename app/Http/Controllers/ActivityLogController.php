@@ -43,7 +43,6 @@ class ActivityLogController extends Controller
                 'entity_implied' => isset($request['entity_implied']) ? $request['entity_implied'] : null,
                 'tab' => isset($request['tab']) ? $request['tab'] : null,
                 'isGroup' => isset($request['isGroup']) ? $request['isGroup'] : false,
-                'status' => 'active',
             ]);
         }
     }

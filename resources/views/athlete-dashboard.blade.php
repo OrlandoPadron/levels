@@ -25,7 +25,7 @@
                         @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                             <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
                                 @csrf
-                                <button type="submit" class="soft-btn stop-training"><i class="fas fa-minus-circle"></i> Dejar de entrenar</button>
+                                <button type="submit" class="soft-btn stop-training"><i class="fas fa-ban"></i> Dejar de entrenar</button>
                                 <input type="text" name="user_id" value="{{$user->id}}" hidden>
                 
                             </form>

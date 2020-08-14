@@ -1,8 +1,8 @@
 <div class="heading-section">
     @if(Auth::user()->isTrainer)
     <button class="btn-add-basic button-position"
-                    @click="addMembers=!addMembers" 
-                    @keydown.escape.window="addMembers=false"
+                @click="addMembers=!addMembers" 
+                @keydown.escape.window="addMembers=false"
                     
                 ><i style="margin-right: 5px;" class="fas fa-plus"></i> Añadir miembros
     </button>
@@ -14,24 +14,37 @@
 @include('modals.addMembersToGroupModal')
 @endif
 <div class="members">
-
+    @php
+        $userLoggedRole = getUserRole($group->id, Auth::user()->id);
+        $showManageColumn = false;
+        if ($userLoggedRole == 'Propietario' || $userLoggedRole == 'Administrador' ){
+            $showManageColumn = true; 
+        }
+    @endphp
     <table id="members_table">
         <thead>
             <th>Usuario</th>
             <th>Perfil</th>
             <th>Rol dentro del grupo</th>
-            @if(getUserRole($group->id, Auth::user()->id) == 'Propietario')
+            @if($showManageColumn)
             <th>Gestionar</th>
+            @else
+            <th></th>
             @endif
         </thead>
         <tbody>
         @foreach(getGroupUsers($group->id) as $key=>$user)
             @php
-              $userLoggedRole = getUserRole($group->id, Auth::user()->id);
               $userRole = getUserRole($group->id,$user->id);
             @endphp
             <tr>
-                <td>
+                <td
+                    @if (Auth::user()->isTrainer)
+                    onclick="location.href='{{route('profile.show', [$user->id, 'general'])}}'"
+                    class="hover-container"
+                    @endif
+                
+                >
                     <div class="table-user">
                         <img src="/uploads/avatars/{{$user->user_image}}" alt="avatar">
                         <p>{{$user->name . ' ' . $user->surname}}</p>
@@ -69,13 +82,9 @@
                             @endif
                         </td>    
                     @break
-                    {{-- <td>
-                        @if(Auth::user()->id!=$user->id)
-                        <button>Hacer admin</button>
-                        <button onclick="removeFromGroup({{$user->id}})">Eliminar</button>
-                        @endif
-                    </td> --}}
+     
                     @default
+                        <td></td>
                         @break
                         
                 @endswitch

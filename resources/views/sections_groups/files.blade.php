@@ -31,6 +31,7 @@
                 <tr>
                     <th>Nombre del archivo</th>
                     <th>Formato</th>
+                    <th>Propietario</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -40,8 +41,12 @@
                 @endphp
                 @foreach(getGroupFiles($group->id) as $key => $file)
                 <tr>
+                    @php
+                        $owned_by = $file->user->name . ' ' . $file->user->surname;
+                    @endphp
                     <td>{{$file->file_name}}</td>
                     <td>{{strtoupper($file->extension)}}</td>
+                    <td>{{$owned_by}}</td>
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if(Auth::user()->id == $file->owned_by || $userLoggedRole == 'Propietario' || $userLoggedRole == 'Administrador')
@@ -65,7 +70,7 @@
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         },
         "columnDefs": [
-            { "orderable": false, "targets": [1,2] },
+            { "orderable": false, "targets": [3] },
             { "searchable": false, "targets": 0 }
         ],
         "bFilter": false

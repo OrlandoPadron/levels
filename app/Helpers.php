@@ -8,13 +8,14 @@ use App\UserFile;
 use App\ActivityLog;
 use App\ForumThread;
 use App\TrainingPlan;
+use Mockery\Undefined;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
-use Mockery\Undefined;
-
 use function GuzzleHttp\json_decode;
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Request;
+use App\Http\Controllers\ActivityLogController;
 
 /**
  * Function used to determine if a given trainer is currently training a 
@@ -204,6 +205,7 @@ function getNumberOfTutorshipsWithBookmark()
 function getUserFilesNotSharedWithCurrentUser($userLoggedInId, $userId)
 {
     $files = UserFile::where('owned_by', $userLoggedInId)
+        ->where('file_type', 0)
         ->where('shared_with', 'not like', "%\"$userId\"%")
         ->get();
     return $files;
@@ -211,7 +213,8 @@ function getUserFilesNotSharedWithCurrentUser($userLoggedInId, $userId)
 function getFilesNotSharedWithGroup($userLoggedInId, $groupId)
 {
     $groupFiles = (array) Group::findOrFail($groupId)->files;
-    $userFiles = UserFile::where('owned_by', $userLoggedInId)->get();
+    $userFiles = UserFile::where('owned_by', $userLoggedInId)
+        ->where('file_type', 0)->get();
     $filesNotSharedWithGroup = collect();
 
     foreach ($userFiles as $file) {
@@ -343,12 +346,11 @@ function getThreadGivenItsId($thread_id)
 {
     return ForumThread::findOrFail($thread_id);
 }
-/** Only for test -> DELETE */
-function test2()
-{
-}
 
 
-function test()
+/** Save log entry into ActivityLogController */
+function saveActivityLog($logArray)
 {
+    $logController = new ActivityLogController();
+    $logController->store($logArray);
 }

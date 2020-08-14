@@ -53,13 +53,17 @@ class TrainingPlanController extends Controller
             'end_date' => isset($request['endDate']) ? $request['endDate'] : null,
 
         ]);
-
-
-
-
         $athlete = Athlete::find($request['athlete_associated']);
         $id_user = $athlete->user->id;
-        //dump($id_user);
+
+        $log = array(
+            'author_id' => Auth::user()->id,
+            'action' => 'creado el plan de entrenamiento <span style="color:#6013bb;">\'' . $trainingPlan->title . '\'</span>',
+            'tab' => 'plan',
+            'entity_implied' => $id_user
+        );
+        saveActivityLog($log);
+
         return redirect()->route('profile.show', ['user' => $id_user, 'tab' => 'plan']);
     }
 
@@ -105,15 +109,26 @@ class TrainingPlanController extends Controller
                         $plan->files_associated = $files;
                         $plan->save();
                     }
+                    $file = getFileModelGivenItsId($request['fileId']);
+                    $fileName = $file->file_name . '.' . $file->extension;
+                    $log = array(
+                        'author_id' => Auth::user()->id,
+                        'action' => 'añadido el archivo <span style="color:#6013bb;">\'' . $fileName  . '\'</span> al plan de entrenamiento <span style="color:#6013bb;">\'' . $plan->title . '\'</span>',
+                        'tab' => 'plan',
+                        'entity_implied' => $plan->athleteAssociated->user->id
+                    );
+                    saveActivityLog($log);
                 }
                 break;
             case 'removeFileFromPlan':
                 //Removes file from a specific training plan 
-                $plan = TrainingPlan::findOrFail($request['planId']);
-                $files = (array) $plan->files_associated;
-                if (in_array($request['fileId'], $files)) {
-                    $plan->files_associated = array_diff($files, (array) $request['fileId']);
-                    $plan->save();
+                if (Auth::user()->isTrainer) {
+                    $plan = TrainingPlan::findOrFail($request['planId']);
+                    $files = (array) $plan->files_associated;
+                    if (in_array($request['fileId'], $files)) {
+                        $plan->files_associated = array_diff($files, (array) $request['fileId']);
+                        $plan->save();
+                    }
                 }
                 break;
 
@@ -122,6 +137,17 @@ class TrainingPlanController extends Controller
                 $file->size = $request['size'];
                 $file->url = $request['url'];
                 $file->save();
+
+                $plan = TrainingPlan::findOrFail($request['planId']);
+
+                $fileName = $file->file_name . '.' . $file->extension;
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'actualizado el archivo <span style="color:#6013bb;">\'' . $fileName  . '\'</span> del plan de entrenamiento <span style="color:#6013bb;">\'' . $plan->title . '\'</span>',
+                    'tab' => 'plan',
+                    'entity_implied' => $plan->athleteAssociated->user->id
+                );
+                saveActivityLog($log);
                 break;
 
             case 'updatePlan':
@@ -139,7 +165,14 @@ class TrainingPlanController extends Controller
                 $plan = TrainingPlan::findOrFail($request['id_plan']);
                 $plan->status = $plan->status == 'active' ? 'finished' : 'active';
                 $plan->save();
-
+                $estado = $plan->status == 'active' ? 'activo' : 'finalizado';
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'marcado como ' . $estado  . ' el plan de entrenamiento <span style="color:#6013bb;">\'' . $plan->title . '\'</span>',
+                    'tab' => 'plan',
+                    'entity_implied' => $plan->athleteAssociated->user->id
+                );
+                saveActivityLog($log);
                 return Redirect::back();
         }
     }

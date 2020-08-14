@@ -173,7 +173,7 @@
                 task.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     console.log('File available at', downloadURL); 
                     console.log('Update file step 2...');
-                    updateTrainingPlanFileReferenceFromDatabase(fileId, file.size, downloadURL);
+                    updateTrainingPlanFileReferenceFromDatabase(fileId, file.size, downloadURL, planId);
 
                 });
             }
@@ -384,15 +384,16 @@
                 location.reload();
                 
             },
-            error: function(){
+            error: function(callback){
                 alert('Se ha producido un error.');
                 console.log('Error on ajax call "deleteFileReferenceFromTrainingPlan" function');
+                console.log(callback);
             }  
         });
     }
 
 
-    function updateTrainingPlanFileReferenceFromDatabase(fileId, fileSize, downloadURL){
+    function updateTrainingPlanFileReferenceFromDatabase(fileId, fileSize, downloadURL, planId){
         $.ajax({
             url: "{{route("trainingPlan.update")}}",
             type: "POST",
@@ -400,6 +401,7 @@
                 fileId: fileId,
                 size: fileSize,
                 url: downloadURL,
+                planId: planId,
                 method: 'updateFile',
                 _token: "{{csrf_token()}}",
             },

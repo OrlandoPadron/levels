@@ -146,7 +146,6 @@ class UserController extends Controller
             // Get user's uploads folder
             $path = 'uploads/files/' . $request['user_id'];
 
-            // !TODO check if a file with same name exists. 
 
             foreach ($files as $file) {
                 $file->move($path, $file->getClientOriginalName());

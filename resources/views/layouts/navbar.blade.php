@@ -13,7 +13,7 @@
         </li>
       </div>
       @else
-      <div class="item-list {{request()->routeIs('athlete.home') ? 'active' : ''}}">
+      <div class="item-list {{request()->routeIs('athlete.home') ? 'active' : ''}}" onclick="location.href='{{route('home')}}'">
         <li>
           <div class="icon">
             <i class="fas fa-home"></i>

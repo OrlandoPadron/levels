@@ -2,20 +2,34 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
+@php
+$userLoggedRole = getUserRole($group->id, Auth::user()->id);
+$showEditModal = false;
+if ($userLoggedRole == 'Propietario' || $userLoggedRole == 'Administrador' ){
+    $showEditModal = true; 
+}
+@endphp
 <div class="content-group-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', addMembers: false, shareFile:false, addTutorshipSession: false, openNewThreadForm: false, editGroupDetails: false, uploadFile: false,}">
     <div class="container-dashboard">
         <div class="groupinfo">
-            <div class="img-group-container" 
-                @click="editGroupDetails=!editGroupDetails"
-                @keydown.escape.window="editGroupDetails=false">
+            <div class="{{ $showEditModal ? 'img-group-container' : 'img-group-container-no-editable'}}" 
+                @if($showEditModal)
+                    @click="editGroupDetails=!editGroupDetails"
+                    @keydown.escape.window="editGroupDetails=false"
+                @endif
+                >
                 <img class="inner-shadow" src="/uploads/group_avatars/{{$group->group_image}}" alt="profile-avatar">
+                @if($showEditModal)
                 <a href="" x-on:click.prevent>
                     <i class="fas fa-pencil-alt"></i>
                 </a>
+                @endif
             </div>
-            <div class="group-header"
-                @click="editGroupDetails=!editGroupDetails"
-                @keydown.escape.window="editGroupDetails=false"
+            <div {!! $showEditModal ? 'class=group-header' : '' !!}
+                @if($showEditModal)
+                    @click="editGroupDetails=!editGroupDetails"
+                    @keydown.escape.window="editGroupDetails=false"
+                @endif
             >
                 <p id="group-type">Grupo</p>
                 <h1 id="group-title">{{$group->title}}</h1>

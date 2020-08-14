@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
 use App\User;
+use App\Group;
 use App\UserFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserFileController extends Controller
 {
@@ -72,6 +73,14 @@ class UserFileController extends Controller
                     }
                     $userFile->shared_with = $sharedWith;
                     $userFile->save();
+                    $fileName = $userFile->file_name . '.' . $userFile->extension;
+                    $log = array(
+                        'author_id' => Auth::user()->id,
+                        'action' => 'subido el archivo <span style="color:#6013bb;">\'' . $fileName . '\'</span>',
+                        'tab' => 'archivos',
+                        'entity_implied' => $request['shared_with']
+                    );
+                    saveActivityLog($log);
                 }
                 break;
             case 'trainingFile':
@@ -91,6 +100,15 @@ class UserFileController extends Controller
                 //Modify some values to represent a group file.
                 $userFile->file_type = 2;
                 $userFile->save();
+                $fileName = $userFile->file_name . '.' . $userFile->extension;
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'subido el archivo <span style="color:#6013bb;">\'' . $fileName . '\'</span>',
+                    'tab' => 'archivos',
+                    'entity_implied' => $group->id,
+                    'isGroup' => true
+                );
+                saveActivityLog($log);
 
                 break;
         }
@@ -145,6 +163,15 @@ class UserFileController extends Controller
                 }
                 $file->shared_with = $sharedWithArray;
                 $file->save();
+                $fileName = $file->file_name . '.' . $file->extension;
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'compartido el archivo <span style="color:#6013bb;">\'' . $fileName . '\'</span>',
+                    'tab' => 'archivos',
+                    'entity_implied' => $request['userId']
+                );
+                saveActivityLog($log);
+
                 break;
 
             case 'shareFileWithGroup':
@@ -155,6 +182,15 @@ class UserFileController extends Controller
                 }
                 $group->files = $groupFiles;
                 $group->save();
+                $fileName = $file->file_name . '.' . $file->extension;
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'compartido el archivo <span style="color:#6013bb;">\'' . $fileName . '\'</span>',
+                    'tab' => 'archivos',
+                    'entity_implied' => $group->id,
+                    'isGroup' => true,
+                );
+                saveActivityLog($log);
 
                 break;
 

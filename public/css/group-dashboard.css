@@ -81,6 +81,12 @@
     height: 180px;
     margin-right: 50px;
 }
+.img-group-container-no-editable {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    margin-right: 50px;
+}
 
 .img-group-container img {
     display: block;

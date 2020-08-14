@@ -8,7 +8,35 @@
         <h2>Información adicional — <label class="light">{{$user->name . ' ' . $user->surname}}</label></h2>
         </div>
         <div class="modal-body">
-            <h2 class="underlined">Datos personales</h2>
+            <div class="modal-body-container">
+                <div class="text-container">
+                    <div class="text-container-content">
+                        <ul>
+                            <li>
+                                <span class="text-container-content-section">Nombre:</span>
+                                <p>{{$user->name}}</p>
+                            </li>
+                            <li>
+                                <span class="text-container-content-section">Apellidos:</span> 
+                                <p>{{$user->surname}}</p>
+                            </li>
+                            <li>
+                                <span class="text-container-content-section">Email:</span> 
+                                <p>{{$user->email}}</p>
+                            </li>
+                            <li>
+                                <span class="text-container-content-section">Administrador:</span> 
+                                <p>{{$user->admin == 0 ? 'No' : 'Sí'}}</p>
+                            </li>
+                            <li>
+                                <span class="text-container-content-section">Cuenta creada:</span> 
+                                <p>{{$user->created_at->format("d/m/Y")}} <span class="dot-separation">·</span> {{$user->created_at->diffForHumans()}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {{-- <h2 class="underlined">Datos personales</h2>
             <ul>
                 <li>
                     <span class="bold">Nombre: </span>{{$user->name . " " . $user->surname}}
@@ -36,7 +64,7 @@
                 </li>
 
                 
-            </ul>
+            </ul> --}}
             
 
         </div>

@@ -44,14 +44,24 @@ class ForumReplyController extends Controller
             ]);
 
             // Log storage. 
-            $log = array(
-                'author_id' => Auth::user()->id,
-                'action' => 'respondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
-                'tab' => 'foro',
-                'entity_implied' => $reply->thread->user_associated
-            );
-            $logController = new ActivityLogController();
-            $logController->store($log);
+            $log = array();
+            if ($reply->thread->user_associated != null) {
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'respondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
+                    'tab' => 'foro',
+                    'entity_implied' => $reply->thread->user_associated
+                );
+            } else {
+                $log = array(
+                    'author_id' => Auth::user()->id,
+                    'action' => 'respondido al hilo <span style="color:#6013bb;">\'' . $reply->thread->title . '\'</span>',
+                    'tab' => 'foro',
+                    'entity_implied' => $reply->thread->group_associated,
+                    'isGroup' => true
+                );
+            }
+            saveActivityLog($log);
             // End log storage
 
             //Updates thread 'updated_at' field

@@ -27,6 +27,10 @@
     text-decoration: underline;
     filter: brightness(150%);
 }
+
+.hover-container:hover {
+    cursor: pointer;
+}
 .underlined {
     border-bottom: 1px solid black;
     padding-bottom: 10px;
