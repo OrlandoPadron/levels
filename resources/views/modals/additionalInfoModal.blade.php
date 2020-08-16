@@ -24,6 +24,10 @@
                                 <p>13/03/1997</p>
                             </li>
                             <li>
+                                <span class="text-container-content-section">Sexo</span>
+                                <p>Hombre</p>
+                            </li>
+                            <li>
                                 <span class="text-container-content-section">DNI</span> 
                                 <p>46378291W</p>
                             </li>

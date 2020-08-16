@@ -34,7 +34,7 @@
                         <form action="{{route('trainUser')}}" method="POST">
                             @csrf
                             <input type="text" name="user_id" value="{{$user->id}}" hidden>
-                            <button type="submit" class="soft-btn start-training"><i class="fas fa-stopwatch"></i> Entrenar</button>
+                            <button type="submit" class="soft-btn start-training"><i class="fas fa-dumbbell"></i> Entrenar</button>
                         </form>
                     @endif
 

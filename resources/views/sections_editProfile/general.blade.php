@@ -15,6 +15,14 @@
       <p>Apellidos</p>
       <input type="text" value="{{$userSurnames}}" required>
     </li>
+    <li class="item-with-select">
+      <p>Sexo</p>
+      <select name="gender">
+        <option value="man">Hombre</option> 
+        <option value="woman">Mujer</option>
+        <option value="no_specified">Prefiero no decirlo</option>
+      </select>
+    </li>
     <li class="item-with-input">
       <p>Fecha de nacimiento</p>
       <input type="date" value="">

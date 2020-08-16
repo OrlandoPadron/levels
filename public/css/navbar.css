@@ -115,20 +115,27 @@ a:hover {
 }
 
 .group ul {
-    list-style: circle !important;
+    padding: 0;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .group li {
-    display: list-item;
-    width: 70%;
+    width: 85%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
     font-size: 15px;
     font-weight: 300;
-    margin-left: 10px;
-    list-style: circle;
-    margin-top: 30px;
-    text-align: left;
-    overflow-wrap: break-word;
-    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+    word-break: normal;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.group li:not(:first-child) {
+    margin-top: 20px;
 }
 
 .group li:hover {

@@ -59,6 +59,12 @@
     border: 2px solid red !important;
     color: red;
 }
+#user-dashboard-buttons-container .soft-btn.start-training {
+    width: 120px;
+}
+#user-dashboard-buttons-container .soft-btn.start-training i {
+    margin-right: 5px;
+}
 
 #user_name_dashboard {
     margin-top: 0px;

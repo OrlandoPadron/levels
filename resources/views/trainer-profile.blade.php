@@ -16,14 +16,18 @@
                         <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
                     </div>
                 </div>
-                <button class="btn-purple-basic"
-                @click="openShowProfileData=!openShowProfileData" 
-                @keydown.escape.window="openShowProfileData=false"
-                >Información adicional</button>
+                <div id="user-dashboard-buttons-container">
+                    <button class="btn-purple-basic"
+                    @click="openShowProfileData=!openShowProfileData" 
+                    @keydown.escape.window="openShowProfileData=false"
+                    >Información adicional</button>
+                </div>
             </div>
                 {{-- @include('modals.additionalInfoModal') --}}
         </div>
     </div>
+    @include('modals.additionalInfoModal')
+
     <!-- Start 'Navbar dashboard' -->
     <div class="navbar-dashboard">
         <div class="container-dashboard">

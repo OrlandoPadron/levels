@@ -83,6 +83,24 @@
     font-size: 14px;
 }
 
+.item-with-select {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+.item-with-select p {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #6013bb;
+}
+.settings-content-section .item-with-select select {
+    width: 100%;
+    height: fit-content;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+}
+
 .settings-content-section {
     display: flex;
     flex-direction: column;
@@ -91,6 +109,7 @@
 
 .settings-content-section ul {
     padding: 0;
+    list-style-type: none;
 }
 
 .settings-sub-heading {
