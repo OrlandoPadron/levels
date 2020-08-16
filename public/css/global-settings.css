@@ -551,6 +551,41 @@ div.modal-body {
     justify-content: center;
 }
 
+/*Athlete's Additional Info modal */
+.additional-info-modal {
+    width: 750px;
+}
+.additional-info-modal .modal-body {
+    padding: 0;
+}
+
+.additional-info-modal .text-container {
+    padding: 0;
+    margin-bottom: 10px;
+    width: 750px;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+}
+
+.additional-info-modal .text-container-content-section {
+    font-size: 18px;
+    width: 100%;
+}
+.additional-info-modal li:not(:last-child) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.additional-info-modal .text-container li {
+    margin: 0;
+}
+
+.additional-info-modal .text-container-content p {
+    font-size: 16px;
+}
+
+/*End Athlete's Additional Info modal */
+
 .add-thread-modal .modal-buttons,
 .new-tutorship-modal .modal-buttons,
 .set-payment-modal .modal-buttons {
@@ -694,14 +729,16 @@ div.modal-body {
     margin-top: -25px;
 }
 
-.edit-group-modal .modal-footer {
+.edit-group-modal .modal-footer,
+.additional-info-modal .modal-footer {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #000f2d;
     border: 2px solid #000f2d;
 }
-.edit-group-modal .modal-footer h3 {
+.edit-group-modal .modal-footer h3,
+.additional-info-modal .modal-footer h3 {
     border-right: 2px solid white;
     color: white;
     padding-right: 10px;
@@ -711,7 +748,8 @@ div.modal-body {
     margin: 0;
 }
 
-.edit-group-modal .modal-footer button {
+.edit-group-modal .modal-footer button,
+.additional-info-modal .modal-footer button {
     width: 120px;
     height: 30px;
     font-size: 14px;
@@ -957,7 +995,7 @@ table.data-table {
     padding-left: 15px;
     margin-left: 10px;
     margin-top: 50px;
-    margin-bottom: 25px;
+    margin-bottom: 5px !important;
 }
 .text-container ul {
     list-style: none;

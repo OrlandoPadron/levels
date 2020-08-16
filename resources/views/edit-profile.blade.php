@@ -13,13 +13,13 @@
     <div class="navbar-container">
       <ul>
         <li class="active" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active': sectionTab === 'general'}">
-          <a href="">General</a>
+          <a href="">Datos personales</a>
+        </li>
+        <li x-on:click.prevent @click="sectionTab = 'account'" :class="{'active': sectionTab === 'account'}">
+          <a href="">Configurar cuenta</a>
         </li>
         <li x-on:click.prevent @click="sectionTab = 'userAvatar'" :class="{'active': sectionTab === 'userAvatar'}">
           <a href="">Imagen de usuario</a>
-        </li>
-        <li x-on:click.prevent @click="sectionTab = 'athleteRecord'" :class="{'active': sectionTab === 'athleteRecord'}">
-          <a href="">Ficha corredor</a>
         </li>
         <li class="active" x-on:click.prevent @click="sectionTab = 'thirdparties'" :class="{'active': sectionTab === 'thirdparties'}">
           <a href="">Servicios de terceros</a>
@@ -34,8 +34,8 @@
     <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'userAvatar'">
       @include('sections_editProfile.userAvatar')
     </div>
-    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'athleteRecord'">
-      @include('sections_editProfile.athleteRecord')
+    <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'account'">
+      @include('sections_editProfile.account')
     </div>
     <div style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'thirdparties'">
       @include('sections_editProfile.thirdparties')

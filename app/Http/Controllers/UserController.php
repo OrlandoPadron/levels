@@ -22,6 +22,9 @@ class UserController extends Controller
     public function showProfile($id, $tab)
     {
         $user = User::find($id);
+        if (!Auth::user()->isTrainer && !$user->isTrainer) return redirect()->route('athlete.home', 'general');
+
+
         $threads = ForumThread::where('user_associated', $user->id)->get();
         $files = UserFile::where('owned_by', $user->id)->get();
         if ($user->isTrainer == 1) {
