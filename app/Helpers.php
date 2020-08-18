@@ -330,7 +330,8 @@ function getUserWallElements($userId)
 function getUserGroups()
 {
     if (Auth::user()->isTrainer == 1) {
-        return Auth::user()->trainer->groups;
+        $groups = Auth::user()->trainer->groups;
+        return $groups->merge(Group::where('users', 'like', "%" . Auth::user()->id . "%")->get());
     } else {
         return Group::where('users', 'like', "%" . Auth::user()->id . "%")->get();
     }
@@ -353,4 +354,57 @@ function saveActivityLog($logArray)
 {
     $logController = new ActivityLogController();
     $logController->store($logArray);
+}
+
+
+/** Returns true if the training plan hasn't been seen by user after a file update */
+function haventISeenThisPlan($planId, $notificationArray)
+{
+    $trainingPlans = $notificationArray;
+    array_pop($trainingPlans); //Getting rid of 'totalChanges' element. 
+    foreach ($trainingPlans as $trainingPlan) {
+        if (reset($trainingPlan)->id == $planId) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function haventISeenThisFile($fileId, $notificationArray)
+{
+    $trainingPlans = $notificationArray;
+    array_pop($trainingPlans); //Getting rid of 'totalChanges' element. 
+    foreach ($trainingPlans as $trainingPlan) {
+        foreach (end($trainingPlan) as $idOfFile) {
+            if ($fileId == $idOfFile) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+function haventISeenThisThread($threadId, $notificationArray)
+{
+    $threads = $notificationArray;
+    array_pop($threads); //Getting rid of 'totalChanges' element. 
+    foreach ($threads as $thread_Id => $thread) {
+        if ($threadId == $thread_Id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function haventISeenThisGroupThread($threadId, $notificationArray)
+{
+    $group = $notificationArray;
+    array_pop($group); //Getting rid of 'totalChanges' element. 
+    foreach ($group as $groupId => $threads) {
+        foreach ($threads as $thread_Id => $thread) {
+            if ($threadId == $thread_Id) {
+                return true;
+            }
+        }
+    }
+    return false;
 }

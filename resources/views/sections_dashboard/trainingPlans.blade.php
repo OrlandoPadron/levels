@@ -31,7 +31,7 @@
                     <div class="info-trainingPlan-status">
                         <p class="title-plan bold">'{{$plan->title}}'</p>
                         <p class="duration-plan">{{$plan->start_date->format("d/m/Y")}} — {{$plan->end_date->format("d/m/Y")}}</p>
-                    <p class="status-plan"><i class="fas fa-check-circle"></i>Estado: <span class="status-plan-{{$plan->status == 'active' ? 'active' : 'finished'}}">{{$plan->status == 'active' ? 'Activo' : 'Finalizado'}}</span></p>
+                        <p class="status-plan"><i class="fas fa-check-circle"></i>Estado: <span class="status-plan-{{$plan->status == 'active' ? 'active' : 'finished'}}">{{$plan->status == 'active' ? 'Activo' : 'Finalizado'}}</span></p>
                     </div>
                 </div>
                 <div class="trainingPlan-description">
@@ -53,6 +53,10 @@
                     class="btn-gray-basic">Gestionar plan</button>
                     @endif
                 </div>
+                @if (haventISeenThisPlan($plan->id, $notifications['trainingPlansUpdates']))
+                <div class="notification-indicator"></div>
+                @endif
+            
             </div>
         </div>
 
@@ -101,6 +105,9 @@
                 class="btn-gray-basic">Gestionar plan</button>
                 @endif
             </div>
+            @if (haventISeenThisPlan($plan->id, $notifications['trainingPlansUpdates']))
+            <div class="notification-indicator"></div>
+            @endif
         </div>
 </div>
 

@@ -52,7 +52,7 @@ Route::post('/updateUserFile', 'UserFileController@update')->name('userFile.upda
 Route::post('/destroyUserFile', 'UserFileController@destroy')->name('userFile.destroy');
 
 // ->> JQ LOAD COMPONENTS 
-Route::get('/thread/{thread}', 'ForumThreadController@show')->name('thread.show');
+Route::get('/thread/{thread}/{isGroup?}', 'ForumThreadController@show')->name('thread.show');
 Route::get('/component/reply/{reply}', 'ForumReplyController@show')->name('reply.show');
 
 //Files uploads and downloads

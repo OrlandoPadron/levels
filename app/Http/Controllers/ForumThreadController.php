@@ -108,9 +108,13 @@ class ForumThreadController extends Controller
      * @param  \App\ForumThread  $forumThread
      * @return \Illuminate\Http\Response
      */
-    public function show($threadId)
+    public function show($threadId, $isGroup = null)
     {
-        return view("common_sections.thread", ["thread" => ForumThread::findOrFail($threadId)]);
+        if ($isGroup != null) {
+            return view("common_sections.thread", ["thread" => ForumThread::findOrFail($threadId), "isGroup" => true]);
+        } else {
+            return view("common_sections.thread", ["thread" => ForumThread::findOrFail($threadId)]);
+        }
     }
 
     /**

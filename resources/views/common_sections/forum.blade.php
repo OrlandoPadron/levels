@@ -77,11 +77,17 @@
 
     function goToThreads(thread_id, isGroup=0){
         console.log('abrimos thread');
-        $("#open-thread-container").load( "/thread/".concat(thread_id));
+        if (isGroup==1){
+            $("#open-thread-container").load( "/thread/".concat(thread_id).concat("/isGroup"));
+        }else{
+            $("#open-thread-container").load( "/thread/".concat(thread_id));
+
+        }
         $("#forum-header").html('<i style="margin-right: 15px;" class="fas fa-chevron-circle-left"></i>');
         $("#forum-header").append("Volver atrás");
         $("#forum-header").attr("onclick", 'closeThread()');
         $("#forum-header").addClass("clickable");
+        $("#notification_indicator_".concat(thread_id)).hide();
         $(".post-container").fadeOut(500);
         $(".pinned-threads").fadeOut(500);
         $(".non-pinned-threads").fadeOut(500);

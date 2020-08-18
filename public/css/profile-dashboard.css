@@ -225,6 +225,39 @@ li.active-dashboard a:hover {
     height: 100%;
     line-height: 50%;
 }
+#navbar-dashboard-items li {
+    position: relative;
+}
+.notification-indicator {
+    position: absolute;
+    top: 8px;
+    right: 7px;
+    width: 6px;
+    height: 6px;
+    background-color: red;
+    border-radius: 50%;
+}
+.trainingPlan-container > .notification-indicator {
+    top: 20px;
+    right: 25px;
+    width: 10px;
+    height: 10px;
+}
+.post-container > .notification-indicator {
+    top: 25px;
+    right: 25px;
+    width: 10px;
+    height: 10px;
+}
+
+#table-notification-status i {
+    color: #00d89d;
+    font-size: 18px;
+}
+
+#table-notification-status i.fa-times-circle {
+    color: #ff2a5d;
+}
 
 .content-dashboard {
     display: flex;
@@ -253,6 +286,7 @@ li.active-dashboard a:hover {
     grid-template-rows: auto;
     grid-template-areas: "status description options";
     margin-top: 30px;
+    position: relative;
     margin-bottom: 50px;
 }
 
@@ -778,6 +812,7 @@ a.collapse-button :hover {
 
 /*Forum Section*/
 .post-container {
+    position: relative;
     width: 100%;
     height: fit-content;
     border-radius: 10px;

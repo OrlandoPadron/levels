@@ -24,26 +24,44 @@
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Nombre</thstyle=>
-                                            <th>Tipo</th>
-                                            <th>Última modificación</th>
-                                            <th>Opciones</th>
-                                        </tr>
+                                        <th>Nombre</th>
+                                        <th>Tipo</th>
+                                        <th>Última modificación</th>
+                                        <th>Has visto el cambio</th>
+                                        <th>Opciones</th>
+                                    </tr>
                                     </thead>
                                     <tbody>
                                         @foreach(getFilesAssociatedWithPlanId($plan->id) as $key => $file)
                                             <tr>
-                                                <td>{{$file->file_name}}</td>
+                                                <td >
+                                                    {{$file->file_name}}
+                                                </td>
                                                 <td>{{'.'.$file->extension}}</td>
-                                                <td>{{$file->updated_at->diffForHumans()}}</td>
+                                                <td>
+                                                    {{$file->updated_at->diffForHumans()}}
+                                                    
+                                                </td>
+                                                <td id="table-notification-status">
+                                                    
+                                                    @if(haventISeenThisFile($file->id, $notifications['trainingPlansUpdates']))
+                                                    <i class="fas fa-times-circle"></i>
+                                                    @else
+                                                    <i class="fas fa-check-circle"></i>
+                                                    @endif
+
+                                                    
+                                                </td>
                                                 <td>
                                                     <div class="table-buttons">
                                                         <button onclick="viewFile('{{$file->url}}', {{$plan->id}})">Ver</button>
                                                         <button onclick="showUpdateFileMode({{$plan->id}},  
                                                             {'fileId': {{$file->id}}, 'userId': {{$user->id}}, 'filename': '{{$file->file_name}}','extension': '{{$file->extension}}' })">Actualizar</button>
+                                                        @if(Auth::user()->isTrainer)
                                                         <button onclick="deleteUserFile({{$user->id}}, 
                                                         '{{$file->file_name .'.'. $file->extension}}', {{$file->id}}, 
                                                         'TrainingPlanSection', {planId:{{$plan->id}}})">Eliminar</button>
+                                                        @endif
                                                     </div>
                                                 </td>
                                             </tr>
@@ -125,7 +143,6 @@
 
             if (newfileExtension == additionalContent['extension']){
                 updatePlanFile(fileId, userId, planId, fileName);
-
             }else{
                 $('#upload-error-'.concat(planId)).fadeIn(250);
                 $('#upload-error-'.concat(planId)).find("span").text(newFile.name);

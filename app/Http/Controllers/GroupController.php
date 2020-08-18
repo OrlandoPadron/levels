@@ -7,6 +7,7 @@ use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
 
 class GroupController extends Controller
@@ -59,12 +60,17 @@ class GroupController extends Controller
      */
     public function show($id, $tab)
     {
+        $homeController = new HomeController;
         $group = Group::find($id);
         $threads = $group->threads;
+        $notifications = array(
+            "threads" => $homeController->getGroupForumElementsUserHasntSeenYet(array($group)),
+        );
         return view('show-group', [
             'group' => $group,
             'tab' => $tab != null ? $tab : 'General',
             'threads' => $threads,
+            'notifications' => $notifications,
         ]);
     }
 

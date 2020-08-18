@@ -1,5 +1,5 @@
-{{-- @dump($notifications) --}}
-
+@dump($notifications)
+@dump(getUserGroups())
 <div class="content-trainer-dashboard" x-data="{planStatusModal:false, forumStatusModal: false, feeStatusModal: false, groupForumStatusModal:false}">
     <div class="container-dashboard">
         <h1 class="primary-blue-color"><i class="fas fa-dumbbell"></i> Panel de Entrenador</h1>

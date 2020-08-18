@@ -49,7 +49,7 @@
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if (Auth::user()->id == $user->id)
-                        <button onclick="deleteUserFile({{Auth::user()->id}}, {{$file->file_name .'.'.$file->extension}}, {{$file->id}})">Eliminar</button>
+                        <button onclick="deleteUserFile({{Auth::user()->id}}, '{{$file->file_name .'.'.$file->extension}}', {{$file->id}}, 'AthleteFileSection')">Eliminar</button>
                         @endif
                     </td>
                 </tr>     
@@ -61,7 +61,7 @@
     
     </div>
     {{-- !TODO MEJORAR  --}}
-    @if(Auth::user()->isTrainer)
+    @if(Auth::user()->isTrainer || Auth::user()->id == $user->id)
     <div class="file-table-container">
         <h2 class="primary-blue-color">Archivos compartidos {{Auth::user()->id == $user->id ? 'contigo' : 'con ' . $user->name. ' '. $user->surname}}</h2>
         <table id="files-table2" class="fee-table file-datatable">
@@ -69,14 +69,19 @@
                 <tr>
                     <th>Nombre del fichero</th>
                     <th>Formato</th>
+                    <th>Propietario</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach(getFilesSharedWithUser($user->id) as $key => $file)
+                @php
+                    $owned_by = $file->user->name . ' ' . $file->user->surname;
+                @endphp
                 <tr>
                     <td>{{$file->file_name}}</td>
                     <td>{{strtoupper($file->extension)}}</td>
+                    <td>{{$owned_by}}</td>
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if($file->owned_by == Auth::user()->id)

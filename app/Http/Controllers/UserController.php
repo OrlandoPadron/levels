@@ -4,17 +4,18 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Athlete;
-use App\ForumThread;
 use App\Invoice;
 use App\UserFile;
 use Carbon\Carbon;
+use App\ForumThread;
 use Illuminate\Http\Request;
+use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 
-use function GuzzleHttp\json_encode;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\HomeController;
 
 class UserController extends Controller
 {
@@ -35,8 +36,13 @@ class UserController extends Controller
                 'userFiles' => $files,
             ]);
         } else {
+            $homeController = new HomeController;
             $trainingPlans = $user->athlete->trainingPlans;
             $invoices = Invoice::where('athlete_id', $user->athlete->id)->orderBy('id', 'DESC')->get();
+            $notifications = array(
+                "trainingPlansUpdates" => $homeController->getArrayOfTrainingPlansUpdates(),
+                "threads" => $homeController->getForumElementsUserHasntSeenYet($threads),
+            );
             return view('show-profile', [
                 'user' => $user,
                 'trainingPlans' => $trainingPlans,
@@ -44,6 +50,7 @@ class UserController extends Controller
                 'tab' => $tab != null ? $tab : 'general',
                 'threads' => $threads,
                 'userFiles' => $files,
+                'notifications' => $notifications,
             ]);
         }
     }

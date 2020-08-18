@@ -1,11 +1,3 @@
-{{-- {{test()}} --}}
-@dump($notifications)
-<form action="{{route("user.updateAccess")}}" method="POST">
-    @csrf
-    <input type="text" value="1" name="id">
-    <input type="text" value="forum" name="method">
-    <button type="submit">go</button>
-</form>
 <div class="box-container shadow-container">
     <div class="box-image">
         <img class="inner-shadow" src="/uploads/avatars/{{$user->athlete->trainer_id != null ? getTrainerByTrainerId($user->athlete->trainer_id)->user->user_image : 'default_avatar.jpg'}}" alt="">
@@ -34,7 +26,11 @@
                     <i class="fas fa-check-circle"></i>
                 @endif
             </p>
-            <p>Sin actividad reciente</p>
+            <p>{{$notifications['trainingPlansUpdates']['totalChanges'] > 0 ? 
+                ($notifications['trainingPlansUpdates']['totalChanges'] == 1 ? 
+                  '1 cambio pendiente' : $notifications['trainingPlansUpdates']['totalChanges'] . ' cambios pendientes' ) 
+                : 'Sin actividad reciente'}}
+            </p>
         </div>
     </div>
     <div class="box-container-notification shadow-container forum-notification hover-scale"
@@ -57,7 +53,9 @@
             </p>
         </div>
     </div>
-    <div class="box-container-notification shadow-container forumgroup-notification hover-scale">
+    <div class="box-container-notification shadow-container forumgroup-notification hover-scale"
+            @click="groupForumStatusModal=!groupForumStatusModal" 
+            @keydown.escape.window="groupForumStatusModal=false">
         <div class="box-icon">
             <div class="box-icon-container">
                 <i class="fas fa-users"></i>

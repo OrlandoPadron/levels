@@ -16,7 +16,7 @@
       <div class="item-list {{request()->routeIs('athlete.home') ? 'active' : ''}}" onclick="location.href='{{route('home')}}'">
         <li>
           <div class="icon">
-            <i class="fas fa-home"></i>
+            <i class="fas fa-home" style="margin-left: 5px"></i>
           </div>
           <div class="text-list">
             <a href="{{route('home')}}">Inicio</a>

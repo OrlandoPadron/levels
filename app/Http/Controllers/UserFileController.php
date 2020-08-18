@@ -98,7 +98,7 @@ class UserFileController extends Controller
                     $group->save();
                 }
                 //Modify some values to represent a group file.
-                $userFile->file_type = 2;
+                // $userFile->file_type = 2;
                 $userFile->save();
                 $fileName = $userFile->file_name . '.' . $userFile->extension;
                 $log = array(
@@ -212,5 +212,16 @@ class UserFileController extends Controller
     public function destroy(Request $request)
     {
         UserFile::find($request['fileId'])->delete();
+
+        //Let's check if the file 
+        $fileId = $request['fileId'];
+        $groups = getUserGroups();
+        foreach ($groups as $group) {
+            $groupFiles = (array) $group->files;
+            if (in_array($fileId, $groupFiles)) {
+                $group->files = array_values(array_diff($groupFiles, (array) $fileId));
+                $group->save();
+            }
+        }
     }
 }

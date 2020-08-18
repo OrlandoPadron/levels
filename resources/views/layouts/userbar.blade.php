@@ -35,7 +35,7 @@
           <a href="{{route('profile.show', [Auth::user()->id, "general"])}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>
           <div class="dropdown-button-userbar-content-item">
-          <a href="{{route('profileEdit.show')}}"><i class="fas fa-user-edit"></i>Gestionar perfil</a>
+          <a href="{{route('profileEdit.show')}}"><i class="fas fa-user-cog"></i>Configuración</a>
           </div>
           
           @if(Auth::user()->admin==1)
@@ -43,9 +43,6 @@
               <a href=""><i class="fas fa-user-cog"></i>Panel admin</a>
             </div>
           @endif
-          <div class="dropdown-button-userbar-content-item">
-            <a href=""><i class="fas fa-cog"></i>Configuración</a>
-          </div>
           <div class="dropdown-button-userbar-content-logout">
             <a href="{{ route('logout') }}"
             onclick="event.preventDefault();

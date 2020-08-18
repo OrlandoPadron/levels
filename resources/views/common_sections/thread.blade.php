@@ -8,8 +8,11 @@
         </div>
     </div>
     <div class="footer-add-reply">
-        <a>Cancelar</a>
+        @if (isset($isGroup))
+        <button onclick="newReply({{$thread->id}}, 1)" class="btn-purple-basic ">Responder</button>
+        @else
         <button onclick="newReply({{$thread->id}})" class="btn-purple-basic ">Responder</button>
+        @endif
     </div>
 </div>
 
@@ -128,7 +131,7 @@
         theme: 'snow'  // or 'bubble'
     });
 
-    function newReply(threadId){
+    function newReply(threadId, isGroup=0){
         if (quill_newReply.getLength() > 1){
             var description = quill_newReply.root.innerHTML;
             var reply;
@@ -153,6 +156,13 @@
                             }
                         });
                         quill_newReply.setContents([]);
+                        if (isGroup == 1){
+                            console.log('Desde group');
+                            updateNotificationLogJson(threadId, 'groupForum');
+                        }else{
+                            updateNotificationLogJson(threadId, 'forum');
+
+                        }
                         
                     },
                     error: function(){

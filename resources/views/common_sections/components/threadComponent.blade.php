@@ -10,7 +10,14 @@
             <img src="/uploads/avatars/{{getUser($thread->author)->user_image}}" alt="user_img">
             <div class="post-details-autor">
                 <p class="bold">{{$thread->title}}</p>
-                <p>Creado por <span>{{$thread->author == Auth::user()->id ? 'ti' : getName($thread->author)}}<span class="italic" style="margin-left: 5px;">({{ucfirst($thread->created_at->diffForHumans())}}) </span></span></p>
+                <p>Creado por 
+                    <span>{{$thread->author == Auth::user()->id ? 'ti' : getName($thread->author)}}
+                        <span class="italic" style="margin-left: 5px;">
+                            ({{ucfirst($thread->created_at->diffForHumans())}}) 
+                        </span>
+                        <span class="low-emphasis">· {{$thread->created_at->format("d/m/Y")}}</span>
+                    </span>
+                </p>
             </div>
         </div>
         @if($thread->author == Auth::user()->id || Auth::user()->admin)
@@ -65,5 +72,16 @@
             <button onclick="closeThreadEditor({{$thread->id}})" class="btn-gray-basic"><i style="margin-right: 5px;" class="fas fa-times"></i> Cancelar</button>
         </div> 
     </div>
+    @endif
+    @if($generalThreadView)
+        @if(isset($group))
+            @if (haventISeenThisGroupThread($thread->id, $notifications['threads']))
+                <div id="notification_indicator_{{$thread->id}}" class="notification-indicator"></div>
+            @endif
+        @else
+            @if (haventISeenThisThread($thread->id, $notifications['threads']))
+                <div id="notification_indicator_{{$thread->id}}" class="notification-indicator"></div>
+            @endif
+        @endif
     @endif
 </div>

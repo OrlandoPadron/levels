@@ -17,12 +17,6 @@
  
 </div>
 
-
-{{-- <form action="{{route('profile.uploadFile')}}" enctype="multipart/form-data" method="POST">
-    @csrf
-    <label for="file-upload">Subir fichero</label>
-    <input name="user_id" value="{{Auth::user()->id}}">
-</form> --}}
 <div class="general-file-table-container">
     <div class="file-table-container">
         <h2 class="primary-blue-color">Archivos del grupo</h2>

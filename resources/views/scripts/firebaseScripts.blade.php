@@ -407,6 +407,7 @@
             },
             success: function(){
                 alert("Su archivo se ha actualizado correctamente."); 
+                updateNotificationLogJson(planId, 'trainingPlans');
                 location.reload();
                 
             },
