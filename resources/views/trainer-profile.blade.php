@@ -6,7 +6,7 @@
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
-            <div class="text-info-dashboard">
+            <div class="text-info-dashboard {{Auth::user()->id == $user->id ? '' : 'no-additional-info'}}">
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
                 <div class="text-info-user-type">
                     <label id="user_type" class="primary-blue-color">Entrenador</label>
@@ -16,17 +16,21 @@
                         <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
                     </div>
                 </div>
+                @if(Auth::user()->id == $user->id)
                 <div id="user-dashboard-buttons-container">
                     <button class="btn-purple-basic"
                     @click="openShowProfileData=!openShowProfileData" 
                     @keydown.escape.window="openShowProfileData=false"
                     >Información adicional</button>
                 </div>
+                @endif
             </div>
                 {{-- @include('modals.additionalInfoModal') --}}
         </div>
     </div>
-    @include('modals.additionalInfoModal')
+    @if(Auth::user()->id == $user->id)
+        @include('modals.additionalInfoModal')
+    @endif
 
     <!-- Start 'Navbar dashboard' -->
     <div class="navbar-dashboard">

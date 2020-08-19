@@ -29,13 +29,13 @@
         @if(Auth::user()->admin==1)
         <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
         @else
-        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" style="height: 180px;">
+        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
         @endif
           <div class="dropdown-button-userbar-content-item">
           <a href="{{route('profile.show', [Auth::user()->id, "general"])}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>
           <div class="dropdown-button-userbar-content-item">
-          <a href="{{route('profileEdit.show')}}"><i class="fas fa-user-cog"></i>Configuración</a>
+          <a href="{{route('profileEdit.show')}}"><i class="fas fa-cog"></i>Configuración</a>
           </div>
           
           @if(Auth::user()->admin==1)

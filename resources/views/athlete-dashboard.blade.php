@@ -6,7 +6,12 @@
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
-            <div class="text-info-dashboard">
+            <div class="text-info-dashboard 
+                {{$user->athlete->trainer_id != null ? 
+                (iAmcurrentlyTrainingThisAthlete($user->athlete->id) ? '' : 'no-additional-info')
+                : 
+                ''}}
+                ">
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
                 <div class="text-info-user-type">
                     <label id="user_type" class="primary-blue-color">{{$user->isTrainer == 0 ? 'Deportista' : 'Entrenador'}}</label>
@@ -16,11 +21,19 @@
                         <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
                     </div>
                 </div>
-                <div id="user-dashboard-buttons-container">
+                <div id="user-dashboard-buttons-container" style="
+                    {{$user->athlete->trainer_id != null ? 
+                    (iAmcurrentlyTrainingThisAthlete($user->athlete->id) ? '' : 'margin-top:0px;')
+                    : 
+                    ''}}">
+                    @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
+
                     <button class="btn-purple-basic"
                     @click="openShowProfileData=!openShowProfileData" 
                     @keydown.escape.window="openShowProfileData=false"
                     >Información adicional</button>
+                    @endif
+
                     @if ($user->athlete->trainer_id != null)
                         @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                             <form action="{{route('stopTrainingThisAthlete')}}" method="POST">
@@ -41,7 +54,9 @@
                 </div>
 
             </div>
+            @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
                 @include('modals.additionalInfoModal')
+            @endif
         </div>
     </div>
     @if(iAmcurrentlyTrainingThisAthlete($user->athlete->id))
@@ -125,6 +140,9 @@
                 <div id="cuenta-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
                     @if ($user->account_activated==0)
                         @include('page_messages.account_deactivated_message')
+                        @if (Auth::user()->admin == 1)
+                            @include('sections_dashboard.account')
+                        @endif
                     @else
                         @include('sections_dashboard.account')
                     @endif

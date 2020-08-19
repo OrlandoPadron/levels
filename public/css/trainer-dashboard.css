@@ -112,6 +112,10 @@
     border: 4px solid #000f2d;
 }
 
+.athlete-component:hover {
+    color: #6013bb;
+}
+
 .athlete-component img:hover {
     cursor: pointer;
 }

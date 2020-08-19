@@ -3,7 +3,7 @@
     <div class="trainer-info-message">
         @if($user->athlete->trainer_id != null)
             <p>{{getTrainersNameByTrainerId($user->athlete->trainer_id)}} es el entrenador de {{$user->name .' '. $user->surname}}.</p>
-            <p>No podrás entrenar a {{$user->name}} si ya está entrenando otra persona.</p>
+            <p>No podrás entrenar a un deportista que ya tiene entrenador.</p>
         @else
             <p>Puedes entrenar a {{$user->name .' '. $user->surname}}.</p>
             <p>Pulsa sobre el botón <span class="bold">'Entrenar'</span> para empezar.</p>

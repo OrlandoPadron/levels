@@ -31,7 +31,7 @@ class HomeController extends Controller
     public function index()
     {
         if (Auth::user()->isTrainer) {
-            $groups = Auth::user()->trainer->groups;
+            $groups = getUserGroups();
             $trainer_notifications = array(
                 "trainingPlansUpdates" => $this->getArrayOfTrainingPlansUpdates(),
                 "athletesHaventPaid" => $this->getCollectionOfAthletesWhoHaventPayMonthYet(Auth::user()->trainer->id),

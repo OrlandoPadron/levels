@@ -67,6 +67,10 @@ body {
     border: 2px solid white;
 }
 
+li.searchbar-user-item:hover {
+    cursor: pointer;
+}
+
 /* width */
 .search-dropdown::-webkit-scrollbar {
     width: 10px;
@@ -260,10 +264,8 @@ body {
 
 .dropdown-button-userbar-content {
     position: absolute;
-    display: flex;
-    flex-direction: column;
     width: 150px;
-    height: 220px;
+    height: fit-content;
     top: 100px;
     margin-top: 15px;
     margin-left: -95px;
@@ -304,9 +306,8 @@ body {
 .dropdown-button-userbar-content-logout {
     display: flex;
     align-items: center;
-    margin-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-top: 25px;
+    padding-bottom: 10px;
     margin-left: 30px;
 }
 

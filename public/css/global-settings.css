@@ -867,7 +867,8 @@ div.modal-body {
 }
 
 .info-account.info-account.no-athletes-to-train {
-    margin: 0px;
+    margin: 0;
+    margin-top: 5px;
 }
 
 .trainer-info-account {

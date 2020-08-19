@@ -33,6 +33,10 @@
     flex-direction: column;
 }
 
+.no-additional-info {
+    justify-content: center;
+}
+
 #user-dashboard-buttons-container {
     display: flex;
     flex-direction: row;

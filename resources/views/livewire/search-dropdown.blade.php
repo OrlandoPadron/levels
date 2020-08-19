@@ -25,7 +25,10 @@
         @if($searchResults->count()>0)
           <ul>
               @foreach ($searchResults as $user)
-                <li>
+                <li
+                  class="searchbar-user-item"
+                  onclick="location.href='{{route('profile.show', [$user->id, 'general'])}}'"
+                >
 
                     <img
                     class="inner-shadow"
