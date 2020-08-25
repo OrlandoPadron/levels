@@ -25,7 +25,6 @@
                 </div>
                 @endif
             </div>
-                {{-- @include('modals.additionalInfoModal') --}}
         </div>
     </div>
     @if(Auth::user()->id == $user->id)

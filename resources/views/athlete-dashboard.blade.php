@@ -2,6 +2,9 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
+@php
+    $numOfPlansUpdated= numOfPlansAssociatedWithUserIHaventSeen($user->id, $notifications['trainingPlansUpdates']);
+@endphp
 <div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false, uploadFile:false, shareFile:false}">
     <div class="container-dashboard">
         <div class="userinfo">
@@ -67,7 +70,7 @@
                     <ul id="navbar-dashboard-items">
                         <li id="general-navbar" onclick="changeUrlParameters('general')" x-on:click.prevent @click="sectionTab = 'general'" :class="{'active-dashboard': sectionTab === 'general'}"><a href="#">Detalles generales</a></li>
                         <li id="plan-navbar" onclick="changeUrlParameters('plan')" x-on:click.prevent @click="sectionTab = 'plan'" :class="{'active-dashboard': sectionTab === 'plan'}">
-                            @if ($notifications['trainingPlansUpdates']['totalChanges'] > 0)
+                            @if ($numOfPlansUpdated > 0)
                             <div class="notification-indicator"></div>
                             @endif
                             <a href="#">Planes de entrenamiento</a>

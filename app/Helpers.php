@@ -160,11 +160,17 @@ function getUserRole($groupId, $userId)
 
 function isUserMemberOfThisGroup($groupId, $userId)
 {
+    $group = Group::findOrFail($groupId);
     $groupMembers = (array) Group::find($groupId)->users;
     if (in_array($userId, $groupMembers)) {
         return true;
     } else {
-        return false;
+        //Check if user is group creator
+        if ($group->creator->user->id == $userId) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
@@ -356,6 +362,27 @@ function saveActivityLog($logArray)
     $logController->store($logArray);
 }
 
+/**
+ * Function that returns the count of plan changes Auth user hasn't seen yet. 
+ * Used in order to represent a visual indicator in userbar's section "Planes de entrenamiento". 
+ */
+function numOfPlansAssociatedWithUserIHaventSeen($userId, $notificationArray)
+{
+    $count = 0;
+    $trainingPlans = $notificationArray;
+    $user = User::findOrFail($userId);
+
+    if ($user->isTrainer) return 0;
+
+    array_pop($trainingPlans); //Getting rid of 'totalChanges' element. 
+    foreach ($trainingPlans as $trainingPlan) {
+        $athlete = Athlete::findOrFail(reset($trainingPlan)->athleteAssociated->id);
+        if ($athlete->id == $user->athlete->id) {
+            $count++;
+        }
+    }
+    return $count;
+}
 
 /** Returns true if the training plan hasn't been seen by user after a file update */
 function haventISeenThisPlan($planId, $notificationArray)
