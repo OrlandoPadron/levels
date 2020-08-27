@@ -14,17 +14,22 @@
                         @php
                             $fullUserName = $user->name . ' ' . $user->name2 . ' ' . $user->surname  . ' ' . $user->surname2 ;
                             trim($fullUserName);
-                            $gender = Auth::user()->gender; 
+                            $gender = $user->gender; 
                             
                             //Additional info
                             $additionalInfo = null;
-                            if(Auth::user()->additional_info != '{}'){
-                                $decrypt = Crypt::decryptString(Auth::user()->additional_info);
+                            if($user->additional_info != '{}'){
+                                $decrypt = Crypt::decryptString($user->additional_info);
                                 $additionalInfo = json_decode($decrypt, true);
                             }else{
-                                $additionalInfo = json_decode(Auth::user()->additional_info, true);
+                                $additionalInfo = json_decode($user->additional_info, true);
                             }
                             $birthday = isset($additionalInfo['additionalInfo']['birthday']) ? $additionalInfo['additionalInfo']['birthday'] : null;
+                            $age = null;
+                            if ($birthday != null){
+                                $birthdayDateTime = new DateTime($birthday);
+                                $age = $birthdayDateTime->diff(new DateTime())->y;
+                            }
                             $dni = isset($additionalInfo['additionalInfo']['dni']) ? $additionalInfo['additionalInfo']['dni'] : 'Sin especificar';
                             $address = isset($additionalInfo['additionalInfo']['address']) ? $additionalInfo['additionalInfo']['address'] : 'Sin especificar';
                             $phone = isset($additionalInfo['additionalInfo']['phone']) ? $additionalInfo['additionalInfo']['phone'] : 'Sin especificar';
@@ -54,7 +59,11 @@
                                             date("d/m/Y", strtotime($birthday))
                                             :
                                             'Sin especificar'
-                                        }}</p>
+                                        }}
+                                        @if($age != null)
+                                        <span class="dot-separation low-emphasis">·</span><span  class="low-emphasis"> {{$age}} años</span>
+                                        @endif 
+                                    </p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Sexo</span>
@@ -92,7 +101,7 @@
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Cuenta creada</span> 
-                                    <p>{{$user->created_at->format("d/m/Y")}} <span class="dot-separation">·</span> {{$user->created_at->diffForHumans()}}</p>
+                                    <p>{{$user->created_at->format("d/m/Y")}} <span class="dot-separation low-emphasis">·</span> <span class="low-emphasis">{{$user->created_at->diffForHumans()}}</span></p>
                                 </li>
                             @endif
                         </ul>
