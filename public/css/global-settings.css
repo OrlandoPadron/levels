@@ -1312,3 +1312,15 @@ table.data-table {
     font-size: 14px;
     margin-left: 6px;
 }
+
+/*Edit Profile's Personal Information */
+.edit-profile-subsection {
+    margin-top: 40px;
+    color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.edit-profile-subsection i {
+    color: #000f2d;
+    margin-right: 5px;
+}
+/*End Edit Profile's Personal Information */

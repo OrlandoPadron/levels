@@ -12,10 +12,12 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Crypt;
 
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
@@ -60,6 +62,111 @@ class UserController extends Controller
         return view('edit-profile');
     }
 
+    /**
+     * Updates user's personal informations. Some of this 
+     */
+    public function updateProfileInfo(Request $request)
+    {
+        //Updating user's name and surname
+        if (isset($request['name']) && isset($request['surname'])) {
+            $this->updateNames($request['name'], $request['surname']);
+        }
+
+        //Getting user object.  
+        $user = User::findOrFail(Auth::user()->id);
+
+        //Gender
+        if (isset($request['gender'])) {
+            $option = $request['gender'];
+            switch ($option) {
+                case 'man':
+                    $user->gender = "male";
+                    break;
+                case 'woman':
+                    $user->gender = "female";
+                    break;
+                default:
+                    $user->gender = null;
+                    break;
+            }
+        }
+
+        //Trainers have no additional information left. 
+        if (Auth::user()->isTrainer) {
+            $user->save();
+            return Redirect::back();
+        }
+
+        //Athlete's additional information
+        $additionalInfo_array = array();
+
+        //Birthday
+        if (isset($request['birthday'])) {
+            $additionalInfo_array['additionalInfo']['birthday'] = $request['birthday'];
+        }
+        //DNI
+        if (isset($request['dni'])) {
+            $additionalInfo_array['additionalInfo']['dni'] = $request['dni'];
+        }
+        //Address
+        if (isset($request['address'])) {
+            $additionalInfo_array['additionalInfo']['address'] = $request['address'];
+        }
+        //Phone Number
+        if (isset($request['phone_number'])) {
+            $additionalInfo_array['additionalInfo']['phone'] = $request['phone_number'];
+        }
+        //Occupation 
+        if (isset($request['occupation'])) {
+            $additionalInfo_array['additionalInfo']['occupation'] = $request['occupation'];
+        }
+
+        $user->additional_info = Crypt::encryptString(json_encode($additionalInfo_array));
+
+
+        $user->save();
+
+        return Redirect::back();
+    }
+
+    /**
+     * Updates user's name depending if numerous values were issued. 
+     */
+    private function updateNames($nameUnsplit, $surnameUnsplit)
+    {
+
+        $names = explode(" ", trim($nameUnsplit));
+        $surnames = explode(" ", trim($surnameUnsplit));
+
+        $user = User::find(Auth::user()->id);
+
+        //Name case 
+        if (count($names) >= 2) {
+            $user->name = $names[0];
+            $name2 = null;
+            for ($i = 1; $i < count($names); $i++) {
+                $name2 .= $names[$i] . ' ';
+            }
+            $user->name2 = trim($name2);
+        } else {
+            $user->name = $names[0];
+            $user->name2 = null;
+        }
+
+        //Surname case 
+        if (count($surnames) >= 2) {
+            $user->surname = $surnames[0];
+            $surname2 = null;
+            for ($i = 1; $i < count($surnames); $i++) {
+                $surname2 .= $surnames[$i] . ' ';
+            }
+            $user->surname2 = trim($surname2);
+        } else {
+            $user->surname2 = $surnames[0];
+            $user->surname2 = null;
+        }
+        $user->save();
+    }
 
     public function updateAvatar(Request $request)
     {

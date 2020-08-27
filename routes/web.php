@@ -36,6 +36,7 @@ Route::get('/home/dashboard/{tab}', 'HomeController@athleteHome')->name('athlete
 Route::get('/profile/edit', 'UserController@showEditProfile')->name('profileEdit.show');
 Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->name('profile.show');
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
+Route::post('/profile/updateprofile', 'UserController@updateProfileInfo')->name('profile.edit');
 
 // Forum, threads and replies 
 Route::post('/updateThread', 'ForumThreadController@update')->name('thread.update');

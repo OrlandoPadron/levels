@@ -13,6 +13,24 @@
                     <div class="text-container-content">
                         @php
                             $fullUserName = $user->name . ' ' . $user->name2 . ' ' . $user->surname  . ' ' . $user->surname2 ;
+                            trim($fullUserName);
+                            $gender = Auth::user()->gender; 
+                            
+                            //Additional info
+                            $additionalInfo = null;
+                            if(Auth::user()->additional_info != '{}'){
+                                $decrypt = Crypt::decryptString(Auth::user()->additional_info);
+                                $additionalInfo = json_decode($decrypt, true);
+                            }else{
+                                $additionalInfo = json_decode(Auth::user()->additional_info, true);
+                            }
+                            $birthday = isset($additionalInfo['additionalInfo']['birthday']) ? $additionalInfo['additionalInfo']['birthday'] : null;
+                            $dni = isset($additionalInfo['additionalInfo']['dni']) ? $additionalInfo['additionalInfo']['dni'] : 'Sin especificar';
+                            $address = isset($additionalInfo['additionalInfo']['address']) ? $additionalInfo['additionalInfo']['address'] : 'Sin especificar';
+                            $phone = isset($additionalInfo['additionalInfo']['phone']) ? $additionalInfo['additionalInfo']['phone'] : 'Sin especificar';
+                            $occupation = isset($additionalInfo['additionalInfo']['occupation']) ? $additionalInfo['additionalInfo']['occupation'] : 'Sin especificar';
+                                            
+                        
                         @endphp
                         <ul>
                             @if($user->isTrainer)
@@ -31,23 +49,38 @@
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Fecha de nacimiento</span>
-                                    <p>13/03/1997</p>
+                                    <p>{{
+                                        $birthday != null ? 
+                                            date("d/m/Y", strtotime($birthday))
+                                            :
+                                            'Sin especificar'
+                                        }}</p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Sexo</span>
-                                    <p>Hombre</p>
+                                    @switch($gender)
+                                        @case('male')
+                                            <p>Hombre</p>
+                                            @break
+                                        @case('female')
+                                            <p>Mujer</p>
+                                            @break
+                                        @default
+                                            <p>Sin especificar</p>
+                                            @break
+                                    @endswitch
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">DNI</span> 
-                                    <p>46378291W</p>
+                                    <p>{{$dni}}</p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Dirección actual</span> 
-                                    <p>c/ Prueba de Texto, Nº 22</p>
+                                    <p>{{$address}}</p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Teléfono de contacto</span> 
-                                    <p>663 345 312</p>
+                                    <p>{{$phone}}</p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Correo electrónico</span> 
@@ -55,7 +88,7 @@
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Profesión</span> 
-                                    <p>Ingeniero Informático</p>
+                                    <p>{{$occupation}}</p>
                                 </li>
                                 <li>
                                     <span class="text-container-content-section">Cuenta creada</span> 
