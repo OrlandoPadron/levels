@@ -5,31 +5,6 @@
       @csrf
       <li class="item-with-input">
         <p>Nombre</p>
-        @php
-          $userName = Auth::user()->name . ' ' . Auth::user()->name2;
-          trim($userName);
-          $userSurnames = Auth::user()->surname . ' ' . Auth::user()->surname2;
-          trim($userSurnames);
-
-          $gender = Auth::user()->gender; 
-
-          //Additional info
-          $additionalInfo = null;
-          if(Auth::user()->additional_info != '{}'){
-            $decrypt = Crypt::decryptString(Auth::user()->additional_info);
-            $additionalInfo = json_decode($decrypt, true);
-          }else{
-            $additionalInfo = json_decode(Auth::user()->additional_info, true);
-          }
-          $birthday = isset($additionalInfo['additionalInfo']['birthday']) ? $additionalInfo['additionalInfo']['birthday'] : null;
-          $dni = isset($additionalInfo['additionalInfo']['dni']) ? $additionalInfo['additionalInfo']['dni'] : null;
-          $address = isset($additionalInfo['additionalInfo']['address']) ? $additionalInfo['additionalInfo']['address'] : null;
-          $phone = isset($additionalInfo['additionalInfo']['phone']) ? $additionalInfo['additionalInfo']['phone'] : null;
-          $occupation = isset($additionalInfo['additionalInfo']['occupation']) ? $additionalInfo['additionalInfo']['occupation'] : null;
- 
-
-
-        @endphp
         <input type="text" name="name" value="{{$userName}}" required>
       </li>
       <li class="item-with-input">

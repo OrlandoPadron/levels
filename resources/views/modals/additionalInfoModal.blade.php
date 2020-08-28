@@ -16,14 +16,6 @@
                             trim($fullUserName);
                             $gender = $user->gender; 
                             
-                            //Additional info
-                            $additionalInfo = null;
-                            if($user->additional_info != '{}'){
-                                $decrypt = Crypt::decryptString($user->additional_info);
-                                $additionalInfo = json_decode($decrypt, true);
-                            }else{
-                                $additionalInfo = json_decode($user->additional_info, true);
-                            }
                             $birthday = isset($additionalInfo['additionalInfo']['birthday']) ? $additionalInfo['additionalInfo']['birthday'] : null;
                             $age = null;
                             if ($birthday != null){

@@ -21,6 +21,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('user.exists');
+    }
+
     //Shows user's profile
     public function showProfile($id, $tab)
     {
@@ -162,10 +174,38 @@ class UserController extends Controller
             }
             $user->surname2 = trim($surname2);
         } else {
-            $user->surname2 = $surnames[0];
+            $user->surname = $surnames[0];
             $user->surname2 = null;
         }
         $user->save();
+    }
+
+
+    /**
+     * Updates user's third parties account information. 
+     */
+    public function updateThirdPartiesInfo(Request $request)
+    {
+        //Getting user object.  
+        $user = Auth::user();
+
+        //Users's additional information
+        $additionalInfo = null;
+        if ($user->additional_info != '{}') {
+            $decrypt = Crypt::decryptString($user->additional_info);
+            $additionalInfo = json_decode($decrypt, true);
+        } else {
+            $additionalInfo = json_decode($user->additional_info, true);
+        }
+
+        foreach ($request->request as $key => $value) {
+            if ($key != '_token') {
+                $additionalInfo['thirdParties'][$key] = $value;
+            }
+        }
+        $user->additional_info = Crypt::encryptString(json_encode($additionalInfo));
+        $user->save();
+        return Redirect::back();
     }
 
     public function updateAvatar(Request $request)

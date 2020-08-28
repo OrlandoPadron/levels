@@ -2,6 +2,22 @@
 <!-- Firebase Scripts -->
 @include('scripts.firebaseScripts')
 @endsection
+@php
+    //Additional info
+    $additionalInfo = null;
+    if($user->additional_info != '{}'){
+        $decrypt = Crypt::decryptString($user->additional_info);
+        $additionalInfo = json_decode($decrypt, true);
+    }else{
+        $additionalInfo = json_decode($user->additional_info, true);
+    }
+    if(isset($additionalInfo['thirdParties'])){
+        foreach($additionalInfo['thirdParties'] as $key => $value) {
+            if(empty($value)) unset($additionalInfo['thirdParties'][$key]); 
+        }        
+    }
+
+@endphp
 <div class="content-profile-dashboard" x-data="{openShowProfileData: false, sectionTab: '{{$tab}}', openNewThreadForm:false, uploadFile: false}">
     <div class="container-dashboard">
         <div class="userinfo">
@@ -10,11 +26,13 @@
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
                 <div class="text-info-user-type">
                     <label id="user_type" class="primary-blue-color">Entrenador</label>
-                    <div class="athlete-accounts-links">
-                        <a href="https://www.strava.com/?hl=es" target="_blank">Strava</a>
-                        <a href="https://connect.garmin.com/" target="_blank">Garmin Connect</a>
-                        <a href="https://www.trainingpeaks.com/" target="_blank">TrainingPeaks</a>
-                    </div>
+                    @if (isset($additionalInfo['thirdParties']) && count($additionalInfo['thirdParties']) >= 1)
+                        <div class="athlete-accounts-links">
+                            @foreach($additionalInfo['thirdParties'] as $service => $url)
+                                <a href="{{$url}}" target="_blank">{{ucfirst($service)}}</a>
+                            @endforeach
+                        </div>
+                    @endif
                 </div>
                 @if(Auth::user()->id == $user->id)
                 <div id="user-dashboard-buttons-container">

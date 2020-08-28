@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\ActivityLogController;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
  * Function used to determine if a given trainer is currently training a 
@@ -160,8 +161,12 @@ function getUserRole($groupId, $userId)
 
 function isUserMemberOfThisGroup($groupId, $userId)
 {
-    $group = Group::findOrFail($groupId);
-    $groupMembers = (array) Group::find($groupId)->users;
+    try {
+        $group = Group::findOrFail($groupId);
+    } catch (ModelNotFoundException $ex) {
+        return false;
+    }
+    $groupMembers = (array) $group->users;
     if (in_array($userId, $groupMembers)) {
         return true;
     } else {

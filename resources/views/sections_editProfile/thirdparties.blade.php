@@ -6,21 +6,24 @@
     Para ello, añade la dirección a tu perfil en los campos correspondientes.
   </p>
   <ul>
-    <li class="item-with-input">
-      <p>Strava</p>
-      <input type="text" value="" placeholder="https://www.strava.com/athletes/tu-id">
-    </li>
-    <li class="item-with-input">
+    <form action="{{route('profile.thirdparties')}}" method="POST" id="profile-thirdparties-form">
+      @csrf
+      <li class="item-with-input">
+        <p>Strava</p>
+        <input type="url" value="{{$strava != null ? $strava : ''}}" name="strava" placeholder="https://www.strava.com/athletes/tu-id">
+      </li>
+    {{-- <li class="item-with-input">
       <p>Garmin Connect</p>
       <input type="text" value="" placeholder="Tu perfil de Garmin Connect">
     </li>
     <li class="item-with-input">
       <p>TrainingPeaks</p>
       <input type="text" value="" placeholder="Tu perfil de TrainingPeaks">
-    </li>
+    </li> --}}
+    </form>
   </ul>
 
 </div>
 <div class="settings-save-changes">
-  <button class="btn-add-basic">Guardar cambios</button>
+  <button class="btn-add-basic" type="submit" form="profile-thirdparties-form">Guardar cambios</button>
 </div>
