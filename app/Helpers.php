@@ -179,6 +179,27 @@ function isUserMemberOfThisGroup($groupId, $userId)
     }
 }
 
+/**
+ * Given a trainers Id, should the auth user be able to see trainers additional info? 
+ */
+function shouldYouSeeMyAdditionalInfo($profileId)
+{
+    if (Auth::user()->isTrainer) {
+        return true;
+    } else {
+        try {
+            $user = User::findOrFail($profileId);
+            if (Auth::user()->athlete->trainer_id == $user->trainer->id) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ModelNotFoundException $ex) {
+            return false;
+        }
+    }
+}
+
 function getUsersTrainedByMeWhoArentInTheGroupYet($groupId)
 {
     $users = getArrayOfUsersTrainedByMe();

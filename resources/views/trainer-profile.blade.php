@@ -17,12 +17,15 @@
         }        
     }
 
+    //Show additional info 
+    $shouldYouSeeMyAdditionalInfo = shouldYouSeeMyAdditionalInfo($user->id);
+
 @endphp
 <div class="content-profile-dashboard" x-data="{openShowProfileData: false, sectionTab: '{{$tab}}', openNewThreadForm:false, uploadFile: false}">
     <div class="container-dashboard">
         <div class="userinfo">
             <img class="inner-shadow" src="/uploads/avatars/{{$user->user_image}}" alt="profile-avatar">
-            <div class="text-info-dashboard {{Auth::user()->id == $user->id ? '' : 'no-additional-info'}}">
+            <div class="text-info-dashboard {{$shouldYouSeeMyAdditionalInfo ? '' : 'no-additional-info'}}">
                 <p id="user_name_dashboard" class="primary-blue-color">{{$user->name .' '. $user->surname}}</p>
                 <div class="text-info-user-type">
                     <label id="user_type" class="primary-blue-color">Entrenador</label>
@@ -34,7 +37,7 @@
                         </div>
                     @endif
                 </div>
-                @if(Auth::user()->id == $user->id)
+                @if($shouldYouSeeMyAdditionalInfo)
                 <div id="user-dashboard-buttons-container">
                     <button class="btn-purple-basic"
                     @click="openShowProfileData=!openShowProfileData" 
@@ -45,7 +48,7 @@
             </div>
         </div>
     </div>
-    @if(Auth::user()->id == $user->id)
+    @if($shouldYouSeeMyAdditionalInfo)
         @include('modals.additionalInfoModal')
     @endif
 
