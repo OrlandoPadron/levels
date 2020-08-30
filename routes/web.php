@@ -38,6 +38,7 @@ Route::get('/profile/{user}/dashboard/{tab}', 'UserController@showProfile')->nam
 Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_avatar');
 Route::post('/profile/updateProfile', 'UserController@updateProfileInfo')->name('profile.edit');
 Route::post('/profile/updateThirdPartiesInfo', 'UserController@updateThirdPartiesInfo')->name('profile.thirdparties');
+Route::post('/profile/updateEmail', 'UserController@updateEmail')->name('email.update');
 
 // Forum, threads and replies 
 Route::post('/updateThread', 'ForumThreadController@update')->name('thread.update');
@@ -118,3 +119,9 @@ Route::get('/group/{group}/{tab}', 'GroupController@show')->name('group.show');
 Route::post('/addToGroup', 'GroupController@addMember')->name('group.addMember');
 Route::post('/removeFromGroup', 'GroupController@removeMember')->name('group.removeMember');
 Route::post('/gdestroy', 'GroupController@destroy')->name('group.destroy');
+
+
+/**
+ * ADMIN ROUTES
+ */
+Route::get('/admin', 'UserController@showAdminDashboard')->name('admin');

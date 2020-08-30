@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Crypt;
 
 use Intervention\Image\Facades\Image;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
@@ -72,6 +73,25 @@ class UserController extends Controller
     public function showEditProfile()
     {
         return view('edit-profile');
+    }
+
+    /**
+     * Shows administration dashboard. 
+     * Only accessible by admins. 
+     */
+    public function showAdminDashboard()
+    {
+        if (Auth::user()->admin) {
+
+            $users = User::all();
+            $files = UserFile::all();
+            return view('admin-dashboard', [
+                "users" => $users,
+                "files" => $files,
+            ]);
+        } else {
+            return redirect()->route('home');
+        }
     }
 
     /**
@@ -206,6 +226,28 @@ class UserController extends Controller
         $user->additional_info = Crypt::encryptString(json_encode($additionalInfo));
         $user->save();
         return Redirect::back();
+    }
+
+    /**
+     * Updates user's email. In case 
+     */
+    public function updateEmail(Request $request)
+    {
+
+        if (isset($request['email'])) {
+            $oldEmail = Auth::user()->email;
+            $newEmail = $request['email'];
+            if ($oldEmail != $newEmail) {
+                try {
+                    Auth::user()->email = $newEmail;
+                    Auth::user()->save();
+                } catch (QueryException $ex) {
+                    echo 'muy mal';
+                    echo $ex->getCode();
+                }
+            }
+            return Redirect::back();
+        }
     }
 
     public function updateAvatar(Request $request)

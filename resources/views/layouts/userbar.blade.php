@@ -40,7 +40,7 @@
           
           @if(Auth::user()->admin==1)
             <div class="dropdown-button-userbar-content-item">
-              <a href=""><i class="fas fa-user-cog"></i>Panel admin</a>
+              <a href="{{route('admin')}}"><i class="fas fa-user-cog"></i>Panel admin</a>
             </div>
           @endif
           <div class="dropdown-button-userbar-content-logout">

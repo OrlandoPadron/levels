@@ -127,6 +127,10 @@
     margin-bottom: 30px;
 }
 
+.settings-save-changes.no-bottom-margin {
+    margin-bottom: 0;
+}
+
 .navbar-container a {
     color: black;
 }
