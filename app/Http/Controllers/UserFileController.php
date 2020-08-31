@@ -225,7 +225,7 @@ class UserFileController extends Controller
     {
         UserFile::find($request['fileId'])->delete();
 
-        //Let's check if the file 
+        //Let's check if the file is in any group. 
         $fileId = $request['fileId'];
         $groups = getUserGroups();
         foreach ($groups as $group) {

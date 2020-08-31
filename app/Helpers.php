@@ -91,8 +91,12 @@ function getUser($user_id)
 
 function getUserUsingAthleteId($id)
 {
-    $user = Athlete::find($id)->user;
-    return $user;
+    try {
+        $user = Athlete::findOrFail($id)->user;
+        return $user;
+    } catch (ModelNotFoundException $ex) {
+        return null;
+    }
 }
 
 /**
@@ -139,7 +143,11 @@ function getGroupUsers($groupId)
     if (empty($usersId)) return $group_members;
 
     foreach ($usersId as $id) {
-        $group_members->add(User::findOrFail($id));
+        try {
+            $group_members->add(User::findOrFail($id));
+        } catch (ModelNotFoundException $ex) {
+            continue;
+        }
     }
     return $group_members;
 }
@@ -258,6 +266,22 @@ function getFilesNotSharedWithGroup($userLoggedInId, $groupId)
 function getUsersFiles($userId)
 {
     return UserFile::where('owned_by', $userId)->get();
+}
+
+function getFileName($fileId)
+{
+    $file = UserFile::find($fileId);
+    return $file->file_name . '.' . $file->extension;
+}
+
+function getArrayOfFilesNames($arrayFilesId)
+{
+    $array = array();
+
+    foreach ($arrayFilesId as $fileId) {
+        array_push($array, getFileName($fileId));
+    }
+    return $array;
 }
 
 function getFilesSharedWithUser($userId)

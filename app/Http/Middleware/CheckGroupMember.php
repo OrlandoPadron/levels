@@ -17,8 +17,10 @@ class CheckGroupMember
      */
     public function handle($request, Closure $next)
     {
-        if (!isUserMemberOfThisGroup($request->group, Auth::user()->id)) {
-            return redirect('home');
+        if ($request->group != null) {
+            if (!isUserMemberOfThisGroup($request->group, Auth::user()->id)) {
+                return redirect('home');
+            }
         }
 
         return $next($request);

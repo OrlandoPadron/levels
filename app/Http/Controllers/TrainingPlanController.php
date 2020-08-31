@@ -197,7 +197,16 @@ class TrainingPlanController extends Controller
     public function destroy(Request $request)
     {
         $plan = TrainingPlan::findOrFail($request['id_plan']);
+        $files_associated = (array) $plan->files_associated;
+
+        /**
+         * Deleting user files associated with training plan
+         */
+        foreach ($files_associated as $fileId) {
+            UserFile::find($fileId)->delete();
+        }
+
         $plan->delete();
-        return redirect()->route('profile.show', ['user' => $request['user_id'], 'tab' => 'plan']);
+        return Redirect::back();
     }
 }

@@ -55,7 +55,9 @@
                     <form action="{{route('group.destroy')}}" method="POST">
                          @csrf
                          <input type="text" name="group_id" value="{{$group->id}}" hidden>
-                         <button class="btn-gray-basic" type="submit">Eliminar grupo</button>
+                         <button class="btn-gray-basic" type="submit" 
+                            onclick="if (confirm('¿Deseas eliminar el grupo \'{{$group->title}}\'?')) {
+                                submit();}">Eliminar grupo</button>
                      </form>
                 </div>
                 @endif
@@ -71,4 +73,6 @@
                 preview.src = src; 
             }
        }
+
+       
    </script>

@@ -65,11 +65,14 @@
                         <td>
                             @if(Auth::user()->id!=$user->id)
                                 @if($userRole != 'Administrador')
-                                    <button onclick="toggleGroupAdmin({{$group}}, {{$user->id}})">Convertir en administrador</button>
+                                    <button onclick="if (confirm('¿Deseas convertir en administrador del grupo a \'{{$user->name . ' ' . $user->surname}}\'?')) {
+                                        toggleGroupAdmin({{$group}}, {{$user->id}})}">Convertir en administrador</button>
                                 @else
-                                    <button onclick="toggleGroupAdmin({{$group}}, {{$user->id}})">Retirar administrador</button>
+                                    <button onclick="if (confirm('¿Deseas quitar el rol de administrador del grupo a \'{{$user->name . ' ' . $user->surname}}\'?')) {
+                                        toggleGroupAdmin({{$group}}, {{$user->id}})}">Retirar administrador</button>
                                 @endif
-                            <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
+                                <button onclick="if (confirm('¿Deseas eliminar del grupo a \'{{$user->name . ' ' . $user->surname}}\'?')) {
+                                    removeFromGroup({{$user->id}})}">Eliminar del grupo</button>
                             @endif
                         </td>
                         @break
@@ -77,7 +80,8 @@
                         <td>
                             @if (Auth::user()->id != $user->id)
                                 @if($userRole != 'Propietario' && $userRole!= 'Administrador')
-                                <button onclick="removeFromGroup({{$user->id}})">Eliminar del grupo</button>
+                                <button onclick="if (confirm('¿Deseas eliminar del grupo a \'{{$user->name . ' ' . $user->surname}}\'?')) {
+                                    removeFromGroup({{$user->id}})}">Eliminar del grupo</button>
                                 @endif
                             @endif
                         </td>    

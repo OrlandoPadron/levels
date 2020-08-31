@@ -31,10 +31,17 @@
                     <input type="text" value="{{$plan->id}}" name="id_plan" hidden>
                     <input type="text" value="{{$user->id}}" name="user_id" hidden>
                     <input type="text" name="method" value="updatePlan" hidden>
+                    @php
+                        $arrayOfFileNames = getArrayOfFilesNames($plan->files_associated);
+                    @endphp
+                    
                     <div class="modal-buttons">
                         <div class="alternative-buttons">
                             <a onclick="submitForm('togglePlanStatus', {{$plan->id}});"><i class="fas fa-calendar-check"></i>Marcar como {{$plan->status == 'active' ? 'finalizado' : 'activo'}}</a>
-                            <a onclick="submitForm('destroyPlan', {{$plan->id}});"><i class="fas fa-trash"></i>Eliminar plan</a>
+                            <a onclick="
+                            if (confirm('¿Deseas eliminar el plan \'{{$plan->title}}\'?')) {
+                                submitForm('destroyPlan', {{$plan->id}}, {{$user->id}}, {{json_encode($arrayOfFileNames, true)}});
+                            }"><i class="fas fa-trash"></i>Eliminar plan</a>
                         </div>
                         <div class="principal-button">
                             <button class="btn-add-basic" type="submit">Guardar cambios</button>
@@ -63,16 +70,28 @@
 
 <script>
 
-    function submitForm(method, planId){
+    function submitForm(method, planId, userId=0, filesAssociated=[]){
         switch(method){
             case 'destroyPlan':
+                data = [userId , planId, method];
+                console.log(filesAssociated);
+                filesAssociated.forEach(removeEachFileFromFirebase, data);
                 $('#destroyPlanForm'.concat(planId)).submit();
+                
                 break;
             case 'togglePlanStatus':
                 $('#togglePlanStatusForm'.concat(planId)).submit();
                 break;
 
         }
+    }
+
+    function removeEachFileFromFirebase(fileName){
+        var userId = parseInt(this[0], 10); 
+        var planId = parseInt(this[1], 10); 
+        var method = String(this[2]); 
+
+        deleteUserFile(userId,fileName, null, method, {planId:planId});
     }
 
 </script>

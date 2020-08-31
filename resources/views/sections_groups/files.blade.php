@@ -44,7 +44,9 @@
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if(Auth::user()->id == $file->owned_by || $userLoggedRole == 'Propietario' || $userLoggedRole == 'Administrador')
-                        <button onclick="stopSharingGroupFile({{$group->id}}, {{$file->id}}, '{{$file->file_name .'.'.$file->extension}}')">Eliminar</button>
+                        <button onclick="
+                        if (confirm('¿Deseas dejar de compartir \'{{$file->file_name}}\' con el grupo?')) {
+                            stopSharingGroupFile({{$group->id}}, {{$file->id}}, '{{$file->file_name .'.'.$file->extension}}')}">Eliminar</button>
                         @endif
                         
                     </td>

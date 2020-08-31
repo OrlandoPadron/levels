@@ -19,10 +19,6 @@
 </div>
 
 
-@if (isset($trainerWall))
-<p>Está</p>
-@endif
-
 @foreach(getUserWall($user->id) as $id => $wall)
 <div id="wall-container-{{$id}}" class="wall-container">
     <div class="wall-heading">
@@ -41,7 +37,8 @@
         @if ($user->id == Auth::user()->id)
         <div class="container-options my-wall-options">
             <i onclick="editWallSection({{$id}})" class="far fa-edit"></i>
-            <i onclick="deleteWallSection({{$id}},{{$user->id}})" class="fas fa-trash"></i>
+            <i onclick="if (confirm('¿Deseas eliminar la sección \'{{$wall['title']}}\'?')) {
+                deleteWallSection({{$id}},{{$user->id}})}" class="fas fa-trash"></i>
         </div>
         @endif
     </div>

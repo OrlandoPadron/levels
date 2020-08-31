@@ -49,7 +49,10 @@
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if (Auth::user()->id == $user->id)
-                        <button onclick="deleteUserFile({{Auth::user()->id}}, '{{$file->file_name .'.'.$file->extension}}', {{$file->id}}, 'AthleteFileSection')">Eliminar</button>
+                        <button onclick="
+                        if (confirm('¿Deseas eliminar el archivo \'{{$file->file_name}}\'?')) {
+                            deleteUserFile({{Auth::user()->id}}, '{{$file->file_name .'.'.$file->extension}}', {{$file->id}}, 'AthleteFileSection')
+                        }">Eliminar</button>
                         @endif
                     </td>
                 </tr>     
@@ -85,7 +88,10 @@
                     <td>
                         <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
                         @if($file->owned_by == Auth::user()->id)
-                        <button onclick="stopSharingFile({{$file->id}}, {{$user->id}}, '{{$file->file_name}}')">Dejar de compartir</button>
+                        <button onclick="
+                        if (confirm('¿Deseas dejar de compartir \'{{$file->file_name}}\' con {{$user->name . ' ' . $user->surname}}?')) {
+                            stopSharingFile({{$file->id}}, {{$user->id}}, '{{$file->file_name}}')
+                        };">Dejar de compartir</button>
                         @endif
                     </td>
                 </tr>     

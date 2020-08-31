@@ -307,7 +307,11 @@
 
             case 'TrainingPlanSection':
                 //Create storage ref
-                console.log("estamos");
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
+                break;        
+                    
+            case 'destroyPlan':
+                //Create storage ref
                 storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
                 break;            
 

@@ -45,7 +45,10 @@
                 </div>
                 <div class="tutorship-options">
                     <a id="anchor_edit_button_{{$tutorship->id}}" onclick="edit({{$tutorship->id}})"><i class="far fa-edit"></i></a>
-                    <a onclick="deleteTutorship({{$tutorship->id}})" style="margin-right: 15px;"><i class="fas fa-trash"></i></a>
+                    <a onclick="
+                    if (confirm('¿Deseas eliminar la tutoría \'{{$tutorship->title}}\'?')) {
+                        deleteTutorship({{$tutorship->id}})
+                    }" style="margin-right: 15px;"><i class="fas fa-trash"></i></a>
                     {{-- <a><i class="fas fa-edit"></i></a>
                     <a><i class="far fa-bookmark"></i></a> --}}
                     <a id="anchor-{{$tutorship->id}}" 
