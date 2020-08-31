@@ -12,8 +12,10 @@ use Illuminate\Http\Request;
 use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
@@ -229,10 +231,15 @@ class UserController extends Controller
     }
 
     /**
-     * Updates user's email. In case 
+     * Updates user's email.
      */
     public function updateEmail(Request $request)
     {
+        $request->validate(
+            [
+                'email' => ['required', 'string', 'email', 'max:255']
+            ]
+        );
 
         if (isset($request['email'])) {
             $oldEmail = Auth::user()->email;
@@ -242,11 +249,37 @@ class UserController extends Controller
                     Auth::user()->email = $newEmail;
                     Auth::user()->save();
                 } catch (QueryException $ex) {
-                    echo 'muy mal';
-                    echo $ex->getCode();
+                    return response()->json([
+                        'message' => 'QueryException',
+                        'code' => 2300,
+                    ], 409);
                 }
             }
-            return Redirect::back();
+        }
+    }
+
+    /**
+     * Changes user's passwords. 
+     */
+    public function updatePassword(Request $request)
+    {
+        if (isset($request['oldPassword']) && (isset($request['newPassword']))) {
+            $oldPassword = $request['oldPassword'];
+
+            if (password_verify($oldPassword, Auth::user()->password)) {
+                $request->validate(
+                    [
+                        'newPassword' => ['required', 'string', 'min:8', 'confirmed']
+                    ]
+                );
+
+                Auth::user()->password = Hash::make($request['newPassword']);
+                Auth::user()->save();
+            } else {
+                return response()->json([
+                    'message' => 'Not valid input. Old password doesn\'t match.'
+                ], 401);
+            }
         }
     }
 

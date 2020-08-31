@@ -39,6 +39,7 @@ Route::post('/profile', 'UserController@updateAvatar')->name('profile.update_ava
 Route::post('/profile/updateProfile', 'UserController@updateProfileInfo')->name('profile.edit');
 Route::post('/profile/updateThirdPartiesInfo', 'UserController@updateThirdPartiesInfo')->name('profile.thirdparties');
 Route::post('/profile/updateEmail', 'UserController@updateEmail')->name('email.update');
+Route::post('/profile/updatePassword', 'UserController@updatePassword')->name('password.update');
 
 // Forum, threads and replies 
 Route::post('/updateThread', 'ForumThreadController@update')->name('thread.update');

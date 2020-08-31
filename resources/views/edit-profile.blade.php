@@ -33,7 +33,7 @@
   //ThirdParties links 
   $strava = isset($additionalInfo['thirdParties']['strava']) ? $additionalInfo['thirdParties']['strava'] : null;
 @endphp
-<div class="settings-profile-container" x-data="{sectionTab: 'account'}">
+<div class="settings-profile-container" x-data="{sectionTab: 'general'}">
   <div class="settings-navbar">
     <div class="navbar-container">
       <ul>
