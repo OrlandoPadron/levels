@@ -9,9 +9,23 @@
 @endsection
 @section('content')
 @php
-  $userName = Auth::user()->name . ' ' . Auth::user()->name2;
+  $userName = null;
+  $userSurnames = null;
+
+  if (Auth::user()->name2 != null){
+    $userName = Auth::user()->name . ', ' . Auth::user()->name2;
+  }else{
+    $userName = Auth::user()->name;
+
+  }
+  if (Auth::user()->surname2 != null){
+    $userSurnames = Auth::user()->surname . ', ' . Auth::user()->surname2;
+    
+  }else{
+    $userSurnames = Auth::user()->surname;
+
+  }
   trim($userName);
-  $userSurnames = Auth::user()->surname . ' ' . Auth::user()->surname2;
   trim($userSurnames);
 
   $gender = Auth::user()->gender; 

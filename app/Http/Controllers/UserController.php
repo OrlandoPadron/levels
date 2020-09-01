@@ -96,6 +96,47 @@ class UserController extends Controller
         }
     }
 
+
+    /**
+     * Admin management's methods
+     */
+    public function adminManagement(Request $request)
+    {
+
+        if ((Auth::user()->admin) && (isset($request['method']))) {
+            switch ($request['method']) {
+                case 'editUserProfile':
+                    //Updating user's name and surname
+                    if (isset($request['name']) && isset($request['surname'])) {
+                        $this->updateNames($request['name'], $request['surname'], $request['userId']);
+                    }
+
+                    return Redirect::back();
+
+                case 'toggleAdminStatus':
+                    $user = User::find($request['userId']);
+                    if ($user->isTrainer) {
+                        $user->admin = $user->admin == 1 ? 0 : 1;
+                        $user->save();
+                    } else {
+                        return response()->json([
+                            'message' => 'User input not valid. Trainer not found.',
+                        ], 409);
+                    }
+                    break;
+
+                    // Activates/Deactivates an account. 
+                case 'toggleAccountStatus':
+                    $user = User::find($request['userId']);
+                    $user->account_activated = $user->account_activated == 1 ? 0 : 1;
+                    $user->save();
+                    break;
+            }
+        } else {
+            return redirect()->route('home');
+        }
+    }
+
     /**
      * Updates user's personal informations. Some of this 
      */
@@ -103,7 +144,7 @@ class UserController extends Controller
     {
         //Updating user's name and surname
         if (isset($request['name']) && isset($request['surname'])) {
-            $this->updateNames($request['name'], $request['surname']);
+            $this->updateNames($request['name'], $request['surname'], Auth::user()->id);
         }
 
         //Getting user object.  
@@ -166,37 +207,37 @@ class UserController extends Controller
     /**
      * Updates user's name depending if numerous values were issued. 
      */
-    private function updateNames($nameUnsplit, $surnameUnsplit)
+    private function updateNames($nameUnsplit, $surnameUnsplit, $userId)
     {
 
-        $names = explode(" ", trim($nameUnsplit));
-        $surnames = explode(" ", trim($surnameUnsplit));
+        $names = explode(",", trim($nameUnsplit));
+        $surnames = explode(",", trim($surnameUnsplit));
 
-        $user = User::find(Auth::user()->id);
+        $user = User::find($userId);
 
         //Name case 
         if (count($names) >= 2) {
-            $user->name = $names[0];
+            $user->name = trim($names[0]);
             $name2 = null;
             for ($i = 1; $i < count($names); $i++) {
-                $name2 .= $names[$i] . ' ';
+                $name2 .= trim($names[$i]) . ' ';
             }
             $user->name2 = trim($name2);
         } else {
-            $user->name = $names[0];
+            $user->name = trim($names[0]);
             $user->name2 = null;
         }
 
         //Surname case 
         if (count($surnames) >= 2) {
-            $user->surname = $surnames[0];
+            $user->surname = trim($surnames[0]);
             $surname2 = null;
             for ($i = 1; $i < count($surnames); $i++) {
-                $surname2 .= $surnames[$i] . ' ';
+                $surname2 .= trim($surnames[$i]) . ' ';
             }
             $user->surname2 = trim($surname2);
         } else {
-            $user->surname = $surnames[0];
+            $user->surname = trim($surnames[0]);
             $user->surname2 = null;
         }
         $user->save();

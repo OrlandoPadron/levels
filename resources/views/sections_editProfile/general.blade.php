@@ -1,5 +1,11 @@
 <h2 class="primary-blue-color heading-text-container">Datos Personales</h2>
 <div class="settings-content-section">
+  <div class="item-with-info">
+    <p><i class="fas fa-info-circle"></i>Información</p>
+    <p>Para añadir nombres compuestos o ambos apellidos, use la coma ( , ) como separador.</p>
+    <p class="item-with-info-subsection">Por ejemplo:</p>
+    <p><span class="bold">Nombre:</span> José, Juan | <span class="bold">Apellidos:</span> Pérez, Rodríguez</p>
+  </div>
   <ul>
     <form action="{{route('profile.edit')}}" method="POST" id="profile-edit-form">
       @csrf

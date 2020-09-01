@@ -474,8 +474,11 @@ div.modal-body {
 .alternative-buttons a > i {
     margin-right: 10px;
 }
-.alternative-buttons :first-child {
+.alternative-buttons > * {
     margin-bottom: 7px;
+}
+.alternative-buttons :last-child {
+    margin-bottom: 0px;
 }
 
 /*Create plan modal*/
@@ -652,6 +655,33 @@ div.modal-body {
     border-bottom-right-radius: 5px;
 }
 
+.item-with-info {
+    padding: 0px 20px;
+    margin-top: 16px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: white;
+    border-left: 3px solid #6013bb;
+}
+
+.item-with-info p:first-of-type {
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: -8px;
+}
+.item-with-info p:first-of-type i {
+    color: #6013bb;
+    margin-right: 8px;
+}
+.item-with-info p:last-of-type {
+    margin-bottom: 15px;
+}
+p.item-with-info-subsection {
+    margin-top: 8px;
+    margin-bottom: -8px;
+    text-decoration-line: underline;
+}
+
 .update-file-section > :first-child > span {
     color: #6013bb;
 }
@@ -823,6 +853,22 @@ div.modal-body {
 
 .month_unpaid {
     color: #d80000;
+}
+
+.flex-title-and-subtitle {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 20px 0;
+}
+.flex-title-and-subtitle > * {
+    margin: 0;
+}
+.flex-title-and-subtitle > .status-alert {
+    color: red;
+    margin-top: 5px;
+}
+.flex-title-and-subtitle > .status-alert i {
+    margin-right: 5px;
 }
 
 .container-title {
