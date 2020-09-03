@@ -88,9 +88,11 @@ class HomeController extends Controller
         if (Auth::user()->isTrainer) {
             $athletesTrainedByMe = array_reverse(getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id));
             foreach ($athletesTrainedByMe as $athlete) {
-                $athleteTrainingPlans = $athlete->trainingPlans;
-                foreach ($athleteTrainingPlans as $plan) {
-                    if ($plan->status == 'active') array_push($activeTrainingPlans, $plan);
+                if ($athlete->user->account_activated) {
+                    $athleteTrainingPlans = $athlete->trainingPlans;
+                    foreach ($athleteTrainingPlans as $plan) {
+                        if ($plan->status == 'active') array_push($activeTrainingPlans, $plan);
+                    }
                 }
             }
         } else {
@@ -133,7 +135,7 @@ class HomeController extends Controller
         $athletes = array_reverse(getArrayOfAthletesTrainedByTrainerId($trainerId));
         $haventPay = array();
         foreach ($athletes as $athlete) {
-            if (!$athlete->monthPaid) {
+            if (!$athlete->monthPaid && $athlete->user->account_activated) {
                 array_push($haventPay, $athlete);
             }
         }
@@ -149,11 +151,13 @@ class HomeController extends Controller
         $athletes = array_reverse(getArrayOfAthletesTrainedByTrainerId(Auth::user()->trainer->id));
 
         foreach ($athletes as $athlete) {
-            $threads = ForumThread::where('user_associated', $athlete->user->id)->get();
-            $arrayOfUpdatedThreads = $this->getForumElementsUserHasntSeenYet($threads);
-            if ($arrayOfUpdatedThreads['totalNumOfNewChanges'] > 0) {
-                $threadsTrainerHasntSeentYet[$athlete->id] = $arrayOfUpdatedThreads;
-                $changesCount += $arrayOfUpdatedThreads['totalNumOfNewChanges'];
+            if ($athlete->user->account_activated) {
+                $threads = ForumThread::where('user_associated', $athlete->user->id)->get();
+                $arrayOfUpdatedThreads = $this->getForumElementsUserHasntSeenYet($threads);
+                if ($arrayOfUpdatedThreads['totalNumOfNewChanges'] > 0) {
+                    $threadsTrainerHasntSeentYet[$athlete->id] = $arrayOfUpdatedThreads;
+                    $changesCount += $arrayOfUpdatedThreads['totalNumOfNewChanges'];
+                }
             }
         }
         //Saving the total changes and returning array. 
