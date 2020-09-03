@@ -112,7 +112,10 @@
                     <div class="modal-buttons">
                         <div class="principal-button align-center-items">
                             <button onclick="toggleResetPasswordView({{$user->id}})" class="btn-gray-basic">Cancelar</button>
-                            <button onclick="resetPassword({{$user->id}}, '{{$newpass}}')" class="btn-add-basic">Cambiar contraseña</button>
+                            <button onclick="
+                                if (confirm('¿Deseas restablecer la contraseña de la cuenta de \'{{getName($user->id)}}\'?')) {
+                                    resetPassword({{$user->id}}, '{{$newpass}}')
+                                }" class="btn-add-basic">Cambiar contraseña</button>
                         </div>
                     </div>
                 </div>
@@ -164,6 +167,21 @@
 
     function resetPassword(userId, newPassword){
         console.log(newPassword);
+        $.ajax({
+                url: "{{route("admin.resetPassword")}}",
+                type: "POST",
+                data: {
+                    password: newPassword,
+                    userId: userId,
+                    _token: "{{csrf_token()}}",
+                },
+                success: function(callback){
+                    alert('Contraseña restablecida');
+                },
+                error: function(){
+                    console.log('Error on ajax call "resetPassword" function');
+                }  
+            });
     }
 
     function adminMethods(method, userId){
