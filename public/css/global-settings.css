@@ -662,6 +662,7 @@ div.modal-body {
     border-bottom-right-radius: 5px;
     background-color: white;
     border-left: 3px solid #6013bb;
+    text-align: justify;
 }
 
 .item-with-info p:first-of-type {
@@ -1377,3 +1378,38 @@ table.data-table {
     margin-right: 5px;
 }
 /*End Edit Profile's Personal Information */
+
+/*Admin section*/
+.password-reset-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+}
+
+.password-reset-container > p:first-of-type {
+    color: #6013bb;
+}
+
+.password-block {
+    width: 100%;
+    display: flex;
+    padding: 10px 0px;
+    justify-content: center;
+    background-color: #f2f1f2;
+    border-radius: 5px;
+}
+
+.password-block p {
+    color: black;
+    font-size: 26px;
+}
+
+.principal-button.align-center-items {
+    width: 100%;
+    justify-self: center !important;
+}
+.principal-button.align-center-items > button:first-of-type {
+    width: 100px;
+    margin-right: 10px;
+}
+/*End admin section*/

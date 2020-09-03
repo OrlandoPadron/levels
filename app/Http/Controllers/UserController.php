@@ -3,24 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Group;
 use App\Athlete;
 use App\Invoice;
+use App\Trainer;
 use App\UserFile;
 use Carbon\Carbon;
 use App\ForumThread;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Crypt;
 use Intervention\Image\Facades\Image;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -557,6 +559,107 @@ class UserController extends Controller
             if (strval($section['position']) == strval($newPosition)) {
                 return $id;
             }
+        }
+    }
+
+    /**
+     * Destroys user's account and files associated. 
+     */
+    public function destroyUser(Request $request)
+    {
+        //Only admin users can delete users. 
+        if (Auth::user()->admin && isset($request['userId'])) {
+
+            $user = User::find($request['userId']);
+            dump('Usuario encontrado');
+
+
+            /**
+             * If user is Trainer, remove it from athlete's trainer id,
+             * If user is Athlete, remove it from trainer's athletes list
+             */
+
+            if ($user->isTrainer) {
+                $athletes = getArrayOfAthletesTrainedByTrainerId($user->trainer->id);
+                foreach ($athletes as $athlete) {
+                    $athlete->trainer_id = null;
+                    dump('Se ha eliminado el id del entrenador del atleta');
+                    $athlete->save();
+                }
+            } else {
+                $trainer = Trainer::find($user->athlete->trainer_id);
+                dump('Se ha encontrado el trainer');
+                $trainer->trained_by_me = array_values(array_diff((array)$trainer->trained_by_me, (array) $user->athlete->id));
+                $trainer->save();
+                dump('Trainer guardado');
+            }
+
+            //Remove user's id from files shared with user 
+            $files = UserFile::where('shared_with', 'like', "%\"$user->id\"%")->get();
+            foreach ($files as $file) {
+                $file->shared_with   = array_values(array_diff((array)$file->shared_with, (array) $user->id));
+                $file->save();
+                dump('File shared updated');
+            }
+
+            //Removing user's files from group shared files. 
+            foreach ($user->files() as $file) {
+                $groupsWithFileShared = Group::where('files', 'like', "%\"$file->id\"%")->get();
+                foreach ($groupsWithFileShared as $group) {
+                    $group->files = array_values(array_diff($group->files, (array) $file->id));
+                    $group->save();
+                }
+            }
+
+
+            //Groups where user is member. 
+            $groups = getUserGroupsByUserId($user->id);
+
+            //In case user is owner, the group is destroyed. 
+            foreach ($groups as $group) {
+                dump($group->id);
+
+                if ($group->creator->id == $user->id) {
+                    dump('Es creador del grupo');
+
+                    //Unlink group image from app. 
+                    if ($group->group_image != 'default_group_avatar.jpg') {
+                        if (file_exists('uploads/group_avatars/' . $group->group_image)) {
+                            unlink('uploads/group_avatars/' . $group->group_image);
+                        }
+                    }
+
+                    $group->delete();
+                    dump('Grupo eliminado');
+                } else {
+                    dump('No es creador del grupo');
+                    //Removing user from group
+                    $userDeletedRole = getUserRole($group->id, $user->id);
+                    $groupMembers = (array) $group->users;
+                    $group->users = array_values(array_diff($groupMembers, (array) $user->id));
+
+                    if ($userDeletedRole == 'Administrador') {
+                        $group->admins = array_values(array_diff((array)$group->admins, (array) $user->id));
+                    }
+                    $group->save();
+                    dump('Grupo actualizado');
+                }
+            }
+
+            //User delete 
+
+            //Deleting user image from application
+            if ($user->user_image != 'default_avatar.jpg') {
+                if (file_exists('uploads/avatars/' . $user->user_image)) {
+                    dump('Imagen eliminada');
+
+                    unlink('uploads/avatars/' . $user->user_image);
+                }
+            }
+            dump('Hemos llegado al final');
+            $user->delete();
+
+            return Redirect::back();
         }
     }
 }

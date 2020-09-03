@@ -36,7 +36,7 @@
         <div class="modal-body">
             <form class="form-edituser" action="{{route('admin.management')}}" method="POST">
                 @csrf
-                <div class="modal-body-container">
+                <div class="modal-body-container" id="modal-body-container{{$user->id}}">
                     <div class="item-with-info">
                         <p><i class="fas fa-info-circle"></i>Información</p>
                         <p>Para añadir nombres compuestos o ambos apellidos, use la coma ( , ) como separador.</p>
@@ -60,7 +60,7 @@
                                         adminMethods('toggleAdminStatus', {{$user->id}})
                                     };"><i class="fas fa-user-cog"></i>{{$user->admin ? 'Quitar rol de administrador' : 'Convertir en administrador'}}</a>
                             @endif
-                            <a onclick="submitForm('togglePlanStatus', );"><i class="fas fa-key"></i>Restablecer contraseña </a>
+                            <a onclick="toggleResetPasswordView({{$user->id}});"><i class="fas fa-key"></i>Restablecer contraseña </a>
                             @if($user->account_activated)
                                 <a onclick="if (confirm('¿Deseas desactivar la cuenta del usuario \'{{getName($user->id)}}\'?')) {
                                     adminMethods('toggleAccountStatus', {{$user->id}})
@@ -70,9 +70,13 @@
                                     adminMethods('toggleAccountStatus', {{$user->id}})
                                 };"><i class="fas fa-user-check"></i>Activar cuenta </a>
                             @endif
+                            @php
+                            $userFilesArray = prepareAllFilesAssociatedWithUserIntoArray($user);
+                            // dump($userFilesArray);
+                            @endphp
                             <a onclick="
                                 if (confirm('¿Deseas eliminar la cuenta del usuario \'{{getName($user->id)}}\'?')) {
-                                
+                                    deleteUser({{json_encode($userFilesArray, true)}}, {{$user->id}})
                                 }"><i class="fas fa-user-slash"></i>Eliminar usuario</a>
                         </div>
                         <div class="principal-button">
@@ -85,19 +89,41 @@
                 <input type="text" name="method" value="editUserProfile" hidden>
                 <input type="text" name="userId" value="{{$user->id}}" hidden>
             </form>
+            <div class="modal-body-container" id="change-password-section{{$user->id}}" style="display: none;">
+                <div class="change-password">
+                    <h3>Restablecer contraseña</h3>
+                    <div class="item-with-info">
+                        <p><i class="fas fa-info-circle"></i>Información</p>
+                        <p>La contraseña del usuario se restablecerá y se sustituirá por la clave 
+                            mostrada a continuación. Dicha clave será la nueva contraseña para acceder 
+                            a la cuenta del usuario. Es de suma importancia que el usuario cambie la 
+                            contraseña una vez acceda a su cuenta.</p>
+                    </div>
+                    <div class="password-reset-container">
+                        <p>Nueva contraseña</p>
+                        <div class="password-block">
+                            @php
+                                $newpass = 'Levels*' . time();
+                            @endphp
+                            <p>{{$newpass}}</p>
+
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <div class="principal-button align-center-items">
+                            <button onclick="toggleResetPasswordView({{$user->id}})" class="btn-gray-basic">Cancelar</button>
+                            <button onclick="resetPassword({{$user->id}}, '{{$newpass}}')" class="btn-add-basic">Cambiar contraseña</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
         </div>
     </div>
-    <form action="{{route('trainingPlan.destroy')}}" method="POST" >
+    <form action="{{route('admin.destroyUser')}}" method="POST" id="destroy-user-form-{{$user->id}}">
         @csrf
-        <input type="text" value="" name="id_plan" hidden>
-        <input type="text" value="" name="user_id" hidden>
-    </form>
-    <form action="{{route('trainingPlan.update')}}" method="POST">
-        @csrf
-        <input type="text" value="" name="id_plan" hidden>
-        <input type="text" name="method" value="togglePlanStatus" hidden>
+        <input type="text" value="{{$user->id}}" name="userId" hidden>
     </form>
 </div>
 
@@ -122,6 +148,23 @@
         event.stopPropagation();
     });
 
+
+    function toggleResetPasswordView(userId){
+        if ($('#change-password-section'.concat(userId)).is(':visible')){
+            $('#modal-body-container'.concat(userId)).fadeIn();
+            $('#change-password-section'.concat(userId)).hide();
+
+        }else{
+            $('#modal-body-container'.concat(userId)).hide();
+            $('#change-password-section'.concat(userId)).fadeIn();
+
+        }
+
+    }
+
+    function resetPassword(userId, newPassword){
+        console.log(newPassword);
+    }
 
     function adminMethods(method, userId){
         $.ajax({
@@ -150,30 +193,31 @@
                 }  
             });
     }
+    
+
+    function deleteUser(userFilesArray, userId){
+            alert('Eliminando usuario...');
+            userFilesArray.forEach(removeEachFileFromFirebase, userId);
+            //$('#destroy-user-form-'.concat(userId)).submit(); 
+            console.log('Se ha eliminado todo...');
 
 
-    function submitForm(method, planId, userId=0, filesAssociated=[]){
-        switch(method){
-            case 'destroyPlan':
-                data = [userId , planId, method];
-                console.log(filesAssociated);
-                filesAssociated.forEach(removeEachFileFromFirebase, data);
-                $('#destroyPlanForm'.concat(planId)).submit();
-                
-                break;
-            case 'togglePlanStatus':
-                $('#togglePlanStatusForm'.concat(planId)).submit();
-                break;
-
-        }
+        
     }
 
-    function removeEachFileFromFirebase(fileName){
-        var userId = parseInt(this[0], 10); 
-        var planId = parseInt(this[1], 10); 
-        var method = String(this[2]); 
+    function removeEachFileFromFirebase(userFile){
+        var userId = parseInt(this, 10); 
+        var filename =  userFile['filename'];
 
-        deleteUserFile(userId,fileName, null, method, {planId:planId});
+        if(userFile.hasOwnProperty('planId')){
+            var planId =  userFile['planId'];
+            deleteUserFile(userId,filename, null, 'destroyPlan', {planId:planId});
+
+        }else{
+            deleteUserFile(userId,filename, null, 'destroyUserFile');
+
+        }
+
     }
 
 </script>

@@ -99,10 +99,7 @@ function getUserUsingAthleteId($id)
     }
 }
 
-/**
- * Given a trainer_id, returns an array with all
- * the users trained by that trainer
- */
+
 function getArrayOfUsersTrainedByMe()
 {
     $users = array();
@@ -113,6 +110,10 @@ function getArrayOfUsersTrainedByMe()
     return $users;
 }
 
+/**
+ * Given a trainer_id, returns an array with all
+ * the users trained by that trainer
+ */
 function getArrayOfAthletesTrainedByTrainerId($trainerId)
 {
     $athletes = array();
@@ -284,6 +285,46 @@ function getArrayOfFilesNames($arrayFilesId)
     return $array;
 }
 
+function prepareAllFilesAssociatedWithUserIntoArray($userModel)
+{
+    $userFilesCollection = getUsersFiles($userModel->id);
+    $array = array();
+
+    foreach ($userFilesCollection as $file) {
+        $data = array();
+        $file_name = $file->file_name . '.' . $file->extension;
+        switch ($file->file_type) {
+                //Normal file
+            case '0':
+                $data = [
+                    'filename' => $file_name,
+                    'userId' => $userModel->id
+                ];
+                break;
+
+                //Training Plan File
+            case '1':
+                if (!$userModel->isTrainer) {
+                    $TrainingPlan = TrainingPlan::where("athlete_associated", $userModel->athlete->id)
+                        ->where('files_associated', 'like', "%\"$file->id\"%")->first();
+
+                    $data = [
+                        'filename' => $file_name,
+                        'planId' => $TrainingPlan->id,
+                    ];
+                }
+                break;
+
+            default:
+                break;
+        }
+        if (!empty($data)) {
+            array_push($array, $data);
+        }
+    }
+    return $array;
+}
+
 function getFilesSharedWithUser($userId)
 {
     $sharedFiles = array();
@@ -390,6 +431,19 @@ function getUserGroups()
         return $groups->merge(Group::where('users', 'like', "%" . Auth::user()->id . "%")->get());
     } else {
         return Group::where('users', 'like', "%" . Auth::user()->id . "%")->get();
+    }
+}
+/**
+ * Returns a collection containing all groups where given user belongs
+ */
+function getUserGroupsByUserId($userId)
+{
+    $user = User::find($userId);
+    if ($user->isTrainer == 1) {
+        $groups = $user->trainer->groups;
+        return $groups->merge(Group::where('users', 'like', "%" . $user->id . "%")->get());
+    } else {
+        return Group::where('users', 'like', "%" . $user->id . "%")->get();
     }
 }
 

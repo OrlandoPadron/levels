@@ -127,3 +127,4 @@ Route::post('/gdestroy', 'GroupController@destroy')->name('group.destroy');
  */
 Route::get('/admin', 'UserController@showAdminDashboard')->name('admin');
 Route::post('/adminManagement', 'UserController@adminManagement')->name('admin.management');
+Route::post('/adminDestroyUser', 'UserController@destroyUser')->name('admin.destroyUser');

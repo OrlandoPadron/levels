@@ -315,7 +315,10 @@
                 storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/trainingPlans/'+ additionalContent['planId'] +'/files/'+ fileName);
                 break;            
 
-
+            case 'destroyUserFile':
+                //Create storage ref
+                storageRef = firebase.storage().ref('users/'+fileOwnerUserId+'/files/'+ fileName);
+                break;
         }
 
         // Delete the file
@@ -328,11 +331,14 @@
 
                 case 'TrainingPlanSection':
                     deleteFileReferenceFromDatabase(fileId, fileName, method, {planId:additionalContent['planId']});
+                
+                default: 
+                    alert('ESTAMOSSS');
+                    break;
             }
         }).catch(function(error) {
             // Uh-oh, an error occurred!
             console.log("No tan guay");
-
         });
     }
 

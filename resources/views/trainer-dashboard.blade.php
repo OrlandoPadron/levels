@@ -92,8 +92,8 @@
         $numOfAthletesTrainedByMe = count(Auth::user()->trainer->trained_by_me);
     @endphp
         <div class="athletes-trainer-dashboard">
-            <h2>Deportistas entrenados por ti <span class="light">({{$numOfAthletesTrainedByMe}})</span></h2>
             @if($numOfAthletesTrainedByMe > 0)
+            <h2>Deportistas entrenados por ti <span class="light">({{$numOfAthletesTrainedByMe}})</span></h2>
             <div class="athletes-trained-by-me">
                 @foreach(collect(getArrayOfUsersTrainedByMe())->sortBy('name') as $key => $user)
                     <div class="athlete-component">

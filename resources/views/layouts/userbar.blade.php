@@ -26,11 +26,7 @@
           <i class="fas fa-caret-down"></i>
 
         </div>
-        @if(Auth::user()->admin==1)
-        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
-        @else
-        <div class="dropdown-button-userbar-content" x-show.transition.duration.250ms.opacity="open" >
-        @endif
+        <div class="dropdown-button-userbar-content" style="display:none;" x-show.transition.duration.250ms.opacity="open" >
           <div class="dropdown-button-userbar-content-item">
           <a href="{{route('profile.show', [Auth::user()->id, "general"])}}"><i class="fas fa-user"></i>Mi perfil</a>
           </div>

@@ -1,4 +1,4 @@
-<div class="search-container" x-data="{ isOpen: true}" @click.away="isOpen = false">
+<div class="search-container" display="display:none;" x-data="{ isOpen: true}" @click.away="isOpen = false">
     <form action="/" method="GET" autocomplete="off"  x-on:keydown.enter.prevent>
       <div class="wrap-search">
         <input 

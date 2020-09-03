@@ -1,4 +1,8 @@
 @extends('layouts.base-inside-app')
+@section('head')
+<!-- Firebase Scripts -->
+@include('scripts.firebaseScripts')
+@endsection
 @section('content')
 <div class="heading-section">
     <button class="btn-add-basic button-position"
@@ -20,7 +24,7 @@
             <th>Email</th>
             <th>Es entrenador</th>
             <th>Es administrador</th>
-            <th>Cuenta desactivada</th>
+            <th>Cuenta activada</th>
             <th>Gestionar</th>
         </tr>
     </thead>
@@ -37,7 +41,7 @@
             <td>{{$user->email}}</td>
             <td>{{$user->isTrainer == 0 ? 'No' : 'Sí'}}</td>
             <td>{{$user->admin == 0 ? 'No' : 'Sí'}}</td>
-            <td>{{$user->account_activated == 0 ? 'Sí' : 'No'}}</td>
+            <td>{{$user->account_activated == 0 ? 'No' : 'Sí'}}</td>
             <td>
                 <button
                 onclick="setVisibleModal('{{$user->id}}')"
