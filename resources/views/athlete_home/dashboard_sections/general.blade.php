@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="box-content">
-            <p>Estado mes {{ucfirst(Date::now()->format('F'))}}</p>
+            <p>Estado del mes <span class="low-emphasis">({{ucfirst(Date::now()->format('F'))}})</span></p>
             <p>Pagado</p>
         </div>
     </div>

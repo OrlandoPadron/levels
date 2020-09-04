@@ -126,6 +126,7 @@ Route::post('/gdestroy', 'GroupController@destroy')->name('group.destroy');
  * ADMIN ROUTES
  */
 Route::get('/admin', 'UserController@showAdminDashboard')->name('admin');
+Route::post('/createNewUser', 'UserController@createNewUser')->name('admin.createNewUser');
 Route::post('/adminManagement', 'UserController@adminManagement')->name('admin.management');
 Route::post('/adminDestroyUser', 'UserController@destroyUser')->name('admin.destroyUser');
 Route::post('/resetPassword', 'UserController@resetPassword')->name('admin.resetPassword');

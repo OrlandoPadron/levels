@@ -10,6 +10,7 @@ use App\Trainer;
 use App\UserFile;
 use Carbon\Carbon;
 use App\ForumThread;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use function GuzzleHttp\json_encode;
 use Illuminate\Support\Facades\Auth;
@@ -98,6 +99,48 @@ class UserController extends Controller
         }
     }
 
+
+    public function createNewUser(Request $request)
+    {
+
+        if (Auth::user()->admin) {
+
+            $request->validate([
+                'name' => ['required', 'string', 'max:255'],
+                'surname' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8'],
+            ]);
+
+            //Type of account we'll create
+            $isTrainer = $request['userType'] == 'athlete' ? False : True;
+            $user = User::create([
+                'name' => $request['name'],
+                'surname' => $request['surname'],
+                'email' => $request['email'],
+                'password' => Hash::make($request['password']),
+                'isTrainer' => $isTrainer,
+            ]);
+
+            // Trainer Table -> creates new row 
+            if ($isTrainer) {
+                $trainer = new TrainerController();
+
+                $trainer->store($user->id);
+            } else {
+                $athlete = new AthleteController();
+                $athlete->store($user->id);
+            }
+
+            //Updating names and surnames in case we have use compound names 
+            if (isset($request['name']) && isset($request['surname'])) {
+                $this->updateNames($request['name'], $request['surname'], $user->id);
+            }
+            // return Redirect::back();
+        } else {
+            // return Redirect::back();
+        }
+    }
 
     /**
      * Admin management's methods
