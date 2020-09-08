@@ -5,44 +5,12 @@ body {
     position: relative;
     background-attachment: fixed;
     background-color: #464646;
-
+    margin: 0;
     /*Disables selection by user*/
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.login-container {
-    align-self: center;
-}
-
-.login-tittle {
-    text-align: center;
-    font-family: "Nunito", sans-serif;
-    font-weight: normal;
-    font-size: 40px;
-    padding-top: 30px;
-}
-.form {
-    display: flex;
-    width: 480px;
-    justify-content: center;
-    background-color: white;
-    border-radius: 5px;
-    padding-bottom: 20px;
-    font-family: "Nunito", sans-serif;
-    font-weight: lighter;
-    font-size: 18px;
-    -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
-    box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
 }
 
 .input-login {
@@ -69,27 +37,6 @@ body {
 .password-login span {
     display: table;
     margin-bottom: 5px;
-}
-
-.last-buttons {
-    display: inline-flex;
-    font-size: 16px;
-}
-
-.forgot-psswd-login a {
-    margin-left: 70px;
-    color: black;
-    text-decoration: none;
-}
-.forgot-psswd-login a:hover {
-    color: #9507e6;
-}
-
-.button-submit {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
 }
 
 .signup-login {
@@ -127,4 +74,158 @@ body {
 .button-submit button:hover {
     background-color: #000f2d;
     cursor: pointer;
+}
+.forgot-psswd-login a {
+    color: black;
+    text-decoration: none;
+}
+.forgot-psswd-login a:hover {
+    color: #9507e6;
+}
+
+/*Mobile media*/
+@media (max-width: 600px) {
+    html,
+    body {
+        height: 100%;
+        font-family: "Nunito", sans-serif;
+    }
+
+    span {
+        font-size: 18px;
+    }
+    .container {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        width: 80%;
+        height: fit-content;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    }
+
+    .form {
+        height: 100%;
+        padding: 30px 0;
+    }
+
+    .login-title {
+        font-size: 30px;
+        font-weight: normal;
+        text-align: center;
+    }
+    .flex-center {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+    .email-login,
+    .password-login {
+        width: 80%;
+    }
+    .email-login span,
+    .password-login span {
+        font-weight: lighter;
+    }
+    .login-container form {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-login {
+        width: 90%;
+    }
+
+    .forgot-psswd-login {
+        width: 100%;
+        text-align: center;
+    }
+
+    .forgot-psswd-login a {
+        text-align: center;
+        text-decoration-line: underline;
+    }
+
+    .last-buttons {
+        display: flex;
+        width: 80%;
+        flex-direction: column;
+        font-size: 16px;
+    }
+    .last-buttons div:first-child {
+        margin-bottom: 15px;
+    }
+
+    .last-buttons div:last-child {
+        margin-top: 20px;
+    }
+
+    .button-submit,
+    .signup-login {
+        margin-bottom: 10px;
+    }
+
+    .signup-login a {
+        text-decoration-line: underline;
+    }
+}
+
+/*Desktop media*/
+@media (min-width: 600px) {
+    .container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .login-tittle {
+        text-align: center;
+        font-family: "Nunito", sans-serif;
+        font-weight: normal;
+        font-size: 40px;
+        padding-top: 30px;
+    }
+    .form {
+        display: flex;
+        width: 480px;
+        justify-content: center;
+        background-color: white;
+        border-radius: 5px;
+        padding-bottom: 20px;
+        font-family: "Nunito", sans-serif;
+        font-weight: lighter;
+        font-size: 18px;
+        -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    }
+
+    .last-buttons {
+        display: inline-flex;
+        font-size: 16px;
+    }
+
+    .button-submit {
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .forgot-psswd-login a {
+        margin-left: 70px;
+        color: black;
+        text-decoration: none;
+    }
 }

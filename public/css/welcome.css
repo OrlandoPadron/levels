@@ -55,3 +55,20 @@ body {
     text-decoration: none;
     text-transform: uppercase;
 }
+
+@media (max-width: 600px) {
+    .title {
+        font-size: 5em;
+    }
+    .top-right {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        top: 18px;
+    }
+}
+@media (max-width: 280px) {
+    .title {
+        font-size: 4em;
+    }
+}

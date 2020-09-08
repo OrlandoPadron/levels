@@ -9,22 +9,25 @@
       <div class="form">
         <form action="{{route('login')}}" method="POST">
           @csrf
-          <h1 class="login-tittle">Iniciar sesión</h1>
-          <div class="email-login">
-            <span>Email</span>
-            <input
-              id = "email"
-              class="input-login"
-              type="email"
-              name="email"
-              placeholder="ejemplo@levels.com"
-              value="{{ old('email') }}"
-              required autocomplete="email"
-              autofocus
-            />
-            {!! $errors->first('email', '<small class="error-message"><i class="fas fa-exclamation-circle"></i> :message</small><br>') !!}
-            
-          </div>
+          <h1 class="login-title">Iniciar sesión</h1>
+          <div class="flex-center">
+            <div class="email-login">
+              <span>Email</span>
+              <input
+                id = "email"
+                class="input-login"
+                type="email"
+                name="email"
+                placeholder="ejemplo@levels.com"
+                value="{{ old('email') }}"
+                required autocomplete="email"
+                autofocus
+              />
+              {!! $errors->first('email', '<small class="error-message"><i class="fas fa-exclamation-circle"></i> :message</small><br>') !!}
+              
+            </div>
+
+      
           <div class="password-login">
             <span>Contraseña</span>
             <input
@@ -37,6 +40,7 @@
             />
             {!! $errors->first('password', '<small class="error-message"><i class="fas fa-exclamation-circle"></i> :message</small><br>') !!}
           </div>
+        </div>
           <div class="last-buttons">
             <div class="remember-me-login">
               <input class="checkbox-input" 

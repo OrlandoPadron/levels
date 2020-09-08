@@ -12,40 +12,13 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.signup-container {
-    align-self: center;
-}
-
-.signup-tittle {
+.signup-title {
     text-align: center;
     font-family: "Nunito", sans-serif;
     font-weight: normal;
     padding-top: 20px;
     margin-bottom: 20px;
 }
-.form {
-    display: flex;
-    width: 600px;
-    height: 700px;
-    justify-content: center;
-    background-color: white;
-    border-radius: 5px;
-    padding-bottom: 20px;
-    font-family: "Nunito", sans-serif;
-    font-weight: lighter;
-    font-size: 18px;
-    -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
-    box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
-}
-
 .input-signup {
     border-radius: 7px;
     border: 1px solid grey;
@@ -66,20 +39,8 @@ body {
     margin-bottom: 5px;
 }
 
-.last-buttons {
-    display: inline-flex;
-    font-size: 16px;
-}
-.usertype-signup input,
-.usertype-signup label {
-    cursor: pointer;
-}
-
-.button-submit {
-    position: absolute; /*Prevents the buttom from moving when errors appear*/
-    top: 88%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.error-message {
+    margin-bottom: 5px;
 }
 
 .button-submit button {
@@ -102,19 +63,8 @@ body {
 }
 
 .button-submit button:hover {
-    background-color: #000f2d;
     cursor: pointer;
 }
-
-.usertype-signup {
-    position: relative;
-    top: -10px;
-}
-.usertype-signup input {
-    position: relative;
-    top: 2px;
-}
-
 .tooltip {
     position: relative;
     display: inline-block;
@@ -128,7 +78,7 @@ body {
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 5px 0;
+    padding: 10px;
     position: absolute;
     z-index: 1;
     bottom: 150%;
@@ -150,6 +100,127 @@ body {
     visibility: visible;
 }
 
-.error-message {
-    margin-bottom: 5px;
+.last-buttons {
+    display: inline-flex;
+    font-size: 16px;
+}
+.usertype-signup input,
+.usertype-signup label {
+    cursor: pointer;
+}
+
+.usertype-signup {
+    position: relative;
+    top: -10px;
+}
+.usertype-signup input {
+    position: relative;
+    top: 2px;
+}
+
+/*Mobile media*/
+@media (max-width: 600px) {
+    html,
+    body {
+        height: 100%;
+        font-family: "Nunito", sans-serif;
+        margin: 0;
+    }
+
+    span:not(.tooltiptext),
+    input,
+    label {
+        font-size: 18px;
+        font-weight: lighter;
+    }
+    .container {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        overflow: auto;
+    }
+
+    .signup-container {
+        width: 80%;
+        height: fit-content;
+        background-color: white;
+        border-radius: 5px;
+        -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    }
+
+    .form {
+        height: 100%;
+    }
+    .signup-title {
+        font-size: 30px;
+        font-weight: normal;
+        text-align: center;
+        margin-top: 0;
+    }
+
+    .flex-center {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: center;
+    }
+
+    .signup-field {
+        width: 80%;
+    }
+
+    .input-signup {
+        width: 90%;
+        margin-bottom: 15px;
+    }
+
+    .last-buttons {
+        width: 80%;
+        margin-top: 10px;
+    }
+
+    .button-submit button {
+        margin-top: 20px;
+        margin-bottom: 25px;
+    }
+}
+
+/*Desktop media*/
+@media (min-width: 600px) {
+    .container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .signup-container {
+        align-self: center;
+    }
+
+    .form {
+        display: flex;
+        width: 600px;
+        height: 700px;
+        justify-content: center;
+        background-color: white;
+        border-radius: 5px;
+        padding-bottom: 20px;
+        font-family: "Nunito", sans-serif;
+        font-weight: lighter;
+        font-size: 18px;
+        -webkit-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        -moz-box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+        box-shadow: 20px 21px 49px -29px rgba(0, 0, 0, 0.3);
+    }
+
+    .button-submit {
+        position: absolute; /*Prevents the buttom from moving when errors appear */
+        top: 88%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }

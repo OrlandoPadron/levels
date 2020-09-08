@@ -35,6 +35,9 @@
     <!-- Global App JS-->
     @include('scripts.genericScripts')
     @yield('head')
+    <!-- CSS Responsive -->
+    <link rel="stylesheet" type="text/css" href="{{asset('css/responsive.css')}}"/>
+
 </head>
 <body>
     
