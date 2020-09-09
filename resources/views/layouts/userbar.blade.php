@@ -1,4 +1,10 @@
 <div class="userbar">
+  <div class="levels-name">
+    <h1 class="app-name-navbar">Levels</h1>
+  </div>
+  <div class="collapse-menu">
+      <i class="fas fa-bars"></i>
+  </div>
   @if(Auth::user()->isTrainer)
     <livewire:search-dropdown> 
   @endif

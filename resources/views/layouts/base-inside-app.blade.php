@@ -39,8 +39,7 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/responsive.css')}}"/>
 
 </head>
-<body>
-    
+<body>   
     @extends('layouts.navbar')
     @extends('layouts.userbar')
     <div class="page-content">
