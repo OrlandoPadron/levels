@@ -1,5 +1,5 @@
 /*Mobile media*/
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     body {
         display: grid;
         grid-template-areas:
@@ -70,7 +70,7 @@
 }
 
 /*Desktop media*/
-@media (min-width: 600px) {
+@media (min-width: 900px) {
     /*General layout*/
     body {
         display: grid;

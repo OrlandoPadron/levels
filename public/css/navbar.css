@@ -10,7 +10,7 @@ body {
     background-color: #f2f1f2;
     font-family: "Nunito", sans-serif;
 }
-@media (min-width: 600px) {
+@media (min-width: 900px) {
     .app-name-navbar {
         margin-top: 0;
         padding-top: 13%;
