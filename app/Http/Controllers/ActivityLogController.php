@@ -46,7 +46,7 @@ class ActivityLogController extends Controller
      */
     public function store(array $request)
     {
-        // Let's create our training plan. 
+
         if (isset($request['author_id'])) {
             ActivityLog::create([
                 'author_id' =>  $request['author_id'],

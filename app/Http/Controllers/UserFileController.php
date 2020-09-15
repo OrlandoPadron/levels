@@ -67,8 +67,8 @@ class UserFileController extends Controller
             $userFile->save();
         } else {
             $userFile = UserFile::create([
-                'file_name' => $request['file_name'] != null ? $request['file_name'] : 'Fichero sin nombre',
-                'extension' => $request['extension'] != null ? $request['extension'] : "Fichero sin extensión",
+                'file_name' => $request['file_name'] != null ? $request['file_name'] : 'Archivo sin nombre',
+                'extension' => $request['extension'] != null ? $request['extension'] : "Archivo sin extensión",
                 'size' => $request['size'],
                 'url' => $request['url'],
                 'owned_by' => $request['owned_by'],

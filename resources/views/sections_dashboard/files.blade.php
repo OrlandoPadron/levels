@@ -70,7 +70,7 @@
         <table id="files-table2" class="fee-table file-datatable">
             <thead>
                 <tr>
-                    <th>Nombre del fichero</th>
+                    <th>Nombre del archivo</th>
                     <th>Formato</th>
                     <th>Propietario</th>
                     <th>Opciones</th>

@@ -4,7 +4,7 @@
        <div class="modal-content upload-file-modal" @click.away="addFileToPlan=false">
            <div class="modal-header">
                <span id="closeModal" class="close" @click="addFileToPlan=!addFileToPlan">&times;</span>
-               <h2>Añadir fichero al plan</h2>
+               <h2>Añadir archivo al plan</h2>
            </div>
            <div class="modal-body">
             <div class="modal-body-container">
