@@ -18,6 +18,7 @@
             if(empty($value)) unset($additionalInfo['thirdParties'][$key]); 
         }        
     }
+    var_dump(json_encode($additionalInfo)); 
 
 @endphp
 <div class="content-profile-dashboard" x-data="{openShowProfileData: false, openNewPlan: false, sectionTab: '{{$tab}}', paymentSettings: false, addTutorshipSession: false, openNewThreadForm:false, uploadFile:false, shareFile:false}">

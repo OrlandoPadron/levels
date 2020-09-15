@@ -260,8 +260,14 @@ class UserController extends Controller
             $additionalInfo_array['additionalInfo']['occupation'] = $request['occupation'];
         }
 
-        $user->additional_info = Crypt::encryptString(json_encode($additionalInfo_array));
-
+        if ($user->additional_info == '{}') {
+            $user->additional_info = Crypt::encryptString(json_encode($additionalInfo_array));
+        } else {
+            $decrypt = Crypt::decryptString($user->additional_info);
+            $old_additionalInfo = json_decode($decrypt, true);
+            $old_additionalInfo['additionalInfo'] = $additionalInfo_array['additionalInfo'];
+            $user->additional_info = Crypt::encryptString(json_encode($old_additionalInfo));
+        }
 
         $user->save();
 

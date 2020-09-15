@@ -19,11 +19,6 @@ class Athlete extends Model
     }
 
 
-    public function subscription()
-    {
-        return $this->hasOne(Subscription::class);
-    }
-
     public function invoices()
     {
         return $this->hasMany(Invoice::class, 'athlete_id');
