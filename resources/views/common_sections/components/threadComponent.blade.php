@@ -20,19 +20,23 @@
                 </p>
             </div>
         </div>
-        @if($thread->author == Auth::user()->id || Auth::user()->admin)
+        @if($thread->author == Auth::user()->id || Auth::user()->admin || Auth::user()->isTrainer)
         <div class="post-options">
             @if (!$generalThreadView)
             <a id="thread_edit_button_{{$thread->id}}" onclick="editThread({{$thread->id}})"><i class="far fa-edit"></i></a>
             <form id="deleteThreadForm" action="{{route('thread.destroy')}}" method="POST">
                 @csrf
                 <input type="text" value="{{$thread->id}}" name="thread_id" hidden>
-                <input type="text" value="1" name="return_to_forum" hidden> 
             </form>
-            <a onclick="document.getElementById('deleteThreadForm').submit()"><i class="fas fa-trash"></i></a>
+            
+            <a onclick="if (confirm('¿Deseas eliminar el hilo seleccionado?')) {
+                document.getElementById('deleteThreadForm').submit();
+            }"><i class="fas fa-trash"></i></a>
             <a id="pin_icon_{{$thread->id}}" class="{{$thread->pinned ? 'pinned' : ''}}" onclick="pinThread({{$thread->id}})"><i class="fas fa-thumbtack"></i></a>
             @else
-            <a onclick="deleteThread({{$thread->id}})"><i class="fas fa-trash"></i></a>
+            <a onclick="if (confirm('¿Deseas eliminar el hilo seleccionado?')) {
+                deleteThread({{$thread->id}})
+                }"><i class="fas fa-trash"></i></a>
             <a id="gpin_icon_{{$thread->id}}" class="{{$thread->pinned ? 'pinned' : ''}}" onclick="pinThread({{$thread->id}})"><i class="fas fa-thumbtack"></i></a>
             @endif
         </div>

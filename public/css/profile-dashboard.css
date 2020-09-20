@@ -732,24 +732,13 @@ table.dataTable {
 .tutorship-section-content h1,
 .my-wall-content h1 {
     margin-top: 0px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 }
 
 .tutorship-section-content h2,
 .my-wall-content h2 {
     margin-top: 0px;
-    margin-bottom: 20px;
-}
-
-.tutorship-section-content ul,
-.post-content ul,
-.my-wall-content ul {
-    margin-top: 25px;
-    margin-bottom: 45px;
-}
-
-.tutorship-section-content br {
-    display: none;
+    margin-bottom: 5px;
 }
 
 .tutorship-section-content a,

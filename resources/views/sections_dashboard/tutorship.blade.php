@@ -157,7 +157,7 @@
         quill[tutorshipId] = new Quill('#quill-editor-'.concat(tutorshipId), {
         modules: {
         toolbar: [
-            [{ 'header': 1 }, { 'header': 2 }, {'header': 3}],     
+            [{ 'header': 1 }, { 'header': 2 }],     
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
             [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
             [{ 'align': [] }],

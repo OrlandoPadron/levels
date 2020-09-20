@@ -48,16 +48,17 @@
     @if(Auth::user()->isTrainer == 1)
       @include('modals.newGroupModal')
     @endif
-  
-    @if (getUserGroups()->count() > 0)
-    <div class="group">
-      <ul class="group-list">
-        @foreach(getUserGroups()->sortBy('title') as $group)
-          <li>
-            <a href="{{route('group.show', [$group->id, 'general'])}}">{{$group->title}}</a>
-          </li>
-        @endforeach
-      </ul>
-    </div>
+    @if(Auth::user()->account_activated)
+      @if (getUserGroups()->count() > 0)
+      <div class="group">
+        <ul class="group-list">
+          @foreach(getUserGroups()->sortBy('title') as $group)
+            <li>
+              <a href="{{route('group.show', [$group->id, 'general'])}}">{{$group->title}}</a>
+            </li>
+          @endforeach
+        </ul>
+      </div>
+      @endif
     @endif
   </div>

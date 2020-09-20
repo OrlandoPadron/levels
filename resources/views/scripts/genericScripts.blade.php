@@ -142,7 +142,12 @@
         switch (method){
             case 'upload':
                 var file = document.getElementById("file-upload").files[0];
-                if (file != undefined){
+                var validFile = true; 
+                if((file.size/1024/1024).toFixed(2) >= 25){
+                    alert("El archivo excede el tamaño límite. Seleccione un archivo con un tamaño inferior o igual a 25 MB.");
+                    validFile = false;  
+                }
+                if (file != undefined && validFile){
                     var filename = file.name.split('.').slice(0, -1).join('.');
                     $('#upload-btn').prop('disabled', false);
                     $('#selected-file-name').text(file.name);
@@ -166,7 +171,12 @@
 
             case 'uploadToTrainingPlan':
                 var file = document.getElementById("file-upload-".concat(optionalId)).files[0];
-                if (file != undefined){
+                var validFile = true; 
+                if((file.size/1024/1024).toFixed(2) >= 25){
+                    alert("El archivo excede el tamaño límite. Seleccione un archivo con un tamaño inferior o igual a 25 MB.");
+                    validFile = false;  
+                }
+                if (file != undefined && validFile){
                     var filename = file.name.split('.').slice(0, -1).join('.');
                     $('#upload-btn-'.concat(optionalId)).prop('disabled', false);
                     $('#selected-file-name-'.concat(optionalId)).text(file.name);
@@ -182,7 +192,13 @@
             
             case 'updateFileFromTrainingPlan':
                 var file = document.getElementById("file-plan-update-".concat(optionalId)).files[0];
-                if (file != undefined){
+                var validFile = true; 
+                if((file.size/1024/1024).toFixed(2) >= 25){
+                    alert("El archivo excede el tamaño límite. Seleccione un archivo con un tamaño inferior o igual a 25 MB.");
+                    validFile = false;  
+                }
+                
+                if (file != undefined && validFile){
                     var filename = file.name.split('.').slice(0, -1).join('.');
                    
                     $('#upload-error-'.concat(optionalId)).hide();
@@ -201,7 +217,12 @@
 
             case 'groupUpload':
                 var file = document.getElementById("group-file-upload").files[0];
-                if (file != undefined){
+                var validFile = true; 
+                if((file.size/1024/1024).toFixed(2) >= 25){
+                    alert("El archivo excede el tamaño límite. Seleccione un archivo con un tamaño inferior o igual a 25 MB.");
+                    validFile = false;  
+                }
+                if (file != undefined && validFile){
                     var filename = file.name.split('.').slice(0, -1).join('.');
                     $('#group-upload-btn').prop('disabled', false);
                     $('#group-selected-file-name').text(file.name);

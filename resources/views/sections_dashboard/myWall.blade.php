@@ -79,7 +79,7 @@
         quill[id] = new Quill('#text-container-quillEditor-'.concat(id), {
             modules: {
             toolbar: [
-                [{ 'header': 1 }, { 'header': 2 }, {'header': 3}],     
+                [{ 'header': 1 }, { 'header': 2 }],     
                 ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
                 [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
                 [{ 'align': [] }],

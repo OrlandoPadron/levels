@@ -8,6 +8,7 @@ use App\ForumThread;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ForumThreadController extends Controller
 {
@@ -186,11 +187,7 @@ class ForumThreadController extends Controller
 
         $thread->delete();
 
-
-        if ($request['return_to_forum'] == 1) {
-            $user = $thread->model;
-            return redirect()->route('profile.show', ["user" => $user, 'tab' => 'foro']);
-        }
+        return Redirect::back();
     }
 
 

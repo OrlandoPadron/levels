@@ -639,7 +639,7 @@ class UserController extends Controller
         if (Auth::user()->admin && isset($request['userId'])) {
 
             $user = User::find($request['userId']);
-            dump('Usuario encontrado');
+            // dump('Usuario encontrado');
 
 
             /**
