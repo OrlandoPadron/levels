@@ -10,11 +10,10 @@
 
     .page-content {
         grid-area: page-content;
-        display: none; /* !TODO ver por qué hay overflow*/
+        /* display: none; !TODO ver por qué hay overflow */
     }
     .navbar {
         grid-area: navbar;
-        display: none;
     }
 
     .userbar {

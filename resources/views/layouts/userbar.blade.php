@@ -3,7 +3,7 @@
     <h1 class="app-name-navbar">Levels</h1>
   </div>
   <div class="collapse-menu">
-      <i class="fas fa-bars"></i>
+      <i class="fas fa-bars" id="collapsed-menu"></i>
   </div>
   @if(Auth::user()->isTrainer)
     <livewire:search-dropdown> 

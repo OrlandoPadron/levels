@@ -75,5 +75,46 @@
     // Get a reference to the storage service, which is used to create references in your storage bucket
     var storage = firebase.storage();
     </script>
+
+    
+    <script>
+        //Responsive oriented scripts
+
+        //Toggle collapsed sidebar visibility 
+
+        $(document).ready(function() {
+            var x = window.matchMedia("(max-width: 900px)");
+            x.addListener(function(){
+                if (!x.matches){
+                    $('.navbar').show();
+                    $('.sidebar-mobile').show();
+                }else{
+                    $('.navbar').hide();
+                    $('.sidebar-mobile').hide();
+                }
+            });
+            $('#collapsed-menu').click(function(){
+                var x = window.matchMedia("(max-width: 900px)");
+                if (x.matches){
+                    $('.navbar').toggle();
+                    $(".sidebar-mobile").animate({width: 'toggle', opacity: '1'});
+                }
+            });
+            $(window).click(function() {
+                var x = window.matchMedia("(max-width: 900px)");
+                if (x.matches){
+                    $('.navbar').hide();
+                    $(".sidebar-mobile").animate({width: 'hide', opacity: '1'});
+                }
+            });
+            $('#collapsed-menu').click(function(event){
+                var x = window.matchMedia("(max-width: 900px)");
+                if (x.matches){
+                    event.stopPropagation();
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
