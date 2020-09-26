@@ -105,6 +105,7 @@
     text-align: center;
     color: black !important;
 }
+
 @media (max-width: 900px) {
     .content-trainer-dashboard > .container-dashboard {
         text-align: center;
@@ -133,16 +134,17 @@
         display: flex;
         height: 200px;
         overflow-x: auto;
-        align-content: center;
-        align-items: center;
-        justify-content: center;
-        justify-items: center;
         padding: 10px;
     }
     .athlete-component {
         padding: 10px;
         margin-bottom: 0;
         margin-right: 0;
+    }
+    .box-container-notification > .box-content p:nth-child(2) {
+        color: #000f2d;
+        font-size: 1em;
+        margin: 0;
     }
 }
 

@@ -9,6 +9,7 @@
     }
 
     .page-content {
+        width: 100vw;
         grid-area: page-content;
         /* display: none; !TODO ver por qué hay overflow */
     }
@@ -18,7 +19,7 @@
 
     .userbar {
         display: grid;
-        width: 100%;
+        width: auto;
         height: 100px;
         grid-area: userbar;
         grid-template-columns: 25% 1fr 25%;

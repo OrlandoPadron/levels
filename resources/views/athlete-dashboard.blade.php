@@ -102,7 +102,6 @@
                         <li id="tutorias-navbar" onclick="changeUrlParameters('tutorias')" x-on:click.prevent @click="sectionTab = 'tutorias'" :class="{'active-dashboard': sectionTab === 'tutorias'}"><a href="#">Tutorías</a></li>
                         <li id="cuotas-navbar" onclick="changeUrlParameters('cuotas')" x-on:click.prevent @click="sectionTab = 'cuotas'" :class="{'active-dashboard': sectionTab === 'cuotas'}"><a href="#">Cuotas</a></li>
                         <li id="muro-navbar" onclick="changeUrlParameters('muro')" x-on:click.prevent @click="sectionTab = 'muro'" :class="{'active-dashboard': sectionTab === 'muro'}"><a href="#">Muro</a></li>
-                        <li id="cuenta-navbar" onclick="changeUrlParameters('cuenta')" x-on:click.prevent @click="sectionTab = 'cuenta'" :class="{'active-dashboard': sectionTab === 'cuenta'}"><a href="#">Cuenta</a></li>
                     </ul>
                 </div>
             </div>
@@ -156,16 +155,6 @@
                     @else   
                         @include('sections_dashboard.payment')
                     @endif                        
-                </div>
-                <div id="cuenta-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'cuenta'">
-                    @if ($user->account_activated==0)
-                        @include('page_messages.account_deactivated_message')
-                        @if (Auth::user()->admin == 1)
-                            @include('sections_dashboard.account')
-                        @endif
-                    @else
-                        @include('sections_dashboard.account')
-                    @endif
                 </div>
                 <div id="plan-section-container" style="display: none;" x-show.transition.in.opacity.duration.500ms="sectionTab === 'muro'">
                     @if ($user->account_activated==0)

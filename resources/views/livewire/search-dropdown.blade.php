@@ -3,7 +3,7 @@
       <div class="wrap-search">
         <input 
         wire:model.debounce.500ms="search" 
-        type="text" placeholder="Busca usuarios..." 
+        type="text" placeholder="Buscar usuarios..." 
         name="search" 
         @keydown = "isOpen = true"
         @focus = "isOpen = true"

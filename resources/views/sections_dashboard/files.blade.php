@@ -64,46 +64,47 @@
     
     </div>
     {{-- !TODO MEJORAR  --}}
-    @if(Auth::user()->isTrainer || Auth::user()->id == $user->id)
-    <div class="file-table-container">
-        <h2 class="primary-blue-color">Archivos compartidos {{Auth::user()->id == $user->id ? 'contigo' : 'con ' . $user->name. ' '. $user->surname}}</h2>
-        <table id="files-table2" class="fee-table file-datatable">
-            <thead>
-                <tr>
-                    <th>Nombre del archivo</th>
-                    <th>Formato</th>
-                    <th>Propietario</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach(getFilesSharedWithUser($user->id) as $key => $file)
-                @php
-                    $owned_by = $file->user->name . ' ' . $file->user->surname;
-                @endphp
-                <tr>
-                    <td>{{$file->file_name}}</td>
-                    <td>{{strtoupper($file->extension)}}</td>
-                    <td>{{$owned_by}}</td>
-                    <td>
-                        <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
-                        @if($file->owned_by == Auth::user()->id)
-                        <button onclick="
-                        if (confirm('¿Deseas dejar de compartir \'{{$file->file_name}}\' con {{$user->name . ' ' . $user->surname}}?')) {
-                            stopSharingFile({{$file->id}}, {{$user->id}}, '{{$file->file_name}}')
-                        };">Dejar de compartir</button>
-                        @endif
-                    </td>
-                </tr>     
-                @endforeach
+    @if(!$user->isTrainer)
+        @if(Auth::user()->isTrainer || Auth::user()->id == $user->id)
+        <div class="file-table-container">
+            <h2 class="primary-blue-color">Archivos compartidos {{Auth::user()->id == $user->id ? 'contigo' : 'con ' . $user->name. ' '. $user->surname}}</h2>
+            <table id="files-table2" class="fee-table file-datatable">
+                <thead>
+                    <tr>
+                        <th>Nombre del archivo</th>
+                        <th>Formato</th>
+                        <th>Propietario</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(getFilesSharedWithUser($user->id) as $key => $file)
+                    @php
+                        $owned_by = $file->user->name . ' ' . $file->user->surname;
+                    @endphp
+                    <tr>
+                        <td>{{$file->file_name}}</td>
+                        <td>{{strtoupper($file->extension)}}</td>
+                        <td>{{$owned_by}}</td>
+                        <td>
+                            <button onclick="window.open('{{$file->url}}','_blank')">Ver</button>
+                            @if($file->owned_by == Auth::user()->id)
+                            <button onclick="
+                            if (confirm('¿Deseas dejar de compartir \'{{$file->file_name}}\' con {{$user->name . ' ' . $user->surname}}?')) {
+                                stopSharingFile({{$file->id}}, {{$user->id}}, '{{$file->file_name}}')
+                            };">Dejar de compartir</button>
+                            @endif
+                        </td>
+                    </tr>     
+                    @endforeach
+                        
                     
-                
-            </tbody>
-        </table>
-    
-    </div>
+                </tbody>
+            </table>
+        
+        </div>
+        @endif
     @endif
-
 </div>
 
 <script>

@@ -1,321 +1,10 @@
-.content-profile-dashboard {
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 300px 60px 1fr;
-    grid-template-areas:
-        "userinfo"
-        "navbar-dashboard"
-        "content-dashboard";
-    row-gap: 15px;
-}
-
-.userinfo {
-    grid-area: userinfo;
-    display: flex;
-}
-
-.userinfo img {
-    width: 220px;
-    height: 220px;
-    margin-top: 40px;
-    margin-right: 3%;
-    border-radius: 50%;
-    border: 4px solid #000f2d;
-}
-
-.text-info-dashboard {
-    display: flex;
-    height: 230px;
-    margin-top: 60px;
-    width: 100%;
-    flex-direction: column;
-}
-
-.no-additional-info {
-    justify-content: center;
-}
-
-#user-dashboard-buttons-container {
-    display: flex;
-    flex-direction: row;
-    margin-top: -20px;
-    align-items: center;
-}
-#user-dashboard-buttons-container .btn-purple-basic {
-    top: 0;
-    margin-right: 10px;
-}
-#user-dashboard-buttons-container .soft-btn {
-    width: 180px;
-    font-size: 16px;
-    min-width: fit-content;
-}
-#user-dashboard-buttons-container .soft-btn i {
-    margin-right: 2px;
-}
-#user-dashboard-buttons-container .soft-btn.start-training:hover {
-    border: 2px solid green !important;
-    color: green;
-}
-#user-dashboard-buttons-container .soft-btn.stop-training:hover {
-    border: 2px solid red !important;
-    color: red;
-}
-#user-dashboard-buttons-container .soft-btn.start-training {
-    width: 120px;
-}
-#user-dashboard-buttons-container .soft-btn.start-training i {
-    margin-right: 5px;
-}
-
-#user_name_dashboard {
-    margin-top: 0px;
-    font-size: 48px;
-    font-weight: 600;
-}
-
-#user_type {
-    grid-area: label;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    font-size: 26px;
-    font-weight: 300;
-    align-items: center;
-    align-content: center;
-    /* background-color: #000f2d; */
-
-    /* position: relative;
-    top: -45px; */
-}
-
-/*User account services (URLs to Strava, Garmin Connect ...)*/
-.text-info-user-type {
-    display: grid;
-    width: 100%;
-    margin-top: -45px;
-    margin-bottom: 46px;
-    grid-template-columns: 100px 1fr;
-    grid-template-rows: fit-content;
-    grid-template-areas: "label links";
-    column-gap: 15px;
-}
-.athlete-accounts-links {
-    grid-area: links;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    margin-left: 20px;
-    align-items: center;
-    align-content: center;
-    border-left: 1.5px solid rgba(0, 0, 0, 0.3);
-    padding-left: 15px;
-}
-
-.athlete-accounts-links a {
-    width: fit-content;
-    height: fit-content;
-    padding: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 5px;
-    background-color: #000f2d;
-    font-size: 14px;
-}
-
-.athlete-accounts-links a:not(:first-child) {
-    margin-left: 10px;
-}
-
-.athlete-accounts-links a:hover {
-    filter: brightness(120%);
-}
-
-.btn-purple-basic {
-    width: 210px;
-    height: 40px;
-    position: relative;
-    top: -10px;
-}
-
-.btn-add-basic {
-    width: fit-content;
-    height: 40px;
-    padding-left: 20px;
-    padding-right: 20px;
-    text-align: center;
-    margin-top: 0px;
-}
-
-.btn-add-basic i {
-    margin-right: 10px;
-}
-
-.train-button {
-    float: right;
-    width: 150px;
-    padding-left: 10px;
-    padding-right: 10px;
-    transform: translateY(-440%);
-    height: 40px;
-    background-color: #000f2d;
-    color: white;
-}
-.train-button i {
-    margin-right: 5px;
-}
-
-.stop-training-button {
-    float: right;
-    width: 200px;
-    padding-left: 10px;
-    padding-right: 10px;
-    transform: translateY(-440%);
-    background-color: #000f2d;
-    color: white;
-    height: 40px;
-}
-.stop-training-button i {
-    margin-right: 5px;
-}
-
-/* NAVBAR DASHBOARD */
-.navbar-dashboard {
-    grid-area: navbar-dashboard;
-    margin-bottom: 0px;
-}
-.navbar-dashboard-menu ul {
-    list-style-type: none;
-    align-content: center;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.55);
-}
-
-.navbar-dashboard-menu li {
-    float: left;
-    text-align: center;
-    margin-bottom: 15px;
-    margin-right: 10px;
-}
-
-.navbar-dashboard-menu li a {
-    display: block;
-    color: black;
-    text-align: center;
-    padding: 16px;
-    text-decoration: none;
-}
-
-.navbar-dashboard-menu li a:hover {
-    color: rgb(149, 7, 230);
-}
-
-li.active-dashboard a {
-    background: #000f2d;
-    border-radius: 5px;
-    height: 10px;
-    color: white;
-}
-
-li.active-dashboard a:hover {
-    color: white;
-}
-
-.navbar-dashboard-menu a {
-    height: 100%;
-    line-height: 50%;
-}
-#navbar-dashboard-items li {
-    position: relative;
-}
-.notification-indicator {
-    position: absolute;
-    top: 8px;
-    right: 7px;
-    width: 6px;
-    height: 6px;
-    background-color: red;
-    border-radius: 50%;
-}
-.trainingPlan-container > .notification-indicator {
-    top: 20px;
-    right: 25px;
-    width: 10px;
-    height: 10px;
-}
-.post-container > .notification-indicator {
-    top: 25px;
-    right: 25px;
-    width: 10px;
-    height: 10px;
-}
-
-#table-notification-status i {
-    color: #00d89d;
-    font-size: 18px;
-}
-
-#table-notification-status i.fa-times-circle {
-    color: #ff2a5d;
-}
-
-.content-dashboard {
-    display: flex;
-    margin-top: -10px;
-    padding-bottom: 100px;
-}
-
-.heading-section {
-    margin-top: 30px;
-    margin-bottom: 50px;
-}
-.button-position {
-    float: right;
-}
-
-/* Training plan */
-.trainingPlan-container {
-    width: 100%;
-    height: fit-content;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    display: grid;
-    grid-template-columns: 30% 50% 20%;
-    grid-template-rows: auto;
-    grid-template-areas: "status description options";
-    margin-top: 30px;
-    position: relative;
-    margin-bottom: 50px;
-}
-
-.trainingPlan-status {
-    grid-area: status;
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    padding-left: 40px;
-    padding-bottom: 10px;
-    height: auto;
+.search-status #search_value {
     color: #6013bb;
-    font-size: 18px;
-    align-items: center;
 }
-
-.title-plan {
-    font-size: 24px;
-    word-wrap: break-word;
+.tutorship-number {
+    opacity: 50%;
+    color: #8e6bb6;
 }
-
-.duration-plan {
-    margin-top: -20px;
-}
-
 .status-plan i {
     margin-right: 10px;
 }
@@ -330,1081 +19,1789 @@ li.active-dashboard a:hover {
     font-weight: bold;
     margin-left: 5px;
 }
-
-.separation-plan {
-    margin-bottom: 10px;
-    margin-top: 20px;
-    margin-left: -30px;
-    margin-right: 20px;
-    height: 140px;
-    border-left: 3px solid rgba(96, 19, 187, 0.75);
-}
-
-.info-trainingPlan-status {
-    display: flex;
-    flex-direction: column;
-}
-
-.trainingPlan-description {
-    grid-area: description;
-    display: flex;
-    flex-direction: row;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    padding-left: 30px;
-    height: auto;
-    color: #6013bb;
-    font-size: 18px;
-    align-items: left;
-    word-wrap: break-word;
-}
-
-.title-description {
-    font-size: 24px;
-    margin-bottom: -10px;
-}
-
-.trainingPlan-options {
-    grid-area: options;
-    display: flex;
-    flex-direction: column;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    padding-right: 10px;
-    height: auto;
-    color: #6013bb;
-    font-size: 18px;
-    align-items: center;
-    justify-content: center;
-}
-
-.btn-gray-basic,
-.btn-activate-account {
-    width: 210px;
-    height: 40px;
-}
-
-button:hover {
-    filter: brightness(1.2);
-}
-
-/*Payment tab*/
-.fee-training-details {
-    width: 100%;
-    height: fit-content;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    display: grid;
-    grid-template-columns: 1fr 40% 25%;
-    grid-template-rows: auto;
-    grid-template-areas: "status details buttons";
-    margin-top: 30px;
-    margin-bottom: 50px;
-}
-
-.fee-training-details-status {
-    grid-area: status;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    margin-top: 10px;
-    margin-right: 0px;
-    padding-top: 10px;
-    padding-left: 50px;
-    height: auto;
-    color: #6013bb;
-    font-size: 24px;
-    align-items: left;
-    justify-self: left;
-    /* background-color: burlywood; */
-}
-
-.fee-training-details-status > .container-title {
-    margin-top: 5px;
-}
-
-.fee-training-details-status > .container-data {
-    margin-top: -25px;
-    margin-bottom: 20px;
-}
-#fee-payment-info {
-    margin-top: -20px;
-    font-size: 55px;
-    font-weight: 300;
-    margin-bottom: 30px;
-}
-
-.fee-training-details-details {
-    grid-area: details;
-    display: flex;
-    color: #6013bb;
-}
-
-.fee-training-details-details p {
-    margin-left: 10px;
-}
-
-.suscription-type {
-    padding-top: 25px;
-    font-size: 24px;
-}
-
-.next-fee {
-    margin-top: 20px;
-    padding-bottom: 10px;
-    font-size: 24px;
-}
-#next-fee-date,
-#fee-details {
-    margin-top: -25px;
-    font-size: 18px;
-}
-
-#fee-monthly-price {
-    font-weight: 100;
-    font-size: 18px;
-}
-
-.fee-training-details-details > .separation-plan {
-    height: 140px;
-    margin-bottom: 10px;
-}
-
-.fee-training-details-buttons {
-    grid-area: buttons;
-    padding-right: 10px;
-    justify-self: center;
-    justify-content: flex-start;
-    align-self: center;
-}
-
-.fee-training-details-buttons > .btn-purple-basic {
-    padding: 10px;
-    width: fit-content;
-    height: fit-content;
-    top: 0px;
-}
-
-.fee-training-details-buttons i {
-    margin-right: 5px;
-    font-size: 15px;
-}
-
-/*Invoice History*/
-.fee-training-history {
-    margin-top: 60px;
-}
-
-table.fee-table {
-    table-layout: fixed;
-    width: 99%;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    border-collapse: collapse;
-    margin-bottom: 100px;
-}
-
-.fee-table th {
-    border-bottom: 1px solid black;
-}
-
-.fee-table th,
-td {
-    padding: 10px;
-    padding-left: 0;
-    margin-left: 200px;
-    width: fit-content;
-}
-
-.fee-table td {
-    border-bottom: 1px solid black;
-}
-
-/*DATATABLES*/
-#fee-table_length {
-    margin-top: 5px;
-    margin-bottom: 20px;
-}
-table.dataTable {
-    margin-top: 2em !important;
-    margin-bottom: 2em !important;
-}
-
-.second_title {
-    font-size: 24px;
-}
-
-.account_deactivated {
-    opacity: 0.9;
-    filter: grayscale(100%);
-}
-
-/*TUTORSHIP SECTION*/
-.tutorship-container {
-    width: 100%;
-    height: fit-content;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    display: grid;
-    grid-template-areas:
-        "heading"
-        "details"
-        "buttons";
-    margin-top: 30px;
-    margin-bottom: 50px;
-}
-
-.tutorship-heading {
-    grid-area: heading;
-    width: 92%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-areas:
-        "title options"
-        "bar bar";
-}
-
-.tutorship-heading-title {
-    grid-area: title;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-top: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    height: auto;
-    width: 100%;
-    color: #000f2d;
-    font-size: 18px;
-    align-items: left;
-    justify-self: left;
-}
-
-.tutorship-heading-title > .container-title {
-    font-size: 22px;
-}
-
-#tutorship_date {
-    font-size: 18px;
-}
-
-.tutorship-heading-title > p.container-title {
-    margin-bottom: -12px;
-}
-
-.tutorship-goal {
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: #8e6bb6;
-}
-
-.tutorship-options {
-    grid-area: options;
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 100%;
-    padding-top: 15px;
-    /* background-color: red; */
-    font-size: 26px;
-    align-items: center;
-    justify-content: flex-end;
-    color: #8e6bb6;
-}
-
-.tutorship-option-bookmarked {
-    color: #6013bb;
-}
-.tutorship-option-bookmarked > i:hover:before {
-    font-weight: normal;
-    color: #bb133d;
-}
-
-.tutorship-options a {
-    margin-left: 15px;
-}
-
-.tutorship-options a:hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-
-.activated i {
-    font-weight: bold;
-    color: #bb133d;
-}
-
-.activated > i:hover:before {
-    font-weight: normal;
-    color: #8e6bb6;
-}
-.tutorship-options:hover:before {
-    font-weight: bold;
-}
-
-.separation-tutorship {
-    grid-area: bar;
-    height: 0px;
-    margin-left: 50px;
-    width: 98%;
-    margin-top: 10px;
-    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
-}
-
-.tutorship-content {
-    grid-area: details;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding-top: 10px;
-    padding-left: 50px;
-    padding-right: 50px;
-    height: auto;
-    width: 90%;
-    color: black;
-    align-items: left;
-    justify-self: left;
-    margin-bottom: 50px;
-}
-
-.tutorship-section-content {
-    font-weight: normal;
-    padding-top: 20px;
-    margin-bottom: 30px;
-}
-
-.tutorship-buttons {
-    grid-area: buttons;
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    padding-left: 50px;
-    padding-right: 50px;
-    height: auto;
-    color: black;
-    font-size: 18px;
-    align-items: center;
-    justify-self: center;
-    margin-bottom: 50px;
-}
-
-.tutorship-buttons button {
-    margin-left: 15px;
-}
-
-.tutorship-buttons > .btn-gray-basic {
-    width: 150px;
-}
-
-/*Bookmark effect*/
-.tutorship-bookmarked {
-    border-top: 20px solid #6013bb;
-}
-
-/*Collapse Tutorship*/
-.tutorship-collapse > .tutorship-heading {
-    padding-bottom: 25px;
-}
-
-.tutorship-collapse > .tutorship-content,
-.tutorship-collapse > .tutorship-heading > .separation-tutorship {
-    display: none;
-}
-
-.tutorship-number {
-    opacity: 50%;
-    color: #8e6bb6;
-}
-
-/* Quill editor inside app  */
-.tutorship-section-content p,
-.post-content p,
-.my-wall-content p {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
-.tutorship-section-content h1,
-.my-wall-content h1 {
-    margin-top: 0px;
-    margin-bottom: 5px;
-}
-
-.tutorship-section-content h2,
-.my-wall-content h2 {
-    margin-top: 0px;
-    margin-bottom: 5px;
-}
-
-.tutorship-section-content a,
-.post-content a,
-.my-wall-content a {
-    color: blue;
-    text-decoration: underline;
-}
-
-.ql-align-center {
-    text-align: center;
-}
-.ql-align-right {
-    text-align: right;
-}
-.ql-align-justify {
-    text-align: justify;
-}
-
-/* Tutorship edit mode -> inputs styles */
-.tutorship-heading-title input {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-size: 18px;
-    border-radius: 8px;
-    padding: 7px;
-    padding-left: 10px;
-    border: 1.8px solid #6013bb;
-}
-
-.tutorship-heading-title input:focus {
-    outline: none !important;
-}
-.tutorship-heading-title input:last-child {
-    margin-top: 10px;
-    margin-bottom: 25px;
-}
-.tutorship-heading-title input:first-child {
-    margin-top: 15px;
-}
-
-.ql-toolbar {
-    margin-top: 15px;
-}
-
-/* Collapse button*/
-
-a.collapse-button:active,
-a.collapse-button:link,
-a.collapse-button:visited,
-a.collapse-button:hover {
-    color: #8e6bb6;
-    text-decoration: none;
-}
-a.collapse-button :hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-.collapse-button {
-    color: #8e6bb6;
-    font-size: 24px;
-    margin-right: 10px;
-}
-
-/*Forum Section*/
-.post-container {
-    position: relative;
-    width: 100%;
-    height: fit-content;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    display: grid;
-    grid-template-rows: 100px 1fr 70px;
-    grid-template-columns: 100%;
-    grid-template-areas:
-        "heading"
-        "post-content"
-        "post-footer";
-    margin-top: 30px;
-    margin-bottom: 50px;
-    gap: 10px;
-}
-
-.post-pinned {
-    border-top: 20px solid #6013bb;
-}
-
-.post-heading {
-    grid-area: heading;
-    display: grid;
-    height: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    grid-template-columns: 70% 30%;
-    grid-template-rows: auto;
-    grid-template-areas: "post-details options";
-    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
-    margin-bottom: 100px;
-    align-items: center;
-}
-.post-details {
-    grid-area: post-details;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.post-details img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #000f2d;
-}
-
-.post-details-autor {
-    margin-left: 20px;
-}
-.post-details-autor p {
-    margin: 0;
-    color: #000f2d;
-    font-size: 18px;
-}
-.post-details-autor p:last-child {
-    font-size: 16px;
-    color: #8e6bb6;
-}
-
-.post-container span {
-    font-weight: normal;
-    margin-left: 1px;
-}
-
-.post-options {
-    grid-area: options;
-    display: flex;
-    flex-direction: row;
-    font-size: 26px;
-    align-items: center;
-    justify-content: flex-end;
-    color: #8e6bb6;
-}
-
-.post-options a {
-    margin-left: 16px;
-}
-
-.post-options a:hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-
-.pinned {
-    color: #6013bb;
-}
-
-a.pinned:hover {
-    color: #8e6bb6;
-}
-
-/* FORUM FILTERS*/
-.filter-options {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-areas:
-        "buttons-filter search-bar"
-        "search-status search-status";
-
-    margin-bottom: 50px;
-}
-
-.filter-buttons {
-    display: flex;
-    grid-area: buttons-filter;
-    align-items: center;
-}
-
-.filter-buttons > * {
-    margin-right: 15px;
-}
-.filter-btn {
-    width: fit-content;
-    height: fit-content;
-    font-size: 14px;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
-    border: none;
-    background-color: transparent;
-}
-.filter-btn:not(.filter-selected):hover {
-    background-color: transparent;
-    color: #6013bb;
-}
-
-.filter-selected {
-    background-color: #000f2d;
-    color: white;
-    pointer-events: none;
-    padding: 10px 20px;
-}
-
-/*Filter's Searchbar */
-.filter-search-bar {
-    display: flex;
-    position: relative;
-    grid-area: search-bar;
-    justify-self: flex-end;
-}
-
-.filter-search-bar input {
-    border-radius: 20px;
-    border: 2px solid grey;
-    width: 350px;
-    height: 30px;
-    padding: 5px;
-    padding-left: 10px;
-    outline: none;
-    background-color: white;
-}
-
-.filter-search-bar input:focus {
-    border: 2px solid #6013bb;
-}
-.filter-search-bar select {
-    position: absolute;
-    right: 0px;
-    width: fit-content;
-    height: 30px;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-    padding: 0 5px;
-    padding-left: 12px;
-    font-size: 14px;
-
-    outline: none;
-    background-color: #000f2d;
-    color: white;
-}
-.filter-search-bar select > * {
-    background-color: white;
-    color: black;
-    outline: none;
-}
-
-.filter-search-bar select:hover {
-    cursor: pointer;
-}
-
-.search-status {
-    grid-area: search-status;
-    margin-top: 30px;
-    margin-bottom: -20px;
-    font-size: 26px;
-    justify-self: left;
-}
-
-.search-status #search_value {
-    color: #6013bb;
-}
-
-/*Pinned section*/
-
-.pinned-threads {
-    height: fit-content;
-    margin-top: -10px;
-    padding-bottom: 0px;
-    margin-bottom: 40px;
-    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
-}
-
-.pinned-threads h2 {
-    margin-bottom: 40px;
-}
-
-.post-content {
-    grid-area: post-content;
-    height: 100%;
-    word-wrap: break-word;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 20px;
-}
-
-.blurry-effect {
-    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
-    mask-image: linear-gradient(180deg, #000 60%, transparent);
-    overflow: hidden;
-    min-height: 100px;
-    max-height: 150px;
-}
-
-.post-footer {
-    grid-area: post-footer;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 20px;
-    padding-top: 20px;
-    font-size: 16px;
-    color: #000f2d;
-    border-top: 1px solid rgba(134, 134, 134, 0.55);
-}
-
-.post-footer i {
-    margin-right: 10px;
-}
-
-.post-footer p {
-    margin-left: 20px;
-    justify-self: flex-end;
-    padding-left: 15px;
-    border-left: 1px solid rgba(134, 134, 134, 0.55);
-}
-
-.post-footer a:hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-
-/*Post hover effect*/
-.post-details:not(.thread-active):hover {
-    cursor: pointer;
-}
-
-/*Collapse Post*/
-div.post-container.post-collapse {
-    grid-template-rows: 80px 70px;
-    grid-template-columns: auto;
-    grid-template-areas:
-        "heading"
-        "post-footer";
-    padding-top: 10px;
-}
-.post-collapse > .post-heading {
-    border-bottom: none;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.post-collapse > .post-content {
-    display: none;
-}
-
-/* REPLY'S STYLES*/
-.reply-container {
-    width: 100%;
-    height: fit-content;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color: white;
-    display: grid;
-    grid-template-rows: 100px 1fr;
-    grid-template-columns: 100%;
-    grid-template-areas:
-        "heading"
-        "reply-content";
-    margin-top: 30px;
-    margin-bottom: 50px;
-    gap: 10px;
-}
-.reply-heading {
-    grid-area: heading;
-    display: grid;
-    height: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    grid-template-columns: 70% 30%;
-    grid-template-rows: auto;
-    grid-template-areas: "reply-details options";
-    border-bottom: 1px solid rgba(134, 134, 134, 0.55);
-    margin-bottom: 100px;
-    align-items: center;
-}
-
-.reply-details {
-    grid-area: reply-details;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-.reply-details img {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px solid #000f2d;
-}
-
-.reply-details-autor {
-    margin-left: 20px;
-}
-.reply-details-autor p {
-    margin: 0;
-    color: #000f2d;
-    font-size: 18px;
-}
-.reply-details-autor p:last-child {
-    font-size: 16px;
-    color: #8e6bb6;
-}
-
-.reply-container span {
-    font-weight: normal;
-    margin-left: 1px;
-}
-
-.reply-options {
-    grid-area: options;
-    display: flex;
-    flex-direction: row;
-    font-size: 26px;
-    align-items: center;
-    justify-content: flex-end;
-    color: #8e6bb6;
-}
-
-.reply-options a {
-    margin-left: 16px;
-}
-
-.reply-options a:hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-
-.reply-content {
-    grid-area: reply-content;
-    height: 100%;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 20px;
-    word-break: break-all;
-}
-
-/*Add reply box */
-.add-reply {
-    display: grid;
-    height: fit-content;
-    grid-template-areas:
-        "upper"
-        "footer";
-    grid-template-columns: auto;
-    margin-top: 70px;
-    margin-bottom: -20px;
-}
-
-.top-add-reply {
-    grid-area: upper;
-    display: flex;
-    padding-left: 50px;
-    padding-right: 50px;
-    flex-direction: row;
-}
-
-.top-add-reply img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    border: 2px solid #000f2d;
-    margin-right: 20px;
-}
-
-.editor-add-reply {
-    width: 100%;
-    height: fit-content;
-    background-color: white;
-    border-radius: 10px;
-}
-.editor-add-reply > * {
-    margin-top: 0;
-}
-
-.editor-add-reply p {
-    word-break: break-all;
-}
-.editor-add-reply > .ql-toolbar {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-.editor-add-reply > .ql-container {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    min-height: 120px;
-}
-
-.footer-add-reply {
-    grid-area: footer;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 30px;
-    padding-right: 50px;
-}
-
-.footer-add-reply > .btn-purple-basic {
-    margin-left: 15px;
-    width: 130px;
-}
-
-.footer-add-reply a {
-    color: #000f2d;
-}
-.footer-add-reply a:hover {
-    cursor: pointer;
-    color: #6013bb;
-}
-
-/* THREAD EDIT COMMAND*/
-.thread_editor_buttons {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 50px;
-    height: auto;
-    color: black;
-    font-size: 18px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: -40px;
-}
-
-.thread_editor_buttons button {
-    width: fit-content;
-}
-.thread_editor_buttons button:last-of-type {
-    margin-left: 15px;
-    width: 130px;
-}
-
-/*REPLY EDIT COMMAND*/
-.reply_editor_buttons {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 30px;
-    height: auto;
-    color: black;
-    font-size: 18px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-.reply_editor_buttons button {
-    width: fit-content;
-}
-.reply_editor_buttons button:last-of-type {
-    margin-left: 15px;
-    width: 130px;
-}
-
-/*My Wall Styles*/
-.wall-heading {
-    display: grid;
-    /* background-color: blue; */
-    grid-template-areas: "title options";
-    align-items: center;
-    margin-top: -15px;
-    margin-bottom: 15px;
-}
-
-.wall-title {
-    grid-area: title;
-    height: fit-content;
-    /* background-color: rebeccapurple; */
-    border-left: 3px solid #6013bb;
-    padding-left: 15px;
-}
-
-.my-wall {
-    height: fit-content;
-    width: 100%;
-    background-color: white;
-    border-radius: 10px;
-    padding: 25px 0px;
-    padding-bottom: 10px;
-    margin-bottom: 70px;
-}
-
-.wall-title-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.wall-title-container > .wall-position {
-    margin-left: 15px;
-}
-
-.wall-title-container > .wall-position label {
-    margin-right: 5px;
-}
-
-.wall-heading input {
-    width: 300px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-size: 18px;
-    border-radius: 8px;
-    padding: 7px;
-    padding-left: 10px;
-    border: 1.8px solid #6013bb;
-    outline: none;
-}
-
-.my-wall-content {
-    grid-area: wall-content;
-    padding: 20px 50px;
-}
-
-.my-wall-options {
-    grid-area: options;
-    display: flex;
-    height: 100%;
-    justify-content: flex-end;
-    padding: 0 20px;
-    align-items: center;
-    font-size: 26px;
-    color: #8e6bb6;
-}
-
-.my-wall-options i:hover {
-    color: #6013bb;
-    cursor: pointer;
-}
-
-.my-wall-options :last-child {
-    margin-left: 15px;
-}
-
-.wall-heading:nth-last-of-type(2) {
-    margin-top: 40px;
-}
-
-.myWall-quillEditor {
-    padding: 10px 30px;
-}
-
-.wall-buttons {
-    display: flex;
-    flex-direction: row;
-    padding-left: 50px;
-    padding-right: 50px;
-    height: auto;
-    color: black;
-    font-size: 18px;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-.wall-buttons button {
-    margin-left: 15px;
-}
-.wall-buttons > .btn-gray-basic {
-    width: 150px;
-}
-
-/*FILES SECTION*/
-.general-file-table-container > div:first-child {
-    margin-bottom: 70px;
+/*Mobile media*/
+@media (max-width: 900px) {
+    .content-profile-dashboard {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 300px 60px 1fr;
+        grid-template-areas:
+            "userinfo"
+            "navbar-dashboard"
+            "content-dashboard";
+        row-gap: 25px;
+    }
+    .userinfo {
+        grid-area: userinfo;
+        display: grid;
+        align-items: center;
+        justify-items: center;
+        grid-template-areas:
+            "profile-img"
+            "others";
+    }
+
+    .userinfo img {
+        margin-top: 20px;
+        width: 125px;
+        height: 125px;
+        border-radius: 50%;
+        border: 3px solid #000f2d;
+    }
+    .text-info-dashboard {
+        grid-area: others;
+        display: grid;
+        justify-items: center;
+        grid-template-areas: "name" "type" "buttons";
+    }
+    .text-info-dashboard p:first-child {
+        font-size: 20px;
+        margin: 10px 0 0 0;
+    }
+    .text-info-dashboard #user_type {
+        font-size: 15px;
+    }
+
+    .text-info-dashboard #user-dashboard-buttons-container {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+    #user-dashboard-buttons-container > .btn-purple-basic {
+        width: 180px;
+        height: 35px;
+        margin: 5px 0 10px 0;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+    #user-dashboard-buttons-container .soft-btn {
+        width: 160px;
+        font-size: 14px;
+    }
+
+    .athlete-accounts-links {
+        grid-area: links;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 5px;
+    }
+    .athlete-accounts-links a {
+        width: fit-content;
+        height: 10px;
+        padding: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+        background-color: #000f2d;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* NAVBAR DASHBOARD */
+
+    .navbar-dashboard-menu ul {
+        grid-area: navbar-dashboard;
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0 0 20px 0;
+        border-bottom: 2px solid black;
+        font-size: 14px;
+    }
+    .navbar-dashboard li:not(:last-child) {
+        margin-right: 5px;
+    }
+
+    .navbar-dashboard li a {
+        display: flex;
+        color: black;
+        width: fit-content;
+        height: 50px;
+        text-align: center;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        padding: 0px 10px;
+    }
+    li.active-dashboard a {
+        display: flex;
+        color: white;
+        width: fit-content;
+        height: 50px;
+
+        text-align: center;
+        align-items: center;
+        justify-items: center;
+        justify-content: center;
+        background-color: #000f2d;
+        border-radius: 5px;
+        padding: 0px 20px;
+    }
+
+    /* .navbar-dashboard-menu li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+    .navbar-dashboard-menu li a:hover {
+        color: rgb(149, 7, 230);
+    }
+
+    li.active-dashboard a {
+        background: #000f2d;
+        border-radius: 5px;
+        height: 10px;
+        color: white;
+    }
+
+    li.active-dashboard a:hover {
+        color: white;
+    }
+
+    .navbar-dashboard-menu a {
+        height: 100%;
+        line-height: 50%;
+    }
+    #navbar-dashboard-items li {
+        position: relative;
+    }
+    .notification-indicator {
+        position: absolute;
+        top: 8px;
+        right: 7px;
+        width: 6px;
+        height: 6px;
+        background-color: red;
+        border-radius: 50%;
+    }
+    .trainingPlan-container > .notification-indicator {
+        top: 20px;
+        right: 25px;
+        width: 10px;
+        height: 10px;
+    }
+    .post-container > .notification-indicator {
+        top: 25px;
+        right: 25px;
+        width: 10px;
+        height: 10px;
+    }
+
+    #table-notification-status i {
+        color: #00d89d;
+        font-size: 18px;
+    }
+
+    #table-notification-status i.fa-times-circle {
+        color: #ff2a5d;
+    } */
+
+    .primary-blue-color {
+        font-size: 24px;
+        text-align: center;
+        margin-top: 25px;
+    }
+    .content-dashboard {
+        display: flex;
+        grid-area: content-dashboard;
+        padding-bottom: 100px;
+    }
+    .heading-section {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1fr;
+        grid-template-areas: "title" "buttons";
+        justify-content: center;
+        text-align: center;
+    }
+
+    .btn-add-basic {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 16px;
+        grid-area: buttons;
+    }
+
+    .btn-add-basic i {
+        margin-right: 5px;
+    }
+    .primary-blue-color.heading-text-container {
+        font-size: 20px;
+        margin: 30px 5px;
+        text-align: left;
+    }
+
+    /*Training plan container*/
+    .trainingPlan-container {
+        background-color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+    }
+    .title-plan,
+    .title-description {
+        color: #6013bb;
+    }
+
+    .trainingPlan-options {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .trainingPlan-options :first-child {
+        margin-right: 10px;
+    }
+    .trainingPlan-options button {
+        padding: 8px 6px;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /*Tutorships*/
+    .collapse-button {
+        display: none;
+    }
+    #tutorships-container {
+        margin-top: 20px;
+    }
+    .tutorship-container {
+        display: grid;
+        grid-template-areas: "heading" "content" "buttons";
+        padding: 10px 20px;
+        border-radius: 5px;
+        background-color: white;
+        margin-top: 30px;
+    }
+
+    .tutorship-heading {
+        grid-area: heading;
+        display: grid;
+        grid-template-areas:
+            "edit-buttons"
+            "title"
+            "goal";
+        padding-bottom: 10px;
+        border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+    }
+
+    .tutorship-options {
+        grid-area: edit-buttons;
+        font-size: 20px;
+        margin-top: 5px;
+        text-align: right;
+        color: #8e6bb6;
+    }
+    .container-title {
+        grid-area: title;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+    }
+    .container-title span {
+        font-size: 16px;
+        margin: 5px 0;
+    }
+
+    .tutorship-goal {
+        grid-area: goal;
+        margin: 5px 0 0 0;
+    }
+
+    .tutorship-buttons {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+    }
+    .tutorship-buttons button {
+        width: 100%;
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    .tutorship-buttons button:last-of-type {
+        margin-top: 10px;
+    }
+    .tutorship-goal {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #8e6bb6;
+    }
+    .tutorship-option-bookmarked {
+        color: #6013bb;
+    }
+
+    .tutorship-options a:hover {
+        color: #8e6bb6;
+        cursor: pointer;
+    }
+    .tutorship-bookmarked {
+        border-top: 10px solid #6013bb;
+    }
+    /* FORUM FILTERS*/
+    .filter-options {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: "buttons-filter" "search-bar";
+
+        margin-bottom: 50px;
+    }
+
+    .filter-buttons {
+        grid-area: buttons-filter;
+        display: flex;
+        margin-top: 5px;
+        margin-bottom: 25px;
+    }
+    .filter-buttons button {
+        font-size: 14px;
+    }
+    .filter-buttons button:not(:last-child) {
+        margin-right: 10px;
+    }
+    .filter-btn {
+        width: fit-content;
+        height: 50px;
+        font-size: 14px;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        padding: 10px 15px;
+
+        background-color: transparent;
+    }
+    .filter-selected {
+        background-color: #000f2d;
+        color: white;
+        pointer-events: none;
+        padding: 10px 15px;
+    }
+    /*Filter's Searchbar */
+    .filter-search-bar {
+        display: flex;
+        grid-area: search-bar;
+    }
+
+    .filter-search-bar input {
+        border-radius: 20px;
+        border: 2px solid grey;
+        width: 100%;
+        height: 30px;
+        padding: 5px;
+        padding-left: 10px;
+        outline: none;
+        background-color: white;
+    }
+
+    .filter-search-bar input:focus {
+        border: 2px solid #6013bb;
+    }
+    #search-status-tutorship {
+        margin-top: 5px;
+    }
+}
+
+/*Desktop media*/
+@media (min-width: 900px) {
+    .content-profile-dashboard {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 300px 60px 1fr;
+        grid-template-areas:
+            "userinfo"
+            "navbar-dashboard"
+            "content-dashboard";
+        row-gap: 15px;
+    }
+
+    .userinfo {
+        grid-area: userinfo;
+        display: flex;
+    }
+
+    .userinfo img {
+        width: 220px;
+        height: 220px;
+        margin-top: 40px;
+        margin-right: 3%;
+        border-radius: 50%;
+        border: 4px solid #000f2d;
+    }
+
+    .text-info-dashboard {
+        display: flex;
+        height: 230px;
+        margin-top: 60px;
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .no-additional-info {
+        justify-content: center;
+    }
+
+    #user-dashboard-buttons-container {
+        display: flex;
+        flex-direction: row;
+        margin-top: -20px;
+        align-items: center;
+    }
+    #user-dashboard-buttons-container .btn-purple-basic {
+        top: 0;
+        margin-right: 10px;
+    }
+    #user-dashboard-buttons-container .soft-btn {
+        width: 180px;
+        font-size: 16px;
+        min-width: fit-content;
+    }
+    #user-dashboard-buttons-container .soft-btn i {
+        margin-right: 2px;
+    }
+    #user-dashboard-buttons-container .soft-btn.start-training:hover {
+        border: 2px solid green !important;
+        color: green;
+    }
+    #user-dashboard-buttons-container .soft-btn.stop-training:hover {
+        border: 2px solid red !important;
+        color: red;
+    }
+    #user-dashboard-buttons-container .soft-btn.start-training {
+        width: 120px;
+    }
+    #user-dashboard-buttons-container .soft-btn.start-training i {
+        margin-right: 5px;
+    }
+
+    #user_name_dashboard {
+        margin-top: 0px;
+        font-size: 48px;
+        font-weight: 600;
+    }
+
+    #user_type {
+        grid-area: label;
+        display: flex;
+        width: 100%;
+        height: 100%;
+        font-size: 26px;
+        font-weight: 300;
+        align-items: center;
+        align-content: center;
+        /* background-color: #000f2d; */
+
+        /* position: relative;
+    top: -45px; */
+    }
+
+    /*User account services (URLs to Strava, Garmin Connect ...)*/
+    .text-info-user-type {
+        display: grid;
+        width: 100%;
+        margin-top: -45px;
+        margin-bottom: 46px;
+        grid-template-columns: 100px 1fr;
+        grid-template-rows: fit-content;
+        grid-template-areas: "label links";
+        column-gap: 15px;
+    }
+    .athlete-accounts-links {
+        grid-area: links;
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        margin-left: 20px;
+        align-items: center;
+        align-content: center;
+        border-left: 1.5px solid rgba(0, 0, 0, 0.3);
+        padding-left: 15px;
+    }
+
+    .athlete-accounts-links a {
+        width: fit-content;
+        height: fit-content;
+        padding: 7px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
+        background-color: #000f2d;
+        font-size: 14px;
+    }
+
+    .athlete-accounts-links a:not(:first-child) {
+        margin-left: 10px;
+    }
+
+    .athlete-accounts-links a:hover {
+        filter: brightness(120%);
+    }
+
+    .btn-purple-basic {
+        width: 210px;
+        height: 40px;
+        position: relative;
+        top: -10px;
+    }
+
+    .btn-add-basic {
+        width: fit-content;
+        height: 40px;
+        padding-left: 20px;
+        padding-right: 20px;
+        text-align: center;
+        margin-top: 0px;
+    }
+
+    .btn-add-basic i {
+        margin-right: 10px;
+    }
+
+    .train-button {
+        float: right;
+        width: 150px;
+        padding-left: 10px;
+        padding-right: 10px;
+        transform: translateY(-440%);
+        height: 40px;
+        background-color: #000f2d;
+        color: white;
+    }
+    .train-button i {
+        margin-right: 5px;
+    }
+
+    .stop-training-button {
+        float: right;
+        width: 200px;
+        padding-left: 10px;
+        padding-right: 10px;
+        transform: translateY(-440%);
+        background-color: #000f2d;
+        color: white;
+        height: 40px;
+    }
+    .stop-training-button i {
+        margin-right: 5px;
+    }
+
+    /* NAVBAR DASHBOARD */
+    .navbar-dashboard {
+        grid-area: navbar-dashboard;
+        margin-bottom: 0px;
+    }
+    .navbar-dashboard-menu ul {
+        list-style-type: none;
+        align-content: center;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.55);
+    }
+
+    .navbar-dashboard-menu li {
+        float: left;
+        text-align: center;
+        margin-bottom: 15px;
+        margin-right: 10px;
+    }
+
+    .navbar-dashboard-menu li a {
+        display: block;
+        color: black;
+        text-align: center;
+        padding: 16px;
+        text-decoration: none;
+    }
+
+    .navbar-dashboard-menu li a:hover {
+        color: rgb(149, 7, 230);
+    }
+
+    li.active-dashboard a {
+        background: #000f2d;
+        border-radius: 5px;
+        height: 10px;
+        color: white;
+    }
+
+    li.active-dashboard a:hover {
+        color: white;
+    }
+
+    .navbar-dashboard-menu a {
+        height: 100%;
+        line-height: 50%;
+    }
+    #navbar-dashboard-items li {
+        position: relative;
+    }
+    .notification-indicator {
+        position: absolute;
+        top: 8px;
+        right: 7px;
+        width: 6px;
+        height: 6px;
+        background-color: red;
+        border-radius: 50%;
+    }
+    .trainingPlan-container > .notification-indicator {
+        top: 20px;
+        right: 25px;
+        width: 10px;
+        height: 10px;
+    }
+    .post-container > .notification-indicator {
+        top: 25px;
+        right: 25px;
+        width: 10px;
+        height: 10px;
+    }
+
+    #table-notification-status i {
+        color: #00d89d;
+        font-size: 18px;
+    }
+
+    #table-notification-status i.fa-times-circle {
+        color: #ff2a5d;
+    }
+
+    .content-dashboard {
+        display: flex;
+        margin-top: -10px;
+        padding-bottom: 100px;
+    }
+
+    .heading-section {
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+    .button-position {
+        float: right;
+    }
+
+    /* Training plan */
+    .trainingPlan-container {
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: grid;
+        grid-template-columns: 30% 50% 20%;
+        grid-template-rows: auto;
+        grid-template-areas: "status description options";
+        margin-top: 30px;
+        position: relative;
+        margin-bottom: 50px;
+    }
+
+    .trainingPlan-status {
+        grid-area: status;
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        padding-left: 40px;
+        padding-bottom: 10px;
+        height: auto;
+        color: #6013bb;
+        font-size: 18px;
+        align-items: center;
+    }
+
+    .title-plan {
+        font-size: 24px;
+        word-wrap: break-word;
+    }
+
+    .duration-plan {
+        margin-top: -20px;
+    }
+
+    .separation-plan {
+        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-left: -30px;
+        margin-right: 20px;
+        height: 140px;
+        border-left: 3px solid rgba(96, 19, 187, 0.75);
+    }
+
+    .info-trainingPlan-status {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .trainingPlan-description {
+        grid-area: description;
+        display: flex;
+        flex-direction: row;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 30px;
+        height: auto;
+        color: #6013bb;
+        font-size: 18px;
+        align-items: left;
+        word-wrap: break-word;
+    }
+
+    .title-description {
+        font-size: 24px;
+        margin-bottom: -10px;
+    }
+
+    .trainingPlan-options {
+        grid-area: options;
+        display: flex;
+        flex-direction: column;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        padding-right: 10px;
+        height: auto;
+        color: #6013bb;
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .btn-gray-basic,
+    .btn-activate-account {
+        width: 210px;
+        height: 40px;
+    }
+
+    button:hover {
+        filter: brightness(1.2);
+    }
+
+    /*Payment tab*/
+    .fee-training-details {
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: grid;
+        grid-template-columns: 1fr 40% 25%;
+        grid-template-rows: auto;
+        grid-template-areas: "status details buttons";
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    .fee-training-details-status {
+        grid-area: status;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        margin-top: 10px;
+        margin-right: 0px;
+        padding-top: 10px;
+        padding-left: 50px;
+        height: auto;
+        color: #6013bb;
+        font-size: 24px;
+        align-items: left;
+        justify-self: left;
+        /* background-color: burlywood; */
+    }
+
+    .fee-training-details-status > .container-title {
+        margin-top: 5px;
+    }
+
+    .fee-training-details-status > .container-data {
+        margin-top: -25px;
+        margin-bottom: 20px;
+    }
+    #fee-payment-info {
+        margin-top: -20px;
+        font-size: 55px;
+        font-weight: 300;
+        margin-bottom: 30px;
+    }
+
+    .fee-training-details-details {
+        grid-area: details;
+        display: flex;
+        color: #6013bb;
+    }
+
+    .fee-training-details-details p {
+        margin-left: 10px;
+    }
+
+    .suscription-type {
+        padding-top: 25px;
+        font-size: 24px;
+    }
+
+    .next-fee {
+        margin-top: 20px;
+        padding-bottom: 10px;
+        font-size: 24px;
+    }
+    #next-fee-date,
+    #fee-details {
+        margin-top: -25px;
+        font-size: 18px;
+    }
+
+    #fee-monthly-price {
+        font-weight: 100;
+        font-size: 18px;
+    }
+
+    .fee-training-details-details > .separation-plan {
+        height: 140px;
+        margin-bottom: 10px;
+    }
+
+    .fee-training-details-buttons {
+        grid-area: buttons;
+        padding-right: 10px;
+        justify-self: center;
+        justify-content: flex-start;
+        align-self: center;
+    }
+
+    .fee-training-details-buttons > .btn-purple-basic {
+        padding: 10px;
+        width: fit-content;
+        height: fit-content;
+        top: 0px;
+    }
+
+    .fee-training-details-buttons i {
+        margin-right: 5px;
+        font-size: 15px;
+    }
+
+    /*Invoice History*/
+    .fee-training-history {
+        margin-top: 60px;
+    }
+
+    table.fee-table {
+        table-layout: fixed;
+        width: 99%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        border-collapse: collapse;
+        margin-bottom: 100px;
+    }
+
+    .fee-table th {
+        border-bottom: 1px solid black;
+    }
+
+    .fee-table th,
+    td {
+        padding: 10px;
+        padding-left: 0;
+        margin-left: 200px;
+        width: fit-content;
+    }
+
+    .fee-table td {
+        border-bottom: 1px solid black;
+    }
+
+    /*DATATABLES*/
+    #fee-table_length {
+        margin-top: 5px;
+        margin-bottom: 20px;
+    }
+    table.dataTable {
+        margin-top: 2em !important;
+        margin-bottom: 2em !important;
+    }
+
+    .second_title {
+        font-size: 24px;
+    }
+
+    .account_deactivated {
+        opacity: 0.9;
+        filter: grayscale(100%);
+    }
+
+    /*TUTORSHIP SECTION*/
+    .tutorship-container {
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: grid;
+        grid-template-areas:
+            "heading"
+            "details"
+            "buttons";
+        margin-top: 30px;
+        margin-bottom: 50px;
+    }
+
+    .tutorship-heading {
+        grid-area: heading;
+        width: 92%;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            "title options"
+            "bar bar";
+    }
+
+    .tutorship-heading-title {
+        grid-area: title;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-top: 10px;
+        padding-left: 50px;
+        padding-right: 50px;
+        height: auto;
+        width: 100%;
+        color: #000f2d;
+        font-size: 18px;
+        align-items: left;
+        justify-self: left;
+    }
+
+    .tutorship-heading-title > .container-title {
+        font-size: 22px;
+    }
+
+    #tutorship_date {
+        font-size: 18px;
+    }
+
+    .tutorship-heading-title > p.container-title {
+        margin-bottom: -12px;
+    }
+
+    .tutorship-goal {
+        font-size: 16px;
+        margin-bottom: 10px;
+        color: #8e6bb6;
+    }
+
+    .tutorship-options {
+        grid-area: options;
+        display: flex;
+        flex-direction: row;
+        height: 100%;
+        width: 100%;
+        padding-top: 15px;
+        /* background-color: red; */
+        font-size: 26px;
+        align-items: center;
+        justify-content: flex-end;
+        color: #8e6bb6;
+    }
+
+    .tutorship-option-bookmarked {
+        color: #6013bb;
+    }
+    .tutorship-option-bookmarked > i:hover:before {
+        font-weight: normal;
+        color: #bb133d;
+    }
+
+    .tutorship-options a {
+        margin-left: 15px;
+    }
+
+    .tutorship-options a:hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+
+    .activated i {
+        font-weight: bold;
+        color: #bb133d;
+    }
+
+    .activated > i:hover:before {
+        font-weight: normal;
+        color: #8e6bb6;
+    }
+    .tutorship-options:hover:before {
+        font-weight: bold;
+    }
+
+    .separation-tutorship {
+        grid-area: bar;
+        height: 0px;
+        margin-left: 50px;
+        width: 98%;
+        margin-top: 10px;
+        border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+    }
+
+    .tutorship-content {
+        grid-area: details;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-top: 10px;
+        padding-left: 50px;
+        padding-right: 50px;
+        height: auto;
+        width: 90%;
+        color: black;
+        align-items: left;
+        justify-self: left;
+        margin-bottom: 50px;
+    }
+
+    .tutorship-section-content {
+        font-weight: normal;
+        padding-top: 20px;
+        margin-bottom: 30px;
+    }
+
+    .tutorship-buttons {
+        grid-area: buttons;
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        padding-left: 50px;
+        padding-right: 50px;
+        height: auto;
+        color: black;
+        font-size: 18px;
+        align-items: center;
+        justify-self: center;
+        margin-bottom: 50px;
+    }
+
+    .tutorship-buttons button {
+        margin-left: 15px;
+    }
+
+    .tutorship-buttons > .btn-gray-basic {
+        width: 150px;
+    }
+
+    /*Bookmark effect*/
+    .tutorship-bookmarked {
+        border-top: 20px solid #6013bb;
+    }
+
+    /*Collapse Tutorship*/
+    .tutorship-collapse > .tutorship-heading {
+        padding-bottom: 25px;
+    }
+
+    .tutorship-collapse > .tutorship-content,
+    .tutorship-collapse > .tutorship-heading > .separation-tutorship {
+        display: none;
+    }
+
+    /* Quill editor inside app  */
+    .tutorship-section-content p,
+    .post-content p,
+    .my-wall-content p {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .tutorship-section-content h1,
+    .my-wall-content h1 {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .tutorship-section-content h2,
+    .my-wall-content h2 {
+        margin-top: 0px;
+        margin-bottom: 5px;
+    }
+
+    .tutorship-section-content a,
+    .post-content a,
+    .my-wall-content a {
+        color: blue;
+        text-decoration: underline;
+    }
+
+    .ql-align-center {
+        text-align: center;
+    }
+    .ql-align-right {
+        text-align: right;
+    }
+    .ql-align-justify {
+        text-align: justify;
+    }
+
+    /* Tutorship edit mode -> inputs styles */
+    .tutorship-heading-title input {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        border-radius: 8px;
+        padding: 7px;
+        padding-left: 10px;
+        border: 1.8px solid #6013bb;
+    }
+
+    .tutorship-heading-title input:focus {
+        outline: none !important;
+    }
+    .tutorship-heading-title input:last-child {
+        margin-top: 10px;
+        margin-bottom: 25px;
+    }
+    .tutorship-heading-title input:first-child {
+        margin-top: 15px;
+    }
+
+    .ql-toolbar {
+        margin-top: 15px;
+    }
+
+    /* Collapse button*/
+
+    a.collapse-button:active,
+    a.collapse-button:link,
+    a.collapse-button:visited,
+    a.collapse-button:hover {
+        color: #8e6bb6;
+        text-decoration: none;
+    }
+    a.collapse-button :hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+    .collapse-button {
+        color: #8e6bb6;
+        font-size: 24px;
+        margin-right: 10px;
+    }
+
+    /*Forum Section*/
+    .post-container {
+        position: relative;
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: grid;
+        grid-template-rows: 100px 1fr 70px;
+        grid-template-columns: 100%;
+        grid-template-areas:
+            "heading"
+            "post-content"
+            "post-footer";
+        margin-top: 30px;
+        margin-bottom: 50px;
+        gap: 10px;
+    }
+
+    .post-pinned {
+        border-top: 20px solid #6013bb;
+    }
+
+    .post-heading {
+        grid-area: heading;
+        display: grid;
+        height: 100%;
+        padding-left: 50px;
+        padding-right: 50px;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: auto;
+        grid-template-areas: "post-details options";
+        border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+        margin-bottom: 100px;
+        align-items: center;
+    }
+    .post-details {
+        grid-area: post-details;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .post-details img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #000f2d;
+    }
+
+    .post-details-autor {
+        margin-left: 20px;
+    }
+    .post-details-autor p {
+        margin: 0;
+        color: #000f2d;
+        font-size: 18px;
+    }
+    .post-details-autor p:last-child {
+        font-size: 16px;
+        color: #8e6bb6;
+    }
+
+    .post-container span {
+        font-weight: normal;
+        margin-left: 1px;
+    }
+
+    .post-options {
+        grid-area: options;
+        display: flex;
+        flex-direction: row;
+        font-size: 26px;
+        align-items: center;
+        justify-content: flex-end;
+        color: #8e6bb6;
+    }
+
+    .post-options a {
+        margin-left: 16px;
+    }
+
+    .post-options a:hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+
+    .pinned {
+        color: #6013bb;
+    }
+
+    a.pinned:hover {
+        color: #8e6bb6;
+    }
+
+    /* FORUM FILTERS*/
+    .filter-options {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            "buttons-filter search-bar"
+            "search-status search-status";
+
+        margin-bottom: 50px;
+    }
+
+    .filter-buttons {
+        display: flex;
+        grid-area: buttons-filter;
+        align-items: center;
+    }
+
+    .filter-buttons > * {
+        margin-right: 15px;
+    }
+    .filter-btn {
+        width: fit-content;
+        height: fit-content;
+        font-size: 14px;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+        background-color: transparent;
+    }
+    .filter-btn:not(.filter-selected):hover {
+        background-color: transparent;
+        color: #6013bb;
+    }
+
+    .filter-selected {
+        background-color: #000f2d;
+        color: white;
+        pointer-events: none;
+        padding: 10px 20px;
+    }
+
+    /*Filter's Searchbar */
+    .filter-search-bar {
+        display: flex;
+        position: relative;
+        grid-area: search-bar;
+        justify-self: flex-end;
+    }
+
+    .filter-search-bar input {
+        border-radius: 20px;
+        border: 2px solid grey;
+        width: 350px;
+        height: 30px;
+        padding: 5px;
+        padding-left: 10px;
+        outline: none;
+        background-color: white;
+    }
+
+    .filter-search-bar input:focus {
+        border: 2px solid #6013bb;
+    }
+    .filter-search-bar select {
+        position: absolute;
+        right: 0px;
+        width: fit-content;
+        height: 30px;
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        padding: 0 5px;
+        padding-left: 12px;
+        font-size: 14px;
+
+        outline: none;
+        background-color: #000f2d;
+        color: white;
+    }
+    .filter-search-bar select > * {
+        background-color: white;
+        color: black;
+        outline: none;
+    }
+
+    .filter-search-bar select:hover {
+        cursor: pointer;
+    }
+
+    .search-status {
+        grid-area: search-status;
+        margin-top: 30px;
+        margin-bottom: -20px;
+        font-size: 26px;
+        justify-self: left;
+    }
+
+    /*Pinned section*/
+
+    .pinned-threads {
+        height: fit-content;
+        margin-top: -10px;
+        padding-bottom: 0px;
+        margin-bottom: 40px;
+        border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+    }
+
+    .pinned-threads h2 {
+        margin-bottom: 40px;
+    }
+
+    .post-content {
+        grid-area: post-content;
+        height: 100%;
+        word-wrap: break-word;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 20px;
+    }
+
+    .blurry-effect {
+        -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+        mask-image: linear-gradient(180deg, #000 60%, transparent);
+        overflow: hidden;
+        min-height: 100px;
+        max-height: 150px;
+    }
+
+    .post-footer {
+        grid-area: post-footer;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 20px;
+        padding-top: 20px;
+        font-size: 16px;
+        color: #000f2d;
+        border-top: 1px solid rgba(134, 134, 134, 0.55);
+    }
+
+    .post-footer i {
+        margin-right: 10px;
+    }
+
+    .post-footer p {
+        margin-left: 20px;
+        justify-self: flex-end;
+        padding-left: 15px;
+        border-left: 1px solid rgba(134, 134, 134, 0.55);
+    }
+
+    .post-footer a:hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+
+    /*Post hover effect*/
+    .post-details:not(.thread-active):hover {
+        cursor: pointer;
+    }
+
+    /*Collapse Post*/
+    div.post-container.post-collapse {
+        grid-template-rows: 80px 70px;
+        grid-template-columns: auto;
+        grid-template-areas:
+            "heading"
+            "post-footer";
+        padding-top: 10px;
+    }
+    .post-collapse > .post-heading {
+        border-bottom: none;
+        align-items: center;
+        justify-content: flex-start;
+    }
+
+    .post-collapse > .post-content {
+        display: none;
+    }
+
+    /* REPLY'S STYLES*/
+    .reply-container {
+        width: 100%;
+        height: fit-content;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: white;
+        display: grid;
+        grid-template-rows: 100px 1fr;
+        grid-template-columns: 100%;
+        grid-template-areas:
+            "heading"
+            "reply-content";
+        margin-top: 30px;
+        margin-bottom: 50px;
+        gap: 10px;
+    }
+    .reply-heading {
+        grid-area: heading;
+        display: grid;
+        height: 100%;
+        padding-left: 50px;
+        padding-right: 50px;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: auto;
+        grid-template-areas: "reply-details options";
+        border-bottom: 1px solid rgba(134, 134, 134, 0.55);
+        margin-bottom: 100px;
+        align-items: center;
+    }
+
+    .reply-details {
+        grid-area: reply-details;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .reply-details img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        border: 2px solid #000f2d;
+    }
+
+    .reply-details-autor {
+        margin-left: 20px;
+    }
+    .reply-details-autor p {
+        margin: 0;
+        color: #000f2d;
+        font-size: 18px;
+    }
+    .reply-details-autor p:last-child {
+        font-size: 16px;
+        color: #8e6bb6;
+    }
+
+    .reply-container span {
+        font-weight: normal;
+        margin-left: 1px;
+    }
+
+    .reply-options {
+        grid-area: options;
+        display: flex;
+        flex-direction: row;
+        font-size: 26px;
+        align-items: center;
+        justify-content: flex-end;
+        color: #8e6bb6;
+    }
+
+    .reply-options a {
+        margin-left: 16px;
+    }
+
+    .reply-options a:hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+
+    .reply-content {
+        grid-area: reply-content;
+        height: 100%;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-bottom: 20px;
+        word-break: break-all;
+    }
+
+    /*Add reply box */
+    .add-reply {
+        display: grid;
+        height: fit-content;
+        grid-template-areas:
+            "upper"
+            "footer";
+        grid-template-columns: auto;
+        margin-top: 70px;
+        margin-bottom: -20px;
+    }
+
+    .top-add-reply {
+        grid-area: upper;
+        display: flex;
+        padding-left: 50px;
+        padding-right: 50px;
+        flex-direction: row;
+    }
+
+    .top-add-reply img {
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        border: 2px solid #000f2d;
+        margin-right: 20px;
+    }
+
+    .editor-add-reply {
+        width: 100%;
+        height: fit-content;
+        background-color: white;
+        border-radius: 10px;
+    }
+    .editor-add-reply > * {
+        margin-top: 0;
+    }
+
+    .editor-add-reply p {
+        word-break: break-all;
+    }
+    .editor-add-reply > .ql-toolbar {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+    .editor-add-reply > .ql-container {
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        min-height: 120px;
+    }
+
+    .footer-add-reply {
+        grid-area: footer;
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 30px;
+        padding-right: 50px;
+    }
+
+    .footer-add-reply > .btn-purple-basic {
+        margin-left: 15px;
+        width: 130px;
+    }
+
+    .footer-add-reply a {
+        color: #000f2d;
+    }
+    .footer-add-reply a:hover {
+        cursor: pointer;
+        color: #6013bb;
+    }
+
+    /* THREAD EDIT COMMAND*/
+    .thread_editor_buttons {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 50px;
+        height: auto;
+        color: black;
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: -40px;
+    }
+
+    .thread_editor_buttons button {
+        width: fit-content;
+    }
+    .thread_editor_buttons button:last-of-type {
+        margin-left: 15px;
+        width: 130px;
+    }
+
+    /*REPLY EDIT COMMAND*/
+    .reply_editor_buttons {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        padding-left: 50px;
+        padding-right: 50px;
+        padding-top: 30px;
+        height: auto;
+        color: black;
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .reply_editor_buttons button {
+        width: fit-content;
+    }
+    .reply_editor_buttons button:last-of-type {
+        margin-left: 15px;
+        width: 130px;
+    }
+
+    /*My Wall Styles*/
+    .wall-heading {
+        display: grid;
+        /* background-color: blue; */
+        grid-template-areas: "title options";
+        align-items: center;
+        margin-top: -15px;
+        margin-bottom: 15px;
+    }
+
+    .wall-title {
+        grid-area: title;
+        height: fit-content;
+        /* background-color: rebeccapurple; */
+        border-left: 3px solid #6013bb;
+        padding-left: 15px;
+    }
+
+    .my-wall {
+        height: fit-content;
+        width: 100%;
+        background-color: white;
+        border-radius: 10px;
+        padding: 25px 0px;
+        padding-bottom: 10px;
+        margin-bottom: 70px;
+    }
+
+    .wall-title-container {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .wall-title-container > .wall-position {
+        margin-left: 15px;
+    }
+
+    .wall-title-container > .wall-position label {
+        margin-right: 5px;
+    }
+
+    .wall-heading input {
+        width: 300px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-size: 18px;
+        border-radius: 8px;
+        padding: 7px;
+        padding-left: 10px;
+        border: 1.8px solid #6013bb;
+        outline: none;
+    }
+
+    .my-wall-content {
+        grid-area: wall-content;
+        padding: 20px 50px;
+    }
+
+    .my-wall-options {
+        grid-area: options;
+        display: flex;
+        height: 100%;
+        justify-content: flex-end;
+        padding: 0 20px;
+        align-items: center;
+        font-size: 26px;
+        color: #8e6bb6;
+    }
+
+    .my-wall-options i:hover {
+        color: #6013bb;
+        cursor: pointer;
+    }
+
+    .my-wall-options :last-child {
+        margin-left: 15px;
+    }
+
+    .wall-heading:nth-last-of-type(2) {
+        margin-top: 40px;
+    }
+
+    .myWall-quillEditor {
+        padding: 10px 30px;
+    }
+
+    .wall-buttons {
+        display: flex;
+        flex-direction: row;
+        padding-left: 50px;
+        padding-right: 50px;
+        height: auto;
+        color: black;
+        font-size: 18px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .wall-buttons button {
+        margin-left: 15px;
+    }
+    .wall-buttons > .btn-gray-basic {
+        width: 150px;
+    }
+
+    /*FILES SECTION*/
+    .general-file-table-container > div:first-child {
+        margin-bottom: 70px;
+    }
 }
