@@ -6,7 +6,7 @@ El proyecto tiene como objetivo el desarrollo de una solución software que perm
 
 
 ## Funcionalidades de Levels
-En Levels existen dos tipos de usuarios; **entrenadores** y **deportistas**. Según el usuario que haya iniciado, las funcionalidades de Levels cambiarán para adecuarse a las necesidades de cada uno.
+En Levels existen dos tipos de usuarios; **entrenadores** y **deportistas**. Según el tipo de usuario que haya iniciado sesión, las funcionalidades de Levels cambiarán para adecuarse a las necesidades de cada uno.
 
 ### Los usuarios de tipo 'entrenador' pueden: 
 - Gestionar planes de entrenamiento. 
